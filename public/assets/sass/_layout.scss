@@ -1,0 +1,536 @@
+//reset
+html, body {
+    border: 0;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+div, span, object, iframe, img, table, caption, thead, tbody,
+tfoot, tr, tr, td, article, aside, canvas, details, figure, hgroup, menu,
+nav, footer, header, section, summary, mark, audio, video {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
+del, dfn, em, ins, q, samp, small, strong, sub, sup, b, i, hr, dl, dt, dd,
+ol, ul, li, fieldset, legend, label {
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+article, aside, canvas, figure, figure img, figcaption, hgroup,
+footer, header, nav, section, audio, video {
+    display: block;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  caption, th, td {
+    text-align: left;
+    vertical-align: middle;
+  }
+}
+
+a img {
+  border: 0;
+}
+
+:focus {
+  outline: 0;
+}
+
+// main layout wrap
+.avfr--wrap {
+    .clearfix();
+
+    * {
+        .box-sizing(border-box);
+    }
+}
+
+// main alyout
+.avfr--layout-main {
+    width: 100%;
+}
+
+// submit area
+.avfr--layout-submit {
+    .clearfix();
+    margin:@entry--margin;
+    padding:@entry--padding;
+    border-top:1px solid @border-color;
+    border-bottom:1px solid @border-color;
+
+    .avfr--submit-left {
+        float: left;
+        padding:10px 0;
+        .box-sizing(border-box);
+    }
+    .avfr--submit-right {
+        float: right;
+    }
+}
+
+#avfr--entry--form input[type="submit"],
+.avfr--button {
+    height: 40px;
+    width: 147px;
+    text-align: center;
+    background:@button--background;
+    color:@button--color;
+    border-radius: 3px;
+    padding: 8px;
+    text-decoration: none;
+    .transition(background .1s ease);
+    display: inline-block;
+
+    &:visited,
+    &:hover {
+        color:white;
+        background:darken(@button--background,5);
+    }
+    &:active {
+        outline:none;
+        background:darken(@button--background,8);
+        .box-shadow(inset 0 1px 1px rgba(0,0,0,0.5));
+    }
+}
+
+
+// main article
+.avfr--entry-wrap {
+    .clearfix();
+    display: block;
+    width: 100%;
+    padding:@entry--wrap_padding;
+    margin-bottom: 0 !important;
+    &:nth-child(even){
+        background:darken(@primary,3);
+    }
+    footer,div.entry-meta {
+        display: table;
+        div {
+            display: inline-block;
+            color: #acacac;
+            margin-right: 10px;
+        }
+        .avfr_short_group {
+            padding-left: 0;
+        }
+        span {
+            display: inline-block;
+            color: #c7c7c7;
+            text-decoration: none;
+            vertical-align: text-top;
+            margin: 0;
+        }
+        img {
+            box-shadow: none;
+        }
+        a {
+            color : @link-color;
+            &:hover,
+            &:focus,
+            &:active {
+                color : @link-color;
+            }
+        }   
+    }
+    footer {
+            margin-left: 106px;
+    }
+    .entry-header {
+
+        margin-top : 0;
+        display: table;
+        .entry-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0;
+        }
+        .entry-meta {
+            margin: 0;
+            .idea_short_group {
+                margin-left: 0;
+            }
+        }
+    }
+    .entry-content {
+        display: table;
+        margin-left: 116px;
+
+        .read-more {
+            font-size: 0.9em;
+            padding-left: 15px;
+        }
+    }
+}
+
+// entry inner
+.avfr--entry {
+    font-size:@entry--font_size;
+    line-height: @entry--font_lineheight;
+    display: table;
+    margin: 0;
+    p{
+        margin: 0px;
+    }
+    img {
+        box-shadow: none;
+    }
+}
+
+
+.avfr-controls {
+    text-align: center;
+    border: @br-width solid @br-color;
+    padding: 8px;
+    width:  @default-width;
+    border-radius: @br-rad;
+    background-color: #fff;
+    line-height: 1.5;
+    .avfr--totals {
+
+        padding: 5px;
+
+        .avfr--totals_num {
+            font-size: 18px;
+            line-height: 22px;
+        }
+
+        .avfr--totals_label {
+            font-size: 12px;
+            color: @vote-lable-color;
+        }
+    }
+
+    &.voted {
+        font-size:85%;
+        display:block;
+        line-height:1;
+        margin-top: 8px;
+    }
+}
+
+// vote controls
+.avfr-vote-up,
+.avfr-vote-down {
+    position:relative;
+    overflow: hidden;
+    display:inline-block;
+    height:30px;
+    width:32px;
+    font-size:@icon--font_size;
+    margin-top: -2px;
+    text-decoration: none;
+    border:1px solid #ccc;
+    border-radius: 3px;
+
+    &:after {
+        font-family:Dashicons;
+        position:absolute;
+        left:0;
+        top:2px;
+        right:0;
+        bottom:0;
+        height:16px;
+    }
+
+    &:focus,
+    &:active {
+        outline:none;
+    }
+}
+.avfr-vote-up{
+    margin-rigth: 2px;
+    &:after {
+        content:'\f132';
+        color:@green;
+    }
+
+    &:hover:after {
+        color:darken(@green,5);
+    }
+
+}
+.avfr-vote-down {
+    margin-left: 2px;
+    &:after {
+        content:'\f460';
+        color:@red;
+    }
+
+    &:hover:after {
+        color:darken(@red,5)
+    }
+}
+.ah-thanks,
+.avfr--totals {
+    font-size:95%;
+}
+
+.ah-thanks {
+    line-height:0.9;
+}
+
+// status
+.avfr--status {
+
+    margin-top:10px;
+    font-size:12px;
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
+
+    span{
+        display:inline-block;
+        vertical-align: baseline;
+        white-space: nowrap;
+        text-align: center;
+        padding:11px 15px;
+        color:white;
+        text-shadow:0 1px 1px rgba(0,0,0,0.1);
+        border-radius:2px;
+        width: @default-width;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .avfr-status_approved{
+        background: @green;
+    }
+    .avfr-status_declined{
+        background: @red;
+    }
+    .avfr-status_open{
+        background: @teal;
+    }
+    .avfr-status_completed{
+        background: @blue;
+    }
+}
+
+.avfr--loadmore {
+    margin:20px auto;
+}
+
+// Filters
+.avfr-filter-controls {
+        margin-left: 0 !important;
+        padding: 15px 0px;
+
+    .avfr-filter-control-item {
+        display: inline-block;
+        
+
+        a {
+            .button-variant(@btn-color, @btn-bg, @br-color);
+            .button-size(@btn-pad-ver, @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+            text-decoration: none;
+            border-width: @br-width;
+        }
+        
+    }
+    div,li {
+        margin: 8px 3px;
+    }
+    select {
+        vertical-align: baseline;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        position: relative;
+        padding-right: 30px;
+        border-radius: 3px;
+    }
+    .triangle-down {
+        position: relative;
+        &:after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            background-color: #EDEFF2;
+            border: solid transparent;
+            border-top-color: #999;
+            pointer-events: none;
+            border-width: 6px 4px 4px 4px;
+            top: 10px;
+            right: 15px;
+        }
+    }
+}
+
+.status-changing {
+    float: right;
+    a {
+        .button-variant(@btn-color, @btn-bg, @br-color);
+        .button-size(@btn-pad-ver, ( @btn-pad-hor - 10 ), @btn-font-size, @filter-line-height, @br-rad);
+        text-decoration: none;
+        border-width: @br-width;
+    }
+    
+
+
+}
+
+
+//Votes
+.avfr-vote-now {
+    .button-variant(@btn-color, @btn-bg, @br-color);
+    padding: (@btn-pad-ver - 3) @btn-pad-hor;
+    border-width: 1px;
+    font-size: 13px;
+    border-radius: 3px;
+}
+.avfr-disabled-button {
+    .button-variant(lighten(@btn-color, 50%), lighten(@btn-bg, 7%), lighten(@br-color, 7%));
+    .button-size((@btn-pad-ver - 2), @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+    border-width: 1px;
+    margin: 0;
+    &:hover {
+        border-color: lighten(@br-color, 7%);
+        color: lighten(@btn-color, 50%);
+    }
+}
+.avfr-votes-area {
+    margin-right: 20px;
+    float: left;
+    .flag-show {
+        text-align: center;
+        padding-top: 5px;
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+.avfr-tooltip {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 15px;
+    margin-top: -30px;
+    text-align: left;
+    line-height: 30px;
+
+    .box-shadow( 0 0 1px 2px rgba(222,222,222,0.5));
+    a{
+        .button-variant(@btn-color, @btn-bg, @br-color);
+        .button-size((@btn-pad-ver - 3), @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+        margin-right: 10px;
+        text-decoration: none;
+        border-width: @br-width;
+    }
+    p {
+        padding-bottom: 10px;
+    }
+    .small-text {
+        font-size: 0.7em;
+        padding-bottom: 0;
+    }
+}
+
+.attachments {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    img {
+        border: 2px solid #ccc;
+        border-radius: 0;
+    }
+    .image-caption {
+        font-weight: bold;
+        color: @link-color;
+    }
+}
+
+.related-avfr-section {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    .related-title {
+        font-weight: bold;
+        color: @link-color;
+    }
+    .single_related {
+        text-decoration: none;
+        font-weight: bold;
+        li {
+            list-style: none;
+        }
+        
+    }
+}
+
+//reload animation
+
+@keyframes ifreloadanimation {
+
+    0%   {.rotate(0)}
+    100% {.rotate(360deg)}
+
+}
+
+.if-reload-animation {
+    animation: ifreloadanimation 1s infinite linear;
+    -webkit-animation: ifreloadanimation 1s infinite linear;
+    -moz-animation: ifreloadanimation 1s infinite linear;
+ 
+    transform-origin: center;
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+}
+
+#avfr-avatar{
+
+   margin-bottom: 15px; 
+   margin-top: 15px;
+    vertical-align: none;
+        img{
+        float: left;    
+        height: 40px;
+        width: 40px;
+        border: 1px solid #cccccc;
+        }
+        #avfr_avatar_name{
+            margin-left: 15px;
+            padding-top: 0px;
+            float: left;
+            font-weight:bold;
+            font-size: 13px;
+        }
+        span{
+        font-weight: normal;
+           color: black; 
+        }
+        p{
+            padding-left: 1px;
+            padding-top: 0px;
+            font-size: 11px;
+            color: #cccccc;
+        }
+}
+
+#avfr_delete{
+    float: right;
+    margin: 20px;
+    color: #cccccc;
+    font-weight: normal;
+    vertical-align: none;
+    font-size: 13px;
+
+}
+
+.clearfix:after {
+   content: " ";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}

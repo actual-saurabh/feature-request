@@ -1,0 +1,227 @@
+.avfr-modal-open {
+    overflow: hidden;
+}
+.avfr-modal {
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: @zindex-modal;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+
+    &.fade .avfr-modal-dialog {
+        .translate(0, -25%);
+        .transition-transform(~"0.3s ease-out");
+    }
+    &.in .avfr-modal-dialog { .translate(0, 0) }
+}
+.avfr-modal-open .avfr-modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.avfr-modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+
+.avfr-modal-content {
+    position: relative;
+    background-color: @modal--content-bg;
+    border: 1px solid @modal--content-fallback-border-color; //old browsers fallback (ie8 etc)
+    border: 1px solid @modal--content-border-color;
+    border-radius: @modal--border-radius;
+    .box-shadow(0 3px 9px rgba(0,0,0,.5));
+    background-clip: padding-box;
+    // Remove focus outline from opened modal
+    outline: 0;
+}
+
+.avfr-modal-backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: @modal--backdrop-bg;
+    // Fade for backdrop
+    &.fade { .opacity(0); }
+    &.in { .opacity(@modal--backdrop-opacity); }
+}
+
+.avfr-modal-header {
+    padding: @modal--title_padding-ver @modal--title_padding ;
+    border-bottom: 1px solid @modal--header-border-color;
+    min-height: (@modal--title_padding + @modal--title-line-height);
+    h3 {
+        margin: 0;
+        line-height: 1.5;
+    }
+}
+
+.avfr-modal-title {
+	margin: 0;
+	line-height: @modal--title-line-height;
+}
+
+.avfr-modal-body {
+    position: relative;
+    padding: @modal--innerpadding;
+}
+ .text-wrap {
+     width: 100% !important;
+     #tags-data-list{
+        height: 32px;
+        width: 100% !important;
+        min-height: 32px;
+        border-radius: @modal--border-radius;
+        border-color: @input--border;
+        padding: 6px 0 26px 8px;
+     }
+ 
+ }
+
+.avfr-modal-footer {
+    padding-top: @modal--innerpadding;
+    text-align: left; // right align buttons
+    &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
+
+    // Properly space out buttons
+    .btn + .btn {
+        margin-left: 5px;
+        margin-bottom: 0; // account for input[type="submit"] which gets the bottom margin like all other inputs
+    }
+    // but override that for button groups
+    .btn-group .btn + .btn {
+        margin-left: -1px;
+    }
+    // and override it for block buttons as well
+    .btn-block + .btn-block {
+        margin-left: 0;
+    }
+
+    input[type="submit"] {
+        font-size:@input--font_size;
+        outline: none;
+        border:none;
+
+        &:active,
+        &:focus {
+            outline:none;
+            border:none;
+        }
+    }
+
+}
+.avfr-modal-scrollbar-measure {
+    position: absolute;
+    top: -9999px;
+    width: 50px;
+    height: 50px;
+    overflow: scroll;
+}
+
+@media (min-width: 768px) {
+
+    .avfr-modal-dialog {
+        width: @modal--md;
+        margin: 80px auto 30px;
+    }
+    .avfr-modal-content {
+        .box-shadow(0 5px 15px rgba(0,0,0,.5));
+    }
+
+    .avfr-modal-sm { width: @modal--sm; }
+}
+
+@media (min-width: 992px) {
+    .avfr-modal-lg { width: @modal--lg; }
+}
+
+// CLOSE
+.close {
+    float: right;
+    font-size: @close--font_size;
+    font-weight: normal;
+    line-height: 1.5;
+    color: @close--font_color;
+    background:transparent;
+    .opacity(.2);
+
+    &:hover,
+    &:focus {
+        color: @close--font_color;
+        background:none;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: none;
+        outline:none;
+        border:none;
+        .opacity(.5);
+    }
+
+}
+
+select#group.ideagroup{
+    border-radius: 3px;
+    padding: @input--padding;  
+    min-width: 192px;  
+}
+
+img#imgCaptcha{
+    margin-left: 11px;
+    border-radius:3px;
+    box-shadow: none;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+img#reload{
+    margin-left: 6px;
+    box-shadow: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input.avfr--button.btn.btn-default{
+    margin-top: 0px;
+    width: 110px;
+    height: 40px;
+    border-radius: 25px;
+
+}
+
+#avfr--entry--form-results{
+    margin: 0 0 0 11px;
+    height: 40px;
+    background: #dd6d5a;
+    border-radius: 3px;
+    display: none;
+    font-size:@input--font_size;
+    .transition(.7s);
+    p {
+        color: #ffffff;
+        padding: 10px;
+        .transition(.7s);
+    }
+}
+
+
+input#captcha{
+    height: 30px;
+    width: 192px;
+}
+
+#avfr--entry--form input[type="submit"]{
+ padding: 0;
+}
+
+.dashicons-warning:before{
+    margin: 15px 15px 0 0;
+
+}
+

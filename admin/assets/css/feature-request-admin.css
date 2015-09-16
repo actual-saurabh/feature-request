@@ -1,0 +1,4 @@
+#if_settings_groups form table tr:nth-child(5n){
+
+	border-bottom:1px solid #ccc;
+}

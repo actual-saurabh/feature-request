@@ -1,0 +1,31 @@
+{
+  "name": "feature-request",
+  "title": "wp_feature_request",
+  "version": "1.0.0",
+  "description": "Wordpress Feature Request Plugin with Advanced Voting System.",
+  "homepage": "https://github.org/averta-lab/feature-request",
+  "license": "GPL-2.0+",
+  "author": "Averta <info@averta.net> (www.averta.net)",
+  "private": false,
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt-autoprefixer": ">=1.0.1",
+    "grunt-concurrent": ">=1.0.0",
+    "grunt-contrib-compass": ">=1.0.1",
+    "grunt-contrib-concat": ">=0.5.0",
+    "grunt-contrib-copy": ">=0.7.0",
+    "grunt-contrib-jshint": ">=0.10.0",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-uglify": ">=0.6.0",
+    "grunt-contrib-watch": ">=0.6.1",
+    "load-grunt-tasks": ">=1.0.0",
+    "time-grunt": ">=1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:averta-lab/feature-request.git"
+  },
+  "keywords": [
+    "grunt"
+  ]
+}

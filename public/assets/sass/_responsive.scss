@@ -1,0 +1,92 @@
+@media(max-width:600px){
+
+    // entrty
+    .avfr--entry-wrap {
+		display: inline-block;
+        padding:12px;
+        .box-sizing(border-box);
+        .entry-header {
+            display:block;
+        }
+        footer {
+            margin-left: 0;
+            div {
+                padding: 0 10px 0 0;
+            }
+        }
+        .entry-content {
+            margin: 10px 0 0 0;
+            display: inline-block;
+        }
+        div.entry-meta {
+            margin: 0;
+            div {
+                padding: 0;
+            }
+        }
+    }
+    .avfr--hasvoted {
+        top:0;
+
+        .avfr--totals {
+            float:left;
+            top:-5px;
+        }
+    }
+    .avfr--controls {
+        .clearfix();
+        margin-right:none;
+    }
+
+    .avfr--controls,
+    .avfr--entry {
+        width:100%;
+        float:none;
+        display: block;
+    }
+
+    .avfr--layout-submit {
+        .avfr--submit-left,
+        .avfr--submit-right {
+            width:100%;
+            float:none;
+            display:block;
+            text-align: center;
+            margin:0;
+        }
+        .avfr--submit-left {
+            margin-bottom:10px;
+        }
+    }
+
+    .vote-up,
+    .vote-down,
+    .avfr--totals {
+        float: left;
+        margin-bottom: 0;
+    }
+
+    .avfr--totals {
+        position: relative;
+        text-align: center;
+        width: 100%;
+    }
+
+    .avfr--loadmore {
+        text-align: center;
+    }
+
+    .avfr--button {
+        text-align: center;
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+@media(max-width:400px) {
+    .avfr--button {
+        width:100%;
+        margin-left:0;
+        margin-right:0;
+    }
+}
