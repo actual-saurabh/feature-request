@@ -1,13 +1,4 @@
 <?php
-
-/**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
- */
-
 session_start();
 $code=rand(1000,9999);
 $_SESSION["code"]=$code;

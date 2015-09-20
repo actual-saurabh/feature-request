@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 	@package   			Feature-request
  * 	@author    			Averta
@@ -8,7 +7,7 @@
  *	@copyright 			2015 Averta
  */
 
-class Av_Feature_Request_Admin {
+class AVFR_Admin {
 
 	/**
 	 * Instance of this class.
@@ -36,13 +35,13 @@ class Av_Feature_Request_Admin {
 	 */
 	private function __construct() {
 
-		$plugin = Av_Feature_Request::get_instance();
+		$plugin = Feature_Request::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
 		require_once(AVFR_DIR.'/admin/includes/class.settings.php');
 		require_once(AVFR_DIR.'/admin/includes/class.meta.php');
 		require_once(AVFR_DIR.'/admin/includes/class.column-mods.php');
-		wp_enqueue_style('Feature-request-admin-css', AVFR_URL.'/admin/assets/css/Feature-request-admin.css', AVFR_VERSION, true );
+		wp_enqueue_style('idea-factory-admin-css', AVFR_URL.'/admin/assets/css/avfr-admin.css', AVFR_VERSION, true );
 
 	}
 

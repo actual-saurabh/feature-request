@@ -1,7 +1,7 @@
-.avfr-modal-open {
+.idea-factory-modal-open {
     overflow: hidden;
 }
-.avfr-modal {
+.idea-factory-modal {
     display: none;
     overflow: hidden;
     position: fixed;
@@ -9,68 +9,67 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: @zindex-modal;
+    z-index: $zindex-modal;
     -webkit-overflow-scrolling: touch;
     outline: 0;
 
-    &.fade .avfr-modal-dialog {
-        .translate(0, -25%);
-        .transition-transform(~"0.3s ease-out");
+    &.fade .idea-factory-modal-dialog {
+        @include translate(0, -25%);
+        @include transform("0.3s ease-out");
     }
-    &.in .avfr-modal-dialog { .translate(0, 0) }
+    &.in .idea-factory-modal-dialog { @include translate(0, 0) }
 }
-.avfr-modal-open .avfr-modal {
+.idea-factory-modal-open .idea-factory-modal {
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.avfr-modal-dialog {
+.idea-factory-modal-dialog {
     position: relative;
     width: auto;
     margin: 10px;
 }
 
-.avfr-modal-content {
+.idea-factory-modal-content {
     position: relative;
-    background-color: @modal--content-bg;
-    border: 1px solid @modal--content-fallback-border-color; //old browsers fallback (ie8 etc)
-    border: 1px solid @modal--content-border-color;
-    border-radius: @modal--border-radius;
-    .box-shadow(0 3px 9px rgba(0,0,0,.5));
+    background-color: $modal--content-bg;
+    border: 1px solid $modal--content-border-color;
+    border-radius: $modal--border-radius;
+    @include box-shadow(0 3px 9px rgba(0,0,0,.5));
     background-clip: padding-box;
     // Remove focus outline from opened modal
     outline: 0;
 }
 
-.avfr-modal-backdrop {
+.idea-factory-modal-backdrop {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    background-color: @modal--backdrop-bg;
+    background-color: $modal--backdrop-bg;
     // Fade for backdrop
-    &.fade { .opacity(0); }
-    &.in { .opacity(@modal--backdrop-opacity); }
+    &.fade { opacity: 0; }
+    &.in { opacity: $modal--backdrop-opacity; }
 }
 
-.avfr-modal-header {
-    padding: @modal--title_padding-ver @modal--title_padding ;
-    border-bottom: 1px solid @modal--header-border-color;
-    min-height: (@modal--title_padding + @modal--title-line-height);
+.idea-factory-modal-header {
+    padding: $modal--title_padding-ver $modal--title_padding ;
+    border-bottom: 1px solid $modal--header-border-color;
+    min-height: ($modal--title_padding + $modal--title-line-height);
     h3 {
         margin: 0;
         line-height: 1.5;
     }
 }
 
-.avfr-modal-title {
+.idea-factory-modal-title {
 	margin: 0;
-	line-height: @modal--title-line-height;
+	line-height: $modal--title-line-height;
 }
 
-.avfr-modal-body {
+.idea-factory-modal-body {
     position: relative;
-    padding: @modal--innerpadding;
+    padding: $modal--innerpadding;
 }
  .text-wrap {
      width: 100% !important;
@@ -78,17 +77,16 @@
         height: 32px;
         width: 100% !important;
         min-height: 32px;
-        border-radius: @modal--border-radius;
-        border-color: @input--border;
+        border-radius: $modal--border-radius;
+        border-color: $input--border;
         padding: 6px 0 26px 8px;
      }
  
  }
 
-.avfr-modal-footer {
-    padding-top: @modal--innerpadding;
+.idea-factory-modal-footer {
+    padding-top: $modal--innerpadding;
     text-align: left; // right align buttons
-    &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
 
     // Properly space out buttons
     .btn + .btn {
@@ -105,7 +103,7 @@
     }
 
     input[type="submit"] {
-        font-size:@input--font_size;
+        font-size:$input--font_size;
         outline: none;
         border:none;
 
@@ -117,7 +115,7 @@
     }
 
 }
-.avfr-modal-scrollbar-measure {
+.idea-factory-modal-scrollbar-measure {
     position: absolute;
     top: -9999px;
     width: 50px;
@@ -127,48 +125,48 @@
 
 @media (min-width: 768px) {
 
-    .avfr-modal-dialog {
-        width: @modal--md;
+    .idea-factory-modal-dialog {
+        width: $modal--md;
         margin: 80px auto 30px;
     }
-    .avfr-modal-content {
-        .box-shadow(0 5px 15px rgba(0,0,0,.5));
+    .idea-factory-modal-content {
+        @include box-shadow(0 5px 15px rgba(0,0,0,.5));
     }
 
-    .avfr-modal-sm { width: @modal--sm; }
+    .idea-factory-modal-sm { width: $modal--sm; }
 }
 
 @media (min-width: 992px) {
-    .avfr-modal-lg { width: @modal--lg; }
+    .idea-factory-modal-lg { width: $modal--lg; }
 }
 
 // CLOSE
 .close {
     float: right;
-    font-size: @close--font_size;
+    font-size: $close--font_size;
     font-weight: normal;
     line-height: 1.5;
-    color: @close--font_color;
+    color: $close--font_color;
     background:transparent;
-    .opacity(.2);
+    opacity: 0.2;
 
     &:hover,
     &:focus {
-        color: @close--font_color;
+        color: $close--font_color;
         background:none;
         text-decoration: none;
         cursor: pointer;
         box-shadow: none;
         outline:none;
         border:none;
-        .opacity(.5);
+        opacity: 0.5;
     }
 
 }
 
 select#group.ideagroup{
     border-radius: 3px;
-    padding: @input--padding;  
+    padding: $input--padding;  
     min-width: 192px;  
 }
 
@@ -187,7 +185,7 @@ img#reload{
     cursor: pointer;
 }
 
-input.avfr--button.btn.btn-default{
+input.idea-factory--button.btn.btn-default{
     margin-top: 0px;
     width: 110px;
     height: 40px;
@@ -195,18 +193,18 @@ input.avfr--button.btn.btn-default{
 
 }
 
-#avfr--entry--form-results{
+#idea-factory--entry--form-results{
     margin: 0 0 0 11px;
     height: 40px;
     background: #dd6d5a;
     border-radius: 3px;
     display: none;
-    font-size:@input--font_size;
-    .transition(.7s);
+    font-size:$input--font_size;
+    @include transition(.7s);
     p {
         color: #ffffff;
         padding: 10px;
-        .transition(.7s);
+        @include transition(.7s);
     }
 }
 
@@ -216,7 +214,7 @@ input#captcha{
     width: 192px;
 }
 
-#avfr--entry--form input[type="submit"]{
+#idea-factory--entry--form input[type="submit"]{
  padding: 0;
 }
 
@@ -224,4 +222,3 @@ input#captcha{
     margin: 15px 15px 0 0;
 
 }
-

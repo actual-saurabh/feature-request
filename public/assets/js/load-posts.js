@@ -7,13 +7,13 @@ jQuery(document).ready(function($) {
 		label_loading = idea_factory.label_loading;
 
 	if(pageNum <= max) {
-		$('.avfr--wrap')
-			.append('<div class="avfr--layout-main clearfix avfr--layout-main-'+ pageNum +'"></div>')
-			.append('<p class="avfr--loadmore fix"><a class="avfr--button" href="#">'+label+'</a></p>');
+		$('.idea-factory--wrap')
+			.append('<div class="idea-factory--layout-main clearfix idea-factory--layout-main-'+ pageNum +'"></div>')
+			.append('<p class="idea-factory--loadmore fix"><a class="idea-factory--button" href="#">'+label+'</a></p>');
 
 	}
 
-	$('.avfr--loadmore a').click(function() {
+	$('.idea-factory--loadmore a').click(function() {
 
 		// Are there more posts to load?
 		if(pageNum <= max) {
@@ -21,20 +21,20 @@ jQuery(document).ready(function($) {
 			// Show that we're working.
 			$(this).text(label_loading);
 
-			$('.avfr--layout-main-'+ pageNum).load(nextLink + ' .avfr--entry-wrap',
+			$('.idea-factory--layout-main-'+ pageNum).load(nextLink + ' .idea-factory--entry-wrap',
 				function() {
 					// Update page number and nextLink.
 					pageNum++;
 					nextLink = nextLink.replace(/\/page\/[0-9]?/, '/page/'+ pageNum);
 
 					// Add a new placeholder, for when user clicks again.
-					$('.avfr--loadmore').before('<div class="avfr--layout-main clearfix avfr--layout-main-'+ pageNum +'"></div>')
+					$('.idea-factory--loadmore').before('<div class="idea-factory--layout-main clearfix idea-factory--layout-main-'+ pageNum +'"></div>')
 
 					// Update the button message.
 					if(pageNum <= max) {
-						$('.avfr--loadmore a').text(label);
+						$('.idea-factory--loadmore a').text(label);
 					} else {
-						$('.avfr--loadmore a').fadeOut();
+						$('.idea-factory--loadmore a').fadeOut();
 					}
 
 				}

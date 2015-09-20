@@ -1,13 +1,13 @@
 <?php
-
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ * weDevs Settings API wrapper class
+ *
+ * @version 1.0
+ *
+ * @author Tareq Hasan <tareq@weDevs.com>
+ * @link http://tareq.weDevs.com Tareq's Planet
+ * @example settings-api.php How to use the class
  */
-
 if ( !class_exists( 'WeDevs_Settings_API' ) ):
 class WeDevs_Settings_API {
     /**

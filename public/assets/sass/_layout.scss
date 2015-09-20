@@ -1,128 +1,81 @@
-//reset
-html, body {
-    border: 0;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-}
-
-div, span, object, iframe, img, table, caption, thead, tbody,
-tfoot, tr, tr, td, article, aside, canvas, details, figure, hgroup, menu,
-nav, footer, header, section, summary, mark, audio, video {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
-del, dfn, em, ins, q, samp, small, strong, sub, sup, b, i, hr, dl, dt, dd,
-ol, ul, li, fieldset, legend, label {
-  border: 0;
-  font-size: 100%;
-  vertical-align: baseline;
-  margin: 0;
-  padding: 0;
-}
-
-article, aside, canvas, figure, figure img, figcaption, hgroup,
-footer, header, nav, section, audio, video {
-    display: block;
-}
-
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  caption, th, td {
-    text-align: left;
-    vertical-align: middle;
-  }
-}
-
-a img {
-  border: 0;
-}
-
-:focus {
-  outline: 0;
-}
-
 // main layout wrap
-.avfr--wrap {
-    .clearfix();
-
+.avfr-wrap-wrap {
+    @include clearfix;
     * {
-        .box-sizing(border-box);
+        @include box-sizing(border-box);
     }
 }
 
 // main alyout
-.avfr--layout-main {
+.idea-factory--layout-main {
     width: 100%;
 }
 
 // submit area
-.avfr--layout-submit {
-    .clearfix();
-    margin:@entry--margin;
-    padding:@entry--padding;
-    border-top:1px solid @border-color;
-    border-bottom:1px solid @border-color;
+.idea-factory--layout-submit {
+    @include clearfix;
+    margin:$entry--margin;
+    padding:$entry--padding;
+    border-top:1px solid $border-color;
+    border-bottom:1px solid $border-color;
 
-    .avfr--submit-left {
+    .idea-factory--submit-left {
         float: left;
         padding:10px 0;
-        .box-sizing(border-box);
+        @include box-sizing(border-box);
     }
-    .avfr--submit-right {
+    .idea-factory--submit-right {
         float: right;
     }
 }
 
-#avfr--entry--form input[type="submit"],
-.avfr--button {
+#idea-factory--entry--form input[type="submit"],
+.idea-factory--button {
     height: 40px;
     width: 147px;
     text-align: center;
-    background:@button--background;
-    color:@button--color;
+    background:$button--background;
+    color:$button--color;
     border-radius: 3px;
     padding: 8px;
     text-decoration: none;
-    .transition(background .1s ease);
+    @include transition(background .1s ease);
     display: inline-block;
 
     &:visited,
     &:hover {
         color:white;
-        background:darken(@button--background,5);
+        background:darken($button--background,5);
     }
     &:active {
         outline:none;
-        background:darken(@button--background,8);
-        .box-shadow(inset 0 1px 1px rgba(0,0,0,0.5));
+        background:darken($button--background,8);
+        @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.5));
     }
 }
 
 
 // main article
-.avfr--entry-wrap {
-    .clearfix();
+.idea-factory--entry-wrap {
+    @include clearfix;
     display: block;
     width: 100%;
-    padding:@entry--wrap_padding;
+    padding:$entry--wrap_padding;
     margin-bottom: 0 !important;
     &:nth-child(even){
-        background:darken(@primary,3);
+        background:darken($primary,3);
     }
     footer,div.entry-meta {
         display: table;
+        margin: 0;
         div {
             display: inline-block;
             color: #acacac;
-            margin-right: 10px;
+            margin: 10px;
         }
-        .avfr_short_group {
+        .idea_short_group {
             padding-left: 0;
+            margin-left: 0;
         }
         span {
             display: inline-block;
@@ -135,16 +88,16 @@ a img {
             box-shadow: none;
         }
         a {
-            color : @link-color;
+            color : $link-color;
             &:hover,
             &:focus,
             &:active {
-                color : @link-color;
+                color : $link-color;
             }
         }   
     }
     footer {
-            margin-left: 106px;
+        margin-left: 116px;
     }
     .entry-header {
 
@@ -154,12 +107,6 @@ a img {
             font-weight: bold;
             font-size: 20px;
             margin: 0;
-        }
-        .entry-meta {
-            margin: 0;
-            .idea_short_group {
-                margin-left: 0;
-            }
         }
     }
     .entry-content {
@@ -174,9 +121,9 @@ a img {
 }
 
 // entry inner
-.avfr--entry {
-    font-size:@entry--font_size;
-    line-height: @entry--font_lineheight;
+.idea-factory--entry {
+    font-size:$entry--font_size;
+    line-height: $entry--font_lineheight;
     display: table;
     margin: 0;
     p{
@@ -188,26 +135,26 @@ a img {
 }
 
 
-.avfr-controls {
+.idea-factory--controls {
     text-align: center;
-    border: @br-width solid @br-color;
+    border: $br-width solid $br-color;
     padding: 8px;
-    width:  @default-width;
-    border-radius: @br-rad;
+    width:  $default-width;
+    border-radius: $br-rad;
     background-color: #fff;
     line-height: 1.5;
-    .avfr--totals {
+    .idea-factory--totals {
 
         padding: 5px;
 
-        .avfr--totals_num {
+        .idea-factory--totals_num {
             font-size: 18px;
             line-height: 22px;
         }
 
-        .avfr--totals_label {
+        .idea-factory--totals_label {
             font-size: 12px;
-            color: @vote-lable-color;
+            color: $vote-lable-color;
         }
     }
 
@@ -220,14 +167,14 @@ a img {
 }
 
 // vote controls
-.avfr-vote-up,
-.avfr-vote-down {
+.idea-factory-vote-up,
+.idea-factory-vote-down {
     position:relative;
     overflow: hidden;
     display:inline-block;
     height:30px;
     width:32px;
-    font-size:@icon--font_size;
+    font-size:$icon--font_size;
     margin-top: -2px;
     text-decoration: none;
     border:1px solid #ccc;
@@ -248,31 +195,31 @@ a img {
         outline:none;
     }
 }
-.avfr-vote-up{
+.idea-factory-vote-up{
     margin-rigth: 2px;
     &:after {
         content:'\f132';
-        color:@green;
+        color:$green;
     }
 
     &:hover:after {
-        color:darken(@green,5);
+        color:darken($green,5);
     }
 
 }
-.avfr-vote-down {
+.idea-factory-vote-down {
     margin-left: 2px;
     &:after {
         content:'\f460';
-        color:@red;
+        color:$red;
     }
 
     &:hover:after {
-        color:darken(@red,5)
+        color:darken($red,5)
     }
 }
 .ah-thanks,
-.avfr--totals {
+.idea-factory--totals {
     font-size:95%;
 }
 
@@ -281,7 +228,7 @@ a img {
 }
 
 // status
-.avfr--status {
+.idea-factory--status {
 
     margin-top:10px;
     font-size:12px;
@@ -297,43 +244,43 @@ a img {
         color:white;
         text-shadow:0 1px 1px rgba(0,0,0,0.1);
         border-radius:2px;
-        width: @default-width;
+        width: $default-width;
         font-size: 13px;
         line-height: 1.5;
     }
 
-    .avfr-status_approved{
-        background: @green;
+    .idea-factory--status_approved{
+        background: $green;
     }
-    .avfr-status_declined{
-        background: @red;
+    .idea-factory--status_declined{
+        background: $red;
     }
-    .avfr-status_open{
-        background: @teal;
+    .idea-factory--status_open{
+        background: $teal;
     }
-    .avfr-status_completed{
-        background: @blue;
+    .idea-factory--status_completed{
+        background: $blue;
     }
 }
 
-.avfr--loadmore {
+.idea-factory--loadmore {
     margin:20px auto;
 }
 
 // Filters
-.avfr-filter-controls {
-        margin-left: 0 !important;
-        padding: 15px 0px;
+.idea-factory-filter-controls {
+    margin-left: 0 !important;
+    padding: 15px 0px;
 
-    .avfr-filter-control-item {
+    .idea-factory-filter-control-item {
         display: inline-block;
         
 
         a {
-            .button-variant(@btn-color, @btn-bg, @br-color);
-            .button-size(@btn-pad-ver, @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+            @include button-variant($btn-color, $btn-bg, $br-color);
+            @include button-size($btn-pad-ver, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
             text-decoration: none;
-            border-width: @br-width;
+            border-width: $br-width;
         }
         
     }
@@ -369,36 +316,32 @@ a img {
 .status-changing {
     float: right;
     a {
-        .button-variant(@btn-color, @btn-bg, @br-color);
-        .button-size(@btn-pad-ver, ( @btn-pad-hor - 10 ), @btn-font-size, @filter-line-height, @br-rad);
+        @include button-variant($btn-color, $btn-bg, $br-color);
+        @include button-size($btn-pad-ver, ( $btn-pad-hor - 10 ), $btn-font-size, $filter-line-height, $br-rad);
         text-decoration: none;
-        border-width: @br-width;
+        border-width: $br-width;
     }
-    
-
-
 }
 
-
 //Votes
-.avfr-vote-now {
-    .button-variant(@btn-color, @btn-bg, @br-color);
-    padding: (@btn-pad-ver - 3) @btn-pad-hor;
+.idea-factory-vote-now {
+    @include button-variant($btn-color, $btn-bg, $br-color);
+    padding: ($btn-pad-ver - 3) $btn-pad-hor;
     border-width: 1px;
     font-size: 13px;
     border-radius: 3px;
 }
-.avfr-disabled-button {
-    .button-variant(lighten(@btn-color, 50%), lighten(@btn-bg, 7%), lighten(@br-color, 7%));
-    .button-size((@btn-pad-ver - 2), @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+.idea-factory-disabled-button {
+    @include button-variant(lighten($btn-color, 50%), lighten($btn-bg, 7%), lighten($br-color, 7%));
+    @include button-size(($btn-pad-ver - 2), $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
     border-width: 1px;
     margin: 0;
     &:hover {
-        border-color: lighten(@br-color, 7%);
-        color: lighten(@btn-color, 50%);
+        border-color: lighten($br-color, 7%);
+        color: lighten($btn-color, 50%);
     }
 }
-.avfr-votes-area {
+.idea-factory-votes-area {
     margin-right: 20px;
     float: left;
     .flag-show {
@@ -410,7 +353,7 @@ a img {
     }
 }
 
-.avfr-tooltip {
+.idea-factory-tooltip {
     display: none;
     position: absolute;
     background-color: #fff;
@@ -421,13 +364,13 @@ a img {
     text-align: left;
     line-height: 30px;
 
-    .box-shadow( 0 0 1px 2px rgba(222,222,222,0.5));
+    @include box-shadow( 0 0 1px 2px rgba(222,222,222,0.5));
     a{
-        .button-variant(@btn-color, @btn-bg, @br-color);
-        .button-size((@btn-pad-ver - 3), @btn-pad-hor, @btn-font-size, @filter-line-height, @br-rad);
+        @include button-variant($btn-color, $btn-bg, $br-color);
+        @include button-size(($btn-pad-ver - 3), $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
         margin-right: 10px;
         text-decoration: none;
-        border-width: @br-width;
+        border-width: $br-width;
     }
     p {
         padding-bottom: 10px;
@@ -447,16 +390,16 @@ a img {
     }
     .image-caption {
         font-weight: bold;
-        color: @link-color;
+        color: $link-color;
     }
 }
 
-.related-avfr-section {
+.related-ideas-section {
     margin-bottom: 40px;
     padding-bottom: 20px;
     .related-title {
         font-weight: bold;
-        color: @link-color;
+        color: $link-color;
     }
     .single_related {
         text-decoration: none;
@@ -472,8 +415,8 @@ a img {
 
 @keyframes ifreloadanimation {
 
-    0%   {.rotate(0)}
-    100% {.rotate(360deg)}
+    0%   {@include rotate(0)}
+    100% {@include rotate(360deg)}
 
 }
 
@@ -481,43 +424,42 @@ a img {
     animation: ifreloadanimation 1s infinite linear;
     -webkit-animation: ifreloadanimation 1s infinite linear;
     -moz-animation: ifreloadanimation 1s infinite linear;
- 
+    
     transform-origin: center;
     -webkit-transform-origin: center;
     -moz-transform-origin: center;
 }
 
-#avfr-avatar{
-
-   margin-bottom: 15px; 
-   margin-top: 15px;
-    vertical-align: none;
-        img{
-        float: left;    
-        height: 40px;
-        width: 40px;
-        border: 1px solid #cccccc;
-        }
-        #avfr_avatar_name{
-            margin-left: 15px;
-            padding-top: 0px;
-            float: left;
-            font-weight:bold;
-            font-size: 13px;
-        }
-        span{
-        font-weight: normal;
-           color: black; 
-        }
-        p{
-            padding-left: 1px;
-            padding-top: 0px;
-            font-size: 11px;
-            color: #cccccc;
-        }
+#idea-avatar{
+ margin-bottom: 70px; 
+ margin-top: 15px;
+ vertical-align: none;
+ img{
+    float: left;    
+    height: 40px;
+    width: 40px;
+    border: 1px solid #cccccc;
+}
+#idea_avatar_name{
+    margin-left: 15px;
+    padding-top: 0px;
+    float: left;
+    font-weight:bold;
+    font-size: 13px;
+}
+span{
+    font-weight: normal;
+    color: black; 
+}
+p{
+    padding-left: 1px;
+    padding-top: 0px;
+    font-size: 11px;
+    color: #cccccc;
+}
 }
 
-#avfr_delete{
+#idea_factory_delete{
     float: right;
     margin: 20px;
     color: #cccccc;
@@ -525,12 +467,4 @@ a img {
     vertical-align: none;
     font-size: 13px;
 
-}
-
-.clearfix:after {
-   content: " ";
-   visibility: hidden;
-   display: block;
-   height: 0;
-   clear: both;
 }

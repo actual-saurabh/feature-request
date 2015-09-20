@@ -1,19 +1,17 @@
 <?php
 
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
- */
-
-class RequestFeatureColumnMods {
+*
+*	Class responsible for adding columns into the edit posts screen in the ideas post type
+*	used for showing admins the status of an idea
+*	@since 1.1
+*/
+class ideaFactoryColumnMods {
 
 	function __construct(){
 
-			add_filter('manage_avfr_posts_columns', 		array($this,'col_head'));
-			add_action('manage_avfr_posts_custom_column', 	array($this,'col_content'), 10, 2);
+			add_filter('manage_ideas_posts_columns', 		array($this,'col_head'));
+			add_action('manage_ideas_posts_custom_column', 	array($this,'col_content'), 10, 2);
 
 	}
 
@@ -21,6 +19,7 @@ class RequestFeatureColumnMods {
 	*
 	*	Log the columns
 	*
+	* 	@since    1.1
 	*/
 	function col_head( $item ) {
 
@@ -30,18 +29,18 @@ class RequestFeatureColumnMods {
 			$item['author'],
 			$item['comments'],
 			$item['taxonomy-groups'],
-			$item['taxonomy-featuretags'],
+			$item['taxonomy-ideatags'],
 			$item['flags']
 		);
 
-	    $item['title'] 		= __('Title','feature-request');
-	    $item['author'] 	= __('Author','feature-request');
-	    $item['comments']   = __('<span class="vers comment-grey-bubble" title="Comments"><span class="screen-reader-text">Comments</span></span>','feature-request');
-	    $item['idea_status'] = __('Feature Status','feature-request');
-	    $item['taxonomy-groups']     = __('Groups','feature-request');
-	    $item['taxonomy-featuretags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Idea Tags</span></span>','feature-request');
-	    $item['flags']   = __('<span class="dashicons-before dashicons-flag" title="Flags"><span class="screen-reader-text">Flags</span></span>','feature-request');
-		$item['date'] 		= __('Date Published','feature-request');
+	    $item['title'] 		= __('Title','idea-factory');
+	    $item['author'] 	= __('Author','idea-factory');
+	    $item['comments']   = __('<span class="vers comment-grey-bubble" title="Comments"><span class="screen-reader-text">Comments</span></span>','idea-factory');
+	    $item['idea_status'] = __('Idea Status','idea-factory');
+	    $item['taxonomy-groups']     = __('Groups','idea-factory');
+	    $item['taxonomy-ideatags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Idea Tags</span></span>','idea-factory');
+	    $item['flags']   = __('<span class="dashicons-before dashicons-flag" title="Flags"><span class="screen-reader-text">Flags</span></span>','idea-factory');
+		$item['date'] 		= __('Date Published','idea-factory');
 
 	    return $item;
 	}
@@ -49,12 +48,14 @@ class RequestFeatureColumnMods {
 	/**
 	* Callback for col_head
 	* Show the status of an idea
+	*
+	* @since    1.1
 	*/
 	function col_content( $column_name, $post_ID ) {
 
-	    if ( 'avfr_status' == $column_name ) {
+	    if ( 'idea_status' == $column_name ) {
 
-	       	$status = get_post_meta( $post_ID,'_avfr_status', true );
+	       	$status = get_post_meta( $post_ID,'_idea_status', true );
 
 	       	if ( 'approved' == $status ) {
 	       		$color = '#5cb85c';
@@ -63,7 +64,7 @@ class RequestFeatureColumnMods {
 	       	} elseif ('completed' == $status ) {
 	       		$color = '#000000';
 	       	} else {
-				$status = __('open', 'feature_request');
+				$status = __('open', 'idea_factory');
 	       		$color = '#5bc0de';
 	       	}
 
@@ -78,4 +79,4 @@ class RequestFeatureColumnMods {
 	}
 
 }
-new RequestFeatureColumnMods;
+new ideaFactoryColumnMods;

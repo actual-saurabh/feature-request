@@ -1,52 +1,31 @@
-My-Grunt-Boilerplate
+Feature Request
 ====================
-
-Node installation:
--------------------
-brew install node
-
-
-Grunt installation:
--------------------
-    npm install -g grunt-cli
-    npm install -g grunt-init
-    npm init (creates a `package.json` file)
-
-
-Project Dependencies:
----------------------
-    npm install grunt --save-dev
-	npm install grunt-contrib-watch    --save-dev
-	npm install grunt-contrib-jshint   --save-dev
-	npm install grunt-contrib-uglify   --save-dev
-
-	npm install grunt-contrib-compass  --save-dev
-	npm install grunt-contrib-copy     --save-dev
-	npm install grunt-contrib-imagemin --save-dev
-	npm install grunt-contrib-htmlmin  --save-dev
-	npm install grunt-contrib-connect  --save-dev
-	npm install grunt-contrib-concat   --save-dev
-
-	npm install load-grunt-tasks   --save-dev
-	npm install time-grunt         --save-dev
-	npm install grunt-concurrent   --save-dev
-
-
-Simple Dependency Install:
---------------------------
-    npm install (from the same root directory as the `package.json` file)
-
-
-Gem Dependencies:
+Description:
 -----------------
-    gem install image_optim
+Featrue request and suggestion submitter with voting system for wordpress.
 
 
-Bower installation:
+installation:
+---------------------
+1. Upload "feature-request" folder to the "/wp-content/plugins/" directory.
+2. Activate the plugin through the "Plugins" menu in WordPress.
+3. Save Feature Request settings and Permalink settings.
+
+
+Frequently Asked Questions:
+--------------------------
+Why the voting controls for features not shown?
+You should save settings after installation and after changing vote type.
+
+
+Some Features:
 -------------------
-	npm install -g bower
-
-
-Bower Dependencies:
--------------------
-	bower install jquery --save
+* Submit feature suggestions from front-end by registered user or guests
+* Like/Dislike for features
+* Vote and multiple votes for features
+* Time based and Numerical limitation for voting to features
+* 4 type of features status (Open, Approved, Declined, Completed)
+* Threshold for changing status of features automatically
+* Internal CAPTCHA
+* Attachment for features
+* Advanced and easy to use settings for controlling new features submitting, Emails, Vote limitation and etc.

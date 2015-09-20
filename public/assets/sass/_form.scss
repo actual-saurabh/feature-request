@@ -1,12 +1,12 @@
-.avfr-modal {
+.idea-factory-modal {
     * {
-        .box-sizing(border-box);
+        @include box-sizing(border-box);
     }
-    div#avfr_form_upload, div#avfr_form_desc, div#avfr_form_title, div#avfr_form_group, div#avfr_form_tags{
+    div#idea_form_upload, div#idea_form_desc, div#idea_form_title, div#idea_form_group, div#idea_form_tags{
         margin: $input--margin;
     }
 
-    div#avfr_form_captcha{
+    div#idea_form_captcha{
         margin: 2px 23px 0 0;
     }
     label {
@@ -26,11 +26,11 @@
         background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
         border: 1px solid $input--border !important;
         border-radius: $input--border_radius;
-        .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
-        .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+        @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+        @include transition("border-color ease-in-out .15s, box-shadow ease-in-out .15s");
 
         &:focus {
-            border:1px solid @input--border_focus;
+            border:1px solid $input--border_focus;
             box-shadow:none;
             outline:none;
         }
@@ -39,7 +39,7 @@
 
     input[type=submit]:disabled,
     button:disabled {
-        .opacity(0.4);
+        opacity:0.4;
     }
 
     textarea {

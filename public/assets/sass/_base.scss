@@ -1,5 +1,5 @@
 // COLORS
-$primary:                           #fff;
+$primary:                           white;
 $blue:                              #007aaf;
 $green:                             #5cb85c;
 $red:                               #d9534f;
@@ -8,11 +8,10 @@ $teal:                              #5bc0de;
 // button
 $button--background:                $blue;
 $button--padding:                   10px 14px;
-$button--color:                     white;
+$button--color:                     $primary;
 
 // entry
 $entry--wrap_padding:               25px;
-
 $entry--font_size:                  16px;
 $entry--font_lineheight:            $entry--font_size * 1.5;
 $entry--title_fontsize:             20px;
@@ -28,7 +27,7 @@ $border-color:                      darken($primary,8);
 // FORMS
 $input--font_size:                  14px;
 $input--font_lineheight:            $input--font_size * 1.5;
-$input--bg:                         #fff;
+$input--bg:                         $primary;
 $input--bg_disabled:                #999;
 $input--color:                      #333;
 $input--border:                     #ccc;
@@ -72,20 +71,17 @@ $close--font_textshadow:            0 1px 0 #fff;
 
 // Filters
 
-$br-color: 						#ccc;
-$br-rad: 						3px;
-$br-width: 						1px;
-$btn-bg: 						#ddd;
-$btn-color: 					#000;
-$btn-pad-ver: 					7px;
-$btn-pad-hor: 					20px;
-$btn-font-size: 				13px;
-$filter-line-height: 			16px;
+$br-color: 							#ccc;
+$br-rad: 							3px;
+$br-width: 							1px;
+$btn-bg: 							#ddd;
+$btn-color: 						#000;
+$btn-pad-ver: 						7px;
+$btn-pad-hor: 						20px;
+$btn-font-size: 					13px;
+$filter-line-height: 				16px;
 
 //Votes
-$vote-br-color: 				#ccc;
-$vote-lable-color: 				#898989;
-$default-width: 				96px;
-
-
-
+$vote-br-color: 					#ccc;
+$vote-lable-color: 					#898989;
+$default-width: 					96px;

@@ -1,14 +1,23 @@
 <?php
-
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ * Idea Factory
+ *
+ * @package   Idea_Factory
+ * @author    Nick Haskins <email@nickhaskins.com>
+ * @license   GPL-2.0+
+ * @link      http://nickhaskins.com
+ * @copyright 2015 Your Mom
  */
 
-class Av_Feature_Request {
+/**
+ * Plugin class. This class should ideally be used to work with the
+ * public-facing side of the WordPress site.
+ *
+ *
+ * @package Idea_Factory
+ * @author  Nick Haskins <email@nickhaskins.com>
+ */
+class Feature_Request {
 
 	/**
 	 * Unique identifier
@@ -18,11 +27,11 @@ class Av_Feature_Request {
 	 * of text. Its value should match the Text Domain file header in the main
 	 * plugin file.
 	 *
-	 * @since    1.0
+	 * @since    0.0.1
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'feature-request';
+	protected $plugin_slug = 'idea-factory';
 
 	/**
 	 * Instance of this class.
@@ -37,7 +46,7 @@ class Av_Feature_Request {
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
 	 *
-	 * @since     1.0
+	 * @since     0.0.1
 	 */
 	private function __construct() {
 
@@ -49,11 +58,11 @@ class Av_Feature_Request {
 		require_once(AVFR_DIR.'/includes/class.process-vote.php');
 		require_once(AVFR_DIR.'/includes/class.process-status.php');
 
-		require_once(AVFR_DIR.'/public/includes/class.template-loader.php');
-		require_once(AVFR_DIR.'/public/includes/class.assets.php');
-		require_once(AVFR_DIR.'/public/includes/helpers.php');
+		require_once(AVFR_DIR.'/public/includes/class-avfr-template.php');
+		require_once(AVFR_DIR.'/public/includes/class-avfr-assets.php');
+		require_once(AVFR_DIR.'/public/includes/avfr-functions.php');
 
-		require_once(AVFR_DIR.'/public/includes/class.shortcodes.php');
+		require_once(AVFR_DIR.'/public/includes/class-avfr-shortcodes.php');
 
 		require_once(AVFR_DIR.'/includes/class.db.php');
 
@@ -65,7 +74,7 @@ class Av_Feature_Request {
 	/**
 	 * Return the plugin slug.
 	 *
-	 * @since    1.0
+	 * @since    0.0.1
 	 *
 	 * @return    Plugin slug variable.
 	 */
@@ -76,7 +85,7 @@ class Av_Feature_Request {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0
+	 * @since     0.0.1
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -93,7 +102,7 @@ class Av_Feature_Request {
 	/**
 	 * Fired when the plugin is activated.
 	 *
-	 * @since    1.0
+	 * @since    0.0.1
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses
 	 *                                       "Network Activate" action, false if
@@ -130,7 +139,7 @@ class Av_Feature_Request {
 	/**
 	 * Fired when the plugin is deactivated.
 	 *
-	 * @since    1.0
+	 * @since    0.0.1
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses
 	 *                                       "Network Deactivate" action, false if
@@ -218,7 +227,7 @@ class Av_Feature_Request {
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'av_feature_request';
+		$table_name = $wpdb->prefix . 'feature_request';
 
 		$sql = "CREATE TABLE $table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -226,7 +235,8 @@ class Av_Feature_Request {
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			ip varchar(20) NOT NULL,
 			userid varchar(20) NOT NULL,
-			groups varchar(64) DEFAULT 'none group' NOT NULL,
+			email varchar(100) NOT NULL,
+			groups varchar(100) DEFAULT 'none group' NOT NULL,
 			type varchar(20) DEFAULT 'vote' NOT NULL,
 			votes smallint(5) DEFAULT '1' NOT NULL,
 			UNIQUE KEY id (id)
@@ -265,9 +275,9 @@ class Av_Feature_Request {
 	*/
 	function upgrade(){
 
-		$version = get_option('avfr_version', true );
+		$version = get_option('feature_request_version', true );
 
-		if ( $version != AVFR_VERSION ) {
+		if ( $version != IDEA_FACTORY_VERSION ) {
 
 			self::upgrade_install_db();
 
@@ -281,7 +291,7 @@ class Av_Feature_Request {
 	*/
 	function upgrade_install_db(){
 
-		$table_name = $wpdb->prefix . 'av_feature_request';
+		$table_name = $wpdb->prefix . 'feature_request';
 
 		$sql = "CREATE TABLE $table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -289,7 +299,8 @@ class Av_Feature_Request {
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			ip varchar(20) NOT NULL,
 			userid varchar(20) NOT NULL,
-			groups varchar(64) DEFAULT 'none group' NOT NULL,
+			email varchar(100) NOT NULL,
+			groups varchar(100) DEFAULT 'none group' NOT NULL,
 			type varchar(20) DEFAULT 'vote' NOT NULL,
 			votes smallint(5) DEFAULT '1' NOT NULL,
 			UNIQUE KEY id (id)
@@ -298,12 +309,7 @@ class Av_Feature_Request {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
 
-		update_option('avfr_version', $version );
+		update_option('idea_factory_version', $version );
 
 	}
 }
-
-
-
-
-
