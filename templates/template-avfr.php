@@ -1,16 +1,24 @@
 <?php
-
+/**
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
 get_header();
 
 	$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
-	$single_allowed  = avfr_get_option('if_single','if_settings_ideas');
+	$single_allowed  = avfr_get_option('if_single','avfr_settings_features');
 	$taxonomy 		 = 'groups';
  	$all_terms    	 = get_terms( $taxonomy, array( 'hide_empty' => false ) );
  	$domain 		 = 'ideas';
 
-	do_action('idea_factory_layout_before'); ?>
+	do_action('avfr_layout_before'); ?>
 	<div class="container">
-	<main class="idea-factory--wrap site-main"  id="main" role="main">
+	<main class="avfr--wrap site-main"  id="main" role="main">
 
 		<?php 
 		global $wp_query;
@@ -19,7 +27,7 @@ get_header();
 
 			if (is_tax($term)) {
 				if ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) { 
-					 _e('Submiting new idea for this group is closed.','idea-factory');
+					 _e('Submiting new feature for this group is closed.','Feature-request');
 				} else {
 					echo avfr_submit_header();
 				}
@@ -30,14 +38,14 @@ get_header();
 		}
 		?>
 
-		<div class="idea-factory-filter">
-			<ul class="idea-factory-filter-controls">
-				<li class="idea-factory-filter-control-item">
+		<div class="avfr-filter">
+			<ul class="avfr-filter-controls">
+				<li class="avfr-filter-control-item">
 					<?php
 					if ( $all_terms && !is_wp_error($all_terms) ) : ?>
 					<span class="triangle-down">
-						<select id="idea-factory-filter-groups" onchange="document.location.href=this.value">
-						<option value="#"><?php _e('Select a group','idea_factory'); ?></option>
+						<select id="avfr-filter-groups" onchange="document.location.href=this.value">
+						<option value="#"><?php _e('Select a group','feature_request'); ?></option>
 							<?php
 							foreach ( $all_terms as $all_term ) { 
 								echo "<option value=".get_post_type_archive_link( $domain )."?".$taxonomy."=".$all_term->slug.">".$all_term->name."</option>";
@@ -47,25 +55,25 @@ get_header();
 					<?php
 					endif; ?>
 				</li>
-				<li class="idea-factory-filter-control-item">
+				<li class="avfr-filter-control-item">
 				<span class="triangle-down">
-					<select name="filter-status" id="idea-factory-filter-status" onchange="document.location.href=this.value">
-						<option value="#"><?php _e('Status of idea','idea_factory'); ?></option>
-						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_status&val=all"><?php _e('All','idea_factory') ?></option>
-						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_status&val=open"><?php _e('Open','idea_factory') ?></option>
-						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_status&val=approved"><?php _e('Approve','idea_factory') ?></option>
-						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_status&val=completed"><?php _e('Completed','idea_factory') ?></option>
-						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_status&val=declined"><?php _e('Decline','idea_factory') ?></option>
+					<select name="filter-status" id="avfr-filter-status" onchange="document.location.href=this.value">
+						<option value="#"><?php _e('Status of feature','feature_request'); ?></option>
+						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_status&val=all"><?php _e('All','feature_request') ?></option>
+						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_status&val=open"><?php _e('Open','feature_request') ?></option>
+						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_status&val=approved"><?php _e('Approve','feature_request') ?></option>
+						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_status&val=completed"><?php _e('Completed','feature_request') ?></option>
+						<option value="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_status&val=declined"><?php _e('Decline','feature_request') ?></option>
 					</select>
 				</span>
 				</li>
 				<?php if ( is_user_logged_in() ) { ?>
-					<li class="idea-factory-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=my"><?php _e('My Ideas','idea_factory') ?></a></li>
+					<li class="avfr-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=my"><?php _e('My Features','feature_request') ?></a></li>
 				<?php
 				} ?>
-				<li class="idea-factory-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=hot"><?php _e('Hot','idea_factory') ?></a></li>
-				<li class="idea-factory-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=_idea_votes"><?php _e('Top','idea_factory') ?></a></li>
-				<li class="idea-factory-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>"><?php _e('New','idea_factory') ?></a></li>
+				<li class="avfr-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=hot"><?php _e('Hot','feature_request') ?></a></li>
+				<li class="avfr-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>?meta=_avfr_votes"><?php _e('Top','feature_request') ?></a></li>
+				<li class="avfr-filter-control-item"><a href="<?php echo get_post_type_archive_link( $domain );?>"><?php _e('New','feature_request') ?></a></li>
 				<?php
 				if ( current_user_can('manage_options') && is_single() ) { 
 					$id = get_the_ID();
@@ -73,13 +81,13 @@ get_header();
 					<div class="status-changing">
 					<span class="triangle-down">
 						<select name="statusChanging" class="change-status-select" data-post-id="<?php echo (int) $id;?>">
-							<option value="open"><?php _e('Open','idea_factory') ?></option>
-							<option value="approved"><?php _e('Approve','idea_factory') ?></option>
-							<option value="completed"><?php _e('Completed','idea_factory') ?></option>
-							<option value="declined"><?php _e('Decline','idea_factory') ?></option>
+							<option value="open"><?php _e('Open','feature_request') ?></option>
+							<option value="approved"><?php _e('Approve','feature_request') ?></option>
+							<option value="completed"><?php _e('Completed','feature_request') ?></option>
+							<option value="declined"><?php _e('Decline','feature_request') ?></option>
 						</select>
 					</span>
-							<a class="idea-factory idea-factory-change-status" data-val="open" data-post-id="<?php echo (int) $id;?>" href="#">Change</a>
+							<a class="avfr avfr-change-status" data-val="open" data-post-id="<?php echo (int) $id;?>" href="#">Change</a>
 					</div>
 				<?php
 				} ?>
@@ -87,9 +95,9 @@ get_header();
 		</div>
 
 		<?php
-		do_action('idea_factory_before_entries'); ?>
+		do_action('avfr_before_entries'); ?>
 
-		<section class="idea-factory--layout-main site-content">
+		<section class="avfr-layout-main site-content">
 	
 		<?php
 
@@ -109,30 +117,30 @@ get_header();
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= idea_factory_has_voted( $id, $ip , $userid );
-					$total_votes 	= idea_factory_get_votes( $id );
-					$status      	= idea_factory_get_status( $id );
-					$status_class   = $status ? sprintf('idea-factory--entry__%s', $status ) : false;
+					$has_voted 		= avfr_has_voted( $id, $ip , $userid );
+					$total_votes 	= avfr_get_votes( $id );
+					$status      	= avfr_get_status( $id );
+					$status_class   = $status ? sprintf('avfr--entry__%s', $status ) : false;
 					?>
-					<article class="idea-factory--entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'idea-factory--hasvoted' : false;?>">
+					<article class="avfr--entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr--hasvoted' : false;?>">
 						<?php do_action('idea_factory_entry_wrap_top', $id ); ?>
-						<div class="idea-factory-votes-area" id="<?php echo (int) $id;?>">
-							<div class="idea-factory--controls">
-								<div class="idea-factory--totals">
+						<div class="avfr-votes-area" id="<?php echo (int) $id;?>">
+							<div class="avfr--controls">
+								<div class="avfr--totals">
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php
 										if ( 1 == $total_votes ) { ?>
 
-											<strong class="idea-factory--totals_num">1</strong><br>
-											<span class="idea-factory--totals_label"><?php _e( 'vote','idea-factory' ); ?></span>
+											<strong class="avfr--totals_num">1</strong><br>
+											<span class="avfr--totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
 												
 										<?php
 
 										} elseif ( !empty( $total_votes ) ) { ?>
 												
-											<strong class="idea-factory--totals_num"><?php echo $total_votes ?></strong><br>
-											<span class="idea-factory--totals_label"><?php _e( 'votes','idea-factory' ); ?></span>
+											<strong class="avfr--totals_num"><?php echo $total_votes ?></strong><br>
+											<span class="avfr--totals_label"><?php _e( 'votes','feature_request' ); ?></span>
 					
 										<?php
 										} 
@@ -140,20 +148,20 @@ get_header();
 									<?php 
 									} else { ?>
 
-										<strong class="idea-factory--totals_num">0</strong><br>
-										<span class="idea-factory--totals_label"><?php _e( 'vote','idea-factory' ); ?></span>
+										<strong class="avfr--totals_num">0</strong><br>
+										<span class="avfr--totals_label"><?php _e( 'vote','feature_request' ); ?></span>
 
 									<?php
 									} ?>
 
 								</div>
 								<?php
-								 if ( idea_factory_is_voting_active( $id, $ip, $userid ) ) {
-									echo idea_factory_vote_controls($id);
+								 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+									echo avfr_vote_controls($id);
 								} ?>
 							</div>
 							
-							<?php echo idea_factory_vote_status( $id ); ?>
+							<?php echo avfr_vote_status( $id ); ?>
 						</div>
 
 						<header class="entry-header">
@@ -169,7 +177,7 @@ get_header();
 	 						<?php 
 	 						if ( is_single() ) { ?>
 		 						<div class="entry-meta" role="category tag">
-			 						<div class="idea_short_group">
+			 						<div class="avfr_short_group">
 										<span class="dashicons dashicons-category"></span>
 										<?php
 										the_terms( $id, 'groups', ' ', ', ' );
@@ -177,11 +185,11 @@ get_header();
 									</div>
 								<?php
 								
-								 if ( false != has_term( '', 'ideatags', $id) ) {?>
-									<div class="idea_short_tags">
+								 if ( false != has_term( '', 'featureTags', $id) ) {?>
+									<div class="avfr_short_tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
-											the_terms( $id, 'ideatags', ' ', ', ' );
+											the_terms( $id, 'featureTags', ' ', ', ' );
 										?>
 									</div>
 
@@ -190,29 +198,29 @@ get_header();
 									//comments option apply here
 		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
 		 						 	if ( $if_disabled_comment == "on" ) {
-		 								_e('Comments are closed for this idea.','idea-factory');
+		 								_e('Comments are closed for this feature.','feature-request');
 		 							} else {
 									?>
 									<div>
-										<span class="idea_short_comment">
+										<span class="avfr_short_comment">
 											<span class="dashicons dashicons-admin-comments"></span>
 										<?php
 											printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
 										?>
 										</span>
 									</div>
-										<?php echo idea_factory_flag_control($id); ?>
+										<?php echo avfr_flag_control($id); ?>
 						     		</div>
 						     <?php if ( is_single() ) :?>
-								<div id="idea-avatar">
+								<div id="avfr-avatar">
 								<?php 
-									idea_factory_get_author_avatar($id); ?>
+									avfr_get_author_avatar($id); ?>
 									
-								 <div id="idea_avatar_name"> 
+								 <div id="avfr_avatar_name"> 
 								<?php 
-									idea_factory_get_author_name($id);
+									avfr_get_author_name($id);
 											?>
-										<span><?php  _e( " shared this idea", idea_factory ); ?> </span>
+										<span><?php  _e( " shared this feature", feature_request ); ?> </span>
 										</br>
 										<p><?php the_time('F j, Y'); ?></p>
 								 </div>
@@ -226,7 +234,7 @@ get_header();
 
  						</header>
                         
- 						<div class="idea-factory--entry entry-content hhhhh">
+ 						<div class="avfr--entry entry-content hhhhh">
                        	<?php
                        	  	the_content(); ?>
                        	  	<?php
@@ -235,8 +243,8 @@ get_header();
 
 								?>
 								<div class="attachments">
-									<p class="image-caption"> <?php _e('Idea attachments:','idea_factory'); ?> </p>
-									<figure class="idea-factory-idea-image post-image">
+									<p class="image-caption"> <?php _e('feature attachments:','feature_request'); ?> </p>
+									<figure class="avfr-image post-image">
 									<?php 
 										echo '<a rel="lightbox" href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
 										the_post_thumbnail( 'thumbnail' );
@@ -255,7 +263,7 @@ get_header();
 	 									$id = get_the_id(); 
 										wp_trash_post($id);
 									} ?>
-								<div id="idea_factory_delete">	
+								<div id="avfr_delete">	
 			 					    <span class="dashicons dashicons-trash"></span><a href="<?php the_permalink(); ?>&action=deletepost">Delete post</a>
 									<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
 								</div>
@@ -266,13 +274,13 @@ get_header();
 								if ( is_single() ) {
 								
 									//Get number of related post from option
-									$related_posts_num = avfr_get_option('related_idea_num','if_settings_ideas');
+									$related_posts_num = avfr_get_option('related_avfr_num','avfr_settings_features');
 									if ( isset( $related_posts_num ) && $related_posts_num != '0') {
 									
 								?>
-								<div class="related-ideas-section">
-									<h2 class="related-title"><?php _e('Related ideas :','idea_factory') ?></h2>
-									<div class="related-ideas-list">
+								<div class="related-avfr-section">
+									<h2 class="related-title"><?php _e('Related Features :','feature_request') ?></h2>
+									<div class="related-avfr-list">
 										<?php 
 											$media = get_attached_media( 'image' );
 											//Get array of terms (Groups and ideatags)
@@ -282,7 +290,7 @@ get_header();
 											$ideatags_ids = wp_list_pluck($ideatags,'term_id');
 
 											$related_query = new WP_Query (array(
-												'post_type'    	 => 'ideas',
+												'post_type'    	 => 'avfr',
 												'tax_query'	  	 => array('relation' => 'AND',
 													array(
 													'taxonomy'	 => 'groups',
@@ -310,7 +318,7 @@ get_header();
 												</ul>
 											<?php endwhile;
 											 wp_reset_query();
-											} else { _e('No related idea exist.','idea-factory'); }
+											} else { _e('No related feature exist.','feature-request'); }
 										 ?>
 									</div>	
 								</div>
@@ -320,18 +328,18 @@ get_header();
 						<?php if ( ! is_single() ) { ?>
 													
 						<footer class="entry-meta" role="category tag">
-							<div class="idea_short_group">
+							<div class="avfr_short_group">
 								<span class="dashicons dashicons-category"></span>
 								<?php
 								the_terms( $id, 'groups', ' ', ', ' );
 								?>
 							</div>
 								<?php
-								 if ( false != has_term( '', 'ideatags', $id) ) {?>
-									<div class="idea_short_tags">
+								 if ( false != has_term( '', 'featureTags', $id) ) {?>
+									<div class="avfr_short_tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
-											the_terms( $id, 'ideatags', ' ', ', ' );
+											the_terms( $id, 'featureTags', ' ', ', ' );
 										?>
 									</div>
 
@@ -340,7 +348,7 @@ get_header();
 							//comments option apply here
  						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
  						 	if ( $if_disabled_comment == "on" ) {
- 								_e('Comments are closed for this idea.','idea-factory');
+ 								_e('Comments are closed for this feature.','feature-request');
  							} else {
 							?>
 							<div>
@@ -359,10 +367,10 @@ get_header();
 							}
 							comments_template();
  							
-							do_action('idea_factory_entry_bottom', $id ); 
+							do_action('avfr_entry_bottom', $id ); 
 							?>
 			
-						<?php do_action('idea_factory_entry_wrap_bottom', $id ); ?>
+						<?php do_action('avfr_entry_wrap_bottom', $id ); ?>
 
 					</article>
 
@@ -374,19 +382,19 @@ get_header();
 
 			else:
 
-				apply_filters('idea_factory_no_ideas', _e('No ideas found. Why not submit one?','idea-factory'));
+				apply_filters('avfr_no_features', _e('No features found. Why not submit one?','feature-request'));
 
 			endif;
 		}//if is single and single allowed
 			?>
 		</section>
 
-		<?php do_action('idea_factory_after_entries'); ?>
+		<?php do_action('avfr_after_entries'); ?>
 
 	</main>
 	</div>
 
-	<?php do_action('idea_factory_layout_after');
+	<?php do_action('avfr_layout_after');
 
 		if ($all_terms) {
 

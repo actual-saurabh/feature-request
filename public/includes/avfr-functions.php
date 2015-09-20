@@ -1,9 +1,13 @@
 <?php
-
 /**
-* Get status of request
-* @since 1.0
-*/
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
 
 function avfr_get_status( $postid ) {
 
@@ -715,7 +719,7 @@ if ( !function_exists('avfr_vote_controls') ):
 					<?php
 						}?>
 					</div>
-					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','if_settings_ideas')); ?>!</p>
+					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
 				</div>
 			<?php
 			} else {
@@ -736,7 +740,7 @@ if ( !function_exists('avfr_vote_controls') ):
 						}
 					 ?>
 					</div>
-					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','if_settings_ideas')); ?>!</p>
+					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
 				</div>
 				<?php
 			}
@@ -776,7 +780,7 @@ if ( !function_exists('avfr_flag-control') ):
 		//getting group of idea.
 		$ideagroups = get_the_terms( $postid, 'groups' );
 		//flag option applying
-		$if_flag_disabled = avfr_get_option('if_flag','if_settings_ideas');
+		$if_flag_disabled = avfr_get_option('if_flag','avfr_settings_features');
 		if ($if_flag_disabled=="on") {
 			?>
 			<div class="flag-show">
@@ -946,7 +950,7 @@ function avfr_image_filter( $input = '' ) {
 		return;
 	
 	$allowed_image = array(
-		$avfr_get_file_type= avfr_get_option('if_settings_ideas','idea_allowed_file_types')
+		$avfr_get_file_type= avfr_get_option('avfr_settings_features','idea_allowed_file_types')
 	);
 
 	return $allowed_image;

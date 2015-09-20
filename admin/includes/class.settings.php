@@ -1,11 +1,11 @@
 <?php
 /**
-* creates setting tabs
-*
-* @since version 1.0
-* @param null
-* @return global settings
-*/
+ *  @package            Feature-request
+ *  @author             Averta
+ *  @license            GPL-2.0+
+ *  @link               http://averta.net
+ *  @copyright          2015 Averta
+ */
 
 require_once dirname( __FILE__ ) . '/class.settings-api.php';
 
@@ -59,7 +59,7 @@ class AVFR_Settings_Api_Wrap {
 			?><h2><?php _e('feature request Reset','feature-request');?></h2>
 
 			<label style="display:block;margin-top:20px;"><?php _e('Click the button below to reset votes. Warning, there is no going back!','feature-request');?></label>
-			<a style="background:#d9534f;border:none;box-shadow:none;color:white;display:inline-block;margin-top:10px;" class="button idea-factory-reset--votes" href="#"><?php _e('Reset Votes','feature-request');?></a>
+			<a style="background:#d9534f;border:none;box-shadow:none;color:white;display:inline-block;margin-top:10px;" class="button feature-request-reset--votes" href="#"><?php _e('Reset Votes','feature-request');?></a>
 			<?php 
 
 		echo '</div>';
@@ -78,16 +78,16 @@ class AVFR_Settings_Api_Wrap {
 
 		echo '<div class="wrap">';
 
-			?><h2 style="margin-bottom:0;"><?php _e('Idea Factory Documentation','feature-request');?></h2>
+			?><h2 style="margin-bottom:0;"><?php _e('Feature Request Documentation','feature-request');?></h2>
 			<hr>
 
 			<h3 style="margin-bottom:0;"><?php _e('The Basics','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('After you activate <em>Idea Factory</em>, it will automatically be available at <a href="'.get_post_type_archive_link( 'suggestions' ).'" target="_blank">'.get_post_type_archive_link( 'suggestions' ).'</a>. You can rename this in the settings or deactivate it all together and use the shortcode instead. By default voting is limited to logged in users, however you can activate public voting that would work (in addition to) logged in voting.','feature-request');?></p>
+			<p style="margin-top:5px;"><?php _e('After you activate <em>Feature Request</em>, it will automatically be available at <a href="'.get_post_type_archive_link( 'suggestions' ).'" target="_blank">'.get_post_type_archive_link( 'suggestions' ).'</a>. You can rename this in the settings or deactivate it all together and use the shortcode instead. By default voting is limited to logged in users, however you can activate public voting that would work (in addition to) logged in voting.','feature-request');?></p>
 
 			<hr style="margin-top:20px;">
 
 			<h3 style="margin-bottom:0;"><?php _e('The Shortcodes','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('You can additionally display the form and ideas via a shortcode as documented below.','feature-request');?></p>
+			<p style="margin-top:5px;"><?php _e('You can additionally display the form and Features via a shortcode as documented below.','feature-request');?></p>
 
 			<code>[idea_factory hide_submit="off" hide_votes="off" hide_voting="off" groups="2,5,12"]</code>
             
@@ -143,14 +143,14 @@ class AVFR_Settings_Api_Wrap {
 
 		$screen = get_current_screen();
 
-		if ( 'ideas_page_feature-request-reset' == $screen->id ) {
+		if ( 'avfr_page_feature-request-reset' == $screen->id ) {
 
 			?>
 				<!-- Reset Votes -->
 				<script>
 					jQuery(document).ready(function($){
 						// reset post meta
-					  	jQuery('.idea-factory-reset--votes').click(function(e){
+					  	jQuery('.feature-request-reset--votes').click(function(e){
                         var r = confirm('Are you sure to reset all votes?');
                             if ( r == false ) {
                                 //continue
@@ -159,7 +159,7 @@ class AVFR_Settings_Api_Wrap {
     					  		e.preventDefault();
 
     					  		var data = {
-    					            action: 'idea_factory_reset',
+    					            action: 'feature-request_reset',
     					            security: '<?php echo $nonce;?>'
     					        };
 
@@ -184,7 +184,7 @@ class AVFR_Settings_Api_Wrap {
 	*	Process the votes reste
 	*	@since 1.1
 	*/
-	function idea_factory_reset(){
+	function avfr_reset(){
 
 		check_ajax_referer( 'feature-request-reset', 'security' );
 
@@ -197,15 +197,15 @@ class AVFR_Settings_Api_Wrap {
 
 			foreach ( $posts as $post ) {
 
-				$total_votes = get_post_meta( $post->ID, '_idea_total_votes', true );
-				$votes 		 = get_post_meta( $post->ID, '_idea_votes', true );
+				$total_votes = get_post_meta( $post->ID, '_avfr_total_votes', true );
+				$votes 		 = get_post_meta( $post->ID, '_avfr_votes', true );
 
 				if ( !empty( $total_votes ) ) {
-					update_post_meta( $post->ID, '_idea_total_votes', 0 );
+					update_post_meta( $post->ID, '_avfr_total_votes', 0 );
 				}
 
 				if ( !empty( $votes ) ) {
-					update_post_meta( $post->ID, '_idea_votes', 0 );
+					update_post_meta( $post->ID, '_avfr_votes', 0 );
 				}
 			}
 
@@ -217,7 +217,7 @@ class AVFR_Settings_Api_Wrap {
 
         $delete = $wpdb->query('TRUNCATE TABLE '.$table.'');
 
-		echo __('All votes reset!','idea-factory');
+		echo __('All votes reset!','feature-request');
 
 		exit;
 
@@ -226,7 +226,7 @@ class AVFR_Settings_Api_Wrap {
 	function submenu_page_callback() {
 
 		echo '<div class="wrap">';
-			?><h2><?php _e('Idea Factory Settings','idea-factory');?></h2><?php
+			?><h2><?php _e('Feature Request Settings','feature-request');?></h2><?php
 
 			$this->settings_api->show_navigation();
         	$this->settings_api->show_forms();
@@ -239,28 +239,28 @@ class AVFR_Settings_Api_Wrap {
         $sections = array(
             array(
                 'id' 	=> 'avfr_settings_main',
-                'title' => __( 'Setup', 'idea-factory' ),
-                'desc'  => __( 'Setting up plugin','idea-factory' )
+                'title' => __( 'Setup', 'feature-request' ),
+                'desc'  => __( 'Setting up plugin','feature-request' )
             ),
             array(
                 'id' 	=> 'avfr_settings_features',
-                'title' => __( 'features', 'idea-factory' ),
-                'desc'  => __( 'Ideas settings (file uploading and character limitation)','idea-factory' )
+                'title' => __( 'features', 'feature-request' ),
+                'desc'  => __( 'Features settings (file uploading and character limitation)','feature-request' )
             ),
             array(
                 'id' 	=> 'avfr_settings_vote_system',
-                'title' => __( 'Groups', 'idea-factory' ),
-                'desc'  => __( 'Groups can have different settings','idea-factory' )
+                'title' => __( 'Groups', 'feature-request' ),
+                'desc'  => __( 'Groups can have different settings','feature-request' )
             ),
             array(
                 'id'    => 'avfr_settings_mail',
-                'title' => __( 'E-Mail', 'idea-factory' ),
-                'desc'  => __( 'Email settings, you can select when and who should be recieve emails.','idea-factory' )
+                'title' => __( 'E-Mail', 'feature-request' ),
+                'desc'  => __( 'Email settings, you can select when and who should be recieve emails.','feature-request' )
             ),
            	array(
                 'id' 	=> 'avfr_settings_advanced',
-                'title' => __( 'Advanced', 'idea-factory' ),
-                'desc'  => __( 'Advanced plugin option','idea-factory' )
+                'title' => __( 'Advanced', 'feature-request' ),
+                'desc'  => __( 'Advanced plugin option','feature-request' )
             )
 
         );
@@ -278,7 +278,7 @@ class AVFR_Settings_Api_Wrap {
                     'label' 			=> __( 'Naming Convention', 'feature-request' ),
                     'desc' 				=> '<a href="'.get_post_type_archive_link( 'suggestions' ).'">'. __( 'Link to ideas page', 'feature-request' ) .'</a> - ' . __( 'By default its called Ideas. You can rename this here.', 'feature-request' ),
                     'type' 				=> 'text',
-                    'default' 			=> __('suggestions','idea-factory'),
+                    'default' 			=> __('suggestions','feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
                 ),
                 array(
@@ -286,29 +286,29 @@ class AVFR_Settings_Api_Wrap {
                     'label' 			=> __( 'Welcome Message', 'feature-request' ),
                     'desc' 				=> __( 'Enter a message to display to users to vote. Some HTML ok.', 'feature-request' ),
                     'type' 				=> 'textarea',
-                    'default' 			=> __('Submit and vote for new features!', 'idea-factory'),
+                    'default' 			=> __('Submit and vote for new features!', 'feature-request'),
                     'sanitize_callback' => 'avfr_content_filter'
                 ),
                 array(
                     'name' 				=> 'avfr_approve_ideas',
-                    'label' 			=> __( 'Require Idea Approval', 'idea-factory' ),
-                    'desc' 				=> __( 'Check this box to enable newly submitted ideas to be put into a pending status instead of automatically publishing.', 'idea-factory' ),
+                    'label' 			=> __( 'Require Feature Approval', 'feature-request' ),
+                    'desc' 				=> __( 'Check this box to enable newly submitted ideas to be put into a pending status instead of automatically publishing.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name' 				=> 'avfr_public_voting',
-                    'label' 			=> __( 'Enable Public Voting', 'idea-factory' ),
-                    'desc' 				=> __( 'Enable the public (non logged in users) to submit and vote on new ideas.', 'idea-factory' ),
+                    'label' 			=> __( 'Enable Public Voting', 'feature-request' ),
+                    'desc' 				=> __( 'Enable the public (non logged in users) to submit and vote on new ideas.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
             	array(
                     'name' 				=> 'avfr_threshold',
-                    'label' 			=> __( 'Voting Threshold', 'idea-factory' ),
-                    'desc' 				=> __( 'Specify an optional number of votes that each idea must reach in order for its status to be automatically updated to "approved" , "declined", or "open."', 'idea-factory' ),
+                    'label' 			=> __( 'Voting Threshold', 'feature-request' ),
+                    'desc' 				=> __( 'Specify an optional number of votes that each feature must reach in order for its status to be automatically updated to "approved" , "declined", or "open."', 'feature-request' ),
                     'type' 				=> 'text',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_int'
@@ -320,8 +320,8 @@ class AVFR_Settings_Api_Wrap {
                  */
                    array(
                     'name'              => 'avfr_disable_upload',
-                    'label'             => __( 'Disable Uplaod Files', 'idea-factory' ),
-                    'desc'              => __( 'Disable upload for idea factory form (if checked).', 'idea-factory' ),
+                    'label'             => __( 'Disable Uplaod Files', 'feature-request' ),
+                    'desc'              => __( 'Disable upload for feature factory form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
@@ -334,8 +334,8 @@ class AVFR_Settings_Api_Wrap {
                  */
                   array(
                     'name'              => 'avfr_disable_captcha',
-                    'label'             => __( 'Disable Captcha ', 'idea-factory' ),
-                    'desc'              => __( 'Disable captcha code on submit form (if checked).', 'idea-factory' ),
+                    'label'             => __( 'Disable Captcha ', 'feature-request' ),
+                    'desc'              => __( 'Disable captcha code on submit form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
@@ -345,56 +345,56 @@ class AVFR_Settings_Api_Wrap {
                  */
                 array(
                     'name'              => 'avfr_voting_type',
-                    'label'             => __( 'Select voting type', 'idea-factory' ),
-                    'desc'              => __( 'Users can vote 1-5 star or can score + and - to any idea.', 'idea-factory' ),
+                    'label'             => __( 'Select voting type', 'feature-request' ),
+                    'desc'              => __( 'Users can vote 1-5 star or can score + and - to any feature.', 'feature-request' ),
                     'type'              => 'radio',
                     'options'           => array('vote' => 'Vote', 'like' => 'Like/Dislike' ),
                     'default'           => 'like'
                 ),
                 array(
                     'name'              => 'avfr_votes_limitation_time',
-                    'label'             => __( 'Select voting limitation time', 'idea-factory' ),
-                    'desc'              => __( 'Set limit to user vote (one user can vote only 10 time in month by defults change it in groups section)', 'idea-factory' ),
+                    'label'             => __( 'Select voting limitation time', 'feature-request' ),
+                    'desc'              => __( 'Set limit to user vote (one user can vote only 10 time in month by defults change it in groups section)', 'feature-request' ),
                     'type'              => 'radio',
                     'options'           => array('YEAR' => 'Year', 'MONTH' => 'Month', 'WEEK' => 'Week' ),
                     'default'           => 'MONTH'
                 ),
                  /**
-                 *Enable or disable flag in ideas
+                 *Enable or disable flag in features
                  */
                 array(
                     'name'              => 'avfr_flag',
-                    'label'             => __( 'Show flag in ideas', 'idea-factory' ),
-                    'desc'              => __( 'If checked, users can report unpleasant ideas.', 'idea-factory' ),
+                    'label'             => __( 'Show flag in features', 'feature-request' ),
+                    'desc'              => __( 'If checked, users can report unpleasant features.', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 /**
-                 *Enable or disable flag in ideas
+                 *Enable or disable flag in features
                  */
                 array(
                     'name'              => 'avfr_single',
-                    'label'             => __( 'Single page for each idea', 'idea-factory' ),
-                    'desc'              => __( 'If checked, ideas has seprate single page and permalink goes activate!.', 'idea-factory' ),
+                    'label'             => __( 'Single page for each feature', 'feature-request' ),
+                    'desc'              => __( 'If checked, features has seprate single page and permalink goes activate!.', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 )
             ),
                 /**
-                 *Ideas setting:upload,filesize,maximum character in title.
+                 *features setting:upload,filesize,maximum character in title.
                  */
-            'avfr_settings_ideas' 	=> array(
+            'avfr_settings_features' 	=> array(
                 /**
                  *Allowed file types
                  */
                 array(
                     'name' 				=> 'avfr_allowed_file_types',
-                    'label' 			=> __( 'Allowed file types', 'idea-factory' ),
-                    'desc' 				=> __( 'Enter file upload format that you want with above format', 'idea-factory' ),
+                    'label' 			=> __( 'Allowed file types', 'feature-request' ),
+                    'desc' 				=> __( 'Enter file upload format that you want with above format', 'feature-request' ),
                     'type'				=> 'text',
-                    'default' 			=> __('image/jpeg,image/jpg','idea-factory'),
+                    'default' 			=> __('image/jpeg,image/jpg','feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
                 ),
                 /**
@@ -402,8 +402,8 @@ class AVFR_Settings_Api_Wrap {
                  */
                 array(
                     'name' 				=> 'avfr_max_file_size',
-                    'label' 			=> __( 'Maximum allowed file size', 'idea-factory' ),
-                    'desc' 				=> __( 'Please enter maximum file size that user can be upload ! (Size Calcute in KB).', 'idea-factory'  ),
+                    'label' 			=> __( 'Maximum allowed file size', 'feature-request' ),
+                    'desc' 				=> __( 'Please enter maximum file size that user can be upload ! (Size Calcute in KB).', 'feature-request'  ),
                     'type'				=> 'text',
                     'default' 			=> '1024', // KB
                     'sanitize_callback' => 'avfr_sanitize_int'
@@ -415,21 +415,21 @@ class AVFR_Settings_Api_Wrap {
                  */
                  array(
                     'name'              => 'avfr_echo_type_size',
-                    'label'             => __( 'Tip upload Massage', 'idea-factory' ),
-                    'desc'              => __( 'Explain for your customer about image size and type that they can upload!', 'idea-factory'  ),
+                    'label'             => __( 'Tip upload Massage', 'feature-request' ),
+                    'desc'              => __( 'Explain for your customer about image size and type that they can upload!', 'feature-request'  ),
                     'type'              => 'text',
                     'default'           => 'Please uplaod image file with jpg format > 1024 KB size!',
                     'sanitize_callback' => 'sanitize_text_field'
                 ),
                  /**
-                 *Number of related ideas to show
+                 *Number of related features to show
                  */
                 array(
-                    'name'              => 'avfr_related_idea_num',
-                    'label'             => __( 'Number of related idea', 'idea-factory' ),
-                    'desc'              => __( 'Show familiar ideas (Enter 0 for disabling related idea show only in single page.)', 'idea-factory' ),
+                    'name'              => 'avfr_related_feature_num',
+                    'label'             => __( 'Number of related feature', 'feature-request' ),
+                    'desc'              => __( 'Show familiar features (Enter 0 for disabling related feature show only in single page.)', 'feature-request' ),
                     'type'              => 'text',
-                    'default'           => __( '3', 'idea-factory' ),
+                    'default'           => __( '3', 'feature-request' ),
                     'sanitize_callback' => 'avfr_sanitize_int'
                 ),
             ),
@@ -439,91 +439,91 @@ class AVFR_Settings_Api_Wrap {
             'avfr_settings_mail' 	=> array(
                 array(
                     'name'              => 'avfr_send_mail_approved_writer',
-                    'label'             => __( 'Send mail if approved', 'idea-factory' ),
-                    'desc'              => __( 'If idea gone be approved, idea submitter will be inform via mail', 'idea-factory'  ),
+                    'label'             => __( 'Send mail if approved', 'feature-request' ),
+                    'desc'              => __( 'If feature gone be approved, feature submitter will be inform via mail', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_approved_writer',
-                    'label'             => __( 'Text will be sent', 'idea-factory' ),
+                    'label'             => __( 'Text will be sent', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
-                    'desc'              => __('Above text will sent to idea submitter if idea gone approved!'),
+                    'desc'              => __('Above text will sent to feature submitter if feature gone approved!'),
                     'sanitize_callback' => 'esc_textarea'
                 ),
                 array(
                     'name'              => 'avfr_send_mail_approved_voters',
-                    'label'             => __( 'Send mail to Voters', 'idea-factory' ),
-                    'desc'              => __( 'Send email to idea voters when idea approved.', 'idea-factory'  ),
+                    'label'             => __( 'Send mail to Voters', 'feature-request' ),
+                    'desc'              => __( 'Send email to feature voters when feature approved.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_approved_voters',
-                    'label'             => __( 'Content (approved idea ) (voters)', 'idea-factory' ),
+                    'label'             => __( 'Content (approved feature ) (voters)', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
                     'sanitize_callback' => 'esc_textarea'
                 ),
                 array(
                     'name'              => 'avfr_send_mail_completed_writer',
-                    'label'             => __( 'To writer if completed', 'idea-factory' ),
-                    'desc'              => __( 'Send email to idea writer when idea completed.', 'idea-factory'  ),
+                    'label'             => __( 'To writer if completed', 'feature-request' ),
+                    'desc'              => __( 'Send email to feature writer when feature completed.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_completed_writer',
-                    'label'             => __( 'Content (completed idea ) (writer)', 'idea-factory' ),
+                    'label'             => __( 'Content (completed feature ) (writer)', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
                     'sanitize_callback' => 'esc_textarea'
                 ),
                 array(
                     'name'              => 'avfr_send_mail_completed_voters',
-                    'label'             => __( 'To voters if approved', 'idea-factory' ),
-                    'desc'              => __( 'Send email to idea voters when idea completed.', 'idea-factory'  ),
+                    'label'             => __( 'To voters if approved', 'feature-request' ),
+                    'desc'              => __( 'Send email to feature voters when feature completed.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_completed_voters',
-                    'label'             => __( 'Content (completed idea ) (voters)', 'idea-factory' ),
+                    'label'             => __( 'Content (completed feature ) (voters)', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
                     'sanitize_callback' => 'esc_textarea'
                 ),
                 array(
                     'name'              => 'avfr_send_mail_declined_writer',
-                    'label'             => __( 'To writer if declined', 'idea-factory' ),
-                    'desc'              => __( 'Send email to idea writer when idea declined.', 'idea-factory'  ),
+                    'label'             => __( 'To writer if declined', 'feature-request' ),
+                    'desc'              => __( 'Send email to feature writer when feature declined.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_declined_writer',
-                    'label'             => __( 'Content (declined idea ) (writer)', 'idea-factory' ),
+                    'label'             => __( 'Content (declined feature ) (writer)', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
                     'sanitize_callback' => 'esc_textarea'
                 ),
                 array(
                     'name'              => 'avfr_send_mail_declined_voters',
-                    'label'             => __( 'To voters if declined', 'idea-factory' ),
-                    'desc'              => __( 'Send email to idea voters when idea declined.', 'idea-factory'  ),
+                    'label'             => __( 'To voters if declined', 'feature-request' ),
+                    'desc'              => __( 'Send email to feature voters when feature declined.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_declined_voters',
-                    'label'             => __( 'Content (declined idea ) (voters)', 'idea-factory' ),
+                    'label'             => __( 'Content (declined feature ) (voters)', 'feature-request' ),
                     'type'              => 'textarea',
                     'default'           => '',
                     'sanitize_callback' => 'esc_textarea'
@@ -535,24 +535,24 @@ class AVFR_Settings_Api_Wrap {
             'avfr_settings_advanced' 	=> array(
             	array(
                     'name' 				=> 'avfr_disable_css',
-                    'label' 			=> __( 'Disable Core CSS', 'idea-factory' ),
-                    'desc' 				=> __( 'Disable the core css file from loading.', 'idea-factory' ),
+                    'label' 			=> __( 'Disable Core CSS', 'feature-request' ),
+                    'desc' 				=> __( 'Disable the core css file from loading.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                  array(
                     'name' 				=> 'avfr_disable_mail',
-                    'label' 			=> __( 'Disable Emails', 'idea-factory' ),
-                    'desc' 				=> __( 'Disable the admin email notification of new submissions.', 'idea-factory' ),
+                    'label' 			=> __( 'Disable Emails', 'feature-request' ),
+                    'desc' 				=> __( 'Disable the admin email notification of new submissions.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name' 				=> 'avfr_disable_archive',
-                    'label' 			=> __( 'Disable Archive', 'idea-factory' ),
-                    'desc' 				=> __( 'Disable the automatic archive. This assumes you will be using the shortcode instead to show the ideas on a page that you specify.', 'idea-factory' ),
+                    'label' 			=> __( 'Disable Archive', 'feature-request' ),
+                    'desc' 				=> __( 'Disable the automatic archive. This assumes you will be using the shortcode instead to show the features on a page that you specify.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
@@ -560,42 +560,37 @@ class AVFR_Settings_Api_Wrap {
             )
         );
 
-            /**
-            *Add text field in setting for each product
-            *Added by hosein71
-            *Commited on 8/2/15 3:48
-            */
 		$taxonomy = 'groups';
 		$terms = get_terms($taxonomy,array('hide_empty'=> false,)); // Get all terms of a taxonomy
 		if ( $terms && !is_wp_error($terms) ) {
-			if ( $this->settings_api->get_option('voting_type','avfr_settings_ideas','')=='vote' ) { // If voting option is set to votes
+			if ( $this->settings_api->get_option('voting_type','avfr_settings_features','')=='vote' ) { // If voting option is set to votes
 				foreach ( $terms as $term ) { 
                     $settings_fields['avfr_settings_vote_system'][]=
                         array(
                             'name'              => 'avfr_group_'.$term->slug,
-                            'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'idea-factory' ),
+                            'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'feature-request' ),
                             'type'              => 'html',
-                            'sanitize_callback' => 'idea_factory_sanitize_html'
+                            'sanitize_callback' => 'avfr_sanitize_html'
                         );
 					$settings_fields['avfr_settings_vote_system'][]=
 						array(
 		                    'name' 				=> 'avfr_vote_limit_'.$term->slug,
-		                    'label' 			=> __(' maximum votes :', 'idea-factory' ),
-		                    'default' 			=> __( '5', 'idea-factory' ),
+		                    'label' 			=> __(' maximum votes :', 'feature-request' ),
+		                    'default' 			=> __( '5', 'feature-request' ),
 		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
 		            $settings_fields['avfr_settings_vote_system'][]=
 						array(
 		                    'name' 				=> 'avfr_total_vote_limit_'.$term->slug,
-		                    'label' 			=> __( 'Total vote:', 'idea-factory' ),
-		                    'default' 			=> __( '30', 'idea-factory' ),
+		                    'label' 			=> __( 'Total vote:', 'feature-request' ),
+		                    'default' 			=> __( '30', 'feature-request' ),
 		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
                     $settings_fields['avfr_settings_vote_system'][]=
                         array(
                             'name'              => 'avfr_disable_comment_for'.$term->slug,
-                            'label'             => __( 'Disable comments', 'idea-factory' ),
-                            'desc'              => __( 'Disable comments for selected group.', 'idea-factory' ),
+                            'label'             => __( 'Disable comments', 'feature-request' ),
+                            'desc'              => __( 'Disable comments for selected group.', 'feature-request' ),
                             'default'           => '',
                             'type'              => 'checkbox',
                             'sanitize_callback' => 'avfr_sanitize_checkbox'
@@ -603,8 +598,8 @@ class AVFR_Settings_Api_Wrap {
                     $settings_fields['avfr_settings_vote_system'][]=
                         array(
                             'name'              => 'avfr_disable_new_for'.$term->slug,
-                            'label'             => __( 'Disable submit new idea', 'idea-factory' ),
-                            'desc'              => __( 'Disable submitting new idea for selected group.', 'idea-factory' ),
+                            'label'             => __( 'Disable submit new feature', 'feature-request' ),
+                            'desc'              => __( 'Disable submitting new feature for selected group.', 'feature-request' ),
                             'default'           => '',
                             'type'              => 'checkbox',
                             'sanitize_callback' => 'avfr_sanitize_checkbox'

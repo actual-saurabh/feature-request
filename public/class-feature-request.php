@@ -1,22 +1,14 @@
 <?php
 /**
- * Idea Factory
- *
- * @package   Idea_Factory
- * @author    Nick Haskins <email@nickhaskins.com>
- * @license   GPL-2.0+
- * @link      http://nickhaskins.com
- * @copyright 2015 Your Mom
- */
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
 
-/**
- * Plugin class. This class should ideally be used to work with the
- * public-facing side of the WordPress site.
- *
- *
- * @package Idea_Factory
- * @author  Nick Haskins <email@nickhaskins.com>
- */
 class Feature_Request {
 
 	/**
@@ -27,7 +19,7 @@ class Feature_Request {
 	 * of text. Its value should match the Text Domain file header in the main
 	 * plugin file.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @var      string
 	 */
@@ -36,7 +28,7 @@ class Feature_Request {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @var      object
 	 */
@@ -46,7 +38,7 @@ class Feature_Request {
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
 	 *
-	 * @since     0.0.1
+	 * @since     1.0
 	 */
 	private function __construct() {
 
@@ -74,7 +66,7 @@ class Feature_Request {
 	/**
 	 * Return the plugin slug.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @return    Plugin slug variable.
 	 */
@@ -85,7 +77,7 @@ class Feature_Request {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     0.0.1
+	 * @since     1.0
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -102,7 +94,7 @@ class Feature_Request {
 	/**
 	 * Fired when the plugin is activated.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses
 	 *                                       "Network Activate" action, false if
@@ -139,7 +131,7 @@ class Feature_Request {
 	/**
 	 * Fired when the plugin is deactivated.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses
 	 *                                       "Network Deactivate" action, false if
@@ -177,7 +169,7 @@ class Feature_Request {
 	/**
 	 * Fired when a new site is activated with a WPMU environment.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @param    int    $blog_id    ID of the new blog.
 	 */
@@ -199,7 +191,7 @@ class Feature_Request {
 	 * - not spam
 	 * - not deleted
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 *
 	 * @return   array|false    The blog ids, false if no matches.
 	 */
@@ -219,7 +211,7 @@ class Feature_Request {
 	/**
 	 * Flush rewrite rules for custom post type archive on single activation
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 */
 	private static function single_activate() {
 
@@ -249,7 +241,7 @@ class Feature_Request {
 	/**
 	 * Fired for each blog when the plugin is deactivated.
 	 *
-	 * @since    0.0.1
+	 * @since    1.0
 	 */
 	private static function single_deactivate() {
 		// @TODO: Define deactivation functionality here
@@ -258,7 +250,7 @@ class Feature_Request {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0
 	 */
 	public function load_plugin_textdomain() {
 
@@ -271,13 +263,13 @@ class Feature_Request {
 	/**
 	*
 	*	Run on plugin upgrade
-	*	@since 1.2
+	*	@since 1.0
 	*/
 	function upgrade(){
 
 		$version = get_option('feature_request_version', true );
 
-		if ( $version != IDEA_FACTORY_VERSION ) {
+		if ( $version != AVFR_VERSION ) {
 
 			self::upgrade_install_db();
 
@@ -287,7 +279,7 @@ class Feature_Request {
 	/**
 	*
 	*	Create public database tabes on upgrade
-	*	@since 1.2
+	*	@since 1.0
 	*/
 	function upgrade_install_db(){
 
@@ -309,7 +301,7 @@ class Feature_Request {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
 
-		update_option('idea_factory_version', $version );
+		update_option('avfr_version', $version );
 
 	}
 }

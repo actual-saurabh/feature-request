@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class featurerequestType {
+class FeatureRequestType {
 
 	public function __construct(){
 
@@ -91,8 +91,8 @@ class featurerequestType {
 		 * 
 		*/
 		$labels = array(
-			'name' 						=> _x( 'Idea tags','taxonomy general name' ), 
-			'singular_name' 			=> _x( 'Idea tags','taxonomy singular name' ),
+			'name' 						=> _x( 'Feature tags','taxonomy general name' ), 
+			'singular_name' 			=> _x( 'Feature tags','taxonomy singular name' ),
 			'search_items' 				=> __( 'Search tags' ),
 			'all_items' 				=> __( 'All tags' ),
 			'edit_item'                 => __( 'Edit tag' ),
@@ -119,4 +119,4 @@ class featurerequestType {
 		}
 }
 
-new featurerequestType;
+new FeatureRequestType;

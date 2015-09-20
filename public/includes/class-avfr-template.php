@@ -1,11 +1,14 @@
 <?php
-
-/*
-*
-*	Class responsible for building the template redirect
-*
-*/
-class AVFR_Template {
+/**
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
+class Avfr_Template {
 
 	function __construct() {
 
@@ -40,4 +43,4 @@ class AVFR_Template {
 
 	}
 }
-new AVFR_Template;
+new Avfr_Template;

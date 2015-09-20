@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class featurerequestDB {
+class FeatureRequestDB {
 
 	private $table_name;
 	private $db_version;

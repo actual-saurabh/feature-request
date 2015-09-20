@@ -1,11 +1,14 @@
 <?php
-
-/*
-*
-*	Class responsible for building the template redirect
-*
-*/
-class AVFR_Assets {
+/**
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
+class Avfr_Assets {
 
 	function __construct(){
 		add_action('wp_enqueue_scripts', array($this,'scripts'), 99);
@@ -31,9 +34,9 @@ class AVFR_Assets {
 			}
 
 			wp_enqueue_script('feature-request-script', AVFR_URL.'/public/assets/js/avfr.js', array('jquery'), AVFR_VERSION, true);
-			wp_localize_script('feature-request-script', 'feature_request', feature_request_args( $max , $paged) );
+			wp_localize_script('feature-request-script', 'feature_request', avfr_localized_args( $max , $paged) );
 
 		endif;
 	}
 }
-new AVFR_Assets;
+new Avfr_Assets;

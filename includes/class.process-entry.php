@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class featurerequestProcessEntry {
+class FeatureRequestProcessEntry {
 
 	function __construct(){
 
@@ -27,13 +27,13 @@ class featurerequestProcessEntry {
 	function process_entry(){
 		echo $avfr_image_filter;
 		$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
-		$allowed_type	= explode(",",avfr_get_option('idea_allowed_file_types','if_settings_ideas'));
-		$allowed_size   = avfr_get_option('avfr_max_file_size','if_settings_ideas');
+		$allowed_type	= explode(",",avfr_get_option('avfr_allowed_file_types','avfr_settings_features'));
+		$allowed_size   = avfr_get_option('avfr_max_file_size','avfr_settings_features');
 		$title 			= isset( $_POST['avfr-title'] ) ? $_POST['avfr-title'] : null;
 		$desc 			= isset( $_POST['avfr-description'] ) ? $_POST['avfr-description'] : null;
 		$uploadajx 		= isset( $_POST['avfr-upload'] ) ? $_POST['avfr-upload'] : null;
 		$uploadOk       = 1;
-		$must_approve 	= 'on' == avfr_get_option('if_approve_ideas','if_settings_main') ? 'pending' : 'publish';
+		$must_approve 	= 'on' == avfr_get_option('avfr_settings_features','if_settings_main') ? 'pending' : 'publish';
 		session_start();
 		
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'process_entry' ) {
@@ -161,7 +161,7 @@ class featurerequestProcessEntry {
 		$user 		 	= get_userdata( $userid );
 		$admin_email 	= get_bloginfo('admin_email');
 		$entry       	= get_post( $entry_id );
-		$mail_disabled 	= idea_factory_get_option('if_disable_mail','if_settings_advanced');
+		$mail_disabled 	= avfr_get_option('if_disable_mail','if_settings_advanced');
 
 		$message = sprintf(__("Submitted by: %s", 'feature-request'), $user->display_name) .".\n\n";
 		$message .= __("Title:", 'feature-request') . "\n";
@@ -177,4 +177,4 @@ class featurerequestProcessEntry {
 	}
 
 }
-new featurerequestProcessEntry;
+new FeatureRequestProcessEntry;

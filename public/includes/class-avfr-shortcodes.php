@@ -1,11 +1,14 @@
 <?php
-
-/*
-*
-*	Class responsible for building teh various shortcodes used
-*
-*/
-class AVFR_Shortcodes {
+/**
+ 	*
+ 	* 	@package   			Feature-request
+ 	* 	@author    			Averta
+ 	* 	@license   			GPL-2.0+
+ 	* 	@link      			http://averta.net
+ 	*	@copyright 			2015 Averta
+ 	*
+ **/	
+class Avfr_Shortcodes {
 
 	function __construct() {
 
@@ -330,4 +333,4 @@ class AVFR_Shortcodes {
 
 
 }
-new AVFR_Shortcodes;
+new Avfr_Shortcodes;

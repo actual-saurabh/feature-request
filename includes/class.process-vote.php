@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class featurerequestProcessVote {
+class FeatureRequestProcessVote {
 	function __construct(){
 
 		add_action( 'wp_ajax_process_vote_up', 				        array($this, 'process_vote_up' ));
@@ -198,7 +198,7 @@ class featurerequestProcessVote {
 			$idea_voted_group 	= $_POST['cig'];
 			// Get limit for users from option in voted category
 			$user_vote_limit	= avfr_get_option('total_vote_limit_'.$avfr_voted_group,'if_settings_groups');
-			$limit_time			= avfr_get_option('votes_limitation_time','if_settings_ideas');
+			$limit_time			= avfr_get_option('votes_limitation_time','avfr_settings_features');
 			//Get user ID
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -269,4 +269,4 @@ class featurerequestProcessVote {
 			die();
 		}
 }
-new featurerequestProcessVote;
+new FeatureRequestProcessVote;

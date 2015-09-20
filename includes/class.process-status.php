@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class featurerequestProcessStatus {
+class FeatureRequestProcessStatus {
 
 	function __construct(){
 
@@ -20,7 +20,7 @@ class featurerequestProcessStatus {
 
 	/**
 	*
-	*	Process the status of an individual idea with an action fired when a user votes up or down
+	*	Process the status of an individual feature with an action fired when a user votes up or down
 	*
 	*	@param $postid int id of the post
 	*	@param $userid int id of the user who voted
@@ -90,7 +90,7 @@ class featurerequestProcessStatus {
 		$reciever_info 	= get_userdata($post_author_id);
 		$entry       	= get_post( $post_id );
 		$search			= array('{{writer-name}}','{{avfr-title}}','{{votes}}');
-		$replace 		= array($reciever_info->user_login, $entry->post_title, avfr_factory_get_votes( $post_id ));
+		$replace 		= array($reciever_info->user_login, $entry->post_title, avfr_get_votes( $post_id ));
 
 		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_writer','if_settings_mail') ) {
 			
@@ -120,7 +120,7 @@ class featurerequestProcessStatus {
 
 	/**
 	*
-	*	Send email to the admin notifying of a status change on an idea
+	*	Send email to the admin notifying of a status change on an feature
 	*
 	*	@param $status string approved | declined
 	*	@param $postid int postid object
@@ -134,7 +134,7 @@ class featurerequestProcessStatus {
 
 		$message = "The status of ".$entry->post_title." has been updated to:\n";
 		$message .= "".$status."\n\n";
-		$message .= "Manage ideas at link below\n";
+		$message .= "Manage features at link below\n";
 		$message .= "".wp_login_url()."\n\n";
 
 		if ( !$mail_disabled )
@@ -143,4 +143,4 @@ class featurerequestProcessStatus {
 	}
 
 }
-new featurerequestProcessStatus;
+new FeatureRequestProcessStatus;
