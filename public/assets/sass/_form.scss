@@ -1,12 +1,12 @@
-.idea-factory-modal {
+.avfr-modal {
     * {
         @include box-sizing(border-box);
     }
-    div#idea_form_upload, div#idea_form_desc, div#idea_form_title, div#idea_form_group, div#idea_form_tags{
-        margin: $input--margin;
+    div#avfr-form-upload, div#avfr-form-desc, div#avfr-form-title, div#avfr-form-group, div#avfr-form-tags{
+        margin: $input-margin;
     }
 
-    div#idea_form_captcha{
+    div#avfr-form-captcha{
         margin: 2px 23px 0 0;
     }
     label {
@@ -19,18 +19,18 @@
         width: 100%;
         height: 30px;
         padding: 6px 10px;
-        font-size: $input--font_size;
-        line-height: $input--font_lineheight;
-        color: $input--color;
-        background-color: $input--bg;
+        font-size: $input-font_size;
+        line-height: $input-font_lineheight;
+        color: $input-color;
+        background-color: $input-bg;
         background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-        border: 1px solid $input--border !important;
-        border-radius: $input--border_radius;
+        border: 1px solid $input-border !important;
+        border-radius: $input-border_radius;
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
         @include transition("border-color ease-in-out .15s, box-shadow ease-in-out .15s");
 
         &:focus {
-            border:1px solid $input--border_focus;
+            border:1px solid $input-border_focus;
             box-shadow:none;
             outline:none;
         }

@@ -1,19 +1,19 @@
 jQuery(document).ready(function($) {
 
-	var pageNum 	= parseInt(idea_factory.startPage) + 1,
-		max 		= parseInt(idea_factory.maxPages),
-		nextLink 	= idea_factory.nextLink,
-		label    	= idea_factory.label,
-		label_loading = idea_factory.label_loading;
+	var pageNum 	= parseInt(feature_request.startPage) + 1,
+		max 		= parseInt(feature_request.maxPages),
+		nextLink 	= feature_request.nextLink,
+		label    	= feature_request.label,
+		label_loading = feature_request.label_loading;
 
 	if(pageNum <= max) {
-		$('.idea-factory--wrap')
-			.append('<div class="idea-factory--layout-main clearfix idea-factory--layout-main-'+ pageNum +'"></div>')
-			.append('<p class="idea-factory--loadmore fix"><a class="idea-factory--button" href="#">'+label+'</a></p>');
+		$('.avfr-wrap')
+			.append('<div class="avfr-layout-main clearfix avfr-layout-main-'+ pageNum +'"></div>')
+			.append('<p class="avfr-loadmore fix"><a class="avfr-button" href="#">'+label+'</a></p>');
 
 	}
 
-	$('.idea-factory--loadmore a').click(function() {
+	$('.avfr-loadmore a').click(function() {
 
 		// Are there more posts to load?
 		if(pageNum <= max) {
@@ -21,20 +21,20 @@ jQuery(document).ready(function($) {
 			// Show that we're working.
 			$(this).text(label_loading);
 
-			$('.idea-factory--layout-main-'+ pageNum).load(nextLink + ' .idea-factory--entry-wrap',
+			$('.avfr-layout-main-'+ pageNum).load(nextLink + ' .avfr-entry-wrap',
 				function() {
 					// Update page number and nextLink.
 					pageNum++;
 					nextLink = nextLink.replace(/\/page\/[0-9]?/, '/page/'+ pageNum);
 
 					// Add a new placeholder, for when user clicks again.
-					$('.idea-factory--loadmore').before('<div class="idea-factory--layout-main clearfix idea-factory--layout-main-'+ pageNum +'"></div>')
+					$('.avfr-loadmore').before('<div class="avfr-layout-main clearfix avfr-layout-main-'+ pageNum +'"></div>')
 
 					// Update the button message.
 					if(pageNum <= max) {
-						$('.idea-factory--loadmore a').text(label);
+						$('.avfr-loadmore a').text(label);
 					} else {
-						$('.idea-factory--loadmore a').fadeOut();
+						$('.avfr-loadmore a').fadeOut();
 					}
 
 				}

@@ -596,7 +596,7 @@ if ( !function_exists('avfr_submit_box') ):
 								        })
 								        .bind('getSuggestions', function(e, data)
 								        {
-								        var list =  [<?php   $idea_modal_tag = array(
+								        var list =  [<?php   $avfr_modal_tag = array(
 												    'orderby'           => 'name', 
 												    'order'             => 'ASC',
 												    'hide_empty'        => false, 
@@ -606,7 +606,7 @@ if ( !function_exists('avfr_submit_box') ):
 												    'cache_domain'      => 'core'
 												); 
 
-										        $terms = get_terms('ideatags',$idea_modal_tag );
+										        $terms = get_terms('featureTags',$avfr_modal_tag );
 										        foreach ($terms as $term) {
 										         echo "'".$term->slug."',";	
 										         } ?>  ],

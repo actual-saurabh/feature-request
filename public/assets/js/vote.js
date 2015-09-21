@@ -1,19 +1,19 @@
 jQuery(document).ready(function($){
 
 	//vars
-	var ajaxurl			= idea_factory.ajaxurl,
-		results         = $('#idea-factory--entry--form-results p'),
-		thanks_voting   = idea_factory.thanks_voting,
-		already_voted   = idea_factory.already_voted,
-		error_message 	= idea_factory.error_message,
-		thanks_flag     = idea_factory.thanks_flag,
-		already_flagged = idea_factory.already_flagged,
-		form 			= $('#idea-factory--entry--form'),
+	var ajaxurl			= feature_request.ajaxurl,
+		results         = $('#avfr-entry--form-results p'),
+		thanks_voting   = feature_request.thanks_voting,
+		already_voted   = feature_request.already_voted,
+		error_message 	= feature_request.error_message,
+		thanks_flag     = feature_request.thanks_flag,
+		already_flagged = feature_request.already_flagged,
+		form 			= $('#avfr-entry--form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
-		reached_limit 	= idea_factory.reached_limit;
+		reached_limit 	= feature_request.reached_limit;
 
 	var options = { 
-        target:        '#idea-factory--entry--form-results p',        
+        target:        '#avfr-entry--form-results p',        
         success:       showResponse,    
         beforeSubmit:  showRequest,    
         url:    ajaxurl                     
@@ -26,7 +26,7 @@ jQuery(document).ready(function($){
 
   		var $this =form;
 
-	   	if ( $.trim( $('#idea-factory--entryform_title').val() ) === '' || $.trim( $('#idea-factory--entryform_description').val() ) === '' )  
+	   	if ( $.trim( $('#avfr-entryform_title').val() ) === '' || $.trim( $('#avfr-entryform_description').val() ) === '' )  
 	    {
 	        $(results).html('Title and description are required.');
 	        
@@ -35,9 +35,9 @@ jQuery(document).ready(function($){
 	        return false;
 	    }
 			$this.find(':submit').attr( 'disabled','disabled' );
-			$('#idea-factory--entry--form-results').show();
-			$('#idea-factory--entry--form-results').css({'display':'inline-block','background-color':'#afafaf'});
-			$('#idea-factory--entry--form-results p').html('Sending data ...');
+			$('#avfr-entry-form-results').show();
+			$('#avfr-entry-form-results').css({'display':'inline-block','background-color':'#afafaf'});
+			$('#avfr-entry-form-results p').html('Sending data ...');
 	}
 
    function showResponse(responseJson, statusText, xhr, $form)  {
@@ -45,15 +45,15 @@ jQuery(document).ready(function($){
    	var json = $.parseJSON(responseJson);
 
    		$(results).html(json.message);
-   		$('#idea-factory--entry--form-results').css({'display':'inline-block','background-color':'#DD6D5A'});
+   		$('#avfr-entry-form-results').css({'display':'inline-block','background-color':'#DD6D5A'});
 
    		if ( 'false' == json.success ) {
 
-   			$('.idea-factory-modal-footer input').removeAttr( 'disabled' );
+   			$('.avfr-modal-footer input').removeAttr( 'disabled' );
    			
    		} else {
 
-   			$('#idea-factory--entry--form-results').css('background-color','#53d96f');
+   			$('#avfr-entry-form-results').css('background-color','#53d96f');
    			setTimeout(function(){
    				location.reload();
    			}, 1000);
@@ -61,23 +61,23 @@ jQuery(document).ready(function($){
    		}
 	}
 
-	$('.idea-factory--wrap').on('click','.idea-factory-like', function(e) {
+	$('.avfr-wrap').on('click','.avfr-like', function(e) {
 		e.preventDefault();
 
 		var $this = $(this);
 
-		$this.nextAll('.idea-factory-tooltip').show();
+		$this.nextAll('.avfr-tooltip').show();
 		e.stopPropagation();
 
-		var voteClass = $this.hasClass('idea-factory-vote-up') ? 'idea-factory-set-vote-up' : 'idea-factory-set-vote-down';
-		$this.nextAll('.idea-factory-tooltip').find('.idea-factory-submit').removeClass( 'idea-factory-set-vote-up idea-factory-set-vote-down' );
-		$this.nextAll('.idea-factory-tooltip').find('.idea-factory-submit').addClass( voteClass );
+		var voteClass = $this.hasClass('avfr-vote-up') ? 'avfr-set-vote-up' : 'iavfr-set-vote-down';
+		$this.nextAll('.avfr-tooltip').find('.avfr-submit').removeClass( 'avfr-set-vote-up avfr-set-vote-down' );
+		$this.nextAll('.avfr-tooltip').find('.avfr-submit').addClass( voteClass );
 
 		var data      = {
 			action:    'calc_remaining_votes',
 			post_id:   $this.data('post-id'),
 			cig: 	   $this.data('current-group'), // cig = Current Idea Group
-			nonce:     idea_factory.nonce
+			nonce:     feature_request.nonce
 		};
 
 		if ( null === localStorage.getItem('email') ) {
@@ -88,7 +88,7 @@ jQuery(document).ready(function($){
 
 		$.post( ajaxurl, data, function(response) {
 			var json = $.parseJSON(response);
-			$this.nextAll('.idea-factory-tooltip').find('span').html( json.response );
+			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
 			if ( null != localStorage.getItem('email') ) {
 				$('.voting-buttons-title').hide();
 			};
@@ -97,18 +97,18 @@ jQuery(document).ready(function($){
 	});
 
 	// When user like / dislike / vote up 1
-	$( '.idea-factory--wrap' ).on('click', '.idea-factory-submit', function(e) {
+	$( '.avfr-wrap' ).on('click', '.avfr-submit', function(e) {
 
 		e.preventDefault();
 
 		var $this = $(this);
 
 		var data      = {
-			action:    $this.hasClass('idea-factory-set-vote-up') ? 'process_vote_up' : 'process_vote_down',
+			action:    $this.hasClass('avfr-set-vote-up') ? 'process_vote_up' : 'process_vote_down',
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			cig: 	   $this.data('current-group'), // cig = Current Idea Group
-			nonce:     idea_factory.nonce
+			nonce:     feature_request.nonce
 		};
 		if ( null === localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
@@ -120,11 +120,11 @@ jQuery(document).ready(function($){
 			var json = $.parseJSON(response);
 			if ( 'success' == json.response ) {
 
-				$('#' + data['post_id'] ).find('.idea-factory-tooltip').css({'margin-top':'5px'});
-				$('#' + data['post_id'] ).find('.idea-factory-like').hide();
-				$('#' + data['post_id'] ).find('.idea-factory-tooltip .voting-buttons').html( thanks_voting );
-				$('#' + data['post_id'] ).find('.idea-factory-tooltip span').html( json.remaining );
-				$('#' + $this.data('post-id') + ' .idea-factory--totals_num').html( json.total_vote );
+				$('#' + data['post_id'] ).find('.avfr-tooltip').css({'margin-top':'5px'});
+				$('#' + data['post_id'] ).find('.avfr-like').hide();
+				$('#' + data['post_id'] ).find('.avfr-tooltip .voting-buttons').html( thanks_voting );
+				$('#' + data['post_id'] ).find('.avfr-tooltip span').html( json.remaining );
+				$('#' + $this.data('post-id') + ' .avfr-totals_num').html( json.total_vote );
 				localStorage.email = data['voter_email'];
 
 			} else if ( 'already-voted' == json.response ) {
@@ -158,7 +158,7 @@ jQuery(document).ready(function($){
 
 	// When user report (flag)
 
-	$( '.idea-factory-flag' ).click ( function(e) {
+	$( '.avfr-flag' ).click ( function(e) {
 		var r = confirm('Are you sure to report this idea as inappropriate ?');
 		if ( r == false ) {
 
@@ -173,14 +173,14 @@ jQuery(document).ready(function($){
 				user_id:   $this.data('user-id'),
 				post_id:   $this.data('post-id'),
 				cig: 	   $this.data('current-group'), // cig = Current Idea Group
-				nonce:     idea_factory.nonce
+				nonce:     feature_request.nonce
 			};
 
 			$.post( ajaxurl, data, function(response) {
 
 				if ( response == 'success' ) {
 
-					$this.parent().addClass('idea-factory-flagged');
+					$this.parent().addClass('avfr-flagged');
 					$this.parent().html(thanks_flag);
 				} else if ( 'already-flagged' == response ){
 					alert( already_flagged );
@@ -192,7 +192,7 @@ jQuery(document).ready(function($){
 	});
 
 	// When user vote multiple
-	$( '.idea-factory--wrap' ).on('click', '.idea-factory-votes-value', function(e) {
+	$( '.avfr-wrap' ).on('click', '.avfr-votes-value', function(e) {
 		e.preventDefault();
 
 		var $this = $(this);
@@ -203,7 +203,7 @@ jQuery(document).ready(function($){
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
 			cig: 	   $this.data('current-group'), // cig = Current Idea Group
-			nonce:     idea_factory.nonce
+			nonce:     feature_request.nonce
 		};
 		if ( null === localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
@@ -215,12 +215,12 @@ jQuery(document).ready(function($){
 				if ( 'success' == json.response ) {
 					
 					$this.parent().parent().css({'margin-top':'-5px'});
-					$this.parent().addClass('idea-factory-voted');
+					$this.parent().addClass('avfr-voted');
 					$this.parent().nextAll('.small-text').find('span').html( json.remaining );
 					$this.parent().html( thanks_voting );
-					$('#' + $this.data('post-id') + ' .idea-factory--totals_num').html( json.total_votes );
+					$('#' + $this.data('post-id') + ' .iavfr-totals_num').html( json.total_votes );
 					localStorage.email = data['voter_email'];
-					$('#' + $this.data('post-id') + ' .idea-factory-vote-now').addClass('voted');
+					$('#' + $this.data('post-id') + ' .avfr-vote-now').addClass('voted');
 					$('.voted').hide();
 
 				} else if ( 'remaining-limit' == json.response ) {
@@ -246,7 +246,7 @@ jQuery(document).ready(function($){
 	});
 
 	// When status chenged from fornt-end
-	$( document ).on('click', '.idea-factory-change-status', function(e) {
+	$( document ).on('click', '.avfr-change-status', function(e) {
 		e.preventDefault();
 
 		var $this = $(this);
@@ -255,7 +255,7 @@ jQuery(document).ready(function($){
 			action:     'process_change_status',
 			post_id:    $this.data('post-id'),
 			new_status: $this.data('val'),
-			nonce:      idea_factory.nonce
+			nonce:      feature_request.nonce
 		};
 
 		$.post( ajaxurl, data, function(response) {
@@ -278,24 +278,24 @@ jQuery(document).ready(function($){
 
 		$this.change(function(){
 
-			$this.parent().nextAll(".idea-factory-change-status").attr('data-val', $this.find('option:selected').val());
+			$this.parent().nextAll(".avfr-change-status").attr('data-val', $this.find('option:selected').val());
 		
 		})
 
 	});
 
 	// When click button to see multivote dropdown
-	$( document ).on('click', '.idea-factory-vote-now', function(e) {
+	$( document ).on('click', '.avfr-vote-now', function(e) {
 		e.preventDefault();
 		var $this = $(this);
-		$this.nextAll('.idea-factory-tooltip').show();
+		$this.nextAll('.avfr-tooltip').show();
 		e.stopPropagation();
 
 		var data      = {
 			action:    'calc_remaining_votes',
 			post_id:   $this.data('post-id'),
 			cig: 	   $this.data('current-group'), // cig = Current Idea Group
-			nonce:     idea_factory.nonce
+			nonce:     feature_request.nonce
 		};
 
 		if ( null === localStorage.getItem('email') ) {
@@ -306,7 +306,7 @@ jQuery(document).ready(function($){
 
 		$.post( ajaxurl, data, function(response) {
 			var json = $.parseJSON(response);
-			$this.nextAll('.idea-factory-tooltip').find('span').html( json.response );
+			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
 			if ( null != localStorage.getItem('email') ) {
 				$('.voting-buttons-title').hide();
 			};
@@ -314,19 +314,19 @@ jQuery(document).ready(function($){
 		
 	});
 
-	$( document ).on('click', '.idea-factory-tooltip', function(e) {
-		$(this).nextAll('.idea-factory-tooltip').show();
+	$( document ).on('click', '.avfr-tooltip', function(e) {
+		$(this).nextAll('.avfr-tooltip').show();
 		e.stopPropagation();
 	});
 
 	$( document ).click( function(e) {
 		e.stopPropagation();
-		$('.idea-factory-tooltip').hide();
+		$('.avfr-tooltip').hide();
 	});
 
 	//Filter buttons current link
 	$(function(){
-		$('.idea-factory-filter-control-item a').each(function() {
+		$('.avfr-filter-control-item a').each(function() {
 			if ($(this).prop('href') == window.location.href) {
 				$(this).addClass('current');
 			}

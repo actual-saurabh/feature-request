@@ -38,7 +38,6 @@ class Avfr_Shortcodes {
 		$single_allowed  = avfr_get_option('avfr_single','avfr_settings_features');
 		$taxonomy 	  	 = 'groups';
  		$all_terms    	 = get_terms( $taxonomy );
- 		$domain 	  	 = avfr_get_option('avfr_domain','avfr_settings_main','features');
 		ob_start();
 
 		do_action('avfr_main_sc_layout_before', $postid);
@@ -58,7 +57,7 @@ class Avfr_Shortcodes {
 							<option value="#"><?php _e('Select a group','feature-request'); ?></option>
 								<?php
 								foreach ( $all_terms as $all_term ) { 
-									echo "<option value=".get_post_type_archive_link( $domain )."?".$taxonomy."=".$all_term->slug.">".$all_term->name."</option>";
+									echo "<option value=".esc_url( add_query_arg( array( $taxonomy => $all_term->slug ) ) ).">".$all_term->name."</option>";
 								} ?>
 							</select>
 						</span>
@@ -307,7 +306,6 @@ class Avfr_Shortcodes {
 		$taxonomy 		 	= 'groups';
 		$args 				= array( 'include' => $atts['groups'] );
 		$terms    		 	= get_terms( $taxonomy , $args );
-		echo get_post_type_archive_link( $domain );
 		?>
 		<div class="user-votes-shortcode">
 

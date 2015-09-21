@@ -1,7 +1,7 @@
-.idea-factory-modal-open {
+.avfr-modal-open {
     overflow: hidden;
 }
-.idea-factory-modal {
+.avfr-modal {
     display: none;
     overflow: hidden;
     position: fixed;
@@ -13,63 +13,63 @@
     -webkit-overflow-scrolling: touch;
     outline: 0;
 
-    &.fade .idea-factory-modal-dialog {
+    &.fade .avfr-modal-dialog {
         @include translate(0, -25%);
         @include transform("0.3s ease-out");
     }
-    &.in .idea-factory-modal-dialog { @include translate(0, 0) }
+    &.in .avfr-modal-dialog { @include translate(0, 0) }
 }
-.idea-factory-modal-open .idea-factory-modal {
+.avfr-modal-open .avfr-modal {
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.idea-factory-modal-dialog {
+.avfr-modal-dialog {
     position: relative;
     width: auto;
     margin: 10px;
 }
 
-.idea-factory-modal-content {
+.avfr-modal-content {
     position: relative;
-    background-color: $modal--content-bg;
-    border: 1px solid $modal--content-border-color;
-    border-radius: $modal--border-radius;
+    background-color: $modal-content-bg;
+    border: 1px solid $modal-content-border-color;
+    border-radius: $modal-border-radius;
     @include box-shadow(0 3px 9px rgba(0,0,0,.5));
     background-clip: padding-box;
     // Remove focus outline from opened modal
     outline: 0;
 }
 
-.idea-factory-modal-backdrop {
+.avfr-modal-backdrop {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    background-color: $modal--backdrop-bg;
+    background-color: $modal-backdrop-bg;
     // Fade for backdrop
     &.fade { opacity: 0; }
-    &.in { opacity: $modal--backdrop-opacity; }
+    &.in { opacity: $modal-backdrop-opacity; }
 }
 
-.idea-factory-modal-header {
-    padding: $modal--title_padding-ver $modal--title_padding ;
-    border-bottom: 1px solid $modal--header-border-color;
-    min-height: ($modal--title_padding + $modal--title-line-height);
+.avfr-modal-header {
+    padding: $modal-title_padding-ver $modal-title_padding ;
+    border-bottom: 1px solid $modal-header-border-color;
+    min-height: ($modal-title_padding + $modal-title-line-height);
     h3 {
         margin: 0;
         line-height: 1.5;
     }
 }
 
-.idea-factory-modal-title {
+.avfr-modal-title {
 	margin: 0;
-	line-height: $modal--title-line-height;
+	line-height: $modal-title-line-height;
 }
 
-.idea-factory-modal-body {
+.avfr-modal-body {
     position: relative;
-    padding: $modal--innerpadding;
+    padding: $modal-innerpadding;
 }
  .text-wrap {
      width: 100% !important;
@@ -77,15 +77,15 @@
         height: 32px;
         width: 100% !important;
         min-height: 32px;
-        border-radius: $modal--border-radius;
-        border-color: $input--border;
+        border-radius: $modal-border-radius;
+        border-color: $input-border;
         padding: 6px 0 26px 8px;
      }
  
  }
 
-.idea-factory-modal-footer {
-    padding-top: $modal--innerpadding;
+.avfr-modal-footer {
+    padding-top: $modal-innerpadding;
     text-align: left; // right align buttons
 
     // Properly space out buttons
@@ -103,7 +103,7 @@
     }
 
     input[type="submit"] {
-        font-size:$input--font_size;
+        font-size:$input-font_size;
         outline: none;
         border:none;
 
@@ -115,7 +115,7 @@
     }
 
 }
-.idea-factory-modal-scrollbar-measure {
+.avfr-modal-scrollbar-measure {
     position: absolute;
     top: -9999px;
     width: 50px;
@@ -125,34 +125,34 @@
 
 @media (min-width: 768px) {
 
-    .idea-factory-modal-dialog {
-        width: $modal--md;
+    .avfr-modal-dialog {
+        width: $modal-md;
         margin: 80px auto 30px;
     }
-    .idea-factory-modal-content {
+    .avfr-modal-content {
         @include box-shadow(0 5px 15px rgba(0,0,0,.5));
     }
 
-    .idea-factory-modal-sm { width: $modal--sm; }
+    .avfr-modal-sm { width: $modal-sm; }
 }
 
 @media (min-width: 992px) {
-    .idea-factory-modal-lg { width: $modal--lg; }
+    .avfr-modal-lg { width: $modal-lg; }
 }
 
 // CLOSE
 .close {
     float: right;
-    font-size: $close--font_size;
+    font-size: $close-font_size;
     font-weight: normal;
     line-height: 1.5;
-    color: $close--font_color;
+    color: $close-font_color;
     background:transparent;
     opacity: 0.2;
 
     &:hover,
     &:focus {
-        color: $close--font_color;
+        color: $close-font_color;
         background:none;
         text-decoration: none;
         cursor: pointer;
@@ -166,7 +166,7 @@
 
 select#group.ideagroup{
     border-radius: 3px;
-    padding: $input--padding;  
+    padding: $input-padding;  
     min-width: 192px;  
 }
 
@@ -185,7 +185,7 @@ img#reload{
     cursor: pointer;
 }
 
-input.idea-factory--button.btn.btn-default{
+input.avfr-button.btn.btn-default{
     margin-top: 0px;
     width: 110px;
     height: 40px;
@@ -193,13 +193,13 @@ input.idea-factory--button.btn.btn-default{
 
 }
 
-#idea-factory--entry--form-results{
+#avfr-entry-form-results{
     margin: 0 0 0 11px;
     height: 40px;
     background: #dd6d5a;
     border-radius: 3px;
     display: none;
-    font-size:$input--font_size;
+    font-size:$input-font_size;
     @include transition(.7s);
     p {
         color: #ffffff;
@@ -214,7 +214,7 @@ input#captcha{
     width: 192px;
 }
 
-#idea-factory--entry--form input[type="submit"]{
+#avfr-entry-form input[type="submit"]{
  padding: 0;
 }
 

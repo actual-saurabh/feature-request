@@ -21,8 +21,8 @@ module.exports = function(grunt) {
         compass: {
             options: {
                 
-                sassDir: 'css/sass',
-                cssDir: 'css/sass-output'
+                sassDir: 'public/assets/sass',
+                cssDir: 'public/assets/css'
             },
             front_dev: {
                 options: {
@@ -30,12 +30,7 @@ module.exports = function(grunt) {
                     watch:true,
                     trace:true,
                     outputStyle: 'compact' // nested, expanded, compact, compressed.
-                    
-
                 },
-                files: {
-                    'public/assets/css/feature-request.css': 'public/assets/sass/master.scss'
-                }
             }
 
         },
@@ -48,20 +43,13 @@ module.exports = function(grunt) {
                 },
                 files: {
                         'public/assets/js/feature-request.js': [
-                          'public/assets/js/transition.js',
-                          'public/assets/js/modal.js',
-                          'public/assets/js/load-posts.js',
-                          'public/assets/js/general.js',
+                        'public/assets/js/transition.js',
+                        'public/assets/js/modal.js',
+                        'public/assets/js/load-posts.js',
+                        'public/assets/js/vote.js',
                         'public/assets/js/jquery.form.min.js',
                         'public/assets/js/textext.core.js',
                         'public/assets/js/textext.plugin.autocomplete.js',
-                        'public/assets/js/textext.plugin.ajax.js',
-                        'public/assets/js/textext.plugin.arrow.js',
-                        'public/assets/js/textext.plugin.filter.js',
-                        'public/assets/js/textext.plugin.clear.js',
-                        'public/assets/js/textext.plugin.focus.js',
-                        'public/assets/js/textext.plugin.prompt.js',
-                        'public/assets/js/textext.plugin.suggestion.js',
                         'public/assets/js/textext.plugin.tags.js'
 
                     ]
