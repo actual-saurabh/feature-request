@@ -49,7 +49,7 @@ class FeatureRequestProcessVote {
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			// get vote statuses
-			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
+			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid, $email );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
 			$user_total_voted 	= $fun( $ip, $userid, $avfr_voted_group );
@@ -105,7 +105,7 @@ class FeatureRequestProcessVote {
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			// get vote statuses
-			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
+			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid, $email );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
 			$user_total_voted 	= $fun( $ip, $userid, $idea_voted_group );
@@ -156,7 +156,7 @@ class FeatureRequestProcessVote {
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			// get vote statuses
-			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
+			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid, $email );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
 			$user_total_voted 	= $fun( $ip, $userid, $avfr_voted_group );

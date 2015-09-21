@@ -156,7 +156,7 @@ class Avfr_Shortcodes {
 
 						} elseif( $public_can_vote ) {
 
-							$has_voted 		= avfr_has_voted( $id );
+							$has_voted 		= avfr_has_voted( $id, $ip, $userid, $email );
 
 						}
 
@@ -203,7 +203,7 @@ class Avfr_Shortcodes {
 
 										</div>
 										<?php
-										 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+										if ( avfr_is_voting_active( $id, $ip, $userid, $email ) ) {
 											echo avfr_vote_controls($id);
 										}
 										?>
@@ -228,7 +228,7 @@ class Avfr_Shortcodes {
 								<?php
 
 									$avfr_read_more= '<a href="' . get_permalink() . '" class="read-more" >Read More &rarr;</a>';								
-									avfr_the_trim_excerpt( null, 250, null, $avfr_read_more );    
+									avfr_get_the_trim_excerpt( null, 250, null, $avfr_read_more );    
 								?>
 								</p>
 							</div>

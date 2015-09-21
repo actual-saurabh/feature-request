@@ -9,32 +9,32 @@
  	*
  **/	
 
-function avfr_get_status( $postid ) {
+function avfr_get_status( $post_id ) {
 
-	if ( empty( $postid ) )
+	if ( empty( $post_id ) )
 		return;
 
-	$status = get_post_meta( $postid, '_request_status', true );
+	$status = get_post_meta( $post_id, '_request_status', true );
 
 	return !empty( $status ) ? $status : false;
 }
 
 
 /**
-* Get users email's that voted to request with $postid id
+* Get users email's that voted to request with $post_id id
 * @since 1.0
 */
 
-function avfr_get_voters_email( $postid ) {
+function avfr_get_voters_email( $post_id ) {
 
-	if ( empty( $postid ) )
+	if ( empty( $post_id ) )
 			return;
 
 	global $wpdb;
 
     $table 	= $wpdb->base_prefix.'feature_request';
 
-   	$sql   	=  $wpdb->prepare('SELECT email FROM '.$table.' WHERE postid ="%d" AND type="vote"', $postid );
+   	$sql   	=  $wpdb->prepare('SELECT email FROM '.$table.' WHERE postid ="%d" AND type="vote"', $post_id );
 
    	$result =  $wpdb->get_col( $sql );
 
@@ -44,32 +44,32 @@ function avfr_get_voters_email( $postid ) {
 
 
 /**
-* Get total time that request with $postid ID voted/liked/disliked.
+* Get total time that request with $post_id ID voted/liked/disliked.
 * @since 1.0
 */
 
-function avfr_get_total_votes( $postid ) {
+function avfr_get_total_votes( $post_id ) {
 
-	if ( empty( $postid ) )
+	if ( empty( $post_id ) )
 		return;
 
-	$total_votes = get_post_meta( $postid, '_feature_total_votes', true );
+	$total_votes = get_post_meta( $post_id, '_feature_total_votes', true );
 
 	return !empty( $total_votes ) ? $total_votes : false;
 }
 
 
 /**
-* Get total votes/likes of request with $postid ID.
+* Get total votes/likes of request with $post_id ID.
 * @since 1.0
 */
 
-function avfr_get_votes( $postid ) {
+function avfr_get_votes( $post_id ) {
 
-	if ( empty( $postid ) )
+	if ( empty( $post_id ) )
 		return;
 
-	$votes = get_post_meta( $postid, '_feature_votes', true );
+	$votes = get_post_meta( $post_id, '_feature_votes', true );
 
 	return !empty( $votes ) ? $votes : false;
 }
@@ -101,7 +101,7 @@ function avfr_get_option( $option, $section, $default = '' ) {
 * @since 1.0
 */
 
-function avfr_content_filter( $input = '' ) {
+function avfr_content_filter( $input ) {
 
 	// bail if no input
 	if ( empty( $input ) )
@@ -144,9 +144,9 @@ function avfr_order_features_hot() {
     $table 			= $wpdb->base_prefix.'feature_request';
     $type 			= 'vote';
    	$sql 			= $wpdb->prepare( 'SELECT postid, SUM(votes) as sum FROM '.$table.' WHERE type="%s" AND time>=(CURDATE() - INTERVAL 14 DAY) GROUP BY postid', $type );
-   	$postids 		= $wpdb->get_col( $sql, 0 );
+   	$post_ids 		= $wpdb->get_col( $sql, 0 );
    	$post_votes 	= $wpdb->get_col( $sql, 1 );
-   	$initial_array 	= array_combine($postids, $post_votes);
+   	$initial_array 	= array_combine($post_ids, $post_votes);
    	foreach ( $initial_array as $key => $value ) {
    		$final_array[$key] = $value / 336;
    	}
@@ -163,6 +163,7 @@ function avfr_order_features_hot() {
 function avfr_add_query_vars_filter( $vars ){
   $vars[] = "meta";
   $vars[] = "val";
+  $vars[] = "action";
   return $vars;
 }
 add_filter( 'query_vars', 'avfr_add_query_vars_filter' );
@@ -224,14 +225,13 @@ function avfr_archive_query( $query ) {
 * @since 1.0
 */
 
-function avfr_is_voting_active( $postid = '' , $ip , $userid ) {
+function avfr_is_voting_active( $post_id, $ip, $userid, $email ) {
 
-
-	$status      	 = avfr_get_status( $postid );
+	$status      	 = avfr_get_status( $post_id );
 
 	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 
-	if ( ( ( false == avfr_has_voted( $postid, $ip, $userid ) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $postid, $ip, $userid ) ) && !is_user_logged_in() && "1" == $public_can_vote) ) && 'open' === $status ){
+	if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) ) && !is_user_logged_in() && "1" == $public_can_vote) ) && 'open' === $status ){
 
 		return true;
 
@@ -241,6 +241,11 @@ function avfr_is_voting_active( $postid = '' , $ip , $userid ) {
 	}
 }
 
+
+/**
+* Add vote and update database
+* @since 1.0
+*/
 
 function avfr_add_vote( $args = array() ) {
 
@@ -260,9 +265,15 @@ function avfr_add_vote( $args = array() ) {
 
 }
 
-function avfr_has_voted( $postid = '', $ip = '' , $userid = '0' ) {
 
-	if ( empty( $postid ) )
+/**
+* Check
+* @since 1.0
+*/
+
+function avfr_has_voted( $post_id, $ip, $userid, $email ) {
+
+	if ( empty( $post_id ) )
 		return;
 
 	if ( empty( $ip ) )
@@ -276,7 +287,7 @@ function avfr_has_voted( $postid = '', $ip = '' , $userid = '0' ) {
 
     $table = $wpdb->base_prefix.'feature_request';
 
-   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $userid, $postid );
+   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ( ip ="%s" OR email="%s" ) AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $email, $userid, $post_id );
 
    	$result =  $wpdb->get_results( $sql );
 
@@ -292,9 +303,9 @@ function avfr_has_voted( $postid = '', $ip = '' , $userid = '0' ) {
 }
 
 
-function avfr_has_flag( $postid = '', $ip = '' ) {
+function avfr_has_flag( $post_id, $ip ) {
 
-	if ( empty( $postid ) )
+	if ( empty( $post_id ) )
 		return;
 
 	if ( empty( $ip ) )
@@ -305,7 +316,7 @@ function avfr_has_flag( $postid = '', $ip = '' ) {
 
     $table = $wpdb->base_prefix.'feature_request';
 
-   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND postid ="%d" AND type="flag"', $ip, $postid );
+   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND postid ="%d" AND type="flag"', $ip, $post_id );
 
    	$result =  $wpdb->get_results( $sql );
 
@@ -321,7 +332,7 @@ function avfr_has_flag( $postid = '', $ip = '' ) {
 }
 
 
-function avfr_total_votes_MONTH( $ip = '', $userid = '', $email ='', $idea_voted_group = '' ) {
+function avfr_total_votes_MONTH( $ip, $userid = '', $email = '', $feature_group) {
 
 	if ( empty( $ip ) )
 		$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -330,14 +341,14 @@ function avfr_total_votes_MONTH( $ip = '', $userid = '', $email ='', $idea_voted
 
     $table = $wpdb->base_prefix.'feature_request';
 
-   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( ( ip ="%s" AND userid="%s" ) OR email="%s" ) AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
+   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $idea_voted_group );
 
    	$total =  $wpdb->get_col( $sql );
 
 		return array_sum($total);
 }
 
-function avfr_total_votes_YEAR( $ip = '', $userid = '', $idea_voted_group = '' ) {
+function avfr_total_votes_YEAR( $ip, $userid = '', $idea_voted_group = '' ) {
 
 	if ( empty( $ip ) )
 		$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -353,7 +364,7 @@ function avfr_total_votes_YEAR( $ip = '', $userid = '', $idea_voted_group = '' )
 		return array_sum($total);
 }
 
-function avfr_total_votes_WEEK( $ip = '', $userid = '', $idea_voted_group = '' ) {
+function avfr_total_votes_WEEK( $ip, $userid = '', $idea_voted_group = '' ) {
 
 	if ( empty( $ip ) )
 		$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -414,7 +425,6 @@ function avfr_localized_args( $max = '', $paged = '' ){
 
 /**
 *
-*
 *	ALL PLUGGABLE BELOW
 *
 */
@@ -424,8 +434,7 @@ if ( !function_exists('avfr_submit_modal') ):
 	function avfr_submit_modal( $groups = '' ) {
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
-
-		$userid 		= $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
+		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
 
 		if ( is_user_logged_in() || '1' == $public_can_vote ) { 
 			
@@ -461,14 +470,16 @@ if ( !function_exists('avfr_submit_modal') ):
 			<div class="fade avfr-modal" tabindex="-1">
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
-						<button type="button" class="close" data-dismiss="avfr-modal"><span aria-hidden="true">&times;</span></button>
+						<button type="button" class="close" data-dismiss="avfr-modal">
+						<span aria-hidden="true">&times;</span>
+						</button>
 
 				    	<div class="avfr-modal-header">
 				    		<h3 class="avfr-modal-title"><?php apply_filters('avfr_submit_idea_label', _e('Submit feature','feature-request'));?></h3>
 				    	</div>
 				    	<div class="avfr-modal-body">
 
-							<form id="avfr-entry--form" method="post" enctype="multipart/form-data">
+							<form id="avfr-entry-form" method="post" enctype="multipart/form-data">
 								<div id="feature-form-group"><label for="feature-title"><?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?></label>
 								<?php if ( !is_archive() && !is_single() && count( explode(',', $groups) ) == 1 ) {
 								 	$group_name = get_term( $groups, 'groups' );
@@ -489,20 +500,9 @@ if ( !function_exists('avfr_submit_modal') ):
 												    'orderby'           => 'name', 
 												    'order'             => 'ASC',
 												    'hide_empty'        => false, 
-												    'exclude'           => array(), 
-												    'exclude_tree'      => array(), 
-												    'include'           => array(),
-												    'number'            => '', 
 												    'fields'            => 'all', 
-												    'slug'              => '',
-												    'parent'            => '',
 												    'childless'         => false,
-												    'get'               => '', 
-												    'name__like'        => '',
-												    'description__like' => '',
-												    'pad_counts'        => false, 
-												    'offset'            => '', 
-												    'search'            => '', 
+												    'pad_counts'        => false,  
 												    'cache_domain'      => 'core'
 												); 
 
@@ -567,7 +567,6 @@ if ( !function_exists('avfr_submit_modal') ):
   									</br>
   									<input id="feature-upload-form" type="file"  name='feature-upload'>
   								</div>
-								<!--File Upload-->
 
 								<?php endif; ?>
 
@@ -614,13 +613,15 @@ if ( !function_exists('avfr_submit_modal') ):
 	}
 
 endif;
+
+
 /**
 *
 *	disable captcha function
 *
 */
 	function avfr_disable_captcha (){
-	  $disable_captcha = avfr_get_option('avfr_disable_captcha','avfr_settings_main') ; 
+	  $disable_captcha = avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') ; 
 	 return $disable_captcha;
 	}
 
@@ -633,8 +634,8 @@ if ( !function_exists('avfr_submit_header') ):
 
 	function avfr_submit_header(){
 
-		$intro_message = avfr_get_option('avfr_welcome','avfr_settings_main',apply_filters('avfr_default_message', __('Submit and vote for new features!','feature-request')));
-		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
+		$intro_message = avfr_get_option('avfr_welcome', 'avfr_settings_main');
+		$public_can_vote = avfr_get_option('avfr_public_voting', 'avfr_settings_main');
 
 		if ( is_user_logged_in() || $public_can_vote ): ?>
 
@@ -666,28 +667,28 @@ endif;
 
 /**
 *	Draw teh actual voting controls
-*	@since 1.1
+*	@since 1.0
 *
 */
 if ( !function_exists('avfr_vote_controls') ):
 
-	function avfr_vote_controls( $postid = '' ) {
+	function avfr_vote_controls( $post_id ) {
 		
-		if ( empty( $postid ) ){
-			$postid = get_the_ID();
+		if ( empty( $post_id ) ){
+			$post_id = get_the_ID();
 		}
 
-		//check voting type
+		//get voting type
 		$voting_type = avfr_get_option('avfr_voting_type','avfr_settings_features');
 		//getting group of idea.
-		$ideagroups = get_the_terms( $postid, 'groups' );
+		$ideagroups = get_the_terms( $post_id, 'groups' );
 
 		if ( 'vote' !== $voting_type ){
 			//getting like/dislike limit option for each group
 			$vote_limit = avfr_get_option('avfr_total_vote_limit_'.$ideagroups[0]->slug,'avfr_settings_groups');
 		?>
-			<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>" id="<?php echo (int) $postid;?>" href="#"></a>
-			<a class="avfr-like avfr-vote-down" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>" id="<?php echo (int) $postid;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-down" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
 			<div class="avfr-tooltip">
 				<div class="voting-buttons">
 					<?php 
@@ -697,7 +698,7 @@ if ( !function_exists('avfr_vote_controls') ):
 						</p>
 					<?php
 						}?>
-					<a class="avfr-submit" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>" href="#"><?php _e('Vote it!','feature-request') ?></a>
+					<a class="avfr-submit" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"><?php _e('Vote it!','feature-request') ?></a>
 				</div>
 				<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
 			</div>
@@ -708,7 +709,7 @@ if ( !function_exists('avfr_vote_controls') ):
 		$voting_limit = avfr_get_option('vote_limit_'.$ideagroups[0]->slug,'if_settings_groups','');
 			if ( $voting_limit == 1 ) {
 			?>
-				<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>" href="#"></a>
+				<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -724,7 +725,7 @@ if ( !function_exists('avfr_vote_controls') ):
 			<?php
 			} else {
 				?>
-				<button class="avfr-vote-now" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>">Vote</button>
+				<button class="avfr-vote-now" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -736,7 +737,7 @@ if ( !function_exists('avfr_vote_controls') ):
 						}?>
 						<?php 
 						for ( $i=1; $i <= $voting_limit ; $i++ ) { 
-							echo "<a class='avfr-votes-value' data-current-group=".$ideagroups[0]->slug." data-post-id=". (int) $postid." data-vote=".$i." href='#'>".$i." vote</a>";
+							echo "<a class='avfr-votes-value' data-current-group=".$ideagroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
 						}
 					 ?>
 					</div>
@@ -751,14 +752,14 @@ endif;
 
 /**
 *	Draw the voting status
-*	@since 1.1
+*	@since 1.0
 *
 */
 if ( !function_exists('avfr_vote_status') ):
 
-	function avfr_vote_status( $postid = '' ) {
+	function avfr_vote_status( $post_id ) {
 
-		$status      	= avfr_get_status( $postid );
+		$status      	= avfr_get_status( $post_id );
 
 		if ( 'open' !== $status && false !== $status ) { ?>
 			<div class="avfr-status">
@@ -776,16 +777,16 @@ endif;
 */
 if ( !function_exists('avfr_flag-control') ):
 
-	function avfr_flag_control($postid = '') {
+	function avfr_flag_control( $post_id ) {
 		//getting group of idea.
-		$ideagroups = get_the_terms( $postid, 'groups' );
+		$ideagroups = get_the_terms( $post_id, 'groups' );
 		//flag option applying
 		$if_flag_disabled = avfr_get_option('if_flag','avfr_settings_features');
 		if ($if_flag_disabled=="on") {
 			?>
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
-				<a href="#" class="avfr-flag" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $postid;?>"> <?php _e('Report this idea','feature-request'); ?></a>
+				<a href="#" class="avfr-flag" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this idea','feature-request'); ?></a>
 			</div>
 			<?php
 		}
@@ -793,38 +794,6 @@ if ( !function_exists('avfr_flag-control') ):
 	}
 endif;
 
-/*-----------------------------------------------------------------------------------*/
-/*  Get trimmed string
-/*-----------------------------------------------------------------------------------*/
-
-function avfr_the_trimmed_string( $string, $max_length = 1000, $more = ' ...' ){
-    echo avfr_get_trimmed_string( $string, $max_length, $more );
-}
-
-    /**
-     * Trim string by character length
-     *
-     * @param string  $string  The string to trim
-     * @param integer $max_length  The width of the desired trim.
-     * @param $string $more  A string that is added to the end of string when string is truncated.
-     *
-     * @return string The trimmed string
-     */
-    if ( ! function_exists( 'avfr_get_trimmed_string') ) {
-
-        function avfr_get_trimmed_string( $string, $max_length = 1000, $more = ' ...' ){
-            return function_exists( 'mb_strimwidth' ) ? mb_strimwidth( $string, 0, $max_length, '' ) . $more : substr( $string, 0, $max_length ) . $more;
-        }
-
-    }
-
-/*-----------------------------------------------------------------------------------*/
-/*  Shortcode enabled excerpts trimmed by character length
-/*-----------------------------------------------------------------------------------*/
-
-function avfr_the_trim_excerpt( $post_id = null, $char_length = 250, $exclude_strip_shortcode_tags = null, $read_more = null ){
-    echo avfr_get_the_trim_excerpt( $post_id, $char_length, $exclude_strip_shortcode_tags, $read_more );
-}
 
     /**
      * Get trimmed string by character length
@@ -861,9 +830,9 @@ function avfr_the_trim_excerpt( $post_id = null, $char_length = 250, $exclude_st
 
     }
 
-/*-----------------------------------------------------------------------------------*/
+/*
 /*  Get excerpt by post ID
-/*-----------------------------------------------------------------------------------*/
+*/
 
 function avfr_the_excerpt_by_id( $post_id = null, $char_length = 250 ){
     echo avfr_get_the_excerpt_by_id( $post_id, $char_length );
@@ -901,9 +870,9 @@ function avfr_the_excerpt_by_id( $post_id = null, $char_length = 250 ){
 
     }
 
-/*-----------------------------------------------------------------------------------*/
-/*  Remove just shortcode tags from the given content but keep content of shortcodes
-/*-----------------------------------------------------------------------------------*/
+/*
+*  Remove just shortcode tags from the given content but keep content of shortcodes
+*/
 
 /**
  *  Remove just shortcode tags from the given content but keep content of shortcodes
@@ -926,9 +895,9 @@ function avfr_strip_shortcodes( $content, $exclude_strip_shortcode_tags = null )
 }
 
 
-/*-----------------------------------------------------------------------------------*/
-/*  The list of shortcode tags that should not be removed in avfr_strip_shortcodes
-/*-----------------------------------------------------------------------------------*/
+/*
+*  The list of shortcode tags that should not be removed in avfr_strip_shortcodes
+*/
 
 /**
  * List of shortcodes to strip
@@ -944,44 +913,55 @@ function avfr_exclude_strip_shortcode_tags(){
 *
 *
 */
-function avfr_image_filter( $input = '' ) {
+function avfr_image_filter( $input ) {
 
 	if ( empty( $input ) )
 		return;
 	
 	$allowed_image = array(
-		$avfr_get_file_type= avfr_get_option('avfr_settings_features','idea_allowed_file_types')
+		$avfr_get_file_type = avfr_get_option('avfr_settings_features','idea_allowed_file_types')
 	);
 
 	return $allowed_image;
 }
 
-function avfr_validate_gravatar($email) {
-	// Craft a potential url and test its headers
-	$hash = md5(strtolower(trim($email)));
-	$uri = 'http://www.gravatar.com/' . $hash.'.php';
+function avfr_validate_gravatar( $email ) {
+
+	$hash 	 = md5( strtolower( trim($email) ) );
+	$uri 	 = 'http://www.gravatar.com/' . $hash.'.php';
 	$headers = @get_headers($uri);
 	if ( $headers ) {
 
 		if ( in_array('HTTP/1.1 404 Not Found', $headers) ) {
+			
 			$has_valid_avatar = FALSE;
+
 		} else {
+
 			$has_valid_avatar = TRUE;
+
 		}
 	} else {
+
 		$has_valid_avatar = FALSE;
 	}
+
 	return $has_valid_avatar;
 }
 
-function avfr_get_author_avatar( $post_id = '' ) {
-	$author_email = get_post_meta( $post_id, '_author_email', true );
+function avfr_get_author_avatar( $post_id ) {
+
+	$author_email 	= get_post_meta( $post_id, '_author_email', true );
 
 	if ( '' == $author_email ) {
+
 		$author_email = get_the_author_meta('email');
 		$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+	
 	} else {
+
 		$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
+	
 	}
 
 	$author_avatar = get_avatar($author_email);
@@ -989,31 +969,45 @@ function avfr_get_author_avatar( $post_id = '' ) {
 	printf( '<a href="%s">%s</a>', $author_link, $author_avatar );
 }
 
-function avfr_get_author_name( $post_id = '' ) {
+function avfr_get_author_name( $post_id ) {
+
 	$author_email = get_post_meta( $post_id, '_author_email', true );
 	
 	if ( '' == $author_email ) {
+
 		$author_email = get_the_author_meta('email');
 		$author_name  = get_the_author_meta('display_name');
 		$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+	
 	} else {
 
 		$author_hash  = md5(strtolower($author_email));
 		$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
 
 		if ( FALSE !== validate_gravatar( $author_email ) ) {
-			$str = file_get_contents( 'http://www.gravatar.com/'.$author_hash.'.php' );
+
+			$str 		= file_get_contents( 'http://www.gravatar.com/'.$author_hash.'.php' );
+		
 		}
 
 		if ( !empty($str) ) {
-			$profile = unserialize( $str );
+
+			$profile 	 = unserialize( $str );
+
 			if ( is_array( $profile ) && isset( $profile['entry'] ) ) {
+
 				$author_name = $profile['entry'][0]['displayName'];
+			
 			} else {
+
 				$author_name = $profile['displayName'];
+
 			}
+
 		} else {
+
 			$author_name = 'Guest';
+		
 		}
 
 	}

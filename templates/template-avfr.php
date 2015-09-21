@@ -18,7 +18,7 @@ get_header();
 
 	do_action('avfr_layout_before'); ?>
 	<div class="container">
-	<main class="avfr--wrap site-main"  id="main" role="main">
+	<main class="avfr-wrap site-main"  id="main" role="main">
 
 		<?php 
 		global $wp_query;
@@ -101,7 +101,7 @@ get_header();
 	
 		<?php
 
-			if (is_single() && $single_allowed!='on' && !current_user_can('manage_options')) {
+			if ( is_single() && '1' != $single_allowed && !current_user_can('manage_options') ) {
 				global $wp_query;
   				$wp_query->set_404();
   				status_header( 404 );
@@ -117,30 +117,30 @@ get_header();
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= avfr_has_voted( $id, $ip , $userid );
+					$has_voted 		= avfr_has_voted( $id, $ip, $userid, $email );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
-					$status_class   = $status ? sprintf('avfr--entry__%s', $status ) : false;
+					$status_class   = $status ? sprintf('avfr-entry__%s', $status ) : false;
 					?>
-					<article class="avfr--entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr--hasvoted' : false;?>">
+					<article class="avfr-entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr-hasvoted' : false;?>">
 						<?php do_action('idea_factory_entry_wrap_top', $id ); ?>
 						<div class="avfr-votes-area" id="<?php echo (int) $id;?>">
-							<div class="avfr--controls">
-								<div class="avfr--totals">
+							<div class="avfr-controls">
+								<div class="avfr-totals">
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php
 										if ( 1 == $total_votes ) { ?>
 
-											<strong class="avfr--totals_num">1</strong><br>
-											<span class="avfr--totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
+											<strong class="avfr-totals_num">1</strong><br>
+											<span class="avfr-totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
 												
 										<?php
 
 										} elseif ( !empty( $total_votes ) ) { ?>
 												
-											<strong class="avfr--totals_num"><?php echo $total_votes ?></strong><br>
-											<span class="avfr--totals_label"><?php _e( 'votes','feature_request' ); ?></span>
+											<strong class="avfr-totals_num"><?php echo $total_votes ?></strong><br>
+											<span class="avfr-totals_label"><?php _e( 'votes','feature_request' ); ?></span>
 					
 										<?php
 										} 
@@ -148,15 +148,15 @@ get_header();
 									<?php 
 									} else { ?>
 
-										<strong class="avfr--totals_num">0</strong><br>
-										<span class="avfr--totals_label"><?php _e( 'vote','feature_request' ); ?></span>
+										<strong class="avfr-totals_num">0</strong><br>
+										<span class="avfr-totals_label"><?php _e( 'vote','feature_request' ); ?></span>
 
 									<?php
 									} ?>
 
 								</div>
 								<?php
-								 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+								 if ( avfr_is_voting_active( $id, $ip, $userid, $email ) ) {
 									echo avfr_vote_controls($id);
 								} ?>
 							</div>
@@ -234,7 +234,7 @@ get_header();
 
  						</header>
                         
- 						<div class="avfr--entry entry-content hhhhh">
+ 						<div class="avfr-entry entry-content hhhhh">
                        	<?php
                        	  	the_content(); ?>
                        	  	<?php
