@@ -237,7 +237,7 @@ class FeatureRequestProcessVote {
 			}
 			$avfr_voted_group 	= $_POST['cig'];
 			// get flag statuses
-			$has_public_flag 	= avfr_has_public_flag( $postid );
+			$has_public_flag 	= avfr_has_flag( $postid );
 			// get flags
 			$flags 				= get_post_meta( $postid, '_flag', true );
 
@@ -254,14 +254,14 @@ class FeatureRequestProcessVote {
 					update_user_meta( $userid, '_avfr'.$postid.'_has_flagged', true );
 					echo 'success';
 				}
-			}elseif(!$has_public_flag){
+			} elseif( !$has_public_flag ){
 				//Update flags count
 				update_post_meta( $postid, '_flag', intval($flags) + 1 );
 				$userid = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 				$args = array( 'postid' => $postid, 'type' => 'flag', 'groups' => $avfr_voted_group );
-		        avfr_add_public_flag( $args );
+		        avfr_add_flag( $args );
 		        echo 'success';
-				}else{
+				} else {
 					echo 'already-flagged';
 					die();
 				}

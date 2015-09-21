@@ -399,11 +399,11 @@ get_header();
 		if ($all_terms) {
 
 			if (is_tax($term)) {
-				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups')=='on' || ( (is_single() && $single_allowed!='on') ) ) ) { 
-					echo avfr_submit_modal();
+				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) ) { 
+					echo avfr_submit_box();
 				}
 			} else {
-				echo avfr_submit_modal();
+				echo avfr_submit_box();
 			}
 			
 		}

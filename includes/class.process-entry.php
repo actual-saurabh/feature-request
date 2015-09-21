@@ -50,7 +50,7 @@ class FeatureRequestProcessEntry {
 
 					printf(('<div class="error">%s</div>'), __('Whoopsy! Looks like you forgot the Title and/or description.', 'feature-request'));
 
-				} else if ( 'on' == avfr_disable_captcha() || isset ($_POST["captcha"]) && $_POST["captcha"] != "" && $_SESSION["code"] == $_POST["captcha"]  )	{
+				} else if ( '1' == avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') || isset ($_POST["captcha"]) && $_POST["captcha"] != "" && $_SESSION["code"] == $_POST["captcha"]  )	{
 
 					if ( is_user_logged_in() ) {
 

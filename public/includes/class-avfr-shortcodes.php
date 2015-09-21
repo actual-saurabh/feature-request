@@ -19,7 +19,7 @@ class Avfr_Shortcodes {
 
 	/**
 	*	Show teh votes and vote form within a shortcode
-	* 	@since version 1.1
+	* 	@since version 1.0
 	*/
 	function avfr_main_sc($atts, $content = null) {
 
@@ -177,7 +177,7 @@ class Avfr_Shortcodes {
 										<?php
 											if ( $total_votes && $show_votes  ) { ?>	
 												<?php
-												if ( 1 == $total_votes ) { ?>
+												if ( '1' == $total_votes ) { ?>
 
 													<strong class="avfr-totals_val">1</strong><br>
 													<span class="avfr-totals_label"><?php _e( 'vote','feature-request' ); ?></span>
@@ -216,7 +216,7 @@ class Avfr_Shortcodes {
 			 						<h2 class="entry-title">
 
 				 						<?php 
-				 						if ( ($single_allowed == '1') || ( ($single_allowed != '1')  && current_user_can('manage_options') ) ) { ?>
+				 						if ( ('1' == $single_allowed ) || ( ('1' != $single_allowed ) && current_user_can('manage_options') ) ) { ?>
 					 						<a href ="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 				 						<?php
 				 						} else { the_title(); } ?>
@@ -278,7 +278,7 @@ class Avfr_Shortcodes {
 
 		</div>
 
-		<?php if ( $show_submit ) { echo avfr_submit_modal($atts['groups']); }
+		<?php if ( $show_submit ) { echo avfr_submit_box($atts['groups']); }
 
 		do_action('avfr_main_sc_layout_after', $postid);
 
@@ -318,7 +318,7 @@ class Avfr_Shortcodes {
 				${'user_total_voted'.$term->slug} 	= $fun( $ip, $userid, $term->slug );
 				${'user_vote_limit'.$term->slug}	= avfr_get_option('avfr_total_vote_limit_'.$term->slug,'avfr_settings_groups');
 				${'remaining_votes'.$term->slug} 	= ${'user_vote_limit'.$term->slug} - ${'user_total_voted'.$term->slug} ;
-				echo "<p>".$term->name."</p>";
+				echo "<p class='avfr-sc-term'>".$term->name."</p>";
 				if ( $show_total ) {
 					_e('Total Votes: ','feature-request'); echo ${'user_total_voted'.$term->slug}."<br>";
 				}
@@ -330,7 +330,6 @@ class Avfr_Shortcodes {
 		</div>
 		<?php
 	}
-
 
 }
 new Avfr_Shortcodes;
