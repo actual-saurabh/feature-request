@@ -431,7 +431,7 @@ if ( !function_exists('avfr_submit_modal') ):
 			
 			$allgroups = get_terms('groups', array('hide_empty' => 0, ));
 			foreach ( $allgroups as $exclude ) {
-				if ( '1' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_vote_system') ) {
+				if ( '1' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_groups') ) {
 					$exluded[]=$exclude->term_id;
 				}
 			}

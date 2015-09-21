@@ -285,7 +285,7 @@ get_header();
 											$media = get_attached_media( 'image' );
 											//Get array of terms (Groups and ideatags)
 											$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
-						 					$ideatags 	= wp_get_post_terms( $id, 'ideatags', array("fields" => "all") );
+						 					$ideatags 	= wp_get_post_terms( $id, 'featureTags', array("fields" => "all") );
 						 					//Pluck out the IDs to get an array of IDS
 											$ideatags_ids = wp_list_pluck($ideatags,'term_id');
 

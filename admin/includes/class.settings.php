@@ -245,10 +245,10 @@ class AVFR_Settings_Api_Wrap {
             array(
                 'id' 	=> 'avfr_settings_features',
                 'title' => __( 'features', 'feature-request' ),
-                'desc'  => __( 'Features settings (file uploading and character limitation)','feature-request' )
+                'desc'  => __( 'Features settings','feature-request' )
             ),
             array(
-                'id' 	=> 'avfr_settings_vote_system',
+                'id' 	=> 'avfr_settings_groups',
                 'title' => __( 'Groups', 'feature-request' ),
                 'desc'  => __( 'Groups can have different settings','feature-request' )
             ),
@@ -313,7 +313,7 @@ class AVFR_Settings_Api_Wrap {
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_int'
                 ),
-                                 /**
+                /**
                  *
                  *Disable Upload
                  *
@@ -529,7 +529,7 @@ class AVFR_Settings_Api_Wrap {
                     'sanitize_callback' => 'esc_textarea'
                 ),
             ),
-            'avfr_settings_vote_system'    => array(
+            'avfr_settings_groups'    => array(
 
             ),
             'avfr_settings_advanced' 	=> array(
@@ -561,32 +561,32 @@ class AVFR_Settings_Api_Wrap {
         );
 
 		$taxonomy = 'groups';
-		$terms = get_terms($taxonomy,array('hide_empty'=> false,)); // Get all terms of a taxonomy
+		$terms = get_terms($taxonomy, array('hide_empty'=> false)); // Get all terms of a taxonomy
 		if ( $terms && !is_wp_error($terms) ) {
-			if ( $this->settings_api->get_option('voting_type','avfr_settings_features','')=='vote' ) { // If voting option is set to votes
 				foreach ( $terms as $term ) { 
-                    $settings_fields['avfr_settings_vote_system'][]=
+                    $settings_fields['avfr_settings_groups'][]=
                         array(
                             'name'              => 'avfr_group_'.$term->slug,
                             'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'feature-request' ),
                             'type'              => 'html',
                             'sanitize_callback' => 'avfr_sanitize_html'
                         );
-					$settings_fields['avfr_settings_vote_system'][]=
+					$settings_fields['avfr_settings_groups'][]=
 						array(
 		                    'name' 				=> 'avfr_vote_limit_'.$term->slug,
-		                    'label' 			=> __(' maximum votes :', 'feature-request' ),
+		                    'label' 			=> __( ' maximum votes :', 'feature-request' ),
+                            'desc'              => __( 'Works only in vote mode.', 'feature-request' ),
 		                    'default' 			=> __( '5', 'feature-request' ),
 		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
-		            $settings_fields['avfr_settings_vote_system'][]=
+		            $settings_fields['avfr_settings_groups'][]=
 						array(
 		                    'name' 				=> 'avfr_total_vote_limit_'.$term->slug,
 		                    'label' 			=> __( 'Total vote:', 'feature-request' ),
 		                    'default' 			=> __( '30', 'feature-request' ),
 		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
-                    $settings_fields['avfr_settings_vote_system'][]=
+                    $settings_fields['avfr_settings_groups'][]=
                         array(
                             'name'              => 'avfr_disable_comment_for'.$term->slug,
                             'label'             => __( 'Disable comments', 'feature-request' ),
@@ -595,7 +595,7 @@ class AVFR_Settings_Api_Wrap {
                             'type'              => 'checkbox',
                             'sanitize_callback' => 'avfr_sanitize_checkbox'
                         );
-                    $settings_fields['avfr_settings_vote_system'][]=
+                    $settings_fields['avfr_settings_groups'][]=
                         array(
                             'name'              => 'avfr_disable_new_for'.$term->slug,
                             'label'             => __( 'Disable submit new feature', 'feature-request' ),
@@ -605,8 +605,6 @@ class AVFR_Settings_Api_Wrap {
                             'sanitize_callback' => 'avfr_sanitize_checkbox'
                         );
 				}
-
-			}
 		}
 
         return $settings_fields;
