@@ -394,13 +394,15 @@ if ( !function_exists('avfr_add_flag') ) {
 
 	function avfr_add_flag( $args = array() ) {
 
-		$db = new ideaFactoryDB;
+		$db = new FeatureRequestDB;
 
 		$defaults = array(
 			'postid' => get_the_ID(),
 			'time'   => current_time('timestamp'),
 			'ip'   	 => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0,
 			'type'   => 'flag',
+			'email' => '',
+			'votes' => ''
 		);
 
 		$args = array_merge( $defaults, $args );

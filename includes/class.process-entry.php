@@ -26,31 +26,31 @@ class FeatureRequestProcessEntry {
 	*/
 	function process_entry(){
 		echo $avfr_image_filter;
-		$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
+		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$allowed_type	= explode(",",avfr_get_option('avfr_allowed_file_types','avfr_settings_features'));
 		$allowed_size   = avfr_get_option('avfr_max_file_size','avfr_settings_features');
 		$title 			= isset( $_POST['avfr-title'] ) ? $_POST['avfr-title'] : null;
 		$desc 			= isset( $_POST['avfr-description'] ) ? $_POST['avfr-description'] : null;
 		$uploadajx 		= isset( $_POST['avfr-upload'] ) ? $_POST['avfr-upload'] : null;
 		$uploadOk       = 1;
-		$must_approve 	= '1' == avfr_get_option('avfr_settings_features','avfr_settings_main') ? 'pending' : 'publish';
+		$must_approve 	= '1' == avfr_get_option('avfr_approve_features','avfr_settings_main') ? 'pending' : 'publish';
 		session_start();
 		
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'process_entry' ) {
 
 							// only run for logged in users or if public is allowed
-			if( !is_user_logged_in() && '1' !== $public_can_vote )
+			if( !is_user_logged_in() && 'on' !== $public_can_vote )
 				return;
 
 							// ok security passes so let's process some data
-			if ( wp_verify_nonce( $_POST['nonce'], 'if-entry-nonce' ) ) {
+			if ( wp_verify_nonce( $_POST['nonce'], 'avfr-entry-nonce' ) ) {
 
 								// bail if we dont have rquired fields
 				if ( empty( $title ) || empty( $desc ) ) {
 
 					printf(('<div class="error">%s</div>'), __('Whoopsy! Looks like you forgot the Title and/or description.', 'feature-request'));
 
-				} else if ( '1' == avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') || isset ($_POST["captcha"]) && $_POST["captcha"] != "" && $_SESSION["code"] == $_POST["captcha"]  )	{
+				} else if ( 'on' == avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') || isset ($_POST["captcha"]) && $_POST["captcha"] != "" && $_SESSION["code"] == $_POST["captcha"]  )	{
 
 					if ( is_user_logged_in() ) {
 
@@ -69,7 +69,7 @@ class FeatureRequestProcessEntry {
 					// create an feature-request post type
 					$post_args = array(
 						'post_title'    => wp_strip_all_tags( $title ),
-						'post_content'  => avfr_media_filter( $desc ),
+						'post_content'  => avfr_content_filter( $desc ),
 						'the_post_thumbnail'  => avfr_image_filter( $uploadajx ),
 						'post_status'   => $must_approve,
 						'post_type'	  	=> 'avfr',
@@ -114,7 +114,7 @@ class FeatureRequestProcessEntry {
 
 					
 					$entry_groups = wp_set_object_terms($entry_id, $groups,'groups');
-					$entry_avfrtags = wp_set_object_terms($entry_id, $tags_array,'avfrtags');
+					$entry_avfrtags = wp_set_object_terms($entry_id, $tags_array,'featureTags');
 
 					update_post_meta( $entry_id, '_avfr_votes', 0 );
 					update_post_meta( $entry_id, '_avfr_total_votes', 0 );
@@ -161,7 +161,7 @@ class FeatureRequestProcessEntry {
 		$user 		 	= get_userdata( $userid );
 		$admin_email 	= get_bloginfo('admin_email');
 		$entry       	= get_post( $entry_id );
-		$mail_disabled 	= avfr_get_option('if_disable_mail','if_settings_advanced');
+		$mail_disabled 	= avfr_get_option('avfr_disable_mail','avfr_settings_advanced');
 
 		$message = sprintf(__("Submitted by: %s", 'feature-request'), $user->display_name) .".\n\n";
 		$message .= __("Title:", 'feature-request') . "\n";

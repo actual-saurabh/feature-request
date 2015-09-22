@@ -173,7 +173,7 @@ jQuery(document).ready(function($){
 			var $this = $(this);
 
 			var data      = {
-				action:    'process_flag',
+				action:    'avfr_add_flag',
 				user_id:   $this.data('user-id'),
 				post_id:   $this.data('post-id'),
 				cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
