@@ -12,7 +12,6 @@
 
 	$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
 	$single_allowed  = avfr_get_option('if_single','avfr_settings_features');
-
 	do_action('avfr_layout_before'); ?>
 	<div class="container">
 	<main class="avfr-wrap site-main"  id="main" role="main">
@@ -62,6 +61,7 @@
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry__%s', $status ) : false;
+					$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 					?>
 					<article class="avfr-entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr-hasvoted' : false;?>">
 						<?php do_action('idea_factory_entry_wrap_top', $id ); ?>
@@ -71,7 +71,7 @@
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php
-										if ( 1 == $total_votes ) { ?>
+										if ( '1' == $total_votes ) { ?>
 
 											<strong class="avfr-totals_num">1</strong><br>
 											<span class="avfr-totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
@@ -109,7 +109,7 @@
 	 						<h2 class="entry-title">
 
 		 						<?php 
-		 						if ( ( $single_allowed == 'on') || ( ( $single_allowed != 'on')  && current_user_can('manage_options') ) ) { ?>
+		 						if ( ( $single_allowed == '1') || ( ( $single_allowed != '1')  && current_user_can('manage_options') ) ) { ?>
 			 						<a href ="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		 						<?php
 		 						} else { the_title(); } ?>
@@ -137,7 +137,7 @@
 									<?php
 								}
 									//comments option apply here
-		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
+		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
 		 						 	if ( $if_disabled_comment == '1' ) {
 		 								_e('Comments are closed for this feature.','feature-request');
 		 							} else {
@@ -161,7 +161,7 @@
 								<?php 
 									avfr_get_author_name($id);
 											?>
-										<span><?php  _e( " shared this feature", feature_request ); ?> </span>
+										<span><?php  _e( " shared this feature", 'feature_request' ); ?> </span>
 										</br>
 										<p><?php the_time('F j, Y'); ?></p>
 								 </div>
@@ -199,11 +199,14 @@
 						</div>
 							<?php
 							if (is_single()) {
-								 if ( current_user_can( 'manage_options' ) ) { 
-									if ($_GET['action']==='deletepost') {
-	 									$id = get_the_id(); 
-										wp_trash_post($id);
-									} ?>
+								 if ( current_user_can( 'manage_options' ) ) {
+								 	if ( isset($_GET['action']) ) {
+										if ($_GET['action']==='deletepost') {
+		 									$id = get_the_id(); 
+											wp_trash_post($id);
+										} 
+									}
+										?>
 								<div id="avfr_delete">	
 			 					    <span class="dashicons dashicons-trash"></span><a href="<?php the_permalink(); ?>&action=deletepost">Delete post</a>
 									<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
@@ -225,7 +228,6 @@
 										<?php 
 											$media = get_attached_media( 'image' );
 											//Get array of terms (Groups and ideatags)
-											$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 						 					$ideatags 	= wp_get_post_terms( $id, 'featureTags', array("fields" => "all") );
 						 					//Pluck out the IDs to get an array of IDS
 											$ideatags_ids = wp_list_pluck($ideatags,'term_id');
@@ -287,8 +289,8 @@
 								<?php
 								}
 							//comments option apply here
- 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
- 						 	if ( $if_disabled_comment == "on" ) {
+ 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
+ 						 	if ( $if_disabled_comment == '1' ) {
  								_e('Comments are closed for this feature.','feature-request');
  							} else {
 							?>

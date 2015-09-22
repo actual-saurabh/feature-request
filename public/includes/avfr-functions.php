@@ -270,7 +270,7 @@ if ( !function_exists('avfr_is_voting_active') ) {
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 
-		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) ) && !is_user_logged_in() && '1' == $public_can_vote) ) && 'open' === $status ){
+		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid ) ) && !is_user_logged_in() && '1' == $public_can_vote) ) && 'open' === $status ){
 
 			return true;
 
@@ -318,7 +318,7 @@ if ( !function_exists('avfr_add_vote') ) {
 
 if ( !function_exists('avfr_has_voted') ) {
 
-	function avfr_has_voted( $post_id, $ip, $userid = '0', $email ) {
+	function avfr_has_voted( $post_id, $ip, $userid = '0' ) {
 
 		if ( empty( $post_id ) )
 			return;
@@ -331,7 +331,7 @@ if ( !function_exists('avfr_has_voted') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ( ip ="%s" OR email="%s" ) AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $email, $userid, $post_id );
+	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $userid, $post_id );
 
 	   	$result =  $wpdb->get_results( $sql );
 
@@ -368,7 +368,7 @@ if ( !function_exists('avfr_has_flag') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ( ip ="%s" OR $email ) AND userid="%s" AND postid ="%d" AND type="flag"', $ip, $email, $userid, $post_id );
+	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="flag"', $ip, $userid, $post_id );
 
 	   	$result =  $wpdb->get_results( $sql );
 
@@ -428,7 +428,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())',$userid, $ip, $idea_voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -453,7 +453,7 @@ if ( !function_exists('avfr_total_votes_MONTH') ) {
 
 	    $table 	= $wpdb->base_prefix.'feature_request';
 
-	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $idea_voted_group );
+	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $idea_voted_group );
 
 	   	$total 	=  $wpdb->get_col( $sql );
 
@@ -479,7 +479,7 @@ if ( !function_exists('avfr_total_votes_YEAR') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $idea_voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -525,7 +525,7 @@ if ( !function_exists('avfr_localized_args') ) {
 
 
 /**
- * Localizing arguments
+ * Submit modal box
  * @since 1.0
  */
 
@@ -535,7 +535,7 @@ if ( !function_exists('avfr_submit_box') ):
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
-
+		$exluded  		 = '';
 		if ( is_user_logged_in() || '1' == $public_can_vote ) { 
 			
 			$allgroups = get_terms('groups', array('hide_empty' => 0, ));
@@ -581,7 +581,7 @@ if ( !function_exists('avfr_submit_box') ):
 
 							<form id="avfr-entry-form" method="post" enctype="multipart/form-data">
 								<div id="feature-form-group"><label for="feature-title"><?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?></label>
-								<?php if ( !is_archive() && !is_single() && count( explode(',', $groups) ) == 1 ) {
+								<?php if ( !is_archive() && !is_single() && !empty($groups) && count( explode(',', $groups) ) == 1 ) {
 								 	$group_name = get_term( $groups, 'groups' );
 								 	echo $group_name->name;
 								 	echo "<input name='group' type='hidden' value=".$group_name->slug.">";
@@ -1129,7 +1129,7 @@ if ( !function_exists('avfr_show_filters') ) {
 							<option value="#"><?php _e('Select a group','feature_request'); ?></option>
 								<?php
 								foreach ( $all_terms as $all_term ) { 
-									echo "<option value=".esc_url( add_query_arg( array( $taxonomy => $all_term->slug ) ) ).">".$all_term->name."</option>";
+									echo "<option value=".esc_url( add_query_arg( array( 'groups' => $all_term->slug ), get_post_type_archive_link( 'avfr' ) ) ).">".$all_term->name."</option>";
 								} ?>
 							</select>
 						</span>

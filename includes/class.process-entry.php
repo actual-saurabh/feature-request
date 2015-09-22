@@ -33,13 +33,13 @@ class FeatureRequestProcessEntry {
 		$desc 			= isset( $_POST['avfr-description'] ) ? $_POST['avfr-description'] : null;
 		$uploadajx 		= isset( $_POST['avfr-upload'] ) ? $_POST['avfr-upload'] : null;
 		$uploadOk       = 1;
-		$must_approve 	= 'on' == avfr_get_option('avfr_settings_features','if_settings_main') ? 'pending' : 'publish';
+		$must_approve 	= '1' == avfr_get_option('avfr_settings_features','avfr_settings_main') ? 'pending' : 'publish';
 		session_start();
 		
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'process_entry' ) {
 
 							// only run for logged in users or if public is allowed
-			if( !is_user_logged_in() && 'on' !== $public_can_vote )
+			if( !is_user_logged_in() && '1' !== $public_can_vote )
 				return;
 
 							// ok security passes so let's process some data

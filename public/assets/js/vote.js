@@ -2,18 +2,18 @@ jQuery(document).ready(function($){
 
 	//vars
 	var ajaxurl			= feature_request.ajaxurl,
-		results         = $('#avfr-entry--form-results p'),
+		results         = $('#avfr-entry-form-results p'),
 		thanks_voting   = feature_request.thanks_voting,
 		already_voted   = feature_request.already_voted,
 		error_message 	= feature_request.error_message,
 		thanks_flag     = feature_request.thanks_flag,
 		already_flagged = feature_request.already_flagged,
-		form 			= $('#avfr-entry--form'),
+		form 			= $('#avfr-entry-form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
 		reached_limit 	= feature_request.reached_limit;
 
 	var options = { 
-        target:        '#avfr-entry--form-results p',        
+        target:        '#avfr-entry-form-results p',        
         success:       showResponse,    
         beforeSubmit:  showRequest,    
         url:    ajaxurl                     
@@ -26,7 +26,7 @@ jQuery(document).ready(function($){
 
   		var $this =form;
 
-	   	if ( $.trim( $('#avfr-entryform_title').val() ) === '' || $.trim( $('#avfr-entryform_description').val() ) === '' )  
+	   	if ( $.trim( $('#avfr-entryform-title').val() ) === '' || $.trim( $('#avfr-entryform-description').val() ) === '' )  
 	    {
 	        $(results).html('Title and description are required.');
 	        

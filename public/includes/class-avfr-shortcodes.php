@@ -26,7 +26,8 @@ class Avfr_Shortcodes {
 		$defaults = array(
 			'hide_submit'	=> 'off',
 			'hide_voting'	=> 'off',
-			'hide_votes'	=> 'off'
+			'hide_votes'	=> 'off',
+			'groups' 		=> ''
 		);
 		$atts = shortcode_atts( $defaults, $atts );
 
@@ -66,6 +67,7 @@ class Avfr_Shortcodes {
 				if ( ! empty($atts['groups'] ) ) {
 					$args['tax_query'] = array( array( 'taxonomy' => 'groups' , 'terms' => explode(',', $atts['groups']) ), );
 				}
+			if ( isset($_GET['meta']) ) {
 
 				if ( 'my' === $_GET['meta'] ) {
 
@@ -97,6 +99,7 @@ class Avfr_Shortcodes {
 		        	unset($args['meta_value'],$args['meta_key'],$args['author']);
 
 		        }
+		    }
 
 				$q = new WP_Query( apply_filters('avfr_query_args', $args ) );
 
