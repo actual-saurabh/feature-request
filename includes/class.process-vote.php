@@ -15,11 +15,11 @@ class FeatureRequestProcessVote {
 		add_action( 'wp_ajax_process_vote_down', 			        array($this, 'process_vote_down' ));
 		add_action( 'wp_ajax_process_multi_vote', 			        array($this, 'process_multi_vote' ));
 		add_action( 'wp_ajax_process_flag', 				        array($this, 'process_flag' ));
-		add_action( 'wp_ajax_calc_remaining_votes', 		        array($this, 'calc_remaining_votes' ));
+		add_action( 'wp_ajax_avfr_calc_remaining_votes', 		    array($this, 'avfr_calc_remaining_votes' ));
 		add_action( 'wp_ajax_nopriv_process_vote_up', 				array($this, 'process_vote_up' ));
 		add_action( 'wp_ajax_nopriv_process_vote_down', 			array($this, 'process_vote_down' ));
 		add_action( 'wp_ajax_nopriv_process_multi_vote', 			array($this, 'process_multi_vote' ));
-		add_action( 'wp_ajax_nopriv_calc_remaining_votes', 			array($this, 'calc_remaining_votes' ));
+		add_action( 'wp_ajax_nopriv_avfr_calc_remaining_votes', 	array($this, 'avfr_calc_remaining_votes' ));
 				
 	}
 
@@ -191,7 +191,7 @@ class FeatureRequestProcessVote {
 
 		check_ajax_referer('feature_request','nonce');
 
-		if ( isset( $_POST['post_id'] ) ) {
+		// if ( isset( $_POST['post_id'] ) ) {
 
 			$postid 			= $_POST['post_id'];
 			// get votes
@@ -205,7 +205,7 @@ class FeatureRequestProcessVote {
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $idea_voted_group );
+			$user_total_voted 	= $fun( $ip, $userid, $voted_group );
 
 			if ( !$user_total_voted ) {
 				$user_total_voted = 0;
@@ -213,10 +213,10 @@ class FeatureRequestProcessVote {
 
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
-			$response_array = array('response' => $limit_time );
+			$response_array = array('response' => $remaining_votes  );
 			echo json_encode($response_array);
 
-		}
+		// }
 		die();
 	}
 
