@@ -10,18 +10,18 @@
  **/	
 	get_header();
 
-	$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
-	$single_allowed  = avfr_get_option('if_single','avfr_settings_features');
+	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
+	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_features');
 	do_action('avfr_layout_before'); ?>
 	<div class="container">
 	<main class="avfr-wrap site-main"  id="main" role="main">
 
-		<?php 
+		<?php
 		global $wp_query;
    		$term = $wp_query->get_queried_object();
 
 			if (is_tax($term)) {
-				if ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
+				if ( avfr_get_option('disable_new_for'.$term->slug,'avfr_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
 					 _e('Submiting new feature for this group is closed.','Feature-request');
 				} else {
 					echo avfr_submit_header();
@@ -137,8 +137,8 @@
 									<?php
 								}
 									//comments option apply here
-		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
-		 						 	if ( $if_disabled_comment == 'on' ) {
+		 						 	$disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
+		 						 	if ( $disabled_comment == 'on' ) {
 		 								_e('Comments are closed for this feature.','feature-request');
 		 							} else {
 									?>
@@ -289,8 +289,8 @@
 								<?php
 								}
 							//comments option apply here
- 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
- 						 	if ( $if_disabled_comment == 'on' ) {
+ 						 	$disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
+ 						 	if ( $disabled_comment == 'on' ) {
  								_e('Comments are closed for this feature.','feature-request');
  							} else {
 							?>

@@ -290,7 +290,7 @@ class AVFR_Settings_Api_Wrap {
                     'sanitize_callback' => 'avfr_content_filter'
                 ),
                 array(
-                    'name' 				=> 'avfr_approve_ideas',
+                    'name' 				=> 'avfr_approve_features',
                     'label' 			=> __( 'Require Feature Approval', 'feature-request' ),
                     'desc' 				=> __( 'Check this box to enable newly submitted ideas to be put into a pending status instead of automatically publishing.', 'feature-request' ),
                     'type'				=> 'checkbox',

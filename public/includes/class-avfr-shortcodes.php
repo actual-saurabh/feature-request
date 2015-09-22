@@ -73,7 +73,7 @@ class Avfr_Shortcodes {
 
 					$args['author'] = get_current_user_id();
 
-				} elseif ( '_feature_status' === $_GET['meta'] ) {
+				} elseif ( '_avfr_status' === $_GET['meta'] ) {
 					if ('all' === $_GET['val']) {
 						// continue
 					} else {
@@ -82,7 +82,7 @@ class Avfr_Shortcodes {
 						$args['meta_value'] = $_GET['val'];
 					}
 
-				} elseif ( '_feature_votes' === $_GET['meta'] ) {
+				} elseif ( '_avfr_votes' === $_GET['meta'] ) {
 					
 					$args['meta_key'] = $_GET['meta'];
 
@@ -116,7 +116,7 @@ class Avfr_Shortcodes {
 
 						if ( is_user_logged_in() ) {
 
-							$has_voted 		= get_user_meta( get_current_user_ID(), '_feature_'.$id.'_has_voted', true);
+							$has_voted 		= get_user_meta( get_current_user_ID(), '_avfr_'.$id.'_has_voted', true);
 
 						} elseif( $public_can_vote ) {
 

@@ -46,7 +46,7 @@ module.exports = function(grunt) {
                         'public/assets/js/transition.js',
                         'public/assets/js/modal.js',
                         'public/assets/js/load-posts.js',
-                        'public/assets/js/vote.js',
+                        'public/assets/js/general.js',
                         'public/assets/js/jquery.form.min.js',
                         'public/assets/js/textext.core.js',
                         'public/assets/js/textext.plugin.autocomplete.js',

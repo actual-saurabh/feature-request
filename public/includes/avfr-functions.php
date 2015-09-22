@@ -16,7 +16,7 @@ if ( !function_exists('avfr_get_status') ) {
 		if ( empty( $post_id ) )
 			return;
 
-		$status = get_post_meta( $post_id, '_request_status', true );
+		$status = get_post_meta( $post_id, '_avfr_status', true );
 
 		return !empty( $status ) ? $status : false;
 	}
@@ -63,7 +63,7 @@ if ( !function_exists('avfr_get_total_votes') ) {
 		if ( empty( $post_id ) )
 			return;
 
-		$total_votes = get_post_meta( $post_id, '_feature_total_votes', true );
+		$total_votes = get_post_meta( $post_id, '_avfr_total_votes', true );
 
 		return !empty( $total_votes ) ? $total_votes : false;
 	}
@@ -83,7 +83,7 @@ if ( !function_exists('avfr_get_votes') ) {
 		if ( empty( $post_id ) )
 			return;
 
-		$votes = get_post_meta( $post_id, '_feature_votes', true );
+		$votes = get_post_meta( $post_id, '_avfr_votes', true );
 
 		return !empty( $votes ) ? $votes : false;
 	}
@@ -227,7 +227,7 @@ if ( !function_exists('avfr_archive_query') ) {
 	 			}
 	 			$query->set( 'author', get_current_user_id() );
 
-	 		} elseif ( '_feature_status' === $meta ) {
+	 		} elseif ( '_avfr_status' === $meta ) {
 	 			if ('all' === $val ) {
 	 				//continue
 	 			} else {
@@ -235,7 +235,7 @@ if ( !function_exists('avfr_archive_query') ) {
 		 			$query->set( 'meta_value', $val );
 	 			}
 
-	 		} elseif ( '_feature_votes' === $meta ) {
+	 		} elseif ( '_avfr_votes' === $meta ) {
 
 	 			$query->set( 'meta_key', $meta );
 
@@ -264,7 +264,7 @@ add_action( 'pre_get_posts', 'avfr_archive_query');
 
 if ( !function_exists('avfr_is_voting_active') ) {
 
-	function avfr_is_voting_active( $post_id, $ip, $userid ) {
+	function avfr_is_voting_active( $post_id, $ip, $userid = '0' ) {
 
 		$status      	 = avfr_get_status( $post_id );
 
@@ -356,7 +356,7 @@ if ( !function_exists('avfr_has_voted') ) {
 
 if ( !function_exists('avfr_has_flag') ) {
 
-	function avfr_has_flag( $post_id, $ip, $userid, $email ) {
+	function avfr_has_flag( $post_id, $ip, $userid ) {
 
 		if ( empty( $post_id ) )
 			return;
@@ -444,7 +444,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 if ( !function_exists('avfr_total_votes_MONTH') ) {
 
-	function avfr_total_votes_MONTH( $ip, $userid = '', $email = '', $feature_group) {
+	function avfr_total_votes_MONTH( $ip, $userid = '', $feature_group) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -580,7 +580,7 @@ if ( !function_exists('avfr_submit_box') ):
 				    	<div class="avfr-modal-body">
 
 							<form id="avfr-entry-form" method="post" enctype="multipart/form-data">
-								<div id="feature-form-group"><label for="feature-title"><?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?></label>
+								<div id="avfr-form-group"><label for="avfr-title"><?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?></label>
 								<?php if ( !is_archive() && !is_single() && !empty($groups) && count( explode(',', $groups) ) == 1 ) {
 								 	$group_name = get_term( $groups, 'groups' );
 								 	echo $group_name->name;
@@ -626,52 +626,52 @@ if ( !function_exists('avfr_submit_box') ):
 								<?php do_action('avfr_inside_form_top');
 
 								if ( !is_user_logged_in() ) { ?>
-									<div id="feature-form-email">
+									<div id="avfr-form-email">
 										<label for="avfr-entryform_email">
 											<?php apply_filters('avfr_form_Email', _e('Email','feature-request'));?>
 										</label>
-									<input id="avfr-entry-form-email" type="text" name="feature-email" value="" placeholder="Email"></div>
+									<input id="avfr-entry-form-email" type="text" name="avfr-email" value="" placeholder="Email"></div>
 								<?php
 								}
 								?>
 								
-								<div id="feature_form_title">
-									<label for="avfr-entryform_title">
+								<div id="avfr-form-title">
+									<label for="avfr-entryform-title">
 										<?php apply_filters('avfr_form_title', _e('Title','feature-request'));?>
 									</label>
-									<input id="avfr-entryform-title" type="text" name="feature-title" value="" placeholder="My Awesome Submission">
+									<input id="avfr-entryform-title" type="text" name="avfr-title" value="" placeholder="My Awesome Submission">
 								</div>
 
-								<div id="feature-form-desc">
+								<div id="avfr-form-desc">
 									<label for="avfr-entryform-description">
 										<?php apply_filters('avfr_form_description', _e('Description','feature-request'));?>
 									</label>
-									<textarea id="avfr-entryform_description" name="feature-description" value="" placeholder="<?php _e('Make the description meaningful!', 'feature-request') ?>"></textarea>		
+									<textarea id="avfr-entryform-description" name="avfr-description" value="" placeholder="<?php _e('Make the description meaningful!', 'feature-request') ?>"></textarea>		
   								</div>
 
-  								<div id="feature-form-tags">
+  								<div id="avfr-form-tags">
 	  								<label for="tags-data-list">
 	  									<?php apply_filters('avfr_form_title', _e('Idea tags:','feature-request'));?>
 	  								</label>
-								<textarea name="feature-tags" id="tags-data-list" rows="1" ></textarea>
+								<textarea name="avfr-tags" id="tags-data-list" rows="1" ></textarea>
 								</div>
 
   								<?php $disable_upload = avfr_get_option('avfr_disable_upload','avfr_settings_fetures') ?>
   								<?php if ( 'on' != $disable_upload ) : ?>
 
-  								<div id="feature-form-upload">
-  									<label for="feature-upload-form">
+  								<div id="avfr-form-upload">
+  									<label for="avfr-upload-form">
   										<?php _e('Select file to upload:','feature-request'); ?>
   									</label>
   									<?php echo avfr_get_option('avfr_echo_type_size','avfr_settings_features');?>
   									</br>
-  									<input id="feature-upload-form" type="file"  name='feature-upload'>
+  									<input id="avfr-upload-form" type="file"  name='avfr-upload'>
   								</div>
 
 								<?php endif; ?>
 
 								<?php if ( 'on' != avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') ) : ?>
-								<div id="feature_form_captcha">
+								<div id="avfr-form-captcha">
 								      <label for="captcha">
 								      	<?php _e('Captcha','feature-request') ?>
 								      </label>
@@ -1142,11 +1142,11 @@ if ( !function_exists('avfr_show_filters') ) {
 					<span class="triangle-down">
 						<select name="filter-status" id="avfr-filter-status" onchange="document.location.href=this.value">
 							<option value="#"><?php _e('Status of feature','feature_request'); ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'all' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('All','feature_request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'open' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Open','feature_request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'approved' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Approve','feature_request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'completed' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Completed','feature_request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'declined' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Decline','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_status', 'val' => 'all' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('All','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_status', 'val' => 'open' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Open','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_status', 'val' => 'approved' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Approve','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_status', 'val' => 'completed' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Completed','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_status', 'val' => 'declined' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Decline','feature_request') ?></option>
 						</select>
 					</span>
 					</li>
@@ -1155,7 +1155,7 @@ if ( !function_exists('avfr_show_filters') ) {
 					<?php
 					} ?>
 					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'hot' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Hot','feature_request') ?></a></li>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_votes' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Top','feature_request') ?></a></li>
+					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => '_avfr_votes' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Top','feature_request') ?></a></li>
 					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'date' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('New','feature_request') ?></a></li>
 					<?php
 					if ( current_user_can('manage_options') && is_single() ) { 
