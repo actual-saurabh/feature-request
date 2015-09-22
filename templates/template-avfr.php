@@ -21,7 +21,7 @@
    		$term = $wp_query->get_queried_object();
 
 			if (is_tax($term)) {
-				if ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) { 
+				if ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
 					 _e('Submiting new feature for this group is closed.','Feature-request');
 				} else {
 					echo avfr_submit_header();
@@ -41,7 +41,7 @@
 	
 		<?php
 
-			if ( is_single() && '1' != $single_allowed && !current_user_can('manage_options') ) {
+			if ( is_single() && 'on' != $single_allowed && !current_user_can('manage_options') ) {
 				global $wp_query;
   				$wp_query->set_404();
   				status_header( 404 );
@@ -71,7 +71,7 @@
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php
-										if ( '1' == $total_votes ) { ?>
+										if ( 'on' == $total_votes ) { ?>
 
 											<strong class="avfr-totals_num">1</strong><br>
 											<span class="avfr-totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
@@ -109,7 +109,7 @@
 	 						<h2 class="entry-title">
 
 		 						<?php 
-		 						if ( ( $single_allowed == '1') || ( ( $single_allowed != '1')  && current_user_can('manage_options') ) ) { ?>
+		 						if ( ( $single_allowed == 'on') || ( ( $single_allowed != 'on')  && current_user_can('manage_options') ) ) { ?>
 			 						<a href ="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		 						<?php
 		 						} else { the_title(); } ?>
@@ -138,7 +138,7 @@
 								}
 									//comments option apply here
 		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
-		 						 	if ( $if_disabled_comment == '1' ) {
+		 						 	if ( $if_disabled_comment == 'on' ) {
 		 								_e('Comments are closed for this feature.','feature-request');
 		 							} else {
 									?>
@@ -290,7 +290,7 @@
 								}
 							//comments option apply here
  						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
- 						 	if ( $if_disabled_comment == '1' ) {
+ 						 	if ( $if_disabled_comment == 'on' ) {
  								_e('Comments are closed for this feature.','feature-request');
  							} else {
 							?>
@@ -340,7 +340,7 @@
 	<?php do_action('avfr_layout_after');
 
 			if (is_tax($term)) {
-				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) ) { 
+				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) ) { 
 					echo avfr_submit_box();
 				}
 			} else {

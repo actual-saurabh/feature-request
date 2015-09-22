@@ -294,16 +294,14 @@ class AVFR_Settings_Api_Wrap {
                     'label' 			=> __( 'Require Feature Approval', 'feature-request' ),
                     'desc' 				=> __( 'Check this box to enable newly submitted ideas to be put into a pending status instead of automatically publishing.', 'feature-request' ),
                     'type'				=> 'checkbox',
-                    'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default' 			=> ''
                 ),
                 array(
                     'name' 				=> 'avfr_public_voting',
                     'label' 			=> __( 'Enable Public Voting', 'feature-request' ),
                     'desc' 				=> __( 'Enable the public (non logged in users) to submit and vote on new ideas.', 'feature-request' ),
                     'type'				=> 'checkbox',
-                    'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default' 			=> ''
                 ),
             	array(
                     'name' 				=> 'avfr_threshold',
@@ -323,8 +321,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Disable Uplaod Files', 'feature-request' ),
                     'desc'              => __( 'Disable upload for feature factory form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
 
                 /**
@@ -337,8 +334,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Disable Captcha ', 'feature-request' ),
                     'desc'              => __( 'Disable captcha code on submit form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                  /**
                  *Type of voting setting in admin panel
@@ -367,8 +363,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Show flag in features', 'feature-request' ),
                     'desc'              => __( 'If checked, users can report unpleasant features.', 'feature-request' ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 /**
                  *Enable or disable flag in features
@@ -378,8 +373,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Single page for each feature', 'feature-request' ),
                     'desc'              => __( 'If checked, features has seprate single page and permalink goes activate!.', 'feature-request' ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 )
             ),
                 /**
@@ -442,8 +436,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Send mail if approved', 'feature-request' ),
                     'desc'              => __( 'If feature gone be approved, feature submitter will be inform via mail', 'feature-request'  ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 array(
                     'name'              => 'avfr_mail_content_approved_writer',
@@ -458,8 +451,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Send mail to Voters', 'feature-request' ),
                     'desc'              => __( 'Send email to feature voters when feature approved.', 'feature-request'  ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 array(
                     'name'              => 'avfr_mail_content_approved_voters',
@@ -473,8 +465,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'To writer if completed', 'feature-request' ),
                     'desc'              => __( 'Send email to feature writer when feature completed.', 'feature-request'  ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 array(
                     'name'              => 'avfr_mail_content_completed_writer',
@@ -488,8 +479,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'To voters if approved', 'feature-request' ),
                     'desc'              => __( 'Send email to feature voters when feature completed.', 'feature-request'  ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 array(
                     'name'              => 'avfr_mail_content_completed_voters',
@@ -518,8 +508,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'To voters if declined', 'feature-request' ),
                     'desc'              => __( 'Send email to feature voters when feature declined.', 'feature-request'  ),
                     'type'              => 'checkbox',
-                    'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default'           => ''
                 ),
                 array(
                     'name'              => 'avfr_mail_content_declined_voters',
@@ -538,24 +527,21 @@ class AVFR_Settings_Api_Wrap {
                     'label' 			=> __( 'Disable Core CSS', 'feature-request' ),
                     'desc' 				=> __( 'Disable the core css file from loading.', 'feature-request' ),
                     'type'				=> 'checkbox',
-                    'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default' 			=> ''
                 ),
                  array(
                     'name' 				=> 'avfr_disable_mail',
                     'label' 			=> __( 'Disable Emails', 'feature-request' ),
                     'desc' 				=> __( 'Disable the admin email notification of new submissions.', 'feature-request' ),
                     'type'				=> 'checkbox',
-                    'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default' 			=> ''
                 ),
                 array(
                     'name' 				=> 'avfr_disable_archive',
                     'label' 			=> __( 'Disable Archive', 'feature-request' ),
                     'desc' 				=> __( 'Disable the automatic archive. This assumes you will be using the shortcode instead to show the features on a page that you specify.', 'feature-request' ),
                     'type'				=> 'checkbox',
-                    'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
+                    'default' 			=> ''
                 )
             )
         );
@@ -592,8 +578,7 @@ class AVFR_Settings_Api_Wrap {
                             'label'             => __( 'Disable comments', 'feature-request' ),
                             'desc'              => __( 'Disable comments for selected group.', 'feature-request' ),
                             'default'           => '',
-                            'type'              => 'checkbox',
-                            'sanitize_callback' => 'avfr_sanitize_checkbox'
+                            'type'              => 'checkbox'
                         );
                     $settings_fields['avfr_settings_groups'][]=
                         array(
@@ -601,8 +586,7 @@ class AVFR_Settings_Api_Wrap {
                             'label'             => __( 'Disable submit new feature', 'feature-request' ),
                             'desc'              => __( 'Disable submitting new feature for selected group.', 'feature-request' ),
                             'default'           => '',
-                            'type'              => 'checkbox',
-                            'sanitize_callback' => 'avfr_sanitize_checkbox'
+                            'type'              => 'checkbox'
                         );
 				}
 		}
@@ -610,25 +594,7 @@ class AVFR_Settings_Api_Wrap {
         return $settings_fields;
     }
 
-    /**
-    *
-    *	Sanitize checkbox input
-    *
-    */
-    function avfr_sanitize_checkbox( $input ) {
 
-		if ( $input ) {
-
-			$output = '1';
-
-		} else {
-
-			$output = '0';
-
-		}
-
-		return $output;
-	}
 
 	/**
 	*

@@ -270,7 +270,7 @@ if ( !function_exists('avfr_is_voting_active') ) {
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 
-		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid ) ) && !is_user_logged_in() && '1' == $public_can_vote) ) && 'open' === $status ){
+		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid ) ) && !is_user_logged_in() && 'on' == $public_can_vote) ) && 'open' === $status ){
 
 			return true;
 
@@ -536,11 +536,11 @@ if ( !function_exists('avfr_submit_box') ):
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
 		$exluded  		 = '';
-		if ( is_user_logged_in() || '1' == $public_can_vote ) { 
+		if ( is_user_logged_in() || 'on' == $public_can_vote ) { 
 			
 			$allgroups = get_terms('groups', array('hide_empty' => 0, ));
 			foreach ( $allgroups as $exclude ) {
-				if ( '1' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_groups') ) {
+				if ( 'on' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_groups') ) {
 					$exluded[]=$exclude->term_id;
 				}
 			}
@@ -657,7 +657,7 @@ if ( !function_exists('avfr_submit_box') ):
 								</div>
 
   								<?php $disable_upload = avfr_get_option('avfr_disable_upload','avfr_settings_fetures') ?>
-  								<?php if ( '1' != $disable_upload ) : ?>
+  								<?php if ( 'on' != $disable_upload ) : ?>
 
   								<div id="feature-form-upload">
   									<label for="feature-upload-form">
@@ -670,7 +670,7 @@ if ( !function_exists('avfr_submit_box') ):
 
 								<?php endif; ?>
 
-								<?php if ( '1' != avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') ) : ?>
+								<?php if ( 'on' != avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') ) : ?>
 								<div id="feature_form_captcha">
 								      <label for="captcha">
 								      	<?php _e('Captcha','feature-request') ?>
@@ -796,8 +796,8 @@ if ( !function_exists('avfr_vote_controls') ):
 
 		} else {
 		
-		$voting_limit = avfr_get_option('vote_limit_'.$ideagroups[0]->slug,'if_settings_groups');
-			if ( $voting_limit == '1' ) {
+		$voting_limit = avfr_get_option('vote_limit_'.$ideagroups[0]->slug,'avfr_settings_groups');
+			if ( $voting_limit == 'on' ) {
 			?>
 				<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
 				<div class="avfr-tooltip">
@@ -866,14 +866,16 @@ endif;
  * @since 1.0
  */
 
-if ( !function_exists('avfr_flag-control') ):
+if ( !function_exists('avfr_flag_control') ):
 
 	function avfr_flag_control( $post_id ) {
+
 		//getting group of idea.
 		$ideagroups = get_the_terms( $post_id, 'groups' );
+
 		//flag option applying
-		$if_flag_disabled = avfr_get_option('if_flag','avfr_settings_features');
-		if ( '1' == $if_flag_disabled ) {
+		$flag_show = avfr_get_option('avfr_flag','avfr_settings_main');
+		if ( 'on' == $flag_show ) {
 
 			?>
 			<div class="flag-show">
