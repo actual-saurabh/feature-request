@@ -241,7 +241,7 @@ if ( !function_exists('avfr_archive_query') ) {
 
 	 		} elseif ( 'hot' === $meta ) {
 
-	 			$orderby_hot = order_ideas_hot();
+	 			$orderby_hot = avfr_order_features_hot();
 	 			$query->set( 'post__in' , $orderby_hot );
 	 			$order_by = 'post__in';
 	 		}
@@ -264,13 +264,13 @@ add_action( 'pre_get_posts', 'avfr_archive_query');
 
 if ( !function_exists('avfr_is_voting_active') ) {
 
-	function avfr_is_voting_active( $post_id, $ip, $userid, $email ) {
+	function avfr_is_voting_active( $post_id, $ip, $userid ) {
 
 		$status      	 = avfr_get_status( $post_id );
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 
-		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) ) && !is_user_logged_in() && "1" == $public_can_vote) ) && 'open' === $status ){
+		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid, $email ) ) && !is_user_logged_in() && '1' == $public_can_vote) ) && 'open' === $status ){
 
 			return true;
 
@@ -327,6 +327,7 @@ if ( !function_exists('avfr_has_voted') ) {
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
 	    global $wpdb;
+
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
@@ -427,7 +428,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( ( ip ="%s" AND userid="%s" ) OR email="%s" ) AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -478,7 +479,7 @@ if ( !function_exists('avfr_total_votes_YEAR') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( ( ip ="%s" AND userid="%s" ) OR email="%s" ) AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ( ip ="%s" OR email="%s" ) AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $ip, $userid, $email, $idea_voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -502,7 +503,6 @@ if ( !function_exists('avfr_localized_args') ) {
 		$args = array(
 			'ajaxurl' 		  => admin_url( 'admin-ajax.php' ),
 			'nonce'			  => wp_create_nonce('feature_request'),
-			'error_message'   => apply_filters('avfr_error', __('Awww snap, something went wrong!', 'feature-request')),
 			'label'			  => apply_filters('avfr_loadmore_label', __('Load more ideas', 'feature-request')),
 			'label_loading'   => apply_filters('avfr_loadmore_loading', __('Loading ideas...', 'feature-request')),
 			'thanks_voting'   => apply_filters('avfr_thanks_voting', __('Thanks for voting!', 'feature-request')),
@@ -888,6 +888,23 @@ endif;
 
 
 /**
+ * Trim string by character length
+ *
+ * @param string  $string  The string to trim
+ * @param integer $max_length  The width of the desired trim.
+ * @param $string $more  A string that is added to the end of string when string is truncated.
+ *
+ * @return string The trimmed string
+ */
+if ( ! function_exists( 'avfr_get_trimmed_string') ) {
+
+    function avfr_get_trimmed_string( $string, $max_length = 1000, $more = ' ...' ){
+        return function_exists( 'mb_strimwidth' ) ? mb_strimwidth( $string, 0, $max_length, '' ) . $more : substr( $string, 0, $max_length ) . $more;
+    }
+
+}
+
+/**
  * Trim excerpt
  * @since 1.0
  */
@@ -1093,6 +1110,71 @@ if ( !function_exists('avfr_get_author_name') ) {
 
 		}
 		printf( '<a href="%s">%s</a>', $author_link, $author_name );
+	}
+
+}
+
+if ( !function_exists('avfr_show_filters') ) {
+
+	function avfr_show_filters() {
+		$all_terms    	 = get_terms( 'groups', array( 'hide_empty' => false ) );
+		?>
+				<div class="avfr-filter">
+				<ul class="avfr-filter-controls">
+					<li class="avfr-filter-control-item">
+						<?php
+						if ( $all_terms && !is_wp_error($all_terms) ) : ?>
+						<span class="triangle-down">
+							<select id="avfr-filter-groups" onchange="document.location.href=this.value">
+							<option value="#"><?php _e('Select a group','feature_request'); ?></option>
+								<?php
+								foreach ( $all_terms as $all_term ) { 
+									echo "<option value=".esc_url( add_query_arg( array( $taxonomy => $all_term->slug ) ) ).">".$all_term->name."</option>";
+								} ?>
+							</select>
+						</span>
+						<?php
+						endif; ?>
+					</li>
+					<li class="avfr-filter-control-item">
+					<span class="triangle-down">
+						<select name="filter-status" id="avfr-filter-status" onchange="document.location.href=this.value">
+							<option value="#"><?php _e('Status of feature','feature_request'); ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'all' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('All','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'open' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Open','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'approved' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Approve','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'completed' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Completed','feature_request') ?></option>
+							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'declined' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Decline','feature_request') ?></option>
+						</select>
+					</span>
+					</li>
+					<?php if ( is_user_logged_in() ) { ?>
+						<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'my' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('My Features','feature_request') ?></a></li>
+					<?php
+					} ?>
+					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'hot' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Hot','feature_request') ?></a></li>
+					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_votes' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('Top','feature_request') ?></a></li>
+					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'date' ), get_post_type_archive_link( 'avfr' ) ) ); ?>"><?php _e('New','feature_request') ?></a></li>
+					<?php
+					if ( current_user_can('manage_options') && is_single() ) { 
+						$id = get_the_ID();
+						?>
+						<div class="status-changing">
+						<span class="triangle-down">
+							<select name="statusChanging" class="change-status-select" data-post-id="<?php echo (int) $id;?>">
+								<option value="open"><?php _e('Open','feature_request') ?></option>
+								<option value="approved"><?php _e('Approve','feature_request') ?></option>
+								<option value="completed"><?php _e('Completed','feature_request') ?></option>
+								<option value="declined"><?php _e('Decline','feature_request') ?></option>
+							</select>
+						</span>
+								<a class="avfr avfr-change-status" data-val="open" data-post-id="<?php echo (int) $id;?>" href="#">Change</a>
+						</div>
+					<?php
+					} ?>
+				</ul>
+			</div>
+		<?php
 	}
 
 }

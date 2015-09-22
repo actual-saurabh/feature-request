@@ -36,8 +36,6 @@ class Avfr_Shortcodes {
 		$show_voting  	 = 'on' !== $atts['hide_voting'];
 		$show_votes   	 = 'on' !== $atts['hide_votes'];
 		$single_allowed  = avfr_get_option('avfr_single','avfr_settings_features');
-		$taxonomy 	  	 = 'groups';
- 		$all_terms    	 = get_terms( $taxonomy );
 		ob_start();
 
 		do_action('avfr_main_sc_layout_before', $postid);
@@ -46,45 +44,9 @@ class Avfr_Shortcodes {
 
 			do_action('avfr_main_sc_layout_before_entries', $postid);
 
-			if ( $show_submit ) { echo avfr_submit_header(); } ?>
-			<div class="avfr-filters">
-				<ul class="avfr-filter-controls">
-					<li class="avfr-filter-control-item">
-						<?php
-						if ( $all_terms && !is_wp_error($all_terms) ) : ?>
-						<span class="triangle-down">
-							<select id="avfr-filter-groups" onchange="document.location.href=this.value">
-							<option value="#"><?php _e('Select a group','feature-request'); ?></option>
-								<?php
-								foreach ( $all_terms as $all_term ) { 
-									echo "<option value=".esc_url( add_query_arg( array( $taxonomy => $all_term->slug ) ) ).">".$all_term->name."</option>";
-								} ?>
-							</select>
-						</span>
-						<?php
-						endif; ?> 
-					</li>
-					<li class="avfr-filter-control-item">
-					<span class="triangle-down">
-						<select name="filter-status" id="avfr-filter-status" onchange="document.location.href=this.value">
-							<option value="#"><?php _e('Status of feature','feature-request'); ?></option>
-							<option id="avfr-filter-status" value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'all' ) ) ); ?>"><?php _e('All','feature-request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'open' ) ) ); ?>"><?php _e('Open','feature-request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'approved' ) ) ); ?>"><?php _e('Approve','feature-request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'completed' ) ) ); ?>"><?php _e('Completed','feature-request') ?></option>
-							<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'declined' ) ) ); ?>"><?php _e('Decline','feature-request') ?></option>
-						</select>
-					</span>
-					</li>
-					<?php if ( is_user_logged_in() ) { ?>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'my' ) ) ); ?>"><?php _e('My suggestions','feature-request') ?></a></li>
-					<?php
-					} ?>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'hot' ) ) ); ?>"><?php _e('Hot','feature-request') ?></a></li>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_votes' ) ) ); ?>"><?php _e('Top','feature-request') ?></a></li>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'date' ) ) ); ?>"><?php _e('New','feature-request') ?></a></li>
-				</ul>
-			</div>
+			if ( $show_submit ) { echo avfr_submit_header(); } 
+				avfr_show_filters();
+				?>
 			<section class="avfr-layout-main">
 				<?php
 
@@ -194,15 +156,15 @@ class Avfr_Shortcodes {
 											<?php 
 											} else { ?>
 
-												<strong class="avfr-totals_value">0</strong><br>
-												<span class="avfr-totals_label"><?php _e( 'vote','feature-request' ); ?></span>
+												<strong class="avfr-totals-value">0</strong><br>
+												<span class="avfr-totals-label"><?php _e( 'vote','feature-request' ); ?></span>
 
 											<?php
 											} ?>
 
 										</div>
 										<?php
-										if ( avfr_is_voting_active( $id, $ip, $userid, $email ) ) {
+										if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
 											echo avfr_vote_controls($id);
 										}
 										?>
@@ -233,7 +195,7 @@ class Avfr_Shortcodes {
 							</div>
 							<footer>
 							<div class="entry-meta" role="category tag">
-								<div class="avfr_short_group">
+								<div class="avfr-short-group">
 									<span class="dashicons dashicons-category"></span>
 									<?php
 									the_terms( $id, 'groups', ' ', ', ' );
@@ -241,7 +203,7 @@ class Avfr_Shortcodes {
 								</div>
 							<?php
 								if ( false != has_term( '', 'featurestags', $id) ) {?>
-									<div class="avfr_short_tags">
+									<div class="avfr-short-tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
 										the_terms( $id, 'featurestags', ' ', ', ' );
@@ -249,7 +211,7 @@ class Avfr_Shortcodes {
 									</div>
 							<?php } ?>
 								<div>
-									<span class="avfr_short_comment">
+									<span class="avfr-short-comment">
 										<span class="dashicons dashicons-admin-comments"></span>
 										<?php comments_popup_link( 'No comment', 'One comment', '% comments', get_permalink() ); ?>
 									</span>
@@ -302,10 +264,8 @@ class Avfr_Shortcodes {
 		$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			//Calculate votes
 		$fun 				= 'avfr_total_votes_'.$limit_time;
-
-		$taxonomy 		 	= 'groups';
 		$args 				= array( 'include' => $atts['groups'] );
-		$terms    		 	= get_terms( $taxonomy , $args );
+		$terms    		 	= get_terms( 'groups' , $args );
 		?>
 		<div class="user-votes-shortcode">
 
