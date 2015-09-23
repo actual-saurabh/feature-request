@@ -108,7 +108,7 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 
 		var data      = {
-			action:    $this.hasClass('avfr-set-vote-up') ? 'process_vote_up' : 'process_vote_down',
+			action:    $this.hasClass('avfr-set-vote-up') ? 'avfr_add_vote' : 'avfr_minus_vote',
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
