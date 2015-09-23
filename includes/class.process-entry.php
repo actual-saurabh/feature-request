@@ -76,7 +76,7 @@ class FeatureRequestProcessEntry {
 						'post_author'   => (int) $userid
 						);
 					if ( !is_user_logged_in() ) {
-						$email = $_POST['idea-email'];
+						$email = $_POST['avfr-email'];
 						if ( !is_email($email) ) {
 							$response_array = array('success' => 'false' , 'message' => __('<span class="dashicons dashicons-warning"></span>'.'Please enter a valid email address.','idea-factory'));
 							echo json_encode($response_array);
@@ -129,7 +129,7 @@ class FeatureRequestProcessEntry {
 					update_post_meta( $entry_id, '_flag', 0 );
 
 					if ( !is_user_logged_in() ) {
-						update_post_meta( $entry_id, 'avfr_author_email', $email );
+						update_post_meta( $entry_id, '_avfr_author_email', $email );
 					}
 
 					do_action('avfr_entry_submitted', $entry_id, $userid );

@@ -222,7 +222,7 @@ if ( !function_exists('avfr_archive_query') ) {
 
 	 		if ( 'my' === $meta ) {
 	 			if ( !empty($val) ) {
-	 				$query->set( 'meta_key', '_author_email' );
+	 				$query->set( 'meta_key', '_avfr_author_email' );
 		 			$query->set( 'meta_value', base64_decode($val) );
 	 			}
 	 			$query->set( 'author', get_current_user_id() );
@@ -1043,16 +1043,16 @@ if ( !function_exists('avfr_get_author_avatar') ) {
 
 	function avfr_get_author_avatar( $post_id ) {
 
-		$author_email 	= get_post_meta( $post_id, '_author_email', true );
+		$author_email 	= get_post_meta( $post_id, '_avfr_author_email', true );
 
 		if ( '' == $author_email ) {
 
 			$author_email = get_the_author_meta('email');
-			$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas' );
 		
 		} else {
 
-			$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
+			$author_link  = esc_url( add_query_arg( array( 'meta' => 'my', 'val' => base64_encode($author_email) ), get_post_type_archive_link( 'avfr' ) ) );
 		
 		}
 
@@ -1073,20 +1073,20 @@ if ( !function_exists('avfr_get_author_name') ) {
 
 	function avfr_get_author_name( $post_id ) {
 
-		$author_email = get_post_meta( $post_id, '_author_email', true );
+		$author_email = get_post_meta( $post_id, '_avfr_author_email', true );
 		
 		if ( '' == $author_email ) {
 
 			$author_email = get_the_author_meta('email');
-			$author_name  = get_the_author_meta('display_name');
-			$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+			$author_name  = esc_html( get_the_author_meta('display_name') );
+			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=avfr' );
 		
 		} else {
 
 			$author_hash  = md5(strtolower($author_email));
-			$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
+			$author_link  = esc_url( add_query_arg( array( 'meta' => 'my', 'val' => base64_encode($author_email) ), get_post_type_archive_link( 'avfr' ) ) );
 
-			if ( FALSE !== validate_gravatar( $author_email ) ) {
+			if ( FALSE !== avfr_validate_gravatar( $author_email ) ) {
 
 				$str 		 = file_get_contents( 'http://www.gravatar.com/'.$author_hash.'.php' );
 			
