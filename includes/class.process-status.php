@@ -103,15 +103,10 @@ class FeatureRequestProcessStatus {
 
 		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_voters','avfr_settings_mail') ) {
 
-			$reciever_ids 		= get_voters_id($post_id);
-			foreach ( $reciever_ids as $reciever ) {
-				$recievers_info 	= get_userdata($reciever);
-				$reciever_emails[]	= $recievers_info->user_email;
-			}
-
-			$content		= avfr_get_option('mail_content_'.$new_status.'_voters','avfr_settings_mail');
+			$reciever_emails		= get_voters_email($post_id);
+			$content		= avfr_get_option('avfr_mail_content_'.$new_status.'_voters','avfr_settings_mail');
 			$mail_content   = str_replace($search, $replace, $content);
-			wp_mail( $reciever_emails, 'Feature Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
+			wp_mail( $reciever_emails, 'Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
 
 		}
 

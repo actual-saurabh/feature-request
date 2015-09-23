@@ -139,6 +139,10 @@ jQuery(document).ready(function($){
 
 				alert( reached_limit );
 
+			} else if ( 'email-warning' == json.response ) {
+
+				alert( json.warning );
+
 			} else {
 
 				alert( error_message );
