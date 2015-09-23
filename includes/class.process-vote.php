@@ -49,7 +49,7 @@ class FeatureRequestProcessVote {
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
-			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
+			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) || 'undefined' != $_POST['voter_email'] ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','idea-factory'), 'email' => $voter_email );
 				echo json_encode($response_array);
@@ -59,7 +59,7 @@ class FeatureRequestProcessVote {
 			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $idea_voted_group );
+			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
 			// if the public can vote and the user has already voted or they are logged in and have already voted then bail out
@@ -73,13 +73,13 @@ class FeatureRequestProcessVote {
 				echo $remaining_votes;
 					die();
 			} else {
-				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $idea_voted_group, 'votes' => '1', 'userid' => $userid, 'email' => $voter_email );
+				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $voted_group, 'votes' => '1', 'userid' => $userid, 'email' => $voter_email );
 				avfr_add_vote( $args );
 				//increase votes
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + 1 );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
 				do_action('avfr_vote_up', $postid, $userid );
-				$response_array = array('response' => 'success' , 'total_votes' => intval( $total_votes ) + intval($votes_num), 'remaining' => $remaining_votes - 1 );
+				$response_array = array('response' => 'success' , 'total_votes' => intval( $total_votes ) + 1, 'remaining' => $remaining_votes - 1 );
 				echo json_encode($response_array);
 			}
 		}
@@ -111,7 +111,8 @@ class FeatureRequestProcessVote {
 			//Get user ID
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
+			$get_voter_email 	= get_userdata($userid);
+			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) || 'undefined' != $_POST['voter_email'] ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','idea-factory') );
 				echo json_encode($response_array);
@@ -121,7 +122,7 @@ class FeatureRequestProcessVote {
 			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $idea_voted_group );
+			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
 			// if the public can vote and the user has already voted or they are logged in and have already voted then bail out
@@ -135,7 +136,7 @@ class FeatureRequestProcessVote {
 				echo $remaining_votes;
 					die();
 			} else {
-				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $idea_voted_group, 'votes' => '1', 'userid' => $userid, 'email' => $voter_email );
+				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $voted_group, 'votes' => '1', 'userid' => $userid, 'email' => $voter_email );
 				avfr_add_vote( $args );
 				//increase votes
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) - 1 );
@@ -168,7 +169,8 @@ class FeatureRequestProcessVote {
 			//Get user ID
 			$userid = get_current_user_ID();
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
+			$get_voter_email 	= get_userdata($userid);
+			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) && 'undefined' != $_POST['voter_email'] ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','idea-factory') );
 				echo json_encode($response_array);
@@ -178,7 +180,7 @@ class FeatureRequestProcessVote {
 			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $idea_voted_group );
+			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
 			// if the public can vote and the user has already voted or they are logged in and have already voted then bail out
@@ -193,7 +195,7 @@ class FeatureRequestProcessVote {
 				echo json_encode($response_array);
 					die();
 			} else {
-				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $idea_voted_group, 'votes' => intval($votes_num), 'userid' => $userid, 'email' => $voter_email );
+				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $voted_group, 'votes' => intval($votes_num), 'userid' => $userid, 'email' => $voter_email );
 				avfr_add_vote( $args );
 				//increase votes
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval($votes_num) );
@@ -210,7 +212,7 @@ class FeatureRequestProcessVote {
 
 		check_ajax_referer('feature_request','nonce');
 
-		// if ( isset( $_POST['post_id'] ) ) {
+		if ( isset( $_POST['post_id'] ) ) {
 
 			$postid 			= $_POST['post_id'];
 			// get votes
@@ -223,10 +225,10 @@ class FeatureRequestProcessVote {
 
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
-			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
+			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) && 'undefined' != $_POST['voter_email'] ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $idea_voted_group );
+			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
 
 			if ( !$user_total_voted ) {
 				$user_total_voted = 0;
@@ -237,7 +239,7 @@ class FeatureRequestProcessVote {
 			$response_array = array('response' => $remaining_votes );
 			echo json_encode($response_array);
 
-		// }
+		}
 		die();
 	}
 

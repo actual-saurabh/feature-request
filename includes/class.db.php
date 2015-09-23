@@ -35,6 +35,7 @@ class FeatureRequestDB {
 			'userid'	=> '',
 			'groups' 	=> '',
 			'type'		=> '',
+			'email'		=> '',
 			'votes' 	=> ''
 		);
 
@@ -49,7 +50,8 @@ class FeatureRequestDB {
 					`userid`	= '%s',
 					`groups`	= '%s',
 					`type`		= '%s',
-					`votes`		= '%s'
+					`votes`		= '%s',
+					`email`		= '%s'
 				;",
 				absint( $args['postid'] ),
 				date_i18n( 'Y-m-d H:i:s', $args['time'], true ),
@@ -57,7 +59,8 @@ class FeatureRequestDB {
 				$args['userid'],
 				$args['groups'],
 				$args['type'],
-				absint($args['votes'])
+				absint($args['votes']),
+				$args['email']
 			)
 		);
 

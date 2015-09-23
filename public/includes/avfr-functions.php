@@ -421,7 +421,7 @@ if ( !function_exists('avfr_add_flag') ) {
 
 if ( !function_exists('avfr_total_votes_WEEK') ) {
 
-	function avfr_total_votes_WEEK( $ip, $userid = '', $idea_voted_group = '' ) {
+	function avfr_total_votes_WEEK( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -430,7 +430,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())',$userid, $ip, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -446,7 +446,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 if ( !function_exists('avfr_total_votes_MONTH') ) {
 
-	function avfr_total_votes_MONTH( $ip, $userid = 0, $voted_group) {
+	function avfr_total_votes_MONTH( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -455,7 +455,7 @@ if ( !function_exists('avfr_total_votes_MONTH') ) {
 
 	    $table 	= $wpdb->base_prefix.'feature_request';
 
-	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $voted_group );
+	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total 	=  $wpdb->get_col( $sql );
 
@@ -472,7 +472,7 @@ if ( !function_exists('avfr_total_votes_MONTH') ) {
 
 if ( !function_exists('avfr_total_votes_YEAR') ) {
 
-	function avfr_total_votes_YEAR( $ip, $userid = '', $idea_voted_group = '' ) {
+	function avfr_total_votes_YEAR( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -481,7 +481,7 @@ if ( !function_exists('avfr_total_votes_YEAR') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
