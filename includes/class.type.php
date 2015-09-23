@@ -21,7 +21,7 @@ class FeatureRequestType {
 	*/
 	function avfr_post_type() {
 
-		$disable_archive = avfr_get_option('if_disable_archive','if_settings_advanced');
+		$disable_archive = avfr_get_option('avfr_disable_archive','avfr_settings_advanced');
 
 		$domain = 'on' == $disable_archive ? false : avfr_get_option('if_domain','if_settings_main','avfr');
 

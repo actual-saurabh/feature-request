@@ -2,22 +2,22 @@ jQuery(document).ready(function($){
 
 	//vars
 	var ajaxurl			= feature_request.ajaxurl,
-		results         = $('#avfr-entry--form-results p'),
+		results         = $('#avfr-entry-form-results p'),
 		thanks_voting   = feature_request.thanks_voting,
 		already_voted   = feature_request.already_voted,
 		error_message 	= feature_request.error_message,
 		thanks_flag     = feature_request.thanks_flag,
 		already_flagged = feature_request.already_flagged,
-		form 			= $('#avfr-entry--form'),
+		form 			= $('#avfr-entry-form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
 		reached_limit 	= feature_request.reached_limit;
 
 	var options = { 
-        target:        '#avfr-entry--form-results p',        
+        target:        '#avfr-entry-form-results p',        
         success:       showResponse,    
         beforeSubmit:  showRequest,    
-        url:    ajaxurl                     
-    }; 
+        url: 		   ajaxurl                     
+    };
 
     form.ajaxForm(options);
 
@@ -26,13 +26,17 @@ jQuery(document).ready(function($){
 
   		var $this =form;
 
-	   	if ( $.trim( $('#avfr-entryform_title').val() ) === '' || $.trim( $('#avfr-entryform_description').val() ) === '' )  
-	    {
-	        $(results).html('Title and description are required.');
+	   	if ( $.trim( $('#avfr-entryform-title').val() ) === '' ) {
+	        $this.find("#avfr-entryform-title").css('border-color','#d9534f');
+	        var _return = false;
+	    }
+	    if ( $.trim( $('#avfr-entryform-description').val() ) === '' ) {
+	        $this.find("textarea[name='avfr-description']").css('border-color','#d9534f');
 	        
-	        $this.find('input[name="idea-title"]').css('border-color','#d9534f');
-	        $this.find('textarea[name="idea-description"]').css('border-color','#d9534f');
-	        return false;
+	        var _return = false;
+	    }
+	    if ( _return === false ) {
+	    	return false;
 	    }
 			$this.find(':submit').attr( 'disabled','disabled' );
 			$('#avfr-entry-form-results').show();
@@ -74,9 +78,9 @@ jQuery(document).ready(function($){
 		$this.nextAll('.avfr-tooltip').find('.avfr-submit').addClass( voteClass );
 
 		var data      = {
-			action:    'calc_remaining_votes',
+			action:    'avfr_calc_remaining_votes',
 			post_id:   $this.data('post-id'),
-			cig: 	   $this.data('current-group'), // cig = Current Idea Group
+			cfg: 	   $this.data('current-group'),
 			nonce:     feature_request.nonce
 		};
 
@@ -107,7 +111,7 @@ jQuery(document).ready(function($){
 			action:    $this.hasClass('avfr-set-vote-up') ? 'process_vote_up' : 'process_vote_down',
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
-			cig: 	   $this.data('current-group'), // cig = Current Idea Group
+			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
 			nonce:     feature_request.nonce
 		};
 		if ( null === localStorage.getItem('email') ) {
@@ -169,10 +173,10 @@ jQuery(document).ready(function($){
 			var $this = $(this);
 
 			var data      = {
-				action:    'process_flag',
+				action:    'avfr_add_flag',
 				user_id:   $this.data('user-id'),
 				post_id:   $this.data('post-id'),
-				cig: 	   $this.data('current-group'), // cig = Current Idea Group
+				cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
 				nonce:     feature_request.nonce
 			};
 
@@ -202,7 +206,7 @@ jQuery(document).ready(function($){
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
-			cig: 	   $this.data('current-group'), // cig = Current Idea Group
+			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
 			nonce:     feature_request.nonce
 		};
 		if ( null === localStorage.getItem('email') ) {
@@ -294,7 +298,7 @@ jQuery(document).ready(function($){
 		var data      = {
 			action:    'calc_remaining_votes',
 			post_id:   $this.data('post-id'),
-			cig: 	   $this.data('current-group'), // cig = Current Idea Group
+			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
 			nonce:     feature_request.nonce
 		};
 

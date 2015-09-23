@@ -29,7 +29,7 @@ class FeatureRequestProcessStatus {
 	function process_status( $postid, $userid ) {
 
 		// get threashold
-		$threshold = avfr_get_option('if_threshold','if_settings_main');
+		$threshold = avfr_get_option('avfr_threshold','avfr_settings_main');
 
 		// bail if no user threshold set
 		if ( empty( $threshold ) )
@@ -92,16 +92,16 @@ class FeatureRequestProcessStatus {
 		$search			= array('{{writer-name}}','{{avfr-title}}','{{votes}}');
 		$replace 		= array($reciever_info->user_login, $entry->post_title, avfr_get_votes( $post_id ));
 
-		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_writer','if_settings_mail') ) {
+		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_writer','avfr_settings_mail') ) {
 			
 			$reciever_email = get_the_author_meta( 'user_email' , $post_author_id );
-			$content		= avfr_get_option('mail_content_'.$new_status.'_writer','if_settings_mail');
+			$content		= avfr_get_option('mail_content_'.$new_status.'_writer','avfr_settings_mail');
 			$mail_content   = str_replace($search, $replace, $content);
 			wp_mail( $reciever_email, 'Feature Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
 
 		}
 
-		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_voters','if_settings_mail') ) {
+		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_voters','avfr_settings_mail') ) {
 
 			$reciever_ids 		= get_voters_id($post_id);
 			foreach ( $reciever_ids as $reciever ) {
@@ -109,7 +109,7 @@ class FeatureRequestProcessStatus {
 				$reciever_emails[]	= $recievers_info->user_email;
 			}
 
-			$content		= avfr_get_option('mail_content_'.$new_status.'_voters','if_settings_mail');
+			$content		= avfr_get_option('mail_content_'.$new_status.'_voters','avfr_settings_mail');
 			$mail_content   = str_replace($search, $replace, $content);
 			wp_mail( $reciever_emails, 'Feature Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
 
@@ -130,7 +130,7 @@ class FeatureRequestProcessStatus {
 
 		$admin_email 	= get_bloginfo('admin_email');
 		$entry       	= get_post( $postid );
-		$mail_disabled 	= avfr_get_option('if_disable_mail','if_settings_advanced');
+		$mail_disabled 	= avfr_get_option('avfr_disable_mail','avfr_settings_advanced');
 
 		$message = "The status of ".$entry->post_title." has been updated to:\n";
 		$message .= "".$status."\n\n";

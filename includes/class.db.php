@@ -17,8 +17,9 @@ class FeatureRequestDB {
 
 		global $wpdb;
 
-		$this->avfr_table_name   = $wpdb->base_prefix . 'av_feature_request';
-		$this->avfr_db_ver 	= AVFR_VERSION;
+
+		$this->table_name   = $wpdb->base_prefix . 'feature_request';
+		$this->db_version 	= AVFR_VERSION;
 
 	}
 
@@ -60,8 +61,6 @@ class FeatureRequestDB {
 				absint($args['votes'])
 			)
 		);
-
-		do_action( 'avfr_public_vote', $args, $wpdb->insert_id );
 
 		if( $add )
 			return $wpdb->insert_id;

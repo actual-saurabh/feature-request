@@ -8,24 +8,20 @@
  	*	@copyright 			2015 Averta
  	*
  **/	
-get_header();
+	get_header();
 
-	$public_can_vote = avfr_get_option('if_public_voting','if_settings_main');
-	$single_allowed  = avfr_get_option('if_single','avfr_settings_features');
-	$taxonomy 		 = 'groups';
- 	$all_terms    	 = get_terms( $taxonomy, array( 'hide_empty' => false ) );
-
+	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
+	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_features');
 	do_action('avfr_layout_before'); ?>
 	<div class="container">
 	<main class="avfr-wrap site-main"  id="main" role="main">
 
-		<?php 
+		<?php
 		global $wp_query;
    		$term = $wp_query->get_queried_object();
-		if ($all_terms) {
 
 			if (is_tax($term)) {
-				if ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) { 
+				if ( avfr_get_option('disable_new_for'.$term->slug,'avfr_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
 					 _e('Submiting new feature for this group is closed.','Feature-request');
 				} else {
 					echo avfr_submit_header();
@@ -33,65 +29,10 @@ get_header();
 			} else {
 				echo avfr_submit_header();
 			}
-			
-		}
+		
 		?>
 
-		<div class="avfr-filter">
-			<ul class="avfr-filter-controls">
-				<li class="avfr-filter-control-item">
-					<?php
-					if ( $all_terms && !is_wp_error($all_terms) ) : ?>
-					<span class="triangle-down">
-						<select id="avfr-filter-groups" onchange="document.location.href=this.value">
-						<option value="#"><?php _e('Select a group','feature_request'); ?></option>
-							<?php
-							foreach ( $all_terms as $all_term ) { 
-								echo "<option value=".esc_url( add_query_arg( array( $taxonomy => $all_term->slug ) ) ).">".$all_term->name."</option>";
-							} ?>
-						</select>
-					</span>
-					<?php
-					endif; ?>
-				</li>
-				<li class="avfr-filter-control-item">
-				<span class="triangle-down">
-					<select name="filter-status" id="avfr-filter-status" onchange="document.location.href=this.value">
-						<option value="#"><?php _e('Status of feature','feature_request'); ?></option>
-						<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'all' ) ) ); ?>"><?php _e('All','feature_request') ?></option>
-						<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'open' ) ) ); ?>"><?php _e('Open','feature_request') ?></option>
-						<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'approved' ) ) ); ?>"><?php _e('Approve','feature_request') ?></option>
-						<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'completed' ) ) ); ?>"><?php _e('Completed','feature_request') ?></option>
-						<option value="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_status', 'val' => 'declined' ) ) ); ?>"><?php _e('Decline','feature_request') ?></option>
-					</select>
-				</span>
-				</li>
-				<?php if ( is_user_logged_in() ) { ?>
-					<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'my' ) ) ); ?>"><?php _e('My Features','feature_request') ?></a></li>
-				<?php
-				} ?>
-				<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'hot' ) ) ); ?>"><?php _e('Hot','feature_request') ?></a></li>
-				<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => '_feature_votes' ) ) ); ?>"><?php _e('Top','feature_request') ?></a></li>
-				<li class="avfr-filter-control-item"><a href="<?php echo esc_url( add_query_arg( array( 'meta' => 'date' ) ) ); ?>"><?php _e('New','feature_request') ?></a></li>
-				<?php
-				if ( current_user_can('manage_options') && is_single() ) { 
-					$id = get_the_ID();
-					?>
-					<div class="status-changing">
-					<span class="triangle-down">
-						<select name="statusChanging" class="change-status-select" data-post-id="<?php echo (int) $id;?>">
-							<option value="open"><?php _e('Open','feature_request') ?></option>
-							<option value="approved"><?php _e('Approve','feature_request') ?></option>
-							<option value="completed"><?php _e('Completed','feature_request') ?></option>
-							<option value="declined"><?php _e('Decline','feature_request') ?></option>
-						</select>
-					</span>
-							<a class="avfr avfr-change-status" data-val="open" data-post-id="<?php echo (int) $id;?>" href="#">Change</a>
-					</div>
-				<?php
-				} ?>
-			</ul>
-		</div>
+		<?php avfr_show_filters(); ?>
 
 		<?php
 		do_action('avfr_before_entries'); ?>
@@ -100,7 +41,7 @@ get_header();
 	
 		<?php
 
-			if ( is_single() && '1' != $single_allowed && !current_user_can('manage_options') ) {
+			if ( is_single() && 'on' != $single_allowed && !current_user_can('manage_options') ) {
 				global $wp_query;
   				$wp_query->set_404();
   				status_header( 404 );
@@ -116,10 +57,11 @@ get_header();
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= avfr_has_voted( $id, $ip, $userid, $email );
+					$has_voted 		= avfr_has_voted( $id, $ip, $userid );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry__%s', $status ) : false;
+					$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 					?>
 					<article class="avfr-entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr-hasvoted' : false;?>">
 						<?php do_action('idea_factory_entry_wrap_top', $id ); ?>
@@ -129,7 +71,7 @@ get_header();
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php
-										if ( 1 == $total_votes ) { ?>
+										if ( 'on' == $total_votes ) { ?>
 
 											<strong class="avfr-totals_num">1</strong><br>
 											<span class="avfr-totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
@@ -155,7 +97,7 @@ get_header();
 
 								</div>
 								<?php
-								 if ( avfr_is_voting_active( $id, $ip, $userid, $email ) ) {
+								 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
 									echo avfr_vote_controls($id);
 								} ?>
 							</div>
@@ -195,8 +137,8 @@ get_header();
 									<?php
 								}
 									//comments option apply here
-		 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
-		 						 	if ( $if_disabled_comment == '1' ) {
+		 						 	$disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
+		 						 	if ( $disabled_comment == 'on' ) {
 		 								_e('Comments are closed for this feature.','feature-request');
 		 							} else {
 									?>
@@ -219,7 +161,7 @@ get_header();
 								<?php 
 									avfr_get_author_name($id);
 											?>
-										<span><?php  _e( " shared this feature", feature_request ); ?> </span>
+										<span><?php  _e( " shared this feature", 'feature_request' ); ?> </span>
 										</br>
 										<p><?php the_time('F j, Y'); ?></p>
 								 </div>
@@ -257,11 +199,14 @@ get_header();
 						</div>
 							<?php
 							if (is_single()) {
-								 if ( current_user_can( 'manage_options' ) ) { 
-									if ($_GET['action']==='deletepost') {
-	 									$id = get_the_id(); 
-										wp_trash_post($id);
-									} ?>
+								 if ( current_user_can( 'manage_options' ) ) {
+								 	if ( isset($_GET['action']) ) {
+										if ($_GET['action']==='deletepost') {
+		 									$id = get_the_id(); 
+											wp_trash_post($id);
+										} 
+									}
+										?>
 								<div id="avfr_delete">	
 			 					    <span class="dashicons dashicons-trash"></span><a href="<?php the_permalink(); ?>&action=deletepost">Delete post</a>
 									<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
@@ -283,7 +228,6 @@ get_header();
 										<?php 
 											$media = get_attached_media( 'image' );
 											//Get array of terms (Groups and ideatags)
-											$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 						 					$ideatags 	= wp_get_post_terms( $id, 'featureTags', array("fields" => "all") );
 						 					//Pluck out the IDs to get an array of IDS
 											$ideatags_ids = wp_list_pluck($ideatags,'term_id');
@@ -345,8 +289,8 @@ get_header();
 								<?php
 								}
 							//comments option apply here
- 						 	$if_disabled_comment = avfr_get_option('disable_comment_for'.$terms[0]->slug,'if_settings_groups');
- 						 	if ( $if_disabled_comment == "on" ) {
+ 						 	$disabled_comment = avfr_get_option('disable_comment_for'.$groups[0]->slug,'avfr_settings_groups');
+ 						 	if ( $disabled_comment == 'on' ) {
  								_e('Comments are closed for this feature.','feature-request');
  							} else {
 							?>
@@ -395,17 +339,13 @@ get_header();
 
 	<?php do_action('avfr_layout_after');
 
-		if ($all_terms) {
-
 			if (is_tax($term)) {
-				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == '1' || ( (is_single() && $single_allowed != '1') ) ) ) { 
+				if ( ! ( avfr_get_option('disable_new_for'.$term->slug,'if_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) ) { 
 					echo avfr_submit_box();
 				}
 			} else {
 				echo avfr_submit_box();
 			}
-			
-		}
 
 	get_footer();
 
