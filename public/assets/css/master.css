@@ -56,69 +56,66 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .avfr-modal-header h3 { margin: 0; line-height: 1.5; }
 
 /* line 65, ../sass/_modal.scss */
-.avfr-modal-title { margin: 0; line-height: 1; }
+.avfr-modal-title { margin: 0; line-height: 1; clear: none; }
 
-/* line 70, ../sass/_modal.scss */
+/* line 71, ../sass/_modal.scss */
 .avfr-modal-body { position: relative; padding: 15px; }
 
-/* line 74, ../sass/_modal.scss */
+/* line 75, ../sass/_modal.scss */
 .text-wrap { width: 100% !important; }
-/* line 76, ../sass/_modal.scss */
+/* line 77, ../sass/_modal.scss */
 .text-wrap #tags-data-list { height: 32px; width: 100% !important; min-height: 32px; border-radius: 5px; border-color: #ccc; padding: 6px 0 26px 8px; }
 
-/* line 87, ../sass/_modal.scss */
+/* line 88, ../sass/_modal.scss */
 .avfr-modal-footer { padding-top: 15px; text-align: left; }
-/* line 92, ../sass/_modal.scss */
+/* line 93, ../sass/_modal.scss */
 .avfr-modal-footer .btn + .btn { margin-left: 5px; margin-bottom: 0; }
-/* line 97, ../sass/_modal.scss */
+/* line 98, ../sass/_modal.scss */
 .avfr-modal-footer .btn-group .btn + .btn { margin-left: -1px; }
-/* line 101, ../sass/_modal.scss */
+/* line 102, ../sass/_modal.scss */
 .avfr-modal-footer .btn-block + .btn-block { margin-left: 0; }
-/* line 105, ../sass/_modal.scss */
+/* line 106, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"] { font-size: 14px; outline: none; border: none; }
-/* line 110, ../sass/_modal.scss */
+/* line 111, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"]:active, .avfr-modal-footer input[type="submit"]:focus { outline: none; border: none; }
 
-/* line 118, ../sass/_modal.scss */
+/* line 119, ../sass/_modal.scss */
 .avfr-modal-scrollbar-measure { position: absolute; top: -9999px; width: 50px; height: 50px; overflow: scroll; }
 
-@media (min-width: 768px) { /* line 128, ../sass/_modal.scss */
+@media (min-width: 768px) { /* line 129, ../sass/_modal.scss */
   .avfr-modal-dialog { width: 600px; margin: 80px auto 30px; }
-  /* line 132, ../sass/_modal.scss */
+  /* line 133, ../sass/_modal.scss */
   .avfr-modal-content { -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
-  /* line 136, ../sass/_modal.scss */
+  /* line 137, ../sass/_modal.scss */
   .avfr-modal-sm { width: 300px; } }
-@media (min-width: 992px) { /* line 140, ../sass/_modal.scss */
+@media (min-width: 992px) { /* line 141, ../sass/_modal.scss */
   .avfr-modal-lg { width: 900px; } }
-/* line 144, ../sass/_modal.scss */
-.close { float: right; font-size: 18px; font-weight: normal; line-height: 1.5; color: #000; background: transparent; opacity: 0.2; }
-/* line 153, ../sass/_modal.scss */
-.close:hover, .close:focus { color: #000; background: none; text-decoration: none; cursor: pointer; box-shadow: none; outline: none; border: none; opacity: 0.5; }
+/* line 145, ../sass/_modal.scss */
+.close { float: right; font-size: 18px; font-weight: normal; line-height: 1.5; color: #000; background: transparent; opacity: 0.4; border: none; }
+/* line 154, ../sass/_modal.scss */
+.close:hover, .close:focus { color: #000; background: none; text-decoration: none; cursor: pointer; box-shadow: none; outline: none; border: none; opacity: 0.7; }
 
-/* line 167, ../sass/_modal.scss */
+/* line 168, ../sass/_modal.scss */
 select#group.ideagroup { border-radius: 3px; padding: 5px; min-width: 192px; }
 
-/* line 173, ../sass/_modal.scss */
+/* line 174, ../sass/_modal.scss */
 img#imgCaptcha { margin-left: 11px; border-radius: 3px; box-shadow: none; vertical-align: middle; margin-left: 10px; }
 
-/* line 181, ../sass/_modal.scss */
+/* line 182, ../sass/_modal.scss */
 img#reload { margin-left: 6px; box-shadow: none; vertical-align: middle; cursor: pointer; }
 
-/* line 188, ../sass/_modal.scss */
+/* line 189, ../sass/_modal.scss */
 input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px; border-radius: 25px; }
 
-/* line 196, ../sass/_modal.scss */
+/* line 197, ../sass/_modal.scss */
 #avfr-entry-form-results { margin: 0 0 0 11px; height: 40px; background: #dd6d5a; border-radius: 3px; display: none; font-size: 14px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
-/* line 204, ../sass/_modal.scss */
+/* line 205, ../sass/_modal.scss */
 #avfr-entry-form-results p { color: #ffffff; padding: 10px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
 
-/* line 212, ../sass/_modal.scss */
+/* line 213, ../sass/_modal.scss */
 input#captcha { height: 30px; width: 192px; }
 
-/* line 217, ../sass/_modal.scss */
-#avfr-entry-form input[type="submit"] { padding: 0; }
-
-/* line 221, ../sass/_modal.scss */
+/* line 218, ../sass/_modal.scss */
 .dashicons-warning:before { margin: 15px 15px 0 0; }
 
 /* line 2, ../sass/_form.scss */
@@ -151,110 +148,110 @@ input#captcha { height: 30px; width: 192px; }
 /* line 22, ../sass/_layout.scss */
 .avfr-layout-submit .avfr-submit-left { float: left; padding: 10px 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 /* line 27, ../sass/_layout.scss */
-.avfr-layout-submit .avfr-submit-right { float: right; }
+.avfr-layout-submit .avfr-submit-right { float: right; padding: 10px 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-/* line 32, ../sass/_layout.scss */
-#avfr-entry-form input[type="submit"], .avfr-button { height: 40px; width: 147px; text-align: center; background: #007aaf; color: white; border-radius: 3px; padding: 8px; text-decoration: none; -moz-transition: background 0.1s ease; -o-transition: background 0.1s ease; -webkit-transition: background 0.1s ease; transition: background 0.1s ease; display: inline-block; }
-/* line 45, ../sass/_layout.scss */
+/* line 34, ../sass/_layout.scss */
+#avfr-entry-form input[type="submit"], .avfr-button { width: 147px; text-align: center; background: #007aaf; color: white; border-radius: 3px; padding: 16px 8px; text-decoration: none; -moz-transition: background 0.1s ease; -o-transition: background 0.1s ease; -webkit-transition: background 0.1s ease; transition: background 0.1s ease; display: inline-block; }
+/* line 46, ../sass/_layout.scss */
 #avfr-entry-form input[type="submit"]:visited, #avfr-entry-form input[type="submit"]:hover, .avfr-button:visited, .avfr-button:hover { color: white; background: #006896; }
-/* line 50, ../sass/_layout.scss */
+/* line 51, ../sass/_layout.scss */
 #avfr-entry-form input[type="submit"]:active, .avfr-button:active { outline: none; background: #005e86; -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5); -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5); }
 
-/* line 59, ../sass/_layout.scss */
+/* line 60, ../sass/_layout.scss */
 .avfr-entry-wrap { overflow: hidden; *zoom: 1; display: block; width: 100%; padding: 25px; margin-bottom: 0 !important; }
-/* line 65, ../sass/_layout.scss */
+/* line 66, ../sass/_layout.scss */
 .avfr-entry-wrap:nth-child(even) { background: #f7f7f7; }
-/* line 68, ../sass/_layout.scss */
+/* line 69, ../sass/_layout.scss */
 .avfr-entry-wrap footer, .avfr-entry-wrap div.entry-meta { display: table; margin: 0; }
-/* line 71, ../sass/_layout.scss */
+/* line 72, ../sass/_layout.scss */
 .avfr-entry-wrap footer div, .avfr-entry-wrap div.entry-meta div { display: inline-block; color: #acacac; margin: 10px; }
-/* line 76, ../sass/_layout.scss */
+/* line 77, ../sass/_layout.scss */
 .avfr-entry-wrap footer .avfr-short-group, .avfr-entry-wrap div.entry-meta .avfr-short-group { padding-left: 0; margin-left: 0; }
-/* line 80, ../sass/_layout.scss */
+/* line 81, ../sass/_layout.scss */
 .avfr-entry-wrap footer span, .avfr-entry-wrap div.entry-meta span { display: inline-block; color: #c7c7c7; text-decoration: none; vertical-align: text-top; margin: 0; }
-/* line 87, ../sass/_layout.scss */
+/* line 88, ../sass/_layout.scss */
 .avfr-entry-wrap footer img, .avfr-entry-wrap div.entry-meta img { box-shadow: none; }
-/* line 90, ../sass/_layout.scss */
+/* line 91, ../sass/_layout.scss */
 .avfr-entry-wrap footer a, .avfr-entry-wrap div.entry-meta a { color: #acacac; }
-/* line 92, ../sass/_layout.scss */
+/* line 93, ../sass/_layout.scss */
 .avfr-entry-wrap footer a:hover, .avfr-entry-wrap footer a:focus, .avfr-entry-wrap footer a:active, .avfr-entry-wrap div.entry-meta a:hover, .avfr-entry-wrap div.entry-meta a:focus, .avfr-entry-wrap div.entry-meta a:active { color: #acacac; }
-/* line 99, ../sass/_layout.scss */
+/* line 100, ../sass/_layout.scss */
 .avfr-entry-wrap footer { margin-left: 116px; }
-/* line 102, ../sass/_layout.scss */
+/* line 103, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-header { margin-top: 0; display: table; }
-/* line 106, ../sass/_layout.scss */
+/* line 107, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-header .entry-title { font-weight: bold; font-size: 20px; margin: 0; }
-/* line 112, ../sass/_layout.scss */
+/* line 113, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-content { display: table; margin-left: 116px; }
-/* line 116, ../sass/_layout.scss */
+/* line 117, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-content .read-more { font-size: 0.9em; padding-left: 15px; }
 
-/* line 124, ../sass/_layout.scss */
+/* line 125, ../sass/_layout.scss */
 .avfr-entry { font-size: 16px; line-height: 24px; display: table; margin: 0; }
-/* line 129, ../sass/_layout.scss */
+/* line 130, ../sass/_layout.scss */
 .avfr-entry p { margin: 0px; }
-/* line 132, ../sass/_layout.scss */
+/* line 133, ../sass/_layout.scss */
 .avfr-entry img { box-shadow: none; }
 
-/* line 137, ../sass/_layout.scss */
+/* line 138, ../sass/_layout.scss */
 .avfr-controls { text-align: center; border: 1px solid #cccccc; padding: 8px; width: 96px; border-radius: 3px; background-color: #fff; line-height: 1.5; }
-/* line 145, ../sass/_layout.scss */
+/* line 146, ../sass/_layout.scss */
 .avfr-controls .avfr-totals { padding: 5px; }
-/* line 149, ../sass/_layout.scss */
+/* line 150, ../sass/_layout.scss */
 .avfr-controls .avfr-totals .avfr-totals_num { font-size: 18px; line-height: 22px; }
-/* line 154, ../sass/_layout.scss */
+/* line 155, ../sass/_layout.scss */
 .avfr-controls .avfr-totals .avfr-totals_label { font-size: 12px; color: #898989; }
-/* line 160, ../sass/_layout.scss */
+/* line 161, ../sass/_layout.scss */
 .avfr-controls.voted { font-size: 85%; display: block; line-height: 1; margin-top: 8px; }
 
-/* line 169, ../sass/_layout.scss */
+/* line 170, ../sass/_layout.scss */
 .avfr-vote-up, .avfr-vote-down { position: relative; overflow: hidden; display: inline-block; height: 30px; width: 32px; font-size: 18px; margin-top: -2px; text-decoration: none; border: 1px solid #ccc; border-radius: 3px; }
-/* line 182, ../sass/_layout.scss */
+/* line 183, ../sass/_layout.scss */
 .avfr-vote-up:after, .avfr-vote-down:after { font-family: Dashicons; position: absolute; left: 0; top: 2px; right: 0; bottom: 0; height: 16px; }
-/* line 192, ../sass/_layout.scss */
+/* line 193, ../sass/_layout.scss */
 .avfr-vote-up:focus, .avfr-vote-up:active, .avfr-vote-down:focus, .avfr-vote-down:active { outline: none; }
 
-/* line 197, ../sass/_layout.scss */
+/* line 198, ../sass/_layout.scss */
 .avfr-vote-up { margin-rigth: 2px; }
-/* line 199, ../sass/_layout.scss */
+/* line 200, ../sass/_layout.scss */
 .avfr-vote-up:after { content: '\f132'; color: #5cb85c; }
-/* line 204, ../sass/_layout.scss */
+/* line 205, ../sass/_layout.scss */
 .avfr-vote-up:hover:after { color: #4cae4c; }
 
-/* line 209, ../sass/_layout.scss */
+/* line 210, ../sass/_layout.scss */
 .avfr-vote-down { margin-left: 2px; }
-/* line 211, ../sass/_layout.scss */
+/* line 212, ../sass/_layout.scss */
 .avfr-vote-down:after { content: '\f460'; color: #d9534f; }
-/* line 216, ../sass/_layout.scss */
+/* line 217, ../sass/_layout.scss */
 .avfr-vote-down:hover:after { color: #d43f3a; }
 
-/* line 220, ../sass/_layout.scss */
+/* line 221, ../sass/_layout.scss */
 .ah-thanks, .avfr-totals { font-size: 95%; }
 
-/* line 225, ../sass/_layout.scss */
+/* line 226, ../sass/_layout.scss */
 .ah-thanks { line-height: 0.9; }
 
-/* line 230, ../sass/_layout.scss */
+/* line 231, ../sass/_layout.scss */
 .avfr-status { margin-top: 10px; font-size: 12px; letter-spacing: 0.05em; text-transform: capitalize; }
-/* line 237, ../sass/_layout.scss */
+/* line 238, ../sass/_layout.scss */
 .avfr-status span { display: inline-block; vertical-align: baseline; white-space: nowrap; text-align: center; padding: 11px 15px; color: white; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); border-radius: 2px; width: 96px; font-size: 13px; line-height: 1.5; }
-/* line 251, ../sass/_layout.scss */
+/* line 252, ../sass/_layout.scss */
 .avfr-status .avfr-status_approved { background: #5cb85c; }
-/* line 254, ../sass/_layout.scss */
+/* line 255, ../sass/_layout.scss */
 .avfr-status .avfr-status_declined { background: #d9534f; }
-/* line 257, ../sass/_layout.scss */
+/* line 258, ../sass/_layout.scss */
 .avfr-status .avfr-status_open { background: #5bc0de; }
-/* line 260, ../sass/_layout.scss */
+/* line 261, ../sass/_layout.scss */
 .avfr-status .avfr-status_completed { background: #007aaf; }
 
-/* line 265, ../sass/_layout.scss */
+/* line 266, ../sass/_layout.scss */
 .avfr-loadmore { margin: 20px auto; }
 
-/* line 270, ../sass/_layout.scss */
+/* line 271, ../sass/_layout.scss */
 .avfr-filter-controls { margin-left: 0 !important; padding: 15px 0px; }
-/* line 274, ../sass/_layout.scss */
+/* line 275, ../sass/_layout.scss */
 .avfr-filter-controls .avfr-filter-control-item { display: inline-block; }
-/* line 278, ../sass/_layout.scss */
+/* line 279, ../sass/_layout.scss */
 .avfr-filter-controls .avfr-filter-control-item a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 7px 20px; font-size: 13px; line-height: 16px; border-radius: 3px; text-decoration: none; border-width: 1px; }
 /* line 10, ../sass/_mixins.scss */
 .avfr-filter-controls .avfr-filter-control-item a:hover, .avfr-filter-controls .avfr-filter-control-item a:focus, .avfr-filter-controls .avfr-filter-control-item a:active, .avfr-filter-controls .avfr-filter-control-item a.active, .avfr-filter-controls .avfr-filter-control-item a.current, .avfr-filter-controls .avfr-filter-control-item a .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
@@ -264,18 +261,18 @@ input#captcha { height: 30px; width: 192px; }
 .avfr-filter-controls .avfr-filter-control-item a.disabled, .avfr-filter-controls .avfr-filter-control-item a.disabled:hover, .avfr-filter-controls .avfr-filter-control-item a.disabled:focus, .avfr-filter-controls .avfr-filter-control-item a.disabled:active, .avfr-filter-controls .avfr-filter-control-item a.disabled.active, .avfr-filter-controls .avfr-filter-control-item a[disabled], .avfr-filter-controls .avfr-filter-control-item a[disabled]:hover, .avfr-filter-controls .avfr-filter-control-item a[disabled]:focus, .avfr-filter-controls .avfr-filter-control-item a[disabled]:active, .avfr-filter-controls .avfr-filter-control-item a[disabled].active, .avfr-filter-controls .avfr-filter-control-item a fieldset[disabled], .avfr-filter-controls .avfr-filter-control-item a fieldset[disabled]:hover, .avfr-filter-controls .avfr-filter-control-item a fieldset[disabled]:focus, .avfr-filter-controls .avfr-filter-control-item a fieldset[disabled]:active, .avfr-filter-controls .avfr-filter-control-item a fieldset[disabled].active { background-color: #ddd; }
 /* line 40, ../sass/_mixins.scss */
 .avfr-filter-controls .avfr-filter-control-item a .badge { color: #ddd; background-color: #fff; }
-/* line 286, ../sass/_layout.scss */
+/* line 287, ../sass/_layout.scss */
 .avfr-filter-controls div, .avfr-filter-controls li { margin: 8px 3px; }
-/* line 289, ../sass/_layout.scss */
+/* line 290, ../sass/_layout.scss */
 .avfr-filter-controls select { vertical-align: baseline; appearance: none; -moz-appearance: none; -webkit-appearance: none; position: relative; padding-right: 30px; border-radius: 3px; }
-/* line 298, ../sass/_layout.scss */
+/* line 299, ../sass/_layout.scss */
 .avfr-filter-controls .triangle-down { position: relative; }
-/* line 300, ../sass/_layout.scss */
-.avfr-filter-controls .triangle-down:after { content: ''; display: inline-block; position: absolute; background-color: #EDEFF2; border: solid transparent; border-top-color: #999; pointer-events: none; border-width: 6px 4px 4px 4px; top: 10px; right: 15px; }
+/* line 301, ../sass/_layout.scss */
+.avfr-filter-controls .triangle-down:after { content: ''; display: inline-block; position: absolute; background-color: transparent; border: solid transparent; border-top-color: #999; pointer-events: none; border-width: 6px 4px 4px 4px; top: 10px; right: 15px; }
 
-/* line 315, ../sass/_layout.scss */
+/* line 316, ../sass/_layout.scss */
 .status-changing { float: right; }
-/* line 317, ../sass/_layout.scss */
+/* line 318, ../sass/_layout.scss */
 .status-changing a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 7px 10px; font-size: 13px; line-height: 16px; border-radius: 3px; text-decoration: none; border-width: 1px; }
 /* line 10, ../sass/_mixins.scss */
 .status-changing a:hover, .status-changing a:focus, .status-changing a:active, .status-changing a.active, .status-changing a.current, .status-changing a .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
@@ -286,7 +283,7 @@ input#captcha { height: 30px; width: 192px; }
 /* line 40, ../sass/_mixins.scss */
 .status-changing a .badge { color: #ddd; background-color: #fff; }
 
-/* line 326, ../sass/_layout.scss */
+/* line 327, ../sass/_layout.scss */
 .avfr-vote-now { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; border-width: 1px; font-size: 13px; border-radius: 3px; }
 /* line 10, ../sass/_mixins.scss */
 .avfr-vote-now:hover, .avfr-vote-now:focus, .avfr-vote-now:active, .avfr-vote-now.active, .avfr-vote-now.current, .avfr-vote-now .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
@@ -297,7 +294,7 @@ input#captcha { height: 30px; width: 192px; }
 /* line 40, ../sass/_mixins.scss */
 .avfr-vote-now .badge { color: #ddd; background-color: #fff; }
 
-/* line 333, ../sass/_layout.scss */
+/* line 334, ../sass/_layout.scss */
 .avfr-disabled-button { color: gray; background-color: #efefef; border-color: #dedede; border-style: solid; padding: 5px 20px; font-size: 13px; line-height: 16px; border-radius: 3px; border-width: 1px; margin: 0; }
 /* line 10, ../sass/_mixins.scss */
 .avfr-disabled-button:hover, .avfr-disabled-button:focus, .avfr-disabled-button:active, .avfr-disabled-button.active, .avfr-disabled-button.current, .avfr-disabled-button .open .dropdown-toggle { color: white; background-color: #636363; border-color: #494949; background-image: none; box-shadow: none; }
@@ -307,19 +304,19 @@ input#captcha { height: 30px; width: 192px; }
 .avfr-disabled-button.disabled, .avfr-disabled-button.disabled:hover, .avfr-disabled-button.disabled:focus, .avfr-disabled-button.disabled:active, .avfr-disabled-button.disabled.active, .avfr-disabled-button[disabled], .avfr-disabled-button[disabled]:hover, .avfr-disabled-button[disabled]:focus, .avfr-disabled-button[disabled]:active, .avfr-disabled-button[disabled].active, .avfr-disabled-button fieldset[disabled], .avfr-disabled-button fieldset[disabled]:hover, .avfr-disabled-button fieldset[disabled]:focus, .avfr-disabled-button fieldset[disabled]:active, .avfr-disabled-button fieldset[disabled].active { background-color: #efefef; }
 /* line 40, ../sass/_mixins.scss */
 .avfr-disabled-button .badge { color: #efefef; background-color: #fff; }
-/* line 338, ../sass/_layout.scss */
+/* line 339, ../sass/_layout.scss */
 .avfr-disabled-button:hover { border-color: #dedede; color: gray; }
 
-/* line 343, ../sass/_layout.scss */
+/* line 344, ../sass/_layout.scss */
 .avfr-votes-area { margin-right: 20px; float: left; }
-/* line 346, ../sass/_layout.scss */
+/* line 347, ../sass/_layout.scss */
 .avfr-votes-area .flag-show { text-align: center; padding-top: 5px; }
-/* line 349, ../sass/_layout.scss */
+/* line 350, ../sass/_layout.scss */
 .avfr-votes-area .flag-show a { text-decoration: none; }
 
-/* line 355, ../sass/_layout.scss */
+/* line 356, ../sass/_layout.scss */
 .avfr-tooltip { display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; border-radius: 3px; padding: 15px; margin-top: -30px; text-align: left; line-height: 30px; -moz-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); -webkit-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); }
-/* line 367, ../sass/_layout.scss */
+/* line 368, ../sass/_layout.scss */
 .avfr-tooltip a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; font-size: 13px; line-height: 16px; border-radius: 3px; margin-right: 10px; text-decoration: none; border-width: 1px; }
 /* line 10, ../sass/_mixins.scss */
 .avfr-tooltip a:hover, .avfr-tooltip a:focus, .avfr-tooltip a:active, .avfr-tooltip a.active, .avfr-tooltip a.current, .avfr-tooltip a .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
@@ -329,44 +326,44 @@ input#captcha { height: 30px; width: 192px; }
 .avfr-tooltip a.disabled, .avfr-tooltip a.disabled:hover, .avfr-tooltip a.disabled:focus, .avfr-tooltip a.disabled:active, .avfr-tooltip a.disabled.active, .avfr-tooltip a[disabled], .avfr-tooltip a[disabled]:hover, .avfr-tooltip a[disabled]:focus, .avfr-tooltip a[disabled]:active, .avfr-tooltip a[disabled].active, .avfr-tooltip a fieldset[disabled], .avfr-tooltip a fieldset[disabled]:hover, .avfr-tooltip a fieldset[disabled]:focus, .avfr-tooltip a fieldset[disabled]:active, .avfr-tooltip a fieldset[disabled].active { background-color: #ddd; }
 /* line 40, ../sass/_mixins.scss */
 .avfr-tooltip a .badge { color: #ddd; background-color: #fff; }
-/* line 374, ../sass/_layout.scss */
+/* line 375, ../sass/_layout.scss */
 .avfr-tooltip p { padding-bottom: 10px; }
-/* line 377, ../sass/_layout.scss */
+/* line 378, ../sass/_layout.scss */
 .avfr-tooltip .small-text { font-size: 0.7em; padding-bottom: 0; }
 
-/* line 383, ../sass/_layout.scss */
+/* line 384, ../sass/_layout.scss */
 .attachments { margin-top: 30px; margin-bottom: 50px; }
-/* line 386, ../sass/_layout.scss */
+/* line 387, ../sass/_layout.scss */
 .attachments img { border: 2px solid #ccc; border-radius: 0; }
-/* line 390, ../sass/_layout.scss */
+/* line 391, ../sass/_layout.scss */
 .attachments .image-caption { font-weight: bold; color: #acacac; }
 
-/* line 396, ../sass/_layout.scss */
+/* line 397, ../sass/_layout.scss */
 .related-features-section { margin-bottom: 40px; padding-bottom: 20px; }
-/* line 399, ../sass/_layout.scss */
+/* line 400, ../sass/_layout.scss */
 .related-features-section .related-title { font-weight: bold; color: #acacac; }
-/* line 403, ../sass/_layout.scss */
+/* line 404, ../sass/_layout.scss */
 .related-features-section .single_related { text-decoration: none; font-weight: bold; }
-/* line 406, ../sass/_layout.scss */
+/* line 407, ../sass/_layout.scss */
 .related-features-section .single_related li { list-style: none; }
 
 @keyframes ifreloadanimation { 0% { -moz-transform: rotate(0); -ms-transform: rotate(0); -webkit-transform: rotate(0); transform: rotate(0); }
   100% { -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
-/* line 422, ../sass/_layout.scss */
+/* line 423, ../sass/_layout.scss */
 .avfr-reload-animation { animation: ifreloadanimation 1s infinite linear; -webkit-animation: ifreloadanimation 1s infinite linear; -moz-animation: ifreloadanimation 1s infinite linear; transform-origin: center; -webkit-transform-origin: center; -moz-transform-origin: center; }
 
-/* line 432, ../sass/_layout.scss */
+/* line 433, ../sass/_layout.scss */
 #avfr-avatar { margin-bottom: 70px; margin-top: 15px; vertical-align: none; }
-/* line 436, ../sass/_layout.scss */
+/* line 437, ../sass/_layout.scss */
 #avfr-avatar img { float: left; height: 40px; width: 40px; border: 1px solid #cccccc; }
-/* line 442, ../sass/_layout.scss */
+/* line 443, ../sass/_layout.scss */
 #avfr-avatar #avfr_avatar-name { margin-left: 15px; padding-top: 0px; float: left; font-weight: bold; font-size: 13px; }
-/* line 449, ../sass/_layout.scss */
+/* line 450, ../sass/_layout.scss */
 #avfr-avatar span { font-weight: normal; color: black; }
-/* line 453, ../sass/_layout.scss */
+/* line 454, ../sass/_layout.scss */
 #avfr-avatar p { padding-left: 1px; padding-top: 0px; font-size: 11px; color: #cccccc; }
 
-/* line 461, ../sass/_layout.scss */
+/* line 462, ../sass/_layout.scss */
 #avfr_delete { float: right; margin: 20px; color: #cccccc; font-weight: normal; vertical-align: none; font-size: 13px; }
 
 @media (max-width: 600px) { /* line 3, ../sass/_responsive.scss */

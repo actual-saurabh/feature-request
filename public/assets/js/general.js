@@ -154,13 +154,13 @@ jQuery(document).ready(function($){
 	});
 
 	$('#imgCaptcha').on('load', function() {
-		$('#reload').removeClass('if-reload-animation');
+		$('#reload').removeClass('avfr-reload-animation');
 	});
 
 	$('#reload').click( function (e) {
 		e.preventDefault();
 		$('#imgCaptcha').attr('src',captcha_src+'?'+Math.random());
-		$(this).addClass('if-reload-animation');
+		$(this).addClass('avfr-reload-animation');
 	});
 
 

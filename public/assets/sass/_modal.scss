@@ -65,6 +65,7 @@
 .avfr-modal-title {
 	margin: 0;
 	line-height: $modal-title-line-height;
+    clear: none;
 }
 
 .avfr-modal-body {
@@ -148,8 +149,8 @@
     line-height: 1.5;
     color: $close-font_color;
     background:transparent;
-    opacity: 0.2;
-
+    opacity: 0.4;
+    border: none;
     &:hover,
     &:focus {
         color: $close-font_color;
@@ -159,7 +160,7 @@
         box-shadow: none;
         outline:none;
         border:none;
-        opacity: 0.5;
+        opacity: 0.7;
     }
 
 }
@@ -212,10 +213,6 @@ input.avfr-button.btn.btn-default{
 input#captcha{
     height: 30px;
     width: 192px;
-}
-
-#avfr-entry-form input[type="submit"]{
- padding: 0;
 }
 
 .dashicons-warning:before{

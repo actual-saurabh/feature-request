@@ -26,18 +26,19 @@
     }
     .avfr-submit-right {
         float: right;
+        padding:10px 0;
+        @include box-sizing(border-box);
     }
 }
 
 #avfr-entry-form input[type="submit"],
 .avfr-button {
-    height: 40px;
     width: 147px;
     text-align: center;
     background:$button-background;
     color:$button-color;
     border-radius: 3px;
-    padding: 8px;
+    padding: 16px 8px;
     text-decoration: none;
     @include transition(background .1s ease);
     display: inline-block;
@@ -301,7 +302,7 @@
             content: '';
             display: inline-block;
             position: absolute;
-            background-color: #EDEFF2;
+            background-color: transparent;
             border: solid transparent;
             border-top-color: #999;
             pointer-events: none;
@@ -316,7 +317,7 @@
     float: right;
     a {
         @include button-variant($btn-color, $btn-bg, $border-color);
-        @include button-size($btn-pad-ver,  $btn-pad-hor - 10, $btn-font-size, $filter-line-height, $br-rad);
+        @include button-size($btn-pad-ver,  $btn-pad-hor - 10px , $btn-font-size, $filter-line-height, $br-rad);
         text-decoration: none;
         border-width: $br-width;
     }
@@ -332,7 +333,7 @@
 }
 .avfr-disabled-button {
     @include button-variant(lighten($btn-color, 50%), lighten($btn-bg, 7%), lighten($border-color, 7%));
-    @include button-size(($btn-pad-ver - 2), $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
+    @include button-size($btn-pad-ver - 2px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
     border-width: 1px;
     margin: 0;
     &:hover {
@@ -366,7 +367,7 @@
     @include box-shadow( 0 0 1px 2px rgba(222,222,222,0.5));
     a{
         @include button-variant($btn-color, $btn-bg, $border-color);
-        @include button-size(($btn-pad-ver - 3), $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
+        @include button-size($btn-pad-ver - 3px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
         margin-right: 10px;
         text-decoration: none;
         border-width: $br-width;
