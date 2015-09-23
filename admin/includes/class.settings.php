@@ -114,7 +114,7 @@ class AVFR_Settings_Api_Wrap {
 			<hr style="margin-top:20px;">
 
 			<h3 style="margin-bottom:0;"><?php _e('How the Threshold Works','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('The threshold allows individual ideas to automatically be assigned a status based on a grading formula. For example, if you set this threshold to 10, then when the total votes reaches 10 it will trigger the grading. A vote up, and vote down, both count. In the end, if the total votes is over 10, and the total up votes is over 10, it passes. If not, it fails. Otherwise, the status remains open.','feature-request');?></p>
+			<p style="margin-top:5px;"><?php _e('The threshold allows individual features to automatically be assigned a status based on a grading formula. For example, if you set this threshold to 10, then when the total votes reaches 10 it will trigger the grading. A vote up, and vote down, both count. In the end, if the total votes is over 10, and the total up votes is over 10, it passes. If not, it fails. Otherwise, the status remains open.','feature-request');?></p>
 
 			<hr style="margin-top:20px;">
 
@@ -276,7 +276,7 @@ class AVFR_Settings_Api_Wrap {
             	array(
                     'name' 				=> 'avfr_domain',
                     'label' 			=> __( 'Naming Convention', 'feature-request' ),
-                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'suggestions' ).'">'. __( 'Link to ideas page', 'feature-request' ) .'</a> - ' . __( 'By default its called Ideas. You can rename this here.', 'feature-request' ),
+                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'suggestions' ).'">'. __( 'Link to features page', 'feature-request' ) .'</a> - ' . __( 'By default its called features. You can rename this here.', 'feature-request' ),
                     'type' 				=> 'text',
                     'default' 			=> __('suggestions','feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
@@ -290,9 +290,9 @@ class AVFR_Settings_Api_Wrap {
                     'sanitize_callback' => 'avfr_content_filter'
                 ),
                 array(
-                    'name' 				=> 'avfr_approve_ideas',
+                    'name' 				=> 'avfr_approve_features',
                     'label' 			=> __( 'Require Feature Approval', 'feature-request' ),
-                    'desc' 				=> __( 'Check this box to enable newly submitted ideas to be put into a pending status instead of automatically publishing.', 'feature-request' ),
+                    'desc' 				=> __( 'Check this box to enable newly submitted features to be put into a pending status instead of automatically publishing.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'
@@ -300,7 +300,7 @@ class AVFR_Settings_Api_Wrap {
                 array(
                     'name' 				=> 'avfr_public_voting',
                     'label' 			=> __( 'Enable Public Voting', 'feature-request' ),
-                    'desc' 				=> __( 'Enable the public (non logged in users) to submit and vote on new ideas.', 'feature-request' ),
+                    'desc' 				=> __( 'Enable the public (non logged in users) to submit and vote on new features.', 'feature-request' ),
                     'type'				=> 'checkbox',
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_checkbox'

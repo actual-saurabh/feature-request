@@ -219,9 +219,9 @@ class Feature_Request {
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'feature_request';
+		$avfr_table_name = $wpdb->prefix . 'feature_request';
 
-		$sql = "CREATE TABLE $table_name (
+		$sql = "CREATE TABLE $avfr_table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			postid bigint(20) NOT NULL,
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
@@ -283,9 +283,9 @@ class Feature_Request {
 	*/
 	function upgrade_install_db(){
 
-		$table_name = $wpdb->prefix . 'feature_request';
+		$avfr_table_name = $wpdb->prefix . 'feature_request';
 
-		$sql = "CREATE TABLE $table_name (
+		$sql = "CREATE TABLE $avfr_table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			postid bigint(20) NOT NULL,
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,

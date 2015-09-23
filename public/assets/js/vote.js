@@ -69,7 +69,7 @@ jQuery(document).ready(function($){
 		$this.nextAll('.avfr-tooltip').show();
 		e.stopPropagation();
 
-		var voteClass = $this.hasClass('avfr-vote-up') ? 'avfr-set-vote-up' : 'iavfr-set-vote-down';
+		var voteClass = $this.hasClass('avfr-vote-up') ? 'avfr-set-vote-up' : 'avfr-set-vote-down';
 		$this.nextAll('.avfr-tooltip').find('.avfr-submit').removeClass( 'avfr-set-vote-up avfr-set-vote-down' );
 		$this.nextAll('.avfr-tooltip').find('.avfr-submit').addClass( voteClass );
 

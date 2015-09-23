@@ -10,15 +10,15 @@
 
 class FeatureRequestDB {
 
-	private $table_name;
-	private $db_version;
+	private $avfr_table_name;
+	private $avfr_db_ver;
 
 	function __construct() {
 
 		global $wpdb;
 
-		$this->table_name   = $wpdb->base_prefix . 'av_feature_request';
-		$this->db_version 	= AVFR_VERSION;
+		$this->avfr_table_name   = $wpdb->base_prefix . 'av_feature_request';
+		$this->avfr_db_ver 	= AVFR_VERSION;
 
 	}
 
@@ -42,7 +42,7 @@ class FeatureRequestDB {
 
 		$add = $wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO {$this->table_name} SET
+				"INSERT INTO {$this->avfr_table_name} SET
 					`postid`	= '%s',
 					`time`		= '%s',
 					`ip`		= '%s',
