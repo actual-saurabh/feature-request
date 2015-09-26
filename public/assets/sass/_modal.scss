@@ -20,7 +20,48 @@
       top: 50%;  
     }
   }
-  
+
+  * {
+      @include box-sizing(border-box);
+  }
+    div#avfr-form-upload, div#avfr-form-desc, div#avfr-form-title, div#avfr-form-group, div#avfr-form-tags{
+        margin: $input-margin;
+    }
+    div#avfr-form-captcha{
+        margin: 2px 23px 0 0;
+    }
+    label {
+        display:block;
+        margin:15px auto 5px;
+        font-weight:bold;
+    }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        height: 30px;
+        padding: 6px 10px;
+        font-size: $input-font_size;
+        line-height: $input-font_lineheight;
+        color: $input-color;
+        background-color: $input-bg;
+        border: 1px solid $input-border;
+        @include border-radius($br-rad);
+        @include transition("border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+
+        &:focus {
+            border:1px solid $blue !important;
+            box-shadow:none;
+            outline:none;
+        }
+    }
+    input[type=submit]:disabled,
+    button:disabled {
+        opacity:0.4;
+    }
+
+    #avfr-entryform-description {
+        min-height: 100px !important;
+    }
 }
 
 .avfr-modal-dialog{
@@ -78,36 +119,42 @@
  .text-wrap {
      width: 100% !important;
      #tags-data-list{
-        height: 32px;
+        height: 28px;
         width: 100% !important;
-        min-height: 32px;
-        @include border-radius($modal-border-radius);
+        min-height: 28px;
+        line-height: 1;
+        @include border-radius($br-rad);
         border-color: $input-border;
-        padding: 6px 0 26px 8px;
+        padding: 6px 0 20px 8px;
      }
- 
+     .text-remove{
+        top:2px !important;
+     }
+
  }
 
 .avfr-modal-footer {
     padding-top: $modal-innerpadding;
-    text-align: left; // right align buttons
+    text-align: left; 
 
-    // Properly space out buttons
+
     .btn + .btn {
         margin-left: 5px;
-        margin-bottom: 0; // account for input[type="submit"] which gets the bottom margin like all other inputs
+        margin-bottom: 0; 
     }
-    // but override that for button groups
+
     .btn-group .btn + .btn {
         margin-left: -1px;
     }
-    // and override it for block buttons as well
+
     .btn-block + .btn-block {
         margin-left: 0;
     }
 
     input[type="submit"] {
         font-size:$input-font_size;
+        height:40px;
+        padding: 0 !important;
         outline: none;
         border:none;
         box-shadow: none;
@@ -147,15 +194,13 @@
 // CLOSE
 .close {
     float: right;
-    font-size: $close-font_size;
-    font-weight: normal;
-    line-height: 1.5;
+    line-height: normal;
     color: $close-font_color;
-    background:transparent;
     opacity: 0.4;
     border: none;
     text-decoration: none;
     padding: 0.5em 1em;
+    line-height: normal;
     &:hover,
     &:focus {
         color: $close-font_color;
@@ -170,21 +215,20 @@
 }
 
 select#group.ideagroup{
-    border-radius: 3px;
+    @include border-radius($br-rad);
     padding: $input-padding;  
     min-width: 192px;
 }
 
 #imgCaptcha{
     margin-left: 11px;
-    border-radius:3px;
+    @include border-radius($br-rad);
     box-shadow: none;
     vertical-align: middle;
-    margin-left: 10px;
+    margin: 0 10px;
 }
 
 #reload{
-    margin-left: 6px;
     box-shadow: none;
     vertical-align: middle;
     cursor: pointer;
@@ -194,21 +238,22 @@ input.avfr-button.btn.btn-default{
     margin-top: 0px;
     width: 110px;
     height: 40px;
-    border-radius: 25px;
 }
 
 #avfr-entry-form-results{
     margin: 0 0 0 11px;
     height: 40px;
     background: #dd6d5a;
-    border-radius: 3px;
+    @include border-radius($br-rad);
     display: none;
+    vertical-align: middle;
     font-size:$input-font_size;
     @include transition(.7s);
     p {
         color: #ffffff;
         padding: 10px;
         @include transition(.7s);
+        line-height: normal;
     }
 }
 

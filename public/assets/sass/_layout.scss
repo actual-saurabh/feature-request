@@ -37,7 +37,7 @@
     text-align: center;
     background:$button-background;
     color:$button-color;
-    border-radius: 3px;
+    @include border-radius($br-rad);
     padding: 16px 8px;
     text-decoration: none;
     @include transition(background .1s ease);
@@ -140,7 +140,7 @@
     border: $br-width solid $border-color;
     padding: 8px;
     width:  $default-width;
-    border-radius: $br-rad;
+    @include border-radius($br-rad);
     background-color: #fff;
     line-height: 1.5;
     .avfr-totals {
@@ -178,7 +178,7 @@
     margin-top: -2px;
     text-decoration: none;
     border:1px solid #ccc;
-    border-radius: 3px;
+    @include border-radius($br-rad);
 
     &:after {
         font-family:Dashicons;
@@ -243,7 +243,7 @@
         padding:11px 15px;
         color:white;
         text-shadow:0 1px 1px rgba(0,0,0,0.1);
-        border-radius:2px;
+        @include border-radius($br-rad);
         width: $default-width;
         font-size: 13px;
         line-height: 1.5;
@@ -294,7 +294,7 @@
         -webkit-appearance: none;
         position: relative;
         padding-right: 30px;
-        border-radius: 3px;
+        @include border-radius($br-rad);
     }
     .triangle-down {
         position: relative;
@@ -329,7 +329,7 @@
     padding: ($btn-pad-ver - 3) $btn-pad-hor;
     border-width: 1px;
     font-size: 13px;
-    border-radius: 3px;
+    @include border-radius($br-rad);
 }
 .avfr-disabled-button {
     @include button-variant(lighten($btn-color, 50%), lighten($btn-bg, 7%), lighten($border-color, 7%));
@@ -358,7 +358,7 @@
     position: absolute;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    @include border-radius($br-rad);
     padding: 15px;
     margin-top: -30px;
     text-align: left;
@@ -386,7 +386,7 @@
     margin-bottom: 50px;
     img {
         border: 2px solid #ccc;
-        border-radius: 0;
+        @include border-radius(0);
     }
     .image-caption {
         font-weight: bold;
@@ -413,7 +413,7 @@
 
 //reload animation
 
-@keyframes ifreloadanimation {
+@include keyframes(avfrreloadanimation) {
 
     0%   {@include rotate(0);}
     100% {@include rotate(360deg);}
@@ -421,42 +421,37 @@
 }
 
 .avfr-reload-animation {
-    animation: ifreloadanimation 1s infinite linear;
-    -webkit-animation: ifreloadanimation 1s infinite linear;
-    -moz-animation: ifreloadanimation 1s infinite linear;
-    
-    transform-origin: center;
-    -webkit-transform-origin: center;
-    -moz-transform-origin: center;
+    @include animation(avfrreloadanimation 1s infinite linear);
+    @include transform-origin($default-origin-x, $default-origin-x)
 }
 
 #avfr-avatar{
  margin-bottom: 70px; 
  margin-top: 15px;
  vertical-align: none;
- img{
-    float: left;    
-    height: 40px;
-    width: 40px;
-    border: 1px solid #cccccc;
-}
-#avfr_avatar-name{
-    margin-left: 15px;
-    padding-top: 0px;
-    float: left;
-    font-weight:bold;
-    font-size: 13px;
-}
-span{
-    font-weight: normal;
-    color: black; 
-}
-p{
-    padding-left: 1px;
-    padding-top: 0px;
-    font-size: 11px;
-    color: #cccccc;
-}
+     img{
+        float: left;    
+        height: 40px;
+        width: 40px;
+        border: 1px solid #cccccc;
+    }
+    #avfr_avatar-name{
+        margin-left: 15px;
+        padding-top: 0px;
+        float: left;
+        font-weight:bold;
+        font-size: 13px;
+    }
+    span{
+        font-weight: normal;
+        color: black; 
+    }
+    p{
+        padding-left: 1px;
+        padding-top: 0px;
+        font-size: 11px;
+        color: #cccccc;
+    }
 }
 
 #avfr_delete{
@@ -466,5 +461,4 @@ p{
     font-weight: normal;
     vertical-align: none;
     font-size: 13px;
-
 }

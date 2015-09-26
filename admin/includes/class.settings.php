@@ -594,27 +594,6 @@ class AVFR_Settings_Api_Wrap {
         return $settings_fields;
     }
 
-
-
-	/**
-	*
-	*	Sanitize integers
-	*
-	*/
-	function avfr_sanitize_int( $input ) {
-
-		if ( $input ) {
-
-			$output = absint( $input );
-
-		} else {
-
-			$output = false;
-
-		}
-
-		return $output;
-	}
 }
 endif;
 

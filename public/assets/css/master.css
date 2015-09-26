@@ -32,104 +32,105 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .avfr-modal:target:before { display: block; }
 /* line 18, ../sass/_modal.scss */
 .avfr-modal:target .avfr-modal-dialog { -moz-transform: translate(0, -50%); -ms-transform: translate(0, -50%); -webkit-transform: translate(0, -50%); transform: translate(0, -50%); top: 50%; }
+/* line 24, ../sass/_modal.scss */
+.avfr-modal * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+/* line 27, ../sass/_modal.scss */
+.avfr-modal div#avfr-form-upload, .avfr-modal div#avfr-form-desc, .avfr-modal div#avfr-form-title, .avfr-modal div#avfr-form-group, .avfr-modal div#avfr-form-tags { margin: 0px 0px 24px 0px; }
+/* line 30, ../sass/_modal.scss */
+.avfr-modal div#avfr-form-captcha { margin: 2px 23px 0 0; }
+/* line 33, ../sass/_modal.scss */
+.avfr-modal label { display: block; margin: 15px auto 5px; font-weight: bold; }
+/* line 38, ../sass/_modal.scss */
+.avfr-modal input[type="text"], .avfr-modal textarea { width: 100%; height: 30px; padding: 6px 10px; font-size: 14px; line-height: 21px; color: #333; background-color: white; border: 1px solid #ccc; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; -o-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; -webkit-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; }
+/* line 51, ../sass/_modal.scss */
+.avfr-modal input[type="text"]:focus, .avfr-modal textarea:focus { border: 1px solid #007aaf !important; box-shadow: none; outline: none; }
+/* line 57, ../sass/_modal.scss */
+.avfr-modal input[type=submit]:disabled, .avfr-modal button:disabled { opacity: 0.4; }
+/* line 62, ../sass/_modal.scss */
+.avfr-modal #avfr-entryform-description { min-height: 100px !important; }
 
-/* line 26, ../sass/_modal.scss */
+/* line 67, ../sass/_modal.scss */
 .avfr-modal-dialog { position: fixed; left: 0; right: 0; top: -100%; z-index: 11; -moz-transform: translate(0, 0); -ms-transform: translate(0, 0); -webkit-transform: translate(0, 0); transform: translate(0, 0); -moz-transition: 0.3s; -o-transition: 0.3s; -webkit-transition: 0.3s; transition: 0.3s; }
 
-/* line 36, ../sass/_modal.scss */
+/* line 77, ../sass/_modal.scss */
 .avfr-modal-content { position: relative; background-color: #fff; border: 1px solid #999; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); background-clip: padding-box; outline: 0; }
 
-/* line 47, ../sass/_modal.scss */
+/* line 88, ../sass/_modal.scss */
 .avfr-modal-backdrop { position: absolute; top: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.6); }
-/* line 54, ../sass/_modal.scss */
+/* line 95, ../sass/_modal.scss */
 .avfr-modal-backdrop.fade { opacity: 0; }
-/* line 55, ../sass/_modal.scss */
+/* line 96, ../sass/_modal.scss */
 .avfr-modal-backdrop.in { opacity: 0.75; }
 
-/* line 58, ../sass/_modal.scss */
+/* line 99, ../sass/_modal.scss */
 .avfr-modal-header { padding: 10px 15px; border-bottom: 1px solid #e5e5e5; min-height: 16px; }
-/* line 62, ../sass/_modal.scss */
+/* line 103, ../sass/_modal.scss */
 .avfr-modal-header h3 { margin: 0; line-height: 1.5; }
 
-/* line 68, ../sass/_modal.scss */
+/* line 109, ../sass/_modal.scss */
 .avfr-modal-title { margin: 0; line-height: 1; clear: none; }
 
-/* line 74, ../sass/_modal.scss */
+/* line 115, ../sass/_modal.scss */
 .avfr-modal-body { position: relative; padding: 15px; }
 
-/* line 78, ../sass/_modal.scss */
+/* line 119, ../sass/_modal.scss */
 .text-wrap { width: 100% !important; }
-/* line 80, ../sass/_modal.scss */
-.text-wrap #tags-data-list { height: 32px; width: 100% !important; min-height: 32px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border-color: #ccc; padding: 6px 0 26px 8px; }
+/* line 121, ../sass/_modal.scss */
+.text-wrap #tags-data-list { height: 28px; width: 100% !important; min-height: 28px; line-height: 1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-color: #ccc; padding: 6px 0 20px 8px; }
+/* line 130, ../sass/_modal.scss */
+.text-wrap .text-remove { top: 2px !important; }
 
-/* line 91, ../sass/_modal.scss */
+/* line 136, ../sass/_modal.scss */
 .avfr-modal-footer { padding-top: 15px; text-align: left; }
-/* line 96, ../sass/_modal.scss */
+/* line 141, ../sass/_modal.scss */
 .avfr-modal-footer .btn + .btn { margin-left: 5px; margin-bottom: 0; }
-/* line 101, ../sass/_modal.scss */
+/* line 146, ../sass/_modal.scss */
 .avfr-modal-footer .btn-group .btn + .btn { margin-left: -1px; }
-/* line 105, ../sass/_modal.scss */
+/* line 150, ../sass/_modal.scss */
 .avfr-modal-footer .btn-block + .btn-block { margin-left: 0; }
-/* line 109, ../sass/_modal.scss */
-.avfr-modal-footer input[type="submit"] { font-size: 14px; outline: none; border: none; box-shadow: none; }
-/* line 114, ../sass/_modal.scss */
+/* line 154, ../sass/_modal.scss */
+.avfr-modal-footer input[type="submit"] { font-size: 14px; height: 40px; padding: 0 !important; outline: none; border: none; box-shadow: none; }
+/* line 161, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"]:active, .avfr-modal-footer input[type="submit"]:focus { outline: none; border: none; }
 
-/* line 122, ../sass/_modal.scss */
+/* line 169, ../sass/_modal.scss */
 .avfr-modal-scrollbar-measure { position: absolute; top: -9999px; width: 50px; height: 50px; overflow: scroll; }
 
-@media (min-width: 768px) { /* line 132, ../sass/_modal.scss */
+@media (min-width: 768px) { /* line 179, ../sass/_modal.scss */
   .avfr-modal-dialog { width: 600px; margin: 0 auto; }
-  /* line 136, ../sass/_modal.scss */
+  /* line 183, ../sass/_modal.scss */
   .avfr-modal-content { -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
-  /* line 140, ../sass/_modal.scss */
+  /* line 187, ../sass/_modal.scss */
   .avfr-modal-sm { width: 300px; } }
-@media (min-width: 992px) { /* line 144, ../sass/_modal.scss */
+@media (min-width: 992px) { /* line 191, ../sass/_modal.scss */
   .avfr-modal-lg { width: 900px; } }
-/* line 148, ../sass/_modal.scss */
-.close { float: right; font-size: 18px; font-weight: normal; line-height: 1.5; color: #000; background: transparent; opacity: 0.4; border: none; text-decoration: none; padding: 0.5em 1em; }
-/* line 159, ../sass/_modal.scss */
+/* line 195, ../sass/_modal.scss */
+.close { float: right; line-height: normal; color: #000; opacity: 0.4; border: none; text-decoration: none; padding: 0.5em 1em; line-height: normal; }
+/* line 204, ../sass/_modal.scss */
 .close:hover, .close:focus { color: #000; background: none; text-decoration: none; cursor: pointer; box-shadow: none; outline: none; border: none; opacity: 0.7; }
 
-/* line 172, ../sass/_modal.scss */
-select#group.ideagroup { border-radius: 3px; padding: 5px; min-width: 192px; }
+/* line 217, ../sass/_modal.scss */
+select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 5px; min-width: 192px; }
 
-/* line 178, ../sass/_modal.scss */
-#imgCaptcha { margin-left: 11px; border-radius: 3px; box-shadow: none; vertical-align: middle; margin-left: 10px; }
+/* line 223, ../sass/_modal.scss */
+#imgCaptcha { margin-left: 11px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; box-shadow: none; vertical-align: middle; margin: 0 10px; }
 
-/* line 186, ../sass/_modal.scss */
-#reload { margin-left: 6px; box-shadow: none; vertical-align: middle; cursor: pointer; }
+/* line 231, ../sass/_modal.scss */
+#reload { box-shadow: none; vertical-align: middle; cursor: pointer; }
 
-/* line 193, ../sass/_modal.scss */
-input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px; border-radius: 25px; }
+/* line 237, ../sass/_modal.scss */
+input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px; }
 
-/* line 200, ../sass/_modal.scss */
-#avfr-entry-form-results { margin: 0 0 0 11px; height: 40px; background: #dd6d5a; border-radius: 3px; display: none; font-size: 14px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
-/* line 208, ../sass/_modal.scss */
-#avfr-entry-form-results p { color: #ffffff; padding: 10px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
+/* line 243, ../sass/_modal.scss */
+#avfr-entry-form-results { margin: 0 0 0 11px; height: 40px; background: #dd6d5a; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; display: none; vertical-align: middle; font-size: 14px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
+/* line 252, ../sass/_modal.scss */
+#avfr-entry-form-results p { color: #ffffff; padding: 10px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; line-height: normal; }
 
-/* line 215, ../sass/_modal.scss */
+/* line 260, ../sass/_modal.scss */
 #captcha { height: 30px; width: 192px; }
 
-/* line 220, ../sass/_modal.scss */
+/* line 265, ../sass/_modal.scss */
 .dashicons-warning:before { margin: 15px 15px 0 0; }
-
-/* line 2, ../sass/_form.scss */
-.avfr-modal * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-/* line 5, ../sass/_form.scss */
-.avfr-modal div#avfr-form-upload, .avfr-modal div#avfr-form-desc, .avfr-modal div#avfr-form-title, .avfr-modal div#avfr-form-group, .avfr-modal div#avfr-form-tags { margin: 0px 0px 22px 0px; }
-/* line 9, ../sass/_form.scss */
-.avfr-modal div#avfr-form-captcha { margin: 2px 23px 0 0; }
-/* line 12, ../sass/_form.scss */
-.avfr-modal label { display: block; margin: 15px auto 5px; font-weight: bold; }
-/* line 17, ../sass/_form.scss */
-.avfr-modal input[type="text"], .avfr-modal textarea { width: 100%; height: 30px; padding: 6px 10px; font-size: 14px; line-height: 21px; color: #333; background-color: white; background-image: none; border: 1px solid #ccc; border-radius: 3px; -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); -moz-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; -o-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; -webkit-transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; transition: "border-color ease-in-out .15s, box-shadow ease-in-out .15s"; }
-/* line 32, ../sass/_form.scss */
-.avfr-modal input[type="text"]:focus, .avfr-modal textarea:focus { border: 1px solid #007aaf !important; box-shadow: none; outline: none; }
-/* line 39, ../sass/_form.scss */
-.avfr-modal input[type=submit]:disabled, .avfr-modal button:disabled { opacity: 0.4; }
-/* line 44, ../sass/_form.scss */
-.avfr-modal textarea { min-height: 100px; }
 
 /* line 2, ../sass/_layout.scss */
 .avfr-wrap-wrap { overflow: hidden; *zoom: 1; }
@@ -147,7 +148,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 .avfr-layout-submit .avfr-submit-right { float: right; padding: 10px 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 /* line 34, ../sass/_layout.scss */
-#avfr-entry-form input[type="submit"], .avfr-button { width: 147px; text-align: center; background: #007aaf; color: white; border-radius: 3px; padding: 16px 8px; text-decoration: none; -moz-transition: background 0.1s ease; -o-transition: background 0.1s ease; -webkit-transition: background 0.1s ease; transition: background 0.1s ease; display: inline-block; }
+#avfr-entry-form input[type="submit"], .avfr-button { width: 147px; text-align: center; background: #007aaf; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 16px 8px; text-decoration: none; -moz-transition: background 0.1s ease; -o-transition: background 0.1s ease; -webkit-transition: background 0.1s ease; transition: background 0.1s ease; display: inline-block; }
 /* line 46, ../sass/_layout.scss */
 #avfr-entry-form input[type="submit"]:visited, #avfr-entry-form input[type="submit"]:hover, .avfr-button:visited, .avfr-button:hover { color: white; background: #006896; }
 /* line 51, ../sass/_layout.scss */
@@ -190,7 +191,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 .avfr-entry img { box-shadow: none; }
 
 /* line 138, ../sass/_layout.scss */
-.avfr-controls { text-align: center; border: 1px solid #cccccc; padding: 8px; width: 96px; border-radius: 3px; background-color: #fff; line-height: 1.5; }
+.avfr-controls { text-align: center; border: 1px solid #cccccc; padding: 8px; width: 96px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; background-color: #fff; line-height: 1.5; }
 /* line 146, ../sass/_layout.scss */
 .avfr-controls .avfr-totals { padding: 5px; }
 /* line 150, ../sass/_layout.scss */
@@ -201,7 +202,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 .avfr-controls.voted { font-size: 85%; display: block; line-height: 1; margin-top: 8px; }
 
 /* line 170, ../sass/_layout.scss */
-.avfr-vote-up, .avfr-vote-down { position: relative; overflow: hidden; display: inline-block; height: 30px; width: 32px; font-size: 18px; margin-top: -2px; text-decoration: none; border: 1px solid #ccc; border-radius: 3px; }
+.avfr-vote-up, .avfr-vote-down { position: relative; overflow: hidden; display: inline-block; height: 30px; width: 32px; font-size: 18px; margin-top: -2px; text-decoration: none; border: 1px solid #ccc; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 /* line 183, ../sass/_layout.scss */
 .avfr-vote-up:after, .avfr-vote-down:after { font-family: Dashicons; position: absolute; left: 0; top: 2px; right: 0; bottom: 0; height: 16px; }
 /* line 193, ../sass/_layout.scss */
@@ -230,7 +231,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 /* line 231, ../sass/_layout.scss */
 .avfr-status { margin-top: 10px; font-size: 12px; letter-spacing: 0.05em; text-transform: capitalize; }
 /* line 238, ../sass/_layout.scss */
-.avfr-status span { display: inline-block; vertical-align: baseline; white-space: nowrap; text-align: center; padding: 11px 15px; color: white; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); border-radius: 2px; width: 96px; font-size: 13px; line-height: 1.5; }
+.avfr-status span { display: inline-block; vertical-align: baseline; white-space: nowrap; text-align: center; padding: 11px 15px; color: white; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; width: 96px; font-size: 13px; line-height: 1.5; }
 /* line 252, ../sass/_layout.scss */
 .avfr-status .avfr-status_approved { background: #5cb85c; }
 /* line 255, ../sass/_layout.scss */
@@ -260,7 +261,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 /* line 287, ../sass/_layout.scss */
 .avfr-filter-controls div, .avfr-filter-controls li { margin: 8px 3px; }
 /* line 290, ../sass/_layout.scss */
-.avfr-filter-controls select { vertical-align: baseline; appearance: none; -moz-appearance: none; -webkit-appearance: none; position: relative; padding-right: 30px; border-radius: 3px; }
+.avfr-filter-controls select { vertical-align: baseline; appearance: none; -moz-appearance: none; -webkit-appearance: none; position: relative; padding-right: 30px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 /* line 299, ../sass/_layout.scss */
 .avfr-filter-controls .triangle-down { position: relative; }
 /* line 301, ../sass/_layout.scss */
@@ -280,7 +281,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 .status-changing a .badge { color: #ddd; background-color: #fff; }
 
 /* line 327, ../sass/_layout.scss */
-.avfr-vote-now { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; border-width: 1px; font-size: 13px; border-radius: 3px; }
+.avfr-vote-now { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; border-width: 1px; font-size: 13px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 /* line 10, ../sass/_mixins.scss */
 .avfr-vote-now:hover, .avfr-vote-now:focus, .avfr-vote-now:active, .avfr-vote-now.active, .avfr-vote-now.current, .avfr-vote-now .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
 /* line 22, ../sass/_mixins.scss */
@@ -311,7 +312,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 .avfr-votes-area .flag-show a { text-decoration: none; }
 
 /* line 356, ../sass/_layout.scss */
-.avfr-tooltip { display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; border-radius: 3px; padding: 15px; margin-top: -30px; text-align: left; line-height: 30px; -moz-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); -webkit-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); }
+.avfr-tooltip { display: none; position: absolute; background-color: #fff; border: 1px solid #ccc; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 15px; margin-top: -30px; text-align: left; line-height: 30px; -moz-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); -webkit-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); }
 /* line 368, ../sass/_layout.scss */
 .avfr-tooltip a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; font-size: 13px; line-height: 16px; border-radius: 3px; margin-right: 10px; text-decoration: none; border-width: 1px; }
 /* line 10, ../sass/_mixins.scss */
@@ -330,7 +331,7 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 /* line 384, ../sass/_layout.scss */
 .attachments { margin-top: 30px; margin-bottom: 50px; }
 /* line 387, ../sass/_layout.scss */
-.attachments img { border: 2px solid #ccc; border-radius: 0; }
+.attachments img { border: 2px solid #ccc; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
 /* line 391, ../sass/_layout.scss */
 .attachments .image-caption { font-weight: bold; color: #acacac; }
 
@@ -343,23 +344,27 @@ input.avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px;
 /* line 407, ../sass/_layout.scss */
 .related-features-section .single_related li { list-style: none; }
 
-@keyframes ifreloadanimation { 0% { -moz-transform: rotate(0); -ms-transform: rotate(0); -webkit-transform: rotate(0); transform: rotate(0); }
+@-moz-keyframes avfrreloadanimation { 0% { -moz-transform: rotate(0); transform: rotate(0); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); } }
+@-webkit-keyframes avfrreloadanimation { 0% { -webkit-transform: rotate(0); transform: rotate(0); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
+@keyframes avfrreloadanimation { 0% { -moz-transform: rotate(0); -ms-transform: rotate(0); -webkit-transform: rotate(0); transform: rotate(0); }
   100% { -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 /* line 423, ../sass/_layout.scss */
-.avfr-reload-animation { animation: ifreloadanimation 1s infinite linear; -webkit-animation: ifreloadanimation 1s infinite linear; -moz-animation: ifreloadanimation 1s infinite linear; transform-origin: center; -webkit-transform-origin: center; -moz-transform-origin: center; }
+.avfr-reload-animation { -moz-animation: avfrreloadanimation 1s infinite linear; -webkit-animation: avfrreloadanimation 1s infinite linear; animation: avfrreloadanimation 1s infinite linear; -moz-transform-origin: 50% 50%; -ms-transform-origin: 50% 50%; -webkit-transform-origin: 50% 50%; transform-origin: 50% 50%; }
 
-/* line 433, ../sass/_layout.scss */
+/* line 428, ../sass/_layout.scss */
 #avfr-avatar { margin-bottom: 70px; margin-top: 15px; vertical-align: none; }
-/* line 437, ../sass/_layout.scss */
+/* line 432, ../sass/_layout.scss */
 #avfr-avatar img { float: left; height: 40px; width: 40px; border: 1px solid #cccccc; }
-/* line 443, ../sass/_layout.scss */
+/* line 438, ../sass/_layout.scss */
 #avfr-avatar #avfr_avatar-name { margin-left: 15px; padding-top: 0px; float: left; font-weight: bold; font-size: 13px; }
-/* line 450, ../sass/_layout.scss */
+/* line 445, ../sass/_layout.scss */
 #avfr-avatar span { font-weight: normal; color: black; }
-/* line 454, ../sass/_layout.scss */
+/* line 449, ../sass/_layout.scss */
 #avfr-avatar p { padding-left: 1px; padding-top: 0px; font-size: 11px; color: #cccccc; }
 
-/* line 462, ../sass/_layout.scss */
+/* line 457, ../sass/_layout.scss */
 #avfr_delete { float: right; margin: 20px; color: #cccccc; font-weight: normal; vertical-align: none; font-size: 13px; }
 
 @media (max-width: 600px) { /* line 3, ../sass/_responsive.scss */
