@@ -3,7 +3,6 @@ $primary:							white;
 $blue:								#007aaf;
 $green:								#5cb85c;
 $red:								#d9534f;
-$teal:								#5bc0de;
 
 // Border and Shadows
 $border-color:                      darken($primary,20%);
@@ -17,8 +16,6 @@ $button-color:						$primary;
 $entry-wrap_padding:				25px;
 $entry-font_size:					16px;
 $entry-font_lineheight:				$entry-font_size * 1.5;
-$entry-title_fontsize:				20px;
-$entry-title_lineheight:			$entry-title_fontsize * 1.5;
 $entry-margin:						20px 0;
 $entry-padding:						$entry-margin;
 
@@ -28,49 +25,34 @@ $link-color: 						#acacac;
 $input-font_size:					14px;
 $input-font_lineheight:				$input-font_size * 1.5;
 $input-bg:							$primary;
-$input-bg_disabled:					#999;
 $input-color:						#333;
-$input-border:						#ccc;
-$input-border_radius:				3px;
-$input-color_placeholder:			#999;
+$input-border:						$border-color;
 $input-padding:						5px;
 
 // ICONS
-$icon-color:						#777;
 $icon-font_size:					18px;
 
 // MODALS
-
-
 $modal-innerpadding:				15px;
 $modal-title_padding-ver:			10px;
 $modal-title_padding:				15px;
 $modal-title-line-height:			1;
 $modal-content-bg:					#fff;
 $modal-content-border-color:		#999;
-$modal-content-fallback-border-color:	 #999;
 $modal-backdrop-bg:					rgba(0,0,0,0.6);
 $modal-backdrop-opacity:			.75;
 $modal-header-border-color:			#e5e5e5;
-$modal-footer-border-color:			#999;
 $modal-border-radius:				5px;
-$input-margin:						0px 0px 22px 0px;
-
-
+$input-margin:						0px 0px 24px 0px;
 $modal-xl:							96%;
 $modal-lg:							900px;
 $modal-md:							600px;
 $modal-sm:							300px;
 $zindex-modal:                      1040;
 
-$close-font_size:					18px;
-$close-font_weight:					bold;
 $close-font_color:					#000;
-$close-font_textshadow:				0 1px 0 #fff;
 
 // Filters
-
-
 $br-rad: 							3px;
 $br-width: 							1px;
 $btn-bg: 							#ddd;
@@ -81,11 +63,5 @@ $btn-font-size: 					13px;
 $filter-line-height: 				16px;
 
 //Votes
-$vote-br-color: 					$border-color;
 $vote-lable-color:					#898989;
 $default-width: 					96px;
-
-
-$space: 40px;
-
-

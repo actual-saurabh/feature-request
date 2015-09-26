@@ -143,15 +143,15 @@ class Avfr_Shortcodes {
 												<?php
 												if ( '1' == $total_votes ) { ?>
 
-													<strong class="avfr-totals_val">1</strong><br>
-													<span class="avfr-totals_label"><?php _e( 'vote','feature-request' ); ?></span>
+													<strong class="avfr-totals-num">1</strong><br>
+													<span class="avfr-totals-label"><?php _e( 'vote','feature-request' ); ?></span>
 														
 												<?php
 
 												} elseif ( !empty( $total_votes ) ) { ?>
 														
-													<strong class="avfr-totals_value"><?php echo $total_votes ?></strong><br>
-													<span class="avfr-totals_label"><?php _e( 'votes','feature-request' ); ?></span>
+													<strong class="avfr-totals-num"><?php echo $total_votes ?></strong><br>
+													<span class="avfr-totals-label"><?php _e( 'votes','feature-request' ); ?></span>
 							
 												<?php
 												} 

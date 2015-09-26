@@ -1,53 +1,51 @@
-// Button variants
-// -------------------------
-// Easily pump out default styles, as well as :hover, :focus, :active,
-// and disabled options for all buttons
 @mixin button-variant($color, $background, $border) {
-  color: $color;
-  background-color: $background;
-  border-color: $border;
-  border-style: solid;
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  &.current,
-  .open .dropdown-toggle {
-               color: lighten($color, 90%);
-    background-color: darken($background, 55%);
-        border-color: darken($background, 65%);
-    background-image: none;
-          box-shadow: none;
-  }
-  &:active,
-  &.active,
-  .open .dropdown-toggle {
-    background-image: none;
-    box-shadow: none;
-  }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled]  {
-    &,
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+    border-style: solid;
+
     &:hover,
     &:focus,
     &:active,
-    &.active {
-      background-color: $background;
+    &.active,
+    &.current,
+    .open .dropdown-toggle {
+        color: lighten($color, 90%);
+        background-color: darken($background, 55%);
+        border-color: darken($background, 65%);
+        background-image: none;
+        box-shadow: none;
     }
-  }
 
-  .badge {
-    color: $background;
-    background-color: #fff;
-  }
+    &:active,
+    &.active,
+    .open .dropdown-toggle {
+        background-image: none;
+        box-shadow: none;
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled]  {
+        &,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            background-color: $background;
+        }
+    }
+
+    .badge {
+        color: $background;
+        background-color: #fff;
+    }
+
 }
 
-// Button sizes
-// -------------------------
 @mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
-  padding: $padding-vertical $padding-horizontal;
-  font-size: $font-size;
-  line-height: $line-height;
-  border-radius: $border-radius;
+    padding: $padding-vertical $padding-horizontal;
+    font-size: $font-size;
+    line-height: $line-height;
+    border-radius: $border-radius;
 }
