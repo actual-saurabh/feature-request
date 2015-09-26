@@ -1,40 +1,43 @@
-.avfr-modal-open {
-    overflow: hidden;
-}
-.avfr-modal {
+.avfr-modal{
+    position:fixed;
+    top:0;
+  &:before{
+    content: ""; 
     display: none;
-    overflow: hidden;
+    background: rgba(0,0,0,.6);
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: $zindex-modal;
-    -webkit-overflow-scrolling: touch;
-    outline: 0;
-
-    &.fade .avfr-modal-dialog {
-        @include translate(0, -25%);
-        @include transform("0.3s ease-out");
+    top: 0; left: 0; right: 0; bottom: 0; 
+    z-index: 10;
+  }
+  
+  &:target{
+     
+    &:before{
+      display: block;
+    }  
+    .avfr-modal-dialog{
+      @include translate(0, -50%); 
+      top: 50%;  
     }
-    &.in .avfr-modal-dialog { @include translate(0, 0) }
-}
-.avfr-modal-open .avfr-modal {
-    overflow-x: hidden;
-    overflow-y: auto;
+  }
+  
 }
 
-.avfr-modal-dialog {
-    position: relative;
-    width: auto;
-    margin: 10px;
+.avfr-modal-dialog{
+  position: fixed; 
+  left: 0;
+  right: 0;
+  top: -100%; 
+  z-index: 11;
+  @include translate(0, 0);
+  @include transition(0.3s);
 }
 
 .avfr-modal-content {
     position: relative;
     background-color: $modal-content-bg;
     border: 1px solid $modal-content-border-color;
-    border-radius: $modal-border-radius;
+    @include border-radius($modal-border-radius);
     @include box-shadow(0 3px 9px rgba(0,0,0,.5));
     background-clip: padding-box;
     // Remove focus outline from opened modal
@@ -78,7 +81,7 @@
         height: 32px;
         width: 100% !important;
         min-height: 32px;
-        border-radius: $modal-border-radius;
+        @include border-radius($modal-border-radius);
         border-color: $input-border;
         padding: 6px 0 26px 8px;
      }
@@ -107,7 +110,7 @@
         font-size:$input-font_size;
         outline: none;
         border:none;
-
+        box-shadow: none;
         &:active,
         &:focus {
             outline:none;
@@ -128,7 +131,7 @@
 
     .avfr-modal-dialog {
         width: $modal-md;
-        margin: 80px auto 30px;
+        margin: 0 auto;
     }
     .avfr-modal-content {
         @include box-shadow(0 5px 15px rgba(0,0,0,.5));
@@ -151,6 +154,8 @@
     background:transparent;
     opacity: 0.4;
     border: none;
+    text-decoration: none;
+    padding: 0.5em 1em;
     &:hover,
     &:focus {
         color: $close-font_color;
@@ -162,16 +167,15 @@
         border:none;
         opacity: 0.7;
     }
-
 }
 
 select#group.ideagroup{
     border-radius: 3px;
     padding: $input-padding;  
-    min-width: 192px;  
+    min-width: 192px;
 }
 
-img#imgCaptcha{
+#imgCaptcha{
     margin-left: 11px;
     border-radius:3px;
     box-shadow: none;
@@ -179,7 +183,7 @@ img#imgCaptcha{
     margin-left: 10px;
 }
 
-img#reload{
+#reload{
     margin-left: 6px;
     box-shadow: none;
     vertical-align: middle;
@@ -191,7 +195,6 @@ input.avfr-button.btn.btn-default{
     width: 110px;
     height: 40px;
     border-radius: 25px;
-
 }
 
 #avfr-entry-form-results{
@@ -209,13 +212,11 @@ input.avfr-button.btn.btn-default{
     }
 }
 
-
-input#captcha{
+#captcha{
     height: 30px;
     width: 192px;
 }
 
 .dashicons-warning:before{
     margin: 15px 15px 0 0;
-
 }

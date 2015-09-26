@@ -569,12 +569,12 @@ if ( !function_exists('avfr_submit_box') ):
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
 				); ?>
-			<div class="fade avfr-modal" tabindex="-1">
+			<div class="fade avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
-						<button type="button" class="close" data-dismiss="avfr-modal">
+						<a href="#close" type="button" class="close" id="avfr-close">
 						<span aria-hidden="true">&times;</span>
-						</button>
+						</a>
 
 				    	<div class="avfr-modal-header">
 				    		<h3 class="avfr-modal-title"><?php apply_filters('avfr_submit_idea_label', _e('Submit feature','feature-request'));?></h3>
@@ -743,7 +743,7 @@ if ( !function_exists('avfr_submit_header') ):
 
 					<?php do_action('avfr_before_submit_button'); ?>
 
-						<a href="#" data-toggle="avfr-modal" data-target=".avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit Idea','feature-request');?></a>
+						<a href="#avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit Idea','feature-request');?></a>
 
 					<?php do_action('avfr_after_submit_button'); ?>
 

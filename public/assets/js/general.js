@@ -59,7 +59,7 @@ jQuery(document).ready(function($){
 
    			$('#avfr-entry-form-results').css('background-color','#53d96f');
    			setTimeout(function(){
-   				location.reload();
+   				window.location = window.location.pathname;
    			}, 1000);
 
    		}
