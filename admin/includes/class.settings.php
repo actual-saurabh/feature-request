@@ -276,7 +276,7 @@ class AVFR_Settings_Api_Wrap {
             	array(
                     'name' 				=> 'avfr_domain',
                     'label' 			=> __( 'Naming Convention', 'feature-request' ),
-                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'suggestions' ).'">'. __( 'Link to ideas page', 'feature-request' ) .'</a> - ' . __( 'By default its called Ideas. You can rename this here.', 'feature-request' ),
+                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'avfr' ).'">'. __( 'Link to ideas page', 'feature-request' ) .'</a> - ' . __( 'By default its called Ideas. You can rename this here.', 'feature-request' ),
                     'type' 				=> 'text',
                     'default' 			=> __('suggestions','feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
