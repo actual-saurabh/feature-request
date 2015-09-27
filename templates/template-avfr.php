@@ -60,7 +60,7 @@
 					$has_voted 		= avfr_has_voted( $id, $ip, $userid );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
-					$status_class   = $status ? sprintf('avfr-entry__%s', $status ) : false;
+					$status_class   = $status ? sprintf('avfr-entry-%s', $status ) : false;
 					$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 					?>
 					<article class="avfr-entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr-hasvoted' : false;?>">
@@ -118,7 +118,7 @@
 	 						<?php 
 	 						if ( is_single() ) { ?>
 		 						<div class="entry-meta" role="category tag">
-			 						<div class="avfr_short_group">
+			 						<div class="avfr-short-group">
 										<span class="dashicons dashicons-category"></span>
 										<?php
 										the_terms( $id, 'groups', ' ', ', ' );
@@ -127,7 +127,7 @@
 								<?php
 								
 								 if ( false != has_term( '', 'featureTags', $id) ) {?>
-									<div class="avfr_short_tags">
+									<div class="avfr-short-tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
 											the_terms( $id, 'featureTags', ' ', ', ' );
@@ -143,7 +143,7 @@
 		 							} else {
 									?>
 									<div>
-										<span class="avfr_short_comment">
+										<span class="avfr-short-comment">
 											<span class="dashicons dashicons-admin-comments"></span>
 										<?php
 											printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
@@ -157,7 +157,7 @@
 								<?php 
 									avfr_get_author_avatar($id); ?>
 									
-								 <div id="avfr_avatar_name"> 
+								 <div id="avfr-avatar-name">
 								<?php 
 									avfr_get_author_name($id);
 											?>
@@ -207,7 +207,7 @@
 										} 
 									}
 										?>
-								<div id="avfr_delete">	
+								<div id="avfr-delete">	
 			 					    <span class="dashicons dashicons-trash"></span><a href="<?php the_permalink(); ?>&action=deletepost">Delete post</a>
 									<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
 								</div>
@@ -256,7 +256,7 @@
 											
 											if ( $related_query->have_posts() ) {
 												while ($related_query->have_posts() ) : $related_query->the_post(); ?>
-												<ul class="single_related">
+												<ul class="single-related">
 													<li><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
 												</ul>
 											<?php endwhile;
@@ -271,7 +271,7 @@
 						<?php if ( ! is_single() ) { ?>
 													
 						<footer class="entry-meta" role="category tag">
-							<div class="avfr_short_group">
+							<div class="avfr-short-group">
 								<span class="dashicons dashicons-category"></span>
 								<?php
 								the_terms( $id, 'groups', ' ', ', ' );
@@ -279,7 +279,7 @@
 							</div>
 								<?php
 								 if ( false != has_term( '', 'featureTags', $id) ) {?>
-									<div class="avfr_short_tags">
+									<div class="avfr-short-tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
 											the_terms( $id, 'featureTags', ' ', ', ' );
@@ -295,7 +295,7 @@
  							} else {
 							?>
 							<div>
-								<span class="idea_short_comment">
+								<span class="idea-short-comment">
 									<span class="dashicons dashicons-admin-comments"></span>
 								<?php
 									printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );

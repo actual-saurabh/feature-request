@@ -858,7 +858,7 @@ if ( !function_exists('avfr_vote_status') ):
 
 		if ( 'open' !== $status && false !== $status ) { ?>
 			<div class="avfr-status">
-				<?php echo '<span class="avfr-status_'.sanitize_html_class( $status ).'">'.esc_attr( $status ).'</span>';?>
+				<?php echo '<span class="avfr-status-'.sanitize_html_class( $status ).'">'.esc_attr( $status ).'</span>';?>
 			</div>
 		<?php }
 	}

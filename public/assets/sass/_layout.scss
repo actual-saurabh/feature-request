@@ -115,7 +115,8 @@
     .entry-header {
         margin-top : 0;
         display: table;
-        
+        margin: 0;
+
         .entry-title {
             font-weight: bold;
             font-size: 20px;
@@ -268,15 +269,15 @@
         line-height: 1.5;
     }
 
-    .avfr-status_approved{
+    .avfr-status-approved{
         background: $green;
     }
 
-    .avfr-status_declined{
+    .avfr-status-declined{
         background: $red;
     }
 
-    .avfr-status_completed{
+    .avfr-status-completed{
         background: $blue;
     }
 
@@ -295,7 +296,7 @@
         
         a {
             @include button-variant($btn-color, $btn-bg, $border-color);
-            @include button-size($btn-pad-ver, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
+            @include button-size($btn-pad-ver, $btn-pad-hor, $filter-line-height, $br-rad);
             text-decoration: none;
             border-width: $br-width;
         }
@@ -340,7 +341,7 @@
 
     a {
         @include button-variant($btn-color, $btn-bg, $border-color);
-        @include button-size($btn-pad-ver,  $btn-pad-hor - 10px , $btn-font-size, $filter-line-height, $br-rad);
+        @include button-size($btn-pad-ver,  $btn-pad-hor - 10px , $filter-line-height, $br-rad);
         text-decoration: none;
         border-width: $br-width;
     }
@@ -357,7 +358,7 @@
 
 .avfr-disabled-button {
     @include button-variant(lighten($btn-color, 50%), lighten($btn-bg, 7%), lighten($border-color, 7%));
-    @include button-size($btn-pad-ver - 2px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
+    @include button-size($btn-pad-ver - 2px, $btn-pad-hor, $filter-line-height, $br-rad);
     border-width: $br-width;
 
     margin: 0;
@@ -397,7 +398,7 @@
 
     a{
         @include button-variant($btn-color, $btn-bg, $border-color);
-        @include button-size($btn-pad-ver - 3px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
+        @include button-size($btn-pad-ver - 3px, $btn-pad-hor, $filter-line-height, $br-rad);
         margin-right: 10px;
         text-decoration: none;
         border-width: $br-width;
@@ -439,7 +440,7 @@
         color: $link-color;
     }
 
-    .single_related {
+    .single-related {
         text-decoration: none;
         font-weight: bold;
 
@@ -474,7 +475,7 @@
         border: $br-width solid $border-color;
     }
 
-    #avfr_avatar-name{
+    #avfr-avatar-name{
         margin-left: 15px;
         padding-top: 0px;
         float: left;
@@ -496,7 +497,7 @@
 
 }
 
-#avfr_delete{
+#avfr-delete{
     float: right;
     margin: 20px;
     color: #cccccc;
