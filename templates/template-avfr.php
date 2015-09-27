@@ -73,15 +73,15 @@
 										<?php
 										if ( 'on' == $total_votes ) { ?>
 
-											<strong class="avfr-totals_num">1</strong><br>
-											<span class="avfr-totals_label"><?php _e( 'vote','Feature-request' ); ?></span>
+											<strong class="avfr-totals-num">1</strong><br>
+											<span class="avfr-totals-label"><?php _e( 'vote','Feature-request' ); ?></span>
 												
 										<?php
 
 										} elseif ( !empty( $total_votes ) ) { ?>
 												
-											<strong class="avfr-totals_num"><?php echo $total_votes ?></strong><br>
-											<span class="avfr-totals_label"><?php _e( 'votes','feature_request' ); ?></span>
+											<strong class="avfr-totals-num"><?php echo $total_votes ?></strong><br>
+											<span class="avfr-totals-label"><?php _e( 'votes','feature_request' ); ?></span>
 					
 										<?php
 										} 
@@ -89,8 +89,8 @@
 									<?php 
 									} else { ?>
 
-										<strong class="avfr-totals_num">0</strong><br>
-										<span class="avfr-totals_label"><?php _e( 'vote','feature_request' ); ?></span>
+										<strong class="avfr-totals-num">0</strong><br>
+										<span class="avfr-totals-label"><?php _e( 'vote','feature_request' ); ?></span>
 
 									<?php
 									} ?>
@@ -175,7 +175,7 @@
 
  						</header>
                         
- 						<div class="avfr-entry entry-content hhhhh">
+ 						<div class="avfr-entry entry-content">
                        	<?php
                        	  	the_content(); ?>
                        	  	<?php

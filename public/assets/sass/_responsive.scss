@@ -1,29 +1,38 @@
-@media(max-width:600px){
-    // entrty
+@media(max-width:600px) {
+
     .avfr-entry-wrap {
 		display: inline-block;
         padding:12px;
         @include box-sizing(border-box);
+
         .entry-header {
             display:block;
         }
+
         footer {
             margin-left: 0;
+
             div {
                 padding: 0 10px 0 0;
             }
+
         }
+
         .entry-content {
             margin: 10px 0 0 0;
             display: inline-block;
         }
+
         div.entry-meta {
             margin: 0;
+
             div {
                 padding: 0;
             }
+
         }
     }
+
     .avfr-hasvoted {
         top:0;
 
@@ -31,7 +40,9 @@
             float:left;
             top:-5px;
         }
+
     }
+
     .avfr-controls {
         @include clearfix;
         margin-right:none;
@@ -45,6 +56,7 @@
     }
 
     .avfr-layout-submit {
+
         .avfr-submit-left,
         .avfr-submit-right {
             width:100%;
@@ -53,9 +65,11 @@
             text-align: center;
             margin:0;
         }
+
         .avfr-submit-left {
             margin-bottom:10px;
         }
+
     }
 
     .vote-up,
@@ -80,12 +94,38 @@
         margin-left:auto;
         margin-right:auto;
     }
+
 }
 
 @media(max-width:400px) {
+
     .avfr-button {
         width:100%;
         margin-left:0;
         margin-right:0;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    .avfr-modal-dialog {
+        width: $modal-md;
+        margin: 0 auto;
+    }
+
+    .avfr-modal-content {
+        @include box-shadow(0 5px 15px rgba(0,0,0,.5));
+    }
+
+    .avfr-modal-sm {
+        width: $modal-sm;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .avfr-modal-lg {
+        width: $modal-lg;
     }
 }

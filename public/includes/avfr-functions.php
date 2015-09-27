@@ -582,7 +582,10 @@ if ( !function_exists('avfr_submit_box') ):
 				    	<div class="avfr-modal-body">
 
 							<form id="avfr-entry-form" method="post" enctype="multipart/form-data">
-								<div id="avfr-form-group"><label for="avfr-title"><?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?></label>
+								<div id="avfr-form-group" class="form-input-group">
+								<label for="avfr-title">
+									<?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?>
+								</label>
 								<?php if ( !is_archive() && !is_single() && !empty($groups) && count( explode(',', $groups) ) == 1 ) {
 								 	$group_name = get_term( $groups, 'groups' );
 								 	echo $group_name->name;
@@ -637,21 +640,21 @@ if ( !function_exists('avfr_submit_box') ):
 								}
 								?>
 								
-								<div id="avfr-form-title">
+								<div id="avfr-form-title" class="form-input-group">
 									<label for="avfr-entryform-title">
 										<?php apply_filters('avfr_form_title', _e('Title','feature-request'));?>
 									</label>
 									<input id="avfr-entryform-title" type="text" name="avfr-title" value="" placeholder="My Awesome Submission">
 								</div>
 
-								<div id="avfr-form-desc">
+								<div id="avfr-form-desc" class="form-input-group">
 									<label for="avfr-entryform-description">
 										<?php apply_filters('avfr_form_description', _e('Description','feature-request'));?>
 									</label>
 									<textarea id="avfr-entryform-description" name="avfr-description" value="" placeholder="<?php _e('Make the description meaningful!', 'feature-request') ?>"></textarea>		
   								</div>
 
-  								<div id="avfr-form-tags">
+  								<div id="avfr-form-tags" class="form-input-group">
 	  								<label for="tags-data-list">
 	  									<?php apply_filters('avfr_form_title', _e('Idea tags:','feature-request'));?>
 	  								</label>
@@ -661,7 +664,7 @@ if ( !function_exists('avfr_submit_box') ):
   								<?php $disable_upload = avfr_get_option('avfr_disable_upload','avfr_settings_fetures') ?>
   								<?php if ( 'on' != $disable_upload ) : ?>
 
-  								<div id="avfr-form-upload">
+  								<div id="avfr-form-upload" class="form-input-group">
   									<label for="avfr-upload-form">
   										<?php _e('Select file to upload:','feature-request'); ?>
   									</label>
@@ -673,7 +676,7 @@ if ( !function_exists('avfr_submit_box') ):
 								<?php endif; ?>
 
 								<?php if ( 'on' != avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') ) : ?>
-								<div id="avfr-form-captcha">
+								<div id="avfr-form-captcha" class="form-input-group">
 								      <label for="captcha">
 								      	<?php _e('Captcha','feature-request') ?>
 								      </label>

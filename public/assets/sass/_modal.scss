@@ -1,40 +1,43 @@
-.avfr-modal{
+.avfr-modal {
     position:fixed;
     top:0;
-  &:before{
-    content: ""; 
-    display: none;
-    background: rgba(0,0,0,.6);
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0; 
-    z-index: 10;
-  }
-  
-  &:target{
-     
-    &:before{
-      display: block;
-    }  
-    .avfr-modal-dialog{
-      @include translate(0, -50%); 
-      top: 50%;  
-    }
-  }
 
-  * {
-      @include box-sizing(border-box);
-  }
-    div#avfr-form-upload, div#avfr-form-desc, div#avfr-form-title, div#avfr-form-group, div#avfr-form-tags{
+    &:before {
+        content: ""; 
+        display: none;
+        background: rgba(0,0,0,.6);
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0; 
+        z-index: 10;
+    }
+
+    &:target {
+
+        &:before{
+          display: block;
+        }
+
+        .avfr-modal-dialog {
+            @include translate(0, -50%); 
+            top: 50%;
+        }
+
+    }
+
+    * {
+        @include box-sizing(border-box);
+    }
+
+    .form-input-group {
         margin: $input-margin;
     }
-    div#avfr-form-captcha{
-        margin: 2px 23px 0 0;
-    }
+
     label {
         display:block;
         margin:15px auto 5px;
         font-weight:bold;
     }
+
     input[type="text"],
     textarea {
         width: 100%;
@@ -44,16 +47,18 @@
         line-height: $input-font_lineheight;
         color: $input-color;
         background-color: $input-bg;
-        border: 1px solid $input-border;
+        border: $br-width solid $input-border;
         @include border-radius($br-rad);
         @include transition("border-color ease-in-out .15s, box-shadow ease-in-out .15s");
 
         &:focus {
-            border:1px solid $blue !important;
+            border:$br-width solid $blue !important;
             box-shadow:none;
             outline:none;
         }
+
     }
+
     input[type=submit]:disabled,
     button:disabled {
         opacity:0.4;
@@ -62,26 +67,26 @@
     #avfr-entryform-description {
         min-height: 100px !important;
     }
+
 }
 
-.avfr-modal-dialog{
-  position: fixed; 
-  left: 0;
-  right: 0;
-  top: -100%; 
-  z-index: 11;
-  @include translate(0, 0);
-  @include transition(0.3s);
+.avfr-modal-dialog {
+    position: fixed; 
+    left: 0;
+    right: 0;
+    top: -100%; 
+    z-index: 11;
+    @include translate(0, 0);
+    @include transition(0.3s);
 }
 
 .avfr-modal-content {
     position: relative;
     background-color: $modal-content-bg;
-    border: 1px solid $modal-content-border-color;
+    border: $br-width solid $modal-content-border-color;
     @include border-radius($modal-border-radius);
     @include box-shadow(0 3px 9px rgba(0,0,0,.5));
     background-clip: padding-box;
-    // Remove focus outline from opened modal
     outline: 0;
 }
 
@@ -91,19 +96,27 @@
     right: 0;
     left: 0;
     background-color: $modal-backdrop-bg;
-    // Fade for backdrop
-    &.fade { opacity: 0; }
-    &.in { opacity: $modal-backdrop-opacity; }
+
+    &.fade { 
+        opacity: 0;
+    }
+
+    &.in {
+        opacity: $modal-backdrop-opacity;
+    }
+
 }
 
 .avfr-modal-header {
     padding: $modal-title_padding-ver $modal-title_padding ;
     border-bottom: 1px solid $modal-header-border-color;
     min-height: ($modal-title_padding + $modal-title-line-height);
+
     h3 {
         margin: 0;
         line-height: 1.5;
     }
+
 }
 
 .avfr-modal-title {
@@ -116,31 +129,32 @@
     position: relative;
     padding: $modal-innerpadding;
 }
- .text-wrap {
-     width: 100% !important;
-     #tags-data-list{
-        height: 28px;
-        width: 100% !important;
-        min-height: 28px;
-        line-height: 1;
-        @include border-radius($br-rad);
-        border-color: $input-border;
-        padding: 6px 0 20px 8px;
-     }
-     .text-remove{
-        top:2px !important;
-     }
 
- }
+.text-wrap {
+   width: 100% !important;
+
+   #tags-data-list {
+    height: 28px;
+    width: 100% !important;
+    min-height: 28px;
+    line-height: 1;
+    @include border-radius($br-rad);
+    border-color: $input-border;
+    padding: 6px 0 20px 8px;
+    }
+
+    .text-remove{
+        top:2px !important;
+    }
+
+}
 
 .avfr-modal-footer {
-    padding-top: $modal-innerpadding;
     text-align: left; 
-
 
     .btn + .btn {
         margin-left: 5px;
-        margin-bottom: 0; 
+        margin-bottom: 0;
     }
 
     .btn-group .btn + .btn {
@@ -158,11 +172,13 @@
         outline: none;
         border:none;
         box-shadow: none;
+
         &:active,
         &:focus {
             outline:none;
             border:none;
         }
+
     }
 
 }
@@ -174,24 +190,6 @@
     overflow: scroll;
 }
 
-@media (min-width: 768px) {
-
-    .avfr-modal-dialog {
-        width: $modal-md;
-        margin: 0 auto;
-    }
-    .avfr-modal-content {
-        @include box-shadow(0 5px 15px rgba(0,0,0,.5));
-    }
-
-    .avfr-modal-sm { width: $modal-sm; }
-}
-
-@media (min-width: 992px) {
-    .avfr-modal-lg { width: $modal-lg; }
-}
-
-// CLOSE
 .close {
     float: right;
     line-height: normal;
@@ -201,6 +199,7 @@
     text-decoration: none;
     padding: 0.5em 1em;
     line-height: normal;
+
     &:hover,
     &:focus {
         color: $close-font_color;
@@ -212,15 +211,16 @@
         border:none;
         opacity: 0.7;
     }
+
 }
 
-select#group.ideagroup{
+select#group.ideagroup {
     @include border-radius($br-rad);
     padding: $input-padding;  
     min-width: 192px;
 }
 
-#imgCaptcha{
+#imgCaptcha {
     margin-left: 11px;
     @include border-radius($br-rad);
     box-shadow: none;
@@ -228,19 +228,19 @@ select#group.ideagroup{
     margin: 0 10px;
 }
 
-#reload{
+#reload {
     box-shadow: none;
     vertical-align: middle;
     cursor: pointer;
 }
 
-input.avfr-button.btn.btn-default{
+.avfr-button.btn.btn-default {
     margin-top: 0px;
     width: 110px;
     height: 40px;
 }
 
-#avfr-entry-form-results{
+#avfr-entry-form-results {
     margin: 0 0 0 11px;
     height: 40px;
     background: #dd6d5a;
@@ -249,19 +249,21 @@ input.avfr-button.btn.btn-default{
     vertical-align: middle;
     font-size:$input-font_size;
     @include transition(.7s);
+
     p {
         color: #ffffff;
         padding: 10px;
         @include transition(.7s);
         line-height: normal;
     }
+
 }
 
-#captcha{
+#captcha {
     height: 30px;
     width: 192px;
 }
 
-.dashicons-warning:before{
+.dashicons-warning:before {
     margin: 15px 15px 0 0;
 }

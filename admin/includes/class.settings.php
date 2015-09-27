@@ -473,6 +473,7 @@ class AVFR_Settings_Api_Wrap {
         return $settings_fields;
     }
 
+
      function avfr_help( $contextual_help, $screen_id) {
          
         switch( $screen_id ) {
@@ -519,6 +520,7 @@ class AVFR_Settings_Api_Wrap {
         }
         return $contextual_help;
     }
+
 }
 endif;
 

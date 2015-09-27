@@ -1,34 +1,35 @@
-// main layout wrap
 .avfr-wrap-wrap {
     @include clearfix;
+
     * {
         @include box-sizing(border-box);
     }
+
 }
 
-// main alyout
 .avfr-layout-main {
     width: 100%;
 }
 
-// submit area
 .avfr-layout-submit {
     @include clearfix;
     margin:$entry-margin;
     padding:$entry-padding;
-    border-top:1px solid $border-color;
-    border-bottom:1px solid $border-color;
+    border-top:$br-width solid $border-color;
+    border-bottom:$br-width solid $border-color;
 
     .avfr-submit-left {
         float: left;
         padding:10px 0;
         @include box-sizing(border-box);
     }
+
     .avfr-submit-right {
         float: right;
         padding:10px 0;
         @include box-sizing(border-box);
     }
+
 }
 
 #avfr-entry-form input[type="submit"],
@@ -48,36 +49,41 @@
         color:white;
         background:darken($button-background,5);
     }
+
     &:active {
         outline:none;
         background:darken($button-background,8);
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.5));
     }
+
 }
 
-
-// main article
 .avfr-entry-wrap {
     @include clearfix;
     display: block;
     width: 100%;
     padding:$entry-wrap_padding;
     margin-bottom: 0 !important;
-    &:nth-child(even){
+
+    &:nth-child(even) {
         background:darken($primary,3);
     }
+
     footer,div.entry-meta {
         display: table;
         margin: 0;
+
         div {
             display: inline-block;
             color: #acacac;
             margin: 16px;
         }
+
         .avfr-short-group {
             padding-left: 0;
             margin-left: 0;
         }
+
         span {
             display: inline-block;
             color: #c7c7c7;
@@ -85,30 +91,37 @@
             vertical-align: text-top;
             margin: 0;
         }
+
         img {
             box-shadow: none;
         }
+
         a {
             color : $link-color;
+
             &:hover,
             &:focus,
             &:active {
                 color : $link-color;
             }
-        }   
+
+        }
+
     }
     footer {
         margin-left: 116px;
     }
-    .entry-header {
 
+    .entry-header {
         margin-top : 0;
         display: table;
+        
         .entry-title {
             font-weight: bold;
             font-size: 20px;
             margin: 0;
         }
+
     }
     .entry-content {
         display: table;
@@ -118,21 +131,25 @@
             font-size: 0.9em;
             padding-left: 15px;
         }
+
     }
 }
 
-// entry inner
+
 .avfr-entry {
     font-size:$entry-font_size;
     line-height: $entry-font_lineheight;
     display: table;
     margin: 0;
-    p{
+
+    p {
         margin: 0px;
     }
+
     img {
         box-shadow: none;
     }
+
 }
 
 .avfr-controls {
@@ -143,19 +160,20 @@
     @include border-radius($br-rad);
     background-color: #fff;
     line-height: 1.5;
-    .avfr-totals {
 
+    .avfr-totals {
         padding: 5px;
 
-        .avfr-totals_num {
+        .avfr-totals-num {
             font-size: 18px;
             line-height: 22px;
         }
 
-        .avfr-totals_label {
+        .avfr-totals-label {
             font-size: 12px;
             color: $vote-lable-color;
         }
+
     }
 
     &.voted {
@@ -166,7 +184,6 @@
     }
 }
 
-// vote controls
 .avfr-vote-up,
 .avfr-vote-down {
     position:relative;
@@ -177,7 +194,7 @@
     font-size:$icon-font_size;
     margin-top: -2px;
     text-decoration: none;
-    border:1px solid #ccc;
+    border:$br-width solid #ccc;
     @include border-radius($br-rad);
 
     &:after {
@@ -198,7 +215,7 @@
 .avfr-vote-up{
     margin-rigth: 2px;
     &:after {
-        content:'\f132';
+        content:'\f529';
         color:$green;
     }
 
@@ -209,15 +226,18 @@
 }
 .avfr-vote-down {
     margin-left: 2px;
+
     &:after {
-        content:'\f460';
+        content:'\f542';
         color:$red;
     }
 
     &:hover:after {
         color:darken($red,5)
     }
+
 }
+
 .ah-thanks,
 .avfr-totals {
     font-size:95%;
@@ -227,7 +247,6 @@
     line-height:0.9;
 }
 
-// status
 .avfr-status {
 
     margin-top:10px;
@@ -249,25 +268,24 @@
         line-height: 1.5;
     }
 
-    .avfr-status_approved{
+    .avfr-status-approved{
         background: $green;
     }
-    .avfr-status_declined{
+
+    .avfr-status-declined{
         background: $red;
     }
-    .avfr-status_open{
-        background: $teal;
-    }
-    .avfr-status_completed{
+
+    .avfr-status-completed{
         background: $blue;
     }
+
 }
 
 .avfr-loadmore {
     margin:20px auto;
 }
 
-// Filters
 .avfr-filter-controls {
     margin-left: 0 !important;
     padding: 15px 0px;
@@ -275,7 +293,6 @@
     .avfr-filter-control-item {
         display: inline-block;
         
-
         a {
             @include button-variant($btn-color, $btn-bg, $border-color);
             @include button-size($btn-pad-ver, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
@@ -284,20 +301,23 @@
         }
         
     }
-    div,li {
+
+    div,
+    li {
         margin: 8px 3px;
     }
+
     select {
         vertical-align: baseline;
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
+        @include appearance(none);
         position: relative;
-        padding-right: 30px;
+        padding: 6px 30px 6px 6px;
         @include border-radius($br-rad);
     }
+
     .triangle-down {
         position: relative;
+
         &:after {
             content: '';
             display: inline-block;
@@ -310,61 +330,71 @@
             top: 10px;
             right: 15px;
         }
+
     }
+
 }
 
 .status-changing {
     float: right;
+
     a {
         @include button-variant($btn-color, $btn-bg, $border-color);
         @include button-size($btn-pad-ver,  $btn-pad-hor - 10px , $btn-font-size, $filter-line-height, $br-rad);
         text-decoration: none;
         border-width: $br-width;
     }
+
 }
 
-//Votes
 .avfr-vote-now {
     @include button-variant($btn-color, $btn-bg, $border-color);
     padding: ($btn-pad-ver - 3) $btn-pad-hor;
-    border-width: 1px;
+    border-width: $br-width;
     font-size: 13px;
     @include border-radius($br-rad);
 }
+
 .avfr-disabled-button {
     @include button-variant(lighten($btn-color, 50%), lighten($btn-bg, 7%), lighten($border-color, 7%));
     @include button-size($btn-pad-ver - 2px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
-    border-width: 1px;
+    border-width: $br-width;
+
     margin: 0;
     &:hover {
         border-color: lighten($border-color, 7%);
         color: lighten($btn-color, 50%);
     }
+
 }
 .avfr-votes-area {
     margin-right: 20px;
     float: left;
+
     .flag-show {
         text-align: center;
         padding-top: 5px;
+
         a {
             text-decoration: none;
         }
+
     }
+
 }
 
 .avfr-tooltip {
     display: none;
     position: absolute;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: $br-width solid $border-color;
     @include border-radius($br-rad);
     padding: 15px;
     margin-top: -30px;
     text-align: left;
     line-height: 30px;
+    @include box-shadow( 0 0 1px 2px rgba(222,222,222,0.5) );
 
-    @include box-shadow( 0 0 1px 2px rgba(222,222,222,0.5));
     a{
         @include button-variant($btn-color, $btn-bg, $border-color);
         @include button-size($btn-pad-ver - 3px, $btn-pad-hor, $btn-font-size, $filter-line-height, $br-rad);
@@ -372,46 +402,53 @@
         text-decoration: none;
         border-width: $br-width;
     }
+
     p {
         padding-bottom: 10px;
     }
+
     .small-text {
         font-size: 0.7em;
         padding-bottom: 0;
     }
+
 }
 
 .attachments {
     margin-top: 30px;
     margin-bottom: 50px;
+
     img {
-        border: 2px solid #ccc;
+        border: 2px solid $border-color;
         @include border-radius(0);
     }
+
     .image-caption {
         font-weight: bold;
         color: $link-color;
     }
+
 }
 
 .related-features-section {
     margin-bottom: 40px;
     padding-bottom: 20px;
+
     .related-title {
         font-weight: bold;
         color: $link-color;
     }
-    .single_related {
+
+    .single-related {
         text-decoration: none;
         font-weight: bold;
+
         li {
             list-style: none;
         }
         
     }
 }
-
-//reload animation
 
 @include keyframes(avfrreloadanimation) {
 
@@ -426,39 +463,47 @@
 }
 
 #avfr-avatar{
- margin-bottom: 70px; 
- margin-top: 15px;
- vertical-align: none;
-     img{
+   margin-bottom: 70px; 
+   margin-top: 15px;
+   vertical-align: none;
+
+   img{
         float: left;    
         height: 40px;
         width: 40px;
-        border: 1px solid #cccccc;
+        border: $br-width solid $border-color;
     }
-    #avfr_avatar-name{
+
+    #avfr-avatar-name{
         margin-left: 15px;
         padding-top: 0px;
         float: left;
         font-weight:bold;
         font-size: 13px;
     }
+
     span{
         font-weight: normal;
         color: black; 
     }
+
     p{
         padding-left: 1px;
         padding-top: 0px;
         font-size: 11px;
         color: #cccccc;
     }
+
 }
 
-#avfr_delete{
+#avfr-delete{
     float: right;
     margin: 20px;
     color: #cccccc;
     font-weight: normal;
-    vertical-align: none;
     font-size: 13px;
+
+    .dashicons {
+        vertical-align: middle;
+    }
 }
