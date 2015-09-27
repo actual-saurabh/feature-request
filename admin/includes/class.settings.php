@@ -24,8 +24,15 @@ class AVFR_Settings_Api_Wrap {
 
         add_action( 'admin_init', 						array($this, 'admin_init') );
         add_action( 'admin_menu', 						array($this, 'submenu_page'));
-        add_action( 'admin_head', 						array($this, 'reset_votes'));
-        add_action( 'wp_ajax_avfr_reset', 		        array($this, 'avfr_reset' ));
+        add_filter( 'contextual_help',                  array($this, 'avfr_help'), 10, 2);
+        add_action( 'admin_head',                       array($this, 'reset_votes'));
+  
+
+
+    }
+        function submenu_page() { 
+        
+         add_submenu_page( 'edit.php?post_type=avfr', 'Settings', __('Settings','feature-request'), 'manage_options', 'feature-request-settings',array($this,'submenu_page_callback') );
 
     }
 
@@ -39,189 +46,6 @@ class AVFR_Settings_Api_Wrap {
         $this->settings_api->admin_init();
     }
 
-	function submenu_page() {
-		add_submenu_page( 'edit.php?post_type=avfr', 'Settings', __('Settings','feature-request'), 'manage_options', 'feature-request-settings', array($this,'submenu_page_callback') );
-		add_submenu_page( 'edit.php?post_type=avfr', 'Help', __('Help','feature-request'), 'manage_options', 'feature-request-docs', array($this,'docs_callback') );
-		add_submenu_page( 'edit.php?post_type=avfr', 'Reset', __('Reset','feature-request'), 'manage_options', 'feature-request-reset', array($this,'reset_callback') );
-	}
-
-	/**
-	*
-	*	Allow admins to reset the votes
-	*
-	*/
-	function reset_callback(){
-
-
-
-		echo '<div class="wrap">';
-
-			?><h2><?php _e('feature request Reset','feature-request');?></h2>
-
-			<label style="display:block;margin-top:20px;"><?php _e('Click the button below to reset votes. Warning, there is no going back!','feature-request');?></label>
-			<a style="background:#d9534f;border:none;box-shadow:none;color:white;display:inline-block;margin-top:10px;" class="button feature-request-reset--votes" href="#"><?php _e('Reset Votes','feature-request');?></a>
-			<?php 
-
-		echo '</div>';
-
-
-	}
-
-	/**
-	*
-	*	Documentation page callback
-	*
-	*/
-	function docs_callback(){
-
-		$domain = avfr_get_option('avfr_domain','avfr_settings_main','suggestions');
-
-		echo '<div class="wrap">';
-
-			?><h2 style="margin-bottom:0;"><?php _e('Feature Request Documentation','feature-request');?></h2>
-			<hr>
-
-			<h3 style="margin-bottom:0;"><?php _e('The Basics','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('After you activate <em>Feature Request</em>, it will automatically be available at <a href="'.get_post_type_archive_link( 'suggestions' ).'" target="_blank">'.get_post_type_archive_link( 'suggestions' ).'</a>. You can rename this in the settings or deactivate it all together and use the shortcode instead. By default voting is limited to logged in users, however you can activate public voting that would work (in addition to) logged in voting.','feature-request');?></p>
-
-			<hr style="margin-top:20px;">
-
-			<h3 style="margin-bottom:0;"><?php _e('The Shortcodes','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('You can additionally display the form and Features via a shortcode as documented below.','feature-request');?></p>
-
-			<code>[idea_factory hide_submit="off" hide_votes="off" hide_voting="off" groups="2,5,12"]</code>
-            
-			<ul>
-				<li><strong><?php _e('Hide Submit','feature-request');?></strong> - <?php _e('Set this to "on" to hide the submission button and form.','feature-request');?></li>
-				<li><strong><?php _e('Hide Votes','feature-request');?></strong> - <?php _e('Set this to "on" to hide the votes.','feature-request');?></li>
-                <li><strong><?php _e('Hide Voting','feature-request');?></strong> - <?php _e('Set this to "on" to hide the voting features.','feature-request');?></li>
-				<li><strong><?php _e('Groups','feature-request');?></strong> - <?php _e('Set groups IDs for show only the specific groups.','feature-request');?></li>
-			</ul>
-
-            <code>[idea_factory_user_votes hide_total="off" hide_remaining="off" groups="1,5,12"]</code>
-
-            <ul>
-                <li><strong><?php _e('groups','feature-request');?></strong> - <?php _e('Set groups IDs for show only total or remaining votes for specific groups. If not set, all groups will be shown. ','feature-request');?></li>
-                <li><strong><?php _e('hide_total','feature-request');?></strong> - <?php _e('Set this to "on" to hide the total votes.','feature-request');?></li>
-                <li><strong><?php _e('hide_remaining','feature-request');?></strong> - <?php _e('Set this to "on" to hide the remaining voting.','feature-request');?></li>
-            </ul>
-
-			<hr style="margin-top:20px;">
-
-			<h3 style="margin-bottom:0;"><?php _e('How Voting Works','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('Voting is available to logged in users, and logged out users (with the option enabled). Total votes are stored in the post meta table for (logged in users). Once a user votes, a flag is recorded in the user_meta table (logged in users), preventing this user from being able to vote again on the same idea.</br></br>In the case of public voting, voters IP addresses are recorded into a custom table. From there the logic works the same, only difference is where the data is stored.','feature-request');?></p>
-
-			<hr style="margin-top:20px;">
-
-			<h3 style="margin-bottom:0;"><?php _e('How the Threshold Works','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('The threshold allows individual features to automatically be assigned a status based on a grading formula. For example, if you set this threshold to 10, then when the total votes reaches 10 it will trigger the grading. A vote up, and vote down, both count. In the end, if the total votes is over 10, and the total up votes is over 10, it passes. If not, it fails. Otherwise, the status remains open.','feature-request');?></p>
-
-			<hr style="margin-top:20px;">
-
-			<h3 style="margin-bottom:0;"><?php _e('Reset','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('On your left you will see the Reset option. When you click into this menu, and you click the red Reset button, it will reset all the votes back to zero. There is no going back, so be sure this is what you want to do when you click that button.','feature-request');?></p>
-
-			<hr style="margin-top:20px;">
-
-			<h3 style="margin-bottom:0;"><?php _e('Developers','feature-request');?></h3>
-			<p style="margin-top:5px;"><?php _e('Full documentation of hooks, actions, filters, and helper functions are available on the GitHub wiki page located <a href="https://github.com/tmeister/feature-request/wiki">here</a>','feature-request');?>.</p>
-
-			<?php
-
-
-		echo '</div>';
-	}
-
-	/**
-	*
-	*	Handl the click event for resetting votes
-	*
-	*/
-	function reset_votes() {
-
-		$nonce = wp_create_nonce('feature-request-reset');
-
-		$screen = get_current_screen();
-
-		if ( 'avfr_page_feature-request-reset' == $screen->id ) {
-
-			?>
-				<!-- Reset Votes -->
-				<script>
-					jQuery(document).ready(function($){
-						// reset post meta
-					  	jQuery('.feature-request-reset--votes').click(function(e){
-                        var r = confirm('Are you sure to reset all votes?');
-                            if ( r == false ) {
-                                //continue
-                            } else {
-
-    					  		e.preventDefault();
-
-    					  		var data = {
-    					            action: 'feature-request_reset',
-    					            security: '<?php echo $nonce;?>'
-    					        };
-
-    						  	jQuery.post(ajaxurl, data, function(response) {
-    						  		if( response ){
-    						        	alert(response);
-    						        	location.reload();
-    						  		}
-    						    });
-                            }
-
-					    });
-					});
-				</script>
-
-		<?php }
-
-	}
-
-	/**
-	*
-	*	Process the votes reste
-	*	@since 1.1
-	*/
-	function avfr_reset(){
-
-		check_ajax_referer( 'feature-request-reset', 'security' );
-
-		if ( !current_user_can('manage_options') )
-			exit;
-
-		$posts = get_posts( array('post_type' => 'avfr', 'posts_per_page' => -1 ) );
-
-		if ( $posts ):
-
-			foreach ( $posts as $post ) {
-
-				$total_votes = get_post_meta( $post->ID, '_avfr_total_votes', true );
-				$votes 		 = get_post_meta( $post->ID, '_avfr_votes', true );
-
-				if ( !empty( $total_votes ) ) {
-					update_post_meta( $post->ID, '_avfr_total_votes', 0 );
-				}
-
-				if ( !empty( $votes ) ) {
-					update_post_meta( $post->ID, '_avfr_votes', 0 );
-				}
-			}
-
-		endif;
-
-        global $wpdb;
-
-        $table = $wpdb->base_prefix.'feature_request';
-
-        $delete = $wpdb->query('TRUNCATE TABLE '.$table.'');
-
-		echo __('All votes reset!','feature-request');
-
-		exit;
-
-	}
 
 	function submenu_page_callback() {
 
@@ -234,6 +58,46 @@ class AVFR_Settings_Api_Wrap {
 		echo '</div>';
 
 	}
+    /**
+    *
+    * Process the votes reste
+    *
+    */
+    function avfr_reset(){
+
+        $avfr_reset_var= avfr_get_option('avfr_set_resets','avfr_settings_resets');
+        if ($avfr_reset_var = 'getreset'){
+            $posts = get_posts( array('post_type' => 'avfr', 'posts_per_page' => -1 ) );
+
+            if ( $posts ):
+
+                foreach ( $posts as $post ) {
+
+                    $total_votes = get_post_meta( $post->ID, '_avfr_total_votes', true );
+                    $votes       = get_post_meta( $post->ID, '_avfr_votes', true );
+
+                    if ( !empty( $total_votes ) ) {
+                        update_post_meta( $post->ID, '_avfr_total_votes', 0 );
+                    }
+
+                    if ( !empty( $votes ) ) {
+                        update_post_meta( $post->ID, '_avfr_votes', 0 );
+                    }
+                }
+
+            endif;
+
+            global $wpdb;
+
+            $table = $wpdb->base_prefix.'feature_request';
+
+            $delete = $wpdb->query('TRUNCATE TABLE '.$table.'');
+
+            echo __('All votes reset!','feature-request');
+
+            exit;
+        }
+    }
 
     function get_settings_sections() {
         $sections = array(
@@ -261,6 +125,11 @@ class AVFR_Settings_Api_Wrap {
                 'id' 	=> 'avfr_settings_advanced',
                 'title' => __( 'Advanced', 'feature-request' ),
                 'desc'  => __( 'Advanced plugin option','feature-request' )
+            ),
+            array(
+                'id'    => 'avfr_settings_resets',
+                'title' => __( 'Reset', 'feature-request' ),
+                'desc'  => __( 'Feature request reset','feature-request' )
             )
 
         );
@@ -543,8 +412,18 @@ class AVFR_Settings_Api_Wrap {
                     'type'				=> 'checkbox',
                     'default' 			=> ''
                 )
+            ),
+            'avfr_settings_resets'    => array(
+                array(
+                    'name'              => 'avfr_set_resets',
+                    'label'             => __( 'Reset Votes', 'feature-request' ),
+                    'desc'              => __( '<a style="background:#d9534f;border:none;box-shadow:none;color:white;display:inline-block;margin-top:10px;" class="button feature-request-reset--votes" n href="#" >Reset Votes</a>' ),
+                    'type'              => 'html',
+                    'default'           => ''
+                )
             )
         );
+
 
 		$taxonomy = 'groups';
 		$terms = get_terms($taxonomy, array('hide_empty'=> false)); // Get all terms of a taxonomy
@@ -594,27 +473,52 @@ class AVFR_Settings_Api_Wrap {
         return $settings_fields;
     }
 
+     function avfr_help( $contextual_help, $screen_id) {
+         
+        switch( $screen_id ) {
+            case 'avfr_page_feature-request-settings' :
+         // To add a whole tab group
+                 get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-first',
+                'title'     => __( 'First View' ),
+                'content'   => __( '<P>'.'When you triggered feature request to active, you can choose two option for first view on your site 1st option is you can use recommended short code that exclusively explained next or 2st option you can use template page which can be see on setup page  however not differences on Functional nature between shortcode and template page but we suggest build your page with short code.' ),
+                
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-options',
+                'title'     => __( 'Voting and options' ),
+                'content'   => __( '<P>'."On feature request wordpress plugin user can see flexibility and customization power. when a request submitted users can vote their feature ( if option enabled not logged in users can be participation on voting system) then you can set limit number of voting that users can’t vote more from your purpose it does not end there you can set limitation time that limit number of voting effected on purpose time even a step further and you have permission to select one by one group and set limit number of voting and set time period limitation and you can make decision that none logged in users can be voting or only user that have signed up on your site can be vote and finally you can choose like and dislike instead vote awesome is'nt? " ),
 
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-tags',
+                'title'     => __( 'Tags and group' ),
+                'content'   => __( '<P>'.'On feature request plugin you can make category for your features it means you can direct your voters to your special purpose and tags on every post made you aware that which one is your famous subject exactly, on group section you can set option and limit for one by one that separated other be make sure you add group first and then reference to groups settings.' ),
+                
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-mail',
+                'title'     => __( 'E-Mail' ),
+                'content'   => __( '<P>'.'Feature request plugin has prospective about email section its mean you can fully customization your plugin about every things relevant to email some example is if feature approved send mail and custom message to writer and every people that made vote for approved post and etc.' ),
+                
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-reset',
+                'title'     => __( 'Resets' ),
+                'content'   => __( '<P>'.'On left  you will see the reset option we created this option for those who wants to rollback to defaults setting we hope this option help you to reconfigure your plugin.' ),
+                
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-dev',
+                'title'     => __( 'Developers' ),
+                'content'   => __( '<P>'.'Serve as developer you can see and everything you need to develop this plugin on github this plugin made in '.'<b>'. 'averta lab'.'<b/>'.' sep 2015.' ),
+                
+                ) );
+                break;
 
-	/**
-	*
-	*	Sanitize integers
-	*
-	*/
-	function avfr_sanitize_int( $input ) {
-
-		if ( $input ) {
-
-			$output = absint( $input );
-
-		} else {
-
-			$output = false;
-
-		}
-
-		return $output;
-	}
+        }
+        return $contextual_help;
+    }
 }
 endif;
 
