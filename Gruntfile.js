@@ -44,7 +44,6 @@ module.exports = function(grunt) {
                 files: {
                         'public/assets/js/feature-request.js': [
                         'public/assets/js/transition.js',
-                        'public/assets/js/modal.js',
                         'public/assets/js/load-posts.js',
                         'public/assets/js/general.js',
                         'public/assets/js/jquery.form.min.js',
@@ -72,15 +71,15 @@ module.exports = function(grunt) {
             files: [
          
               // makes all src relative to cwd 
-              {expand: true, cwd: 'public/', src: ['**'], dest: '../../../../../wamp/www/wp/wp-content/plugins/feature-request/public/'},
+              {expand: true, cwd: 'public/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/public/'},
 
               //copy template folder
-              {expand: true, cwd: 'templates/', src: ['**'], dest: '../../../../../wamp/www/wp/wp-content/plugins/feature-request/templates/'},
+              {expand: true, cwd: 'templates/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/templates/'},
 
               //copy admin
-              {expand: true, cwd: 'admin/', src: ['**'], dest: '../../../../../wamp/www/wp/wp-content/plugins/feature-request/admin/'},
+              {expand: true, cwd: 'admin/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/admin/'},
               //copy includes
-              {expand: true, cwd: 'includes/', src: ['**'], dest: '../../../../../wamp/www/wp/wp-content/plugins/feature-request/includes/'}
+              {expand: true, cwd: 'includes/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/includes/'}
          
             ],
           },

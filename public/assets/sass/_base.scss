@@ -54,7 +54,7 @@ $modal-backdrop-opacity:			.75;
 $modal-header-border-color:			#e5e5e5;
 $modal-footer-border-color:			#999;
 $modal-border-radius:				5px;
-$input-margin:						0px 0px 22px 0px;
+$input-margin:						0px 0px 24px 0px;
 
 
 $modal-xl:							96%;
@@ -63,10 +63,7 @@ $modal-md:							600px;
 $modal-sm:							300px;
 $zindex-modal:                      1040;
 
-$close-font_size:					18px;
-$close-font_weight:					bold;
 $close-font_color:					#000;
-$close-font_textshadow:				0 1px 0 #fff;
 
 // Filters
 
@@ -84,3 +81,7 @@ $filter-line-height: 				16px;
 $vote-br-color: 					$border-color;
 $vote-lable-color:					#898989;
 $default-width: 					96px;
+
+$space: 40px;
+
+

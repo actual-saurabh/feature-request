@@ -222,7 +222,7 @@ if ( !function_exists('avfr_archive_query') ) {
 
 	 		if ( 'my' === $meta ) {
 	 			if ( !empty($val) ) {
-	 				$query->set( 'meta_key', '_author_email' );
+	 				$query->set( 'meta_key', '_avfr_author_email' );
 		 			$query->set( 'meta_value', base64_decode($val) );
 	 			}
 	 			$query->set( 'author', get_current_user_id() );
@@ -292,7 +292,7 @@ if ( !function_exists('avfr_add_vote') ) {
 
 	function avfr_add_vote( $args = array() ) {
 
-		$db = new ideaFactoryDB;
+		$db = new FeatureRequestDB;
 
 		$defaults = array(
 			'postid' => get_the_ID(),
@@ -421,7 +421,7 @@ if ( !function_exists('avfr_add_flag') ) {
 
 if ( !function_exists('avfr_total_votes_WEEK') ) {
 
-	function avfr_total_votes_WEEK( $ip, $userid = '', $idea_voted_group = '' ) {
+	function avfr_total_votes_WEEK( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -430,7 +430,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())',$userid, $ip, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -446,7 +446,7 @@ if ( !function_exists('avfr_total_votes_WEEK') ) {
 
 if ( !function_exists('avfr_total_votes_MONTH') ) {
 
-	function avfr_total_votes_MONTH( $ip, $userid = '', $voted_group) {
+	function avfr_total_votes_MONTH( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -455,7 +455,7 @@ if ( !function_exists('avfr_total_votes_MONTH') ) {
 
 	    $table 	= $wpdb->base_prefix.'feature_request';
 
-	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $voted_group );
+	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total 	=  $wpdb->get_col( $sql );
 
@@ -472,7 +472,7 @@ if ( !function_exists('avfr_total_votes_MONTH') ) {
 
 if ( !function_exists('avfr_total_votes_YEAR') ) {
 
-	function avfr_total_votes_YEAR( $ip, $userid = '', $idea_voted_group = '' ) {
+	function avfr_total_votes_YEAR( $ip, $userid = 0, $email, $voted_group ) {
 
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
@@ -481,7 +481,7 @@ if ( !function_exists('avfr_total_votes_YEAR') ) {
 
 	    $table = $wpdb->base_prefix.'feature_request';
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE ( userid="%s" AND ip ="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $idea_voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -569,12 +569,12 @@ if ( !function_exists('avfr_submit_box') ):
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
 				); ?>
-			<div class="fade avfr-modal" tabindex="-1">
+			<div class="fade avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
-						<button type="button" class="close" data-dismiss="avfr-modal">
+						<a href="#close" type="button" class="close" id="avfr-close">
 						<span aria-hidden="true">&times;</span>
-						</button>
+						</a>
 
 				    	<div class="avfr-modal-header">
 				    		<h3 class="avfr-modal-title"><?php apply_filters('avfr_submit_idea_label', _e('Submit feature','feature-request'));?></h3>
@@ -655,7 +655,7 @@ if ( !function_exists('avfr_submit_box') ):
 	  								<label for="tags-data-list">
 	  									<?php apply_filters('avfr_form_title', _e('Idea tags:','feature-request'));?>
 	  								</label>
-								<textarea name="avfr-tags" id="tags-data-list" rows="1" ></textarea>
+								<textarea name="avfr-tags" id="tags-data-list" rows="1"></textarea>
 								</div>
 
   								<?php $disable_upload = avfr_get_option('avfr_disable_upload','avfr_settings_fetures') ?>
@@ -743,7 +743,7 @@ if ( !function_exists('avfr_submit_header') ):
 
 					<?php do_action('avfr_before_submit_button'); ?>
 
-						<a href="#" data-toggle="avfr-modal" data-target=".avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit Idea','feature-request');?></a>
+						<a href="#avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit Idea','feature-request');?></a>
 
 					<?php do_action('avfr_after_submit_button'); ?>
 
@@ -1043,16 +1043,16 @@ if ( !function_exists('avfr_get_author_avatar') ) {
 
 	function avfr_get_author_avatar( $post_id ) {
 
-		$author_email 	= get_post_meta( $post_id, '_author_email', true );
+		$author_email 	= get_post_meta( $post_id, '_avfr_author_email', true );
 
 		if ( '' == $author_email ) {
 
 			$author_email = get_the_author_meta('email');
-			$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas' );
 		
 		} else {
 
-			$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
+			$author_link  = esc_url( add_query_arg( array( 'meta' => 'my', 'val' => base64_encode($author_email) ), get_post_type_archive_link( 'avfr' ) ) );
 		
 		}
 
@@ -1073,20 +1073,20 @@ if ( !function_exists('avfr_get_author_name') ) {
 
 	function avfr_get_author_name( $post_id ) {
 
-		$author_email = get_post_meta( $post_id, '_author_email', true );
+		$author_email = get_post_meta( $post_id, '_avfr_author_email', true );
 		
 		if ( '' == $author_email ) {
 
 			$author_email = get_the_author_meta('email');
-			$author_name  = get_the_author_meta('display_name');
-			$author_link  = get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas';
+			$author_name  = esc_html( get_the_author_meta('display_name') );
+			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=avfr' );
 		
 		} else {
 
 			$author_hash  = md5(strtolower($author_email));
-			$author_link  = get_post_type_archive_link( 'ideas' ).'?meta=my&val='.base64_encode($author_email);
+			$author_link  = esc_url( add_query_arg( array( 'meta' => 'my', 'val' => base64_encode($author_email) ), get_post_type_archive_link( 'avfr' ) ) );
 
-			if ( FALSE !== validate_gravatar( $author_email ) ) {
+			if ( FALSE !== avfr_validate_gravatar( $author_email ) ) {
 
 				$str 		 = file_get_contents( 'http://www.gravatar.com/'.$author_hash.'.php' );
 			

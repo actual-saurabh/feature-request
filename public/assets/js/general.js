@@ -59,7 +59,7 @@ jQuery(document).ready(function($){
 
    			$('#avfr-entry-form-results').css('background-color','#53d96f');
    			setTimeout(function(){
-   				location.reload();
+   				window.location = window.location.pathname;
    			}, 1000);
 
    		}
@@ -108,7 +108,7 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 
 		var data      = {
-			action:    $this.hasClass('avfr-set-vote-up') ? 'process_vote_up' : 'process_vote_down',
+			action:    $this.hasClass('avfr-set-vote-up') ? 'avfr_add_vote' : 'avfr_minus_vote',
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
@@ -139,6 +139,10 @@ jQuery(document).ready(function($){
 
 				alert( reached_limit );
 
+			} else if ( 'email-warning' == json.response ) {
+
+				alert( json.warning );
+
 			} else {
 
 				alert( error_message );
@@ -150,13 +154,13 @@ jQuery(document).ready(function($){
 	});
 
 	$('#imgCaptcha').on('load', function() {
-		$('#reload').removeClass('if-reload-animation');
+		$('#reload').removeClass('avfr-reload-animation');
 	});
 
 	$('#reload').click( function (e) {
 		e.preventDefault();
 		$('#imgCaptcha').attr('src',captcha_src+'?'+Math.random());
-		$(this).addClass('if-reload-animation');
+		$(this).addClass('avfr-reload-animation');
 	});
 
 

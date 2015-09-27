@@ -11,7 +11,7 @@
 	get_header();
 
 	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
-	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_features');
+	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_main');
 	do_action('avfr_layout_before'); ?>
 	<div class="container">
 	<main class="avfr-wrap site-main"  id="main" role="main">

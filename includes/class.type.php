@@ -23,7 +23,7 @@ class FeatureRequestType {
 
 		$disable_archive = avfr_get_option('avfr_disable_archive','avfr_settings_advanced');
 
-		$domain = 'on' == $disable_archive ? false : avfr_get_option('if_domain','if_settings_main','avfr');
+		$domain = 'on' == $disable_archive ? false : avfr_get_option('avfr_domain','avfr_settings_main','suggestions');
 
 		$labels = array(
 			'name'                		=> _x( 'Features','Feature-request' ),
@@ -46,6 +46,9 @@ class FeatureRequestType {
 			'labels'              		=> $labels,
 			'label'               		=> __( 'Feature', 'Feature-request' ),
 			'description'         		=> __( 'Create votes', 'Feature-request' ),
+			'labels'              		=> $labels,
+			'supports'            		=> array( 'editor','title', 'comments', 'author','thumbnail' ), //featured image 
+			'rewrite' 					=> array( 'slug' => 'suggestions','pages' =>true ),
 			'public'					=> true,
 			'publicly_queryable'        => true,
 			'show_ui' 					=> true,
