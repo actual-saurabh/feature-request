@@ -68,6 +68,7 @@
 						<div class="avfr-votes-area" id="<?php echo (int) $id;?>">
 							<div class="avfr-controls">
 								<div class="avfr-totals">
+								
 								<?php
 									if ( $total_votes ) { ?>	
 										<?php

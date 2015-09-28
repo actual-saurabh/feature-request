@@ -412,7 +412,7 @@ class AVFR_Settings_Api_Wrap {
                     'label'             => __( 'Tip upload Massage', 'feature-request' ),
                     'desc'              => __( 'Explain for your customer about image size and type that they can upload!', 'feature-request'  ),
                     'type'              => 'text',
-                    'default'           => 'Please uplaod image file with jpg format > 1024 KB size!',
+                    'default'           => __('Please uplaod image file with jpg format >1024 KB size!', 'feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
                 ),
                  /**
