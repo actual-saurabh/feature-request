@@ -299,6 +299,7 @@
             @include button-size($btn-pad-ver, $btn-pad-hor, $filter-line-height, $br-rad);
             text-decoration: none;
             border-width: $br-width;
+            font-size: 13px;
         }
         
     }
@@ -452,10 +453,8 @@
 }
 
 @include keyframes(avfrreloadanimation) {
-
     0%   {@include rotate(0);}
     100% {@include rotate(360deg);}
-
 }
 
 .avfr-reload-animation {

@@ -1,25 +1,28 @@
 .avfr-modal {
     position:fixed;
     top:0;
-
+    z-index: 11;
+    pointer-events: none;
     &:before {
         content: ""; 
         display: none;
         background: rgba(0,0,0,.6);
         position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0; 
-        z-index: 10;
+        top: 0; left: 0; right: 0; bottom: 0;
     }
 
     &:target {
+        pointer-events: auto;
 
         &:before{
           display: block;
         }
 
         .avfr-modal-dialog {
-            @include translate(0, -50%); 
+            @include transform( translate(0, -50%) scale(1));
+            @include transform-origin(50% 0, false); 
             top: 50%;
+            z-index: 11;
         }
 
     }
@@ -49,7 +52,7 @@
         background-color: $input-bg;
         border: $br-width solid $input-border;
         @include border-radius($br-rad);
-        @include transition("border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+        @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
 
         &:focus {
             border:$br-width solid $blue !important;
@@ -76,8 +79,9 @@
     right: 0;
     top: -100%; 
     z-index: 11;
-    @include translate(0, 0);
-    @include transition(0.3s);
+    @include transform( translate(0, 0) scale(0) );
+    @include transform-origin(50% 0, false);
+    @include transition(top 0s, transform 0.3s ease-in-out);
 }
 
 .avfr-modal-content {
@@ -191,27 +195,16 @@
 }
 
 .close {
-    float: right;
-    line-height: normal;
-    color: $close-font_color;
-    opacity: 0.4;
-    border: none;
-    text-decoration: none;
-    padding: 0.5em 1em;
-    line-height: normal;
-
-    &:hover,
-    &:focus {
-        color: $close-font_color;
-        background:none;
-        text-decoration: none;
-        cursor: pointer;
-        box-shadow: none;
-        outline:none;
-        border:none;
-        opacity: 0.7;
-    }
-
+    position: fixed;
+    border:none;
+    display:block;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    z-index:0;
+    overflow: hidden;
+    cursor: default !important;
 }
 
 select#group.ideagroup {
