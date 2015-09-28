@@ -1,0 +1,15 @@
+#avfr_settings_resets #submit{
+	display: none;
+}
+
+#avfr_settings_resets a.button.feature-request-reset--votes {
+
+	margin-top: 0 ;
+	background:#00a0d2;
+	border:none;
+	box-shadow:none;
+	color:white;
+	display:inline-block;
+
+}
+

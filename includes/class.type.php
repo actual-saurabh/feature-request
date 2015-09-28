@@ -57,7 +57,7 @@ class FeatureRequestType {
 			'rewrite' 					=> array( 'slug' => 'avfr','pages' =>true ),
 			'capability_type' 			=> 'post',
 			'has_archive'				=> $domain,
-			'menu_icon'					=> 'dashicons-controls-volumeon',
+			'menu_icon'					=> 'dashicons-megaphone',
 			'can_export' 				=> true,
 			'hierarchical'              => false,
 		    'menu_position'             => null,

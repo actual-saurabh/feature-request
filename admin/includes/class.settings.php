@@ -8,7 +8,7 @@
  */
 
 require_once dirname( __FILE__ ) . '/class.settings-api.php';
-
+wp_enqueue_style( 'admin-css' , (AVFR_URL.'/admin/assets/css/admin.css' ));
 if ( !class_exists('AVFR_Settings_Api_Wrap' ) ):
 class AVFR_Settings_Api_Wrap {
 
@@ -26,8 +26,8 @@ class AVFR_Settings_Api_Wrap {
         add_action( 'admin_menu', 						array($this, 'submenu_page'));
         add_filter( 'contextual_help',                  array($this, 'avfr_help'), 10, 2);
         add_action( 'admin_head',                       array($this, 'reset_votes'));
-  
-
+        add_action( 'wp_ajax_avfr_reset',               array($this, 'avfr_reset' ));
+        
 
     }
         function submenu_page() { 
@@ -47,26 +47,58 @@ class AVFR_Settings_Api_Wrap {
     }
 
 
-	function submenu_page_callback() {
+    function submenu_page_callback() {
+        echo '<div class="wrap">';
+            ?><h2><?php _e('Feature Request Settings','feature-request');?></h2><?php
+            $this->settings_api->show_navigation();
+            $this->settings_api->show_forms();
+        echo '</div>';
+    }
 
-		echo '<div class="wrap">';
-			?><h2><?php _e('Feature Request Settings','feature-request');?></h2><?php
+    /**
+    *
+    *   Handl the click event for resetting votes
+    *
+    */
+    function reset_votes() {
 
-			$this->settings_api->show_navigation();
-        	$this->settings_api->show_forms();
+        $nonce = wp_create_nonce('avfr-reset');
+            ?>
+                <!-- Reset Votes -->
+                <script>
+                    jQuery(document).ready(function($){
+                        // reset post meta
+                        jQuery('.feature-request-reset--votes').click(function(e){
 
-		echo '</div>';
+                            e.preventDefault();
 
-	}
+                            var data = {
+                                action: $(this).hasClass('reset-db') ? 'avfr_db_reset' : 'avfr_reset',
+                                security: '<?php echo $nonce;?>'
+                            };
+
+                            jQuery.post(ajaxurl, data, function(response) {
+                                if( response ){
+                                    alert(response);
+                                    location.reload();
+                                }
+                            });
+
+                        });
+                    });
+                </script>
+
+        <?php 
+
+    }
     /**
     *
     * Process the votes reste
     *
     */
     function avfr_reset(){
-
-        $avfr_reset_var= avfr_get_option('avfr_set_resets','avfr_settings_resets');
-        if ($avfr_reset_var = 'getreset'){
+         
+            check_ajax_referer( 'avfr-reset', 'security' );
             $posts = get_posts( array('post_type' => 'avfr', 'posts_per_page' => -1 ) );
 
             if ( $posts ):
@@ -96,7 +128,7 @@ class AVFR_Settings_Api_Wrap {
             echo __('All votes reset!','feature-request');
 
             exit;
-        }
+        
     }
 
     function get_settings_sections() {
@@ -416,8 +448,8 @@ class AVFR_Settings_Api_Wrap {
             'avfr_settings_resets'    => array(
                 array(
                     'name'              => 'avfr_set_resets',
-                    'label'             => __( 'Reset Votes', 'feature-request' ),
-                    'desc'              => __( '<a style="background:#d9534f;border:none;box-shadow:none;color:white;display:inline-block;margin-top:10px;" class="button feature-request-reset--votes" n href="#" >Reset Votes</a>' ),
+                    'label'             => __( 'Reset All Votes', 'feature-request' ),
+                    'desc'              => __( '<a class="button feature-request-reset--votes" href="#" >Reset Votes</a>' ),
                     'type'              => 'html',
                     'default'           => ''
                 )
