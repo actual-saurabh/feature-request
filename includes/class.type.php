@@ -12,14 +12,14 @@ class FeatureRequestType {
 
 	public function __construct(){
 
-       	add_action('init',array($this,'do_type'));
+       	add_action('init',array($this,'avfr_post_type'));
 	}
 	/**
+	 	* 
 	 	* Creates a post type
-	 	*
-	 	* @since    1.0.0
+	 	* 
 	*/
-	function do_type() {
+	function avfr_post_type() {
 
 		$disable_archive = avfr_get_option('avfr_disable_archive','avfr_settings_advanced');
 
@@ -28,30 +28,40 @@ class FeatureRequestType {
 		$labels = array(
 			'name'                		=> _x( 'Features','Feature-request' ),
 			'singular_name'       		=> _x( 'Feature','Feature-request' ),
-			'menu_name'           		=> __( 'Features', 'Feature-request' ),
-			'parent_item_colon'   		=> __( 'Parent Feature:', 'Feature-request' ),
-			'all_items'           		=> __( 'All Features', 'Feature-request' ),
-			'view_item'           		=> __( 'View Feature', 'Feature-request' ),
-			'add_new_item'        		=> __( 'Add New Feature', 'Feature-request' ),
+			'menu_name'           		=> __( 'Features Request', 'Feature-request' ),
+			'name_admin_bar'            => _x( 'Feature', 'add new on admin bar', 'Feature-request' ),
 			'add_new'             		=> __( 'New Feature', 'Feature-request' ),
+			'add_new_item'        		=> __( 'Add New Feature', 'Feature-request' ),
+			'new_item'                  => __( 'New Feature', 'Feature-request' ),
 			'edit_item'           		=> __( 'Edit Feature', 'Feature-request' ),
+			'view_item'           		=> __( 'View Feature', 'Feature-request' ),
+			'all_items'           		=> __( 'All Features', 'Feature-request' ),
+			'search_items'        		=> __( 'Search Feature', 'Feature-request' ),		
 			'update_item'         		=> __( 'Update Feature', 'Feature-request' ),
-			'search_items'        		=> __( 'Search Feature', 'Feature-request' ),
+			'parent_item_colon'   		=> __( 'Parent Feature:', 'Feature-request' ),
 			'not_found'           		=> __( 'No Feature found', 'Feature-request' ),
 			'not_found_in_trash'  		=> __( 'No Feature found in Trash', 'Feature-request' ),
 		);
 		$args = array(
+			'labels'              		=> $labels,
 			'label'               		=> __( 'Feature', 'Feature-request' ),
 			'description'         		=> __( 'Create votes', 'Feature-request' ),
 			'labels'              		=> $labels,
 			'supports'            		=> array( 'editor','title', 'comments', 'author','thumbnail' ), //featured image 
 			'rewrite' 					=> array( 'slug' => 'suggestions','pages' =>true ),
-			'menu_icon'					=> 'dashicons-lightbulb',
 			'public'					=> true,
- 			'show_ui' 					=> true,
-			'can_export' 				=> true,
+			'publicly_queryable'        => true,
+			'show_ui' 					=> true,
+			'show_in_menu'              => true,
+			'query_var'                 => true,
+			'rewrite' 					=> array( 'slug' => 'avfr','pages' =>true ),
+			'capability_type' 			=> 'post',
 			'has_archive'				=> $domain,
-			'capability_type' 			=> 'post'
+			'menu_icon'					=> 'dashicons-megaphone',
+			'can_export' 				=> true,
+			'hierarchical'              => false,
+		    'menu_position'             => null,
+			'supports'            		=> array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ) 
 		);
 
 		register_post_type( 'avfr', apply_filters('avfr_type_args', $args ) );

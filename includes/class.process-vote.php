@@ -50,11 +50,12 @@ class FeatureRequestProcessVote {
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) || 'undefined' != $_POST['voter_email'] ) ? $_POST['voter_email'] : $get_voter_email->user_email;
-			if ( !is_email( $voter_email ) ) {
+						if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','idea-factory'), 'email' => $voter_email );
 				echo json_encode($response_array);
 				die();
 			}
+
 			// get vote statuses
 			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
 			//Get related function to time limitation
