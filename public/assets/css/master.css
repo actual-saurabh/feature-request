@@ -27,99 +27,106 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 1, ../sass/_modal.scss */
 .avfr-modal { position: fixed; top: 0; z-index: 11; pointer-events: none; }
 /* line 6, ../sass/_modal.scss */
-.avfr-modal:before { content: ""; display: none; background: rgba(0, 0, 0, 0.6); position: fixed; top: 0; left: 0; right: 0; bottom: 0; }
-/* line 14, ../sass/_modal.scss */
-.avfr-modal:target { pointer-events: auto; }
-/* line 17, ../sass/_modal.scss */
-.avfr-modal:target:before { display: block; }
-/* line 21, ../sass/_modal.scss */
+.avfr-modal:before { content: ""; display: none; background-color: transparent; opacity: 0; position: fixed; top: 0; left: 0; right: 0; bottom: 0; }
+/* line 15, ../sass/_modal.scss */
+.avfr-modal:target { pointer-events: auto; -moz-transition: all 3s; -o-transition: all 3s; -webkit-transition: all 3s; transition: all 3s; }
+/* line 19, ../sass/_modal.scss */
+.avfr-modal:target:before { display: block; background-color: rgba(0, 0, 0, 0.6); opacity: 1; -moz-transition: all 3s; -o-transition: all 3s; -webkit-transition: all 3s; transition: all 3s; }
+/* line 26, ../sass/_modal.scss */
 .avfr-modal:target .avfr-modal-dialog { -moz-transform: translate(0, -50%) scale(1); -ms-transform: translate(0, -50%) scale(1); -webkit-transform: translate(0, -50%) scale(1); transform: translate(0, -50%) scale(1); -moz-transform-origin: 50% 0; -ms-transform-origin: 50% 0; -webkit-transform-origin: 50% 0; transform-origin: 50% 0; top: 50%; z-index: 11; }
-/* line 30, ../sass/_modal.scss */
+/* line 35, ../sass/_modal.scss */
 .avfr-modal * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-/* line 34, ../sass/_modal.scss */
+/* line 39, ../sass/_modal.scss */
 .avfr-modal .form-input-group { margin: 0px 0px 24px 0px; }
-/* line 38, ../sass/_modal.scss */
+/* line 43, ../sass/_modal.scss */
 .avfr-modal label { display: block; margin: 15px auto 5px; font-weight: bold; }
-/* line 44, ../sass/_modal.scss */
+/* line 49, ../sass/_modal.scss */
 .avfr-modal input[type="text"], .avfr-modal textarea { width: 100%; height: 30px; padding: 6px 10px; font-size: 14px; line-height: 21px; color: #333; background-color: white; border: 1px solid #cccccc; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
-/* line 57, ../sass/_modal.scss */
+/* line 62, ../sass/_modal.scss */
 .avfr-modal input[type="text"]:focus, .avfr-modal textarea:focus { border: 1px solid #007aaf !important; box-shadow: none; outline: none; }
-/* line 65, ../sass/_modal.scss */
-.avfr-modal input[type=submit]:disabled, .avfr-modal button:disabled { opacity: 0.4; }
 /* line 70, ../sass/_modal.scss */
+.avfr-modal input[type=submit]:disabled, .avfr-modal button:disabled { opacity: 0.4; }
+/* line 75, ../sass/_modal.scss */
 .avfr-modal #avfr-entryform-description { min-height: 100px !important; }
 
-/* line 76, ../sass/_modal.scss */
+/* line 81, ../sass/_modal.scss */
+#close { -moz-transition: all 3s; -o-transition: all 3s; -webkit-transition: all 3s; transition: all 3s; }
+
+/* line 85, ../sass/_modal.scss */
 .avfr-modal-dialog { position: fixed; left: 0; right: 0; top: -100%; z-index: 11; -moz-transform: translate(0, 0) scale(0); -ms-transform: translate(0, 0) scale(0); -webkit-transform: translate(0, 0) scale(0); transform: translate(0, 0) scale(0); -moz-transform-origin: 50% 0; -ms-transform-origin: 50% 0; -webkit-transform-origin: 50% 0; transform-origin: 50% 0; -moz-transition: top 0s, -moz-transform 0.3s ease-in-out; -o-transition: top 0s, -o-transform 0.3s ease-in-out; -webkit-transition: top 0s, -webkit-transform 0.3s ease-in-out; transition: top 0s, transform 0.3s ease-in-out; }
 
-/* line 87, ../sass/_modal.scss */
+/* line 96, ../sass/_modal.scss */
 .avfr-modal-content { position: relative; background-color: #fff; border: 1px solid #999; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); background-clip: padding-box; outline: 0; }
 
-/* line 97, ../sass/_modal.scss */
+/* line 106, ../sass/_modal.scss */
 .avfr-modal-backdrop { position: absolute; top: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.6); }
-/* line 104, ../sass/_modal.scss */
+/* line 113, ../sass/_modal.scss */
 .avfr-modal-backdrop.fade { opacity: 0; }
-/* line 108, ../sass/_modal.scss */
+/* line 117, ../sass/_modal.scss */
 .avfr-modal-backdrop.in { opacity: 0.75; }
 
-/* line 114, ../sass/_modal.scss */
+/* line 123, ../sass/_modal.scss */
 .avfr-modal-header { padding: 10px 15px; border-bottom: 1px solid #e5e5e5; min-height: 16px; }
-/* line 119, ../sass/_modal.scss */
+/* line 128, ../sass/_modal.scss */
 .avfr-modal-header h3 { margin: 0; line-height: 1.5; }
+/* line 133, ../sass/_modal.scss */
+.avfr-modal-header .modal-close { float: right; border: none; opacity: 0.4; text-decoration: none; line-height: normal; text-align: center; padding: 0px 3px; }
+/* line 141, ../sass/_modal.scss */
+.avfr-modal-header .modal-close:focus { outline: 0; border: 0; }
 
-/* line 126, ../sass/_modal.scss */
+/* line 149, ../sass/_modal.scss */
 .avfr-modal-title { margin: 0; line-height: 1; clear: none; }
 
-/* line 132, ../sass/_modal.scss */
+/* line 155, ../sass/_modal.scss */
 .avfr-modal-body { position: relative; padding: 15px; }
 
-/* line 137, ../sass/_modal.scss */
+/* line 160, ../sass/_modal.scss */
 .text-wrap { width: 100% !important; }
-/* line 140, ../sass/_modal.scss */
+/* line 163, ../sass/_modal.scss */
 .text-wrap #tags-data-list { height: 28px; width: 100% !important; min-height: 28px; line-height: 1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-color: #cccccc; padding: 6px 0 20px 8px; }
-/* line 150, ../sass/_modal.scss */
+/* line 173, ../sass/_modal.scss */
 .text-wrap .text-remove { top: 2px !important; }
 
-/* line 156, ../sass/_modal.scss */
+/* line 179, ../sass/_modal.scss */
 .avfr-modal-footer { text-align: left; }
-/* line 159, ../sass/_modal.scss */
+/* line 182, ../sass/_modal.scss */
 .avfr-modal-footer .btn + .btn { margin-left: 5px; margin-bottom: 0; }
-/* line 164, ../sass/_modal.scss */
+/* line 187, ../sass/_modal.scss */
 .avfr-modal-footer .btn-group .btn + .btn { margin-left: -1px; }
-/* line 168, ../sass/_modal.scss */
+/* line 191, ../sass/_modal.scss */
 .avfr-modal-footer .btn-block + .btn-block { margin-left: 0; }
-/* line 172, ../sass/_modal.scss */
+/* line 195, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"] { font-size: 14px; height: 40px; padding: 0 !important; outline: none; border: none; box-shadow: none; }
-/* line 180, ../sass/_modal.scss */
+/* line 203, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"]:active, .avfr-modal-footer input[type="submit"]:focus { outline: none; border: none; }
 
-/* line 189, ../sass/_modal.scss */
+/* line 212, ../sass/_modal.scss */
 .avfr-modal-scrollbar-measure { position: absolute; top: -9999px; width: 50px; height: 50px; overflow: scroll; }
 
-/* line 197, ../sass/_modal.scss */
+/* line 220, ../sass/_modal.scss */
 .close { position: fixed; border: none; display: block; top: 0; left: 0; height: 100%; width: 100%; z-index: 0; overflow: hidden; cursor: default !important; }
 
-/* line 210, ../sass/_modal.scss */
+/* line 233, ../sass/_modal.scss */
 select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 5px; min-width: 192px; }
 
-/* line 216, ../sass/_modal.scss */
+/* line 239, ../sass/_modal.scss */
 #imgCaptcha { margin-left: 11px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; box-shadow: none; vertical-align: middle; margin: 0 10px; }
 
-/* line 224, ../sass/_modal.scss */
+/* line 247, ../sass/_modal.scss */
 #reload { box-shadow: none; vertical-align: middle; cursor: pointer; }
 
-/* line 230, ../sass/_modal.scss */
+/* line 253, ../sass/_modal.scss */
 .avfr-button.btn.btn-default { margin-top: 0px; width: 110px; height: 40px; }
 
-/* line 236, ../sass/_modal.scss */
+/* line 259, ../sass/_modal.scss */
 #avfr-entry-form-results { margin: 0 0 0 11px; height: 40px; background: #dd6d5a; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; display: none; vertical-align: middle; font-size: 14px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; }
-/* line 246, ../sass/_modal.scss */
+/* line 269, ../sass/_modal.scss */
 #avfr-entry-form-results p { color: #ffffff; padding: 10px; -moz-transition: 0.7s; -o-transition: 0.7s; -webkit-transition: 0.7s; transition: 0.7s; line-height: normal; }
 
-/* line 255, ../sass/_modal.scss */
+/* line 278, ../sass/_modal.scss */
 #captcha { height: 30px; width: 192px; }
 
-/* line 260, ../sass/_modal.scss */
+/* line 283, ../sass/_modal.scss */
 .dashicons-warning:before { margin: 15px 15px 0 0; }
 
 /* line 1, ../sass/_layout.scss */
@@ -169,7 +176,7 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 /* line 120, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-header .entry-title { font-weight: bold; font-size: 20px; margin: 0; }
 /* line 127, ../sass/_layout.scss */
-.avfr-entry-wrap .entry-content { display: table; margin-left: 116px; }
+.avfr-entry-wrap .entry-content { display: table; margin-left: 132px; }
 /* line 131, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-content .read-more { font-size: 0.9em; padding-left: 15px; }
 
@@ -258,7 +265,7 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 /* line 340, ../sass/_layout.scss */
 .status-changing { float: right; }
 /* line 343, ../sass/_layout.scss */
-.status-changing a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 7px 10px; line-height: 16px; border-radius: 3px; text-decoration: none; border-width: 1px; }
+.status-changing a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 7px 10px; line-height: 16px; border-radius: 3px; text-decoration: none; border-width: 1px; font-size: 13px; }
 /* line 7, ../sass/_mixins.scss */
 .status-changing a:hover, .status-changing a:focus, .status-changing a:active, .status-changing a.active, .status-changing a.current, .status-changing a .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
 /* line 20, ../sass/_mixins.scss */
@@ -268,7 +275,7 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 /* line 39, ../sass/_mixins.scss */
 .status-changing a .badge { color: #ddd; background-color: #fff; }
 
-/* line 352, ../sass/_layout.scss */
+/* line 353, ../sass/_layout.scss */
 .avfr-vote-now { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; border-width: 1px; font-size: 13px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 /* line 7, ../sass/_mixins.scss */
 .avfr-vote-now:hover, .avfr-vote-now:focus, .avfr-vote-now:active, .avfr-vote-now.active, .avfr-vote-now.current, .avfr-vote-now .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
@@ -279,7 +286,7 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 /* line 39, ../sass/_mixins.scss */
 .avfr-vote-now .badge { color: #ddd; background-color: #fff; }
 
-/* line 360, ../sass/_layout.scss */
+/* line 361, ../sass/_layout.scss */
 .avfr-disabled-button { color: gray; background-color: #efefef; border-color: #dedede; border-style: solid; padding: 5px 20px; line-height: 16px; border-radius: 3px; border-width: 1px; margin: 0; }
 /* line 7, ../sass/_mixins.scss */
 .avfr-disabled-button:hover, .avfr-disabled-button:focus, .avfr-disabled-button:active, .avfr-disabled-button.active, .avfr-disabled-button.current, .avfr-disabled-button .open .dropdown-toggle { color: white; background-color: #636363; border-color: #494949; background-image: none; box-shadow: none; }
@@ -289,20 +296,20 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 .avfr-disabled-button.disabled, .avfr-disabled-button.disabled:hover, .avfr-disabled-button.disabled:focus, .avfr-disabled-button.disabled:active, .avfr-disabled-button.disabled.active, .avfr-disabled-button[disabled], .avfr-disabled-button[disabled]:hover, .avfr-disabled-button[disabled]:focus, .avfr-disabled-button[disabled]:active, .avfr-disabled-button[disabled].active, .avfr-disabled-button fieldset[disabled], .avfr-disabled-button fieldset[disabled]:hover, .avfr-disabled-button fieldset[disabled]:focus, .avfr-disabled-button fieldset[disabled]:active, .avfr-disabled-button fieldset[disabled].active { background-color: #efefef; }
 /* line 39, ../sass/_mixins.scss */
 .avfr-disabled-button .badge { color: #efefef; background-color: #fff; }
-/* line 366, ../sass/_layout.scss */
+/* line 367, ../sass/_layout.scss */
 .avfr-disabled-button:hover { border-color: #dedede; color: gray; }
 
-/* line 372, ../sass/_layout.scss */
+/* line 373, ../sass/_layout.scss */
 .avfr-votes-area { margin-right: 20px; float: left; }
-/* line 376, ../sass/_layout.scss */
+/* line 377, ../sass/_layout.scss */
 .avfr-votes-area .flag-show { text-align: center; padding-top: 5px; }
-/* line 380, ../sass/_layout.scss */
+/* line 381, ../sass/_layout.scss */
 .avfr-votes-area .flag-show a { text-decoration: none; }
 
-/* line 388, ../sass/_layout.scss */
+/* line 389, ../sass/_layout.scss */
 .avfr-tooltip { display: none; position: absolute; background-color: #fff; border: 1px solid #cccccc; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 15px; margin-top: -30px; text-align: left; line-height: 30px; -moz-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); -webkit-box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); box-shadow: 0 0 1px 2px rgba(222, 222, 222, 0.5); }
-/* line 400, ../sass/_layout.scss */
-.avfr-tooltip a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; line-height: 16px; border-radius: 3px; margin-right: 10px; text-decoration: none; border-width: 1px; }
+/* line 401, ../sass/_layout.scss */
+.avfr-tooltip a { color: #000; background-color: #ddd; border-color: #cccccc; border-style: solid; padding: 4px 20px; line-height: 16px; border-radius: 3px; margin-right: 10px; text-decoration: none; border-width: 1px; font-size: 13px; }
 /* line 7, ../sass/_mixins.scss */
 .avfr-tooltip a:hover, .avfr-tooltip a:focus, .avfr-tooltip a:active, .avfr-tooltip a.active, .avfr-tooltip a.current, .avfr-tooltip a .open .dropdown-toggle { color: #e6e6e6; background-color: #515151; border-color: #373737; background-image: none; box-shadow: none; }
 /* line 20, ../sass/_mixins.scss */
@@ -311,25 +318,25 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 .avfr-tooltip a.disabled, .avfr-tooltip a.disabled:hover, .avfr-tooltip a.disabled:focus, .avfr-tooltip a.disabled:active, .avfr-tooltip a.disabled.active, .avfr-tooltip a[disabled], .avfr-tooltip a[disabled]:hover, .avfr-tooltip a[disabled]:focus, .avfr-tooltip a[disabled]:active, .avfr-tooltip a[disabled].active, .avfr-tooltip a fieldset[disabled], .avfr-tooltip a fieldset[disabled]:hover, .avfr-tooltip a fieldset[disabled]:focus, .avfr-tooltip a fieldset[disabled]:active, .avfr-tooltip a fieldset[disabled].active { background-color: #ddd; }
 /* line 39, ../sass/_mixins.scss */
 .avfr-tooltip a .badge { color: #ddd; background-color: #fff; }
-/* line 408, ../sass/_layout.scss */
+/* line 410, ../sass/_layout.scss */
 .avfr-tooltip p { padding-bottom: 10px; }
-/* line 412, ../sass/_layout.scss */
+/* line 414, ../sass/_layout.scss */
 .avfr-tooltip .small-text { font-size: 0.7em; padding-bottom: 0; }
 
-/* line 419, ../sass/_layout.scss */
+/* line 421, ../sass/_layout.scss */
 .attachments { margin-top: 30px; margin-bottom: 50px; }
-/* line 423, ../sass/_layout.scss */
+/* line 425, ../sass/_layout.scss */
 .attachments img { border: 2px solid #cccccc; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
-/* line 428, ../sass/_layout.scss */
+/* line 430, ../sass/_layout.scss */
 .attachments .image-caption { font-weight: bold; color: #acacac; }
 
-/* line 435, ../sass/_layout.scss */
+/* line 437, ../sass/_layout.scss */
 .related-features-section { margin-bottom: 40px; padding-bottom: 20px; }
-/* line 439, ../sass/_layout.scss */
+/* line 441, ../sass/_layout.scss */
 .related-features-section .related-title { font-weight: bold; color: #acacac; }
-/* line 444, ../sass/_layout.scss */
+/* line 446, ../sass/_layout.scss */
 .related-features-section .single-related { text-decoration: none; font-weight: bold; }
-/* line 448, ../sass/_layout.scss */
+/* line 450, ../sass/_layout.scss */
 .related-features-section .single-related li { list-style: none; }
 
 @-moz-keyframes avfrreloadanimation { 0% { -moz-transform: rotate(0); transform: rotate(0); }
@@ -338,23 +345,23 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
   100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
 @keyframes avfrreloadanimation { 0% { -moz-transform: rotate(0); -ms-transform: rotate(0); -webkit-transform: rotate(0); transform: rotate(0); }
   100% { -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
-/* line 460, ../sass/_layout.scss */
+/* line 462, ../sass/_layout.scss */
 .avfr-reload-animation { -moz-animation: avfrreloadanimation 1s infinite linear; -webkit-animation: avfrreloadanimation 1s infinite linear; animation: avfrreloadanimation 1s infinite linear; -moz-transform-origin: 50% 50%; -ms-transform-origin: 50% 50%; -webkit-transform-origin: 50% 50%; transform-origin: 50% 50%; }
 
-/* line 465, ../sass/_layout.scss */
+/* line 467, ../sass/_layout.scss */
 #avfr-avatar { margin-bottom: 70px; margin-top: 15px; vertical-align: none; }
-/* line 470, ../sass/_layout.scss */
+/* line 472, ../sass/_layout.scss */
 #avfr-avatar img { float: left; height: 40px; width: 40px; border: 1px solid #cccccc; }
-/* line 477, ../sass/_layout.scss */
+/* line 479, ../sass/_layout.scss */
 #avfr-avatar #avfr-avatar-name { margin-left: 15px; padding-top: 0px; float: left; font-weight: bold; font-size: 13px; }
-/* line 485, ../sass/_layout.scss */
+/* line 487, ../sass/_layout.scss */
 #avfr-avatar span { font-weight: normal; color: black; }
-/* line 490, ../sass/_layout.scss */
+/* line 492, ../sass/_layout.scss */
 #avfr-avatar p { padding-left: 1px; padding-top: 0px; font-size: 11px; color: #cccccc; }
 
-/* line 499, ../sass/_layout.scss */
+/* line 501, ../sass/_layout.scss */
 #avfr-delete { float: right; margin: 20px; color: #cccccc; font-weight: normal; font-size: 13px; }
-/* line 506, ../sass/_layout.scss */
+/* line 508, ../sass/_layout.scss */
 #avfr-delete .dashicons { vertical-align: middle; }
 
 @media (max-width: 600px) { /* line 3, ../sass/_responsive.scss */

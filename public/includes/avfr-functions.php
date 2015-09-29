@@ -574,6 +574,9 @@ if ( !function_exists('avfr_submit_box') ):
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
 				    	<div class="avfr-modal-header">
+				    	<a href="#close" type="button" class="modal-close" id="avfr-close">
+						<span aria-hidden="true">&times;</span>
+						</a>
 				    		<h3 class="avfr-modal-title"><?php apply_filters('avfr_submit_idea_label', _e('Submit feature','feature-request'));?></h3>
 				    	</div>
 				    	<div class="avfr-modal-body">

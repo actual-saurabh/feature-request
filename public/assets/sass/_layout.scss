@@ -126,7 +126,7 @@
     }
     .entry-content {
         display: table;
-        margin-left: 116px;
+        margin-left: 132px;
 
         .read-more {
             font-size: 0.9em;
@@ -345,6 +345,7 @@
         @include button-size($btn-pad-ver,  $btn-pad-hor - 10px , $filter-line-height, $br-rad);
         text-decoration: none;
         border-width: $br-width;
+        font-size: 13px;
     }
 
 }
@@ -403,6 +404,7 @@
         margin-right: 10px;
         text-decoration: none;
         border-width: $br-width;
+        font-size: 13px;
     }
 
     p {

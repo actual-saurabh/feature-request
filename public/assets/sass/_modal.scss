@@ -6,16 +6,21 @@
     &:before {
         content: ""; 
         display: none;
-        background: rgba(0,0,0,.6);
+        background-color: transparent;
+        opacity: 0;
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
     }
 
     &:target {
         pointer-events: auto;
+        @include transition(all 3s);
 
         &:before{
-          display: block;
+            display: block;
+            background-color: rgba(0,0,0,0.6);
+            opacity: 1;
+            @include transition(all 3s);
         }
 
         .avfr-modal-dialog {
@@ -73,6 +78,10 @@
 
 }
 
+#close {
+    @include transition(all 3s);
+}
+
 .avfr-modal-dialog {
     position: fixed; 
     left: 0;
@@ -119,6 +128,20 @@
     h3 {
         margin: 0;
         line-height: 1.5;
+    }
+
+    .modal-close {
+        float: right;
+        border: none;
+        opacity: 0.4;
+        text-decoration: none;
+        line-height: normal;
+        text-align: center;
+        padding: 0px 3px;
+        &:focus {
+            outline: 0;
+            border: 0;
+        }
     }
 
 }
