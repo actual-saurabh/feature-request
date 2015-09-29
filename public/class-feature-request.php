@@ -148,6 +148,8 @@ class Feature_Request {
 			update_option( 'avfr_settings_features', $avfr_settings_features, '', 'no' );
 		}
 
+		flush_rewrite_rules();
+
 	}
 
 	/**
@@ -185,6 +187,8 @@ class Feature_Request {
 		} else {
 			self::single_deactivate();
 		}
+
+		flush_rewrite_rules();
 
 	}
 

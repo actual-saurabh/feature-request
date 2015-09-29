@@ -116,8 +116,6 @@ class FeatureRequestType {
 			'rewrite' 					=> array( 'slug' => 'avfrtags' ),
 			);
 		register_taxonomy('featureTags' , array('avfr') , $args);
-
-		flush_rewrite_rules();
 		
 		}
 }
