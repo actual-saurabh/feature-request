@@ -781,8 +781,8 @@ if ( !function_exists('avfr_vote_controls') ):
 			//getting like/dislike limit option for each group
 			$vote_limit = avfr_get_option('avfr_total_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
 		?>
-			<a class="avfr-like avfr-vote-now avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
-			<a class="avfr-like avfr-vote-now avfr-vote-down" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-calc avfr-vote-down" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
 			<div class="avfr-tooltip">
 				<div class="voting-buttons">
 					<?php 
@@ -803,7 +803,7 @@ if ( !function_exists('avfr_vote_controls') ):
 		$voting_limit = avfr_get_option('avfr_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
 			if ( $voting_limit == '1' ) {
 			?>
-				<a class="avfr-like avfr-vote-now avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
+				<a class="avfr-like avfr-vote-now avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -819,7 +819,7 @@ if ( !function_exists('avfr_vote_controls') ):
 			<?php
 			} else {
 				?>
-				<button class="avfr-vote-now" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
+				<button class="avfr-vote-now avfr-vote-calc" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 

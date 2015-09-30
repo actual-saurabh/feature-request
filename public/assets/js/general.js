@@ -121,50 +121,6 @@ jQuery(document).ready(function($){
 
 	});
 
-	$('#imgCaptcha').on('load', function() {
-		$('#reload').removeClass('avfr-reload-animation');
-	});
-
-	$('#reload').click( function (e) {
-		e.preventDefault();
-		$('#imgCaptcha').attr('src',captcha_src+'?'+Math.random());
-		$(this).addClass('avfr-reload-animation');
-	});
-
-
-	// When user report (flag)
-
-	$( '.avfr-flag' ).click ( function(e) {
-		var r = confirm('Are you sure to report this idea as inappropriate ?');
-		if ( r == true ) {
-
-			e.preventDefault();
-
-			var $this = $(this);
-
-			var data      = {
-				action:    'avfr_add_flag',
-				user_id:   $this.data('user-id'),
-				post_id:   $this.data('post-id'),
-				cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
-				nonce:     feature_request.nonce
-			};
-
-			$.post( ajaxurl, data, function(response) {
-
-				if ( response == 'success' ) {
-
-					$this.parent().addClass('avfr-flagged');
-					$this.parent().html(thanks_flag);
-				} else if ( 'already-flagged' == response ){
-					alert( already_flagged );
-				}
-
-			});
-		}
-
-	});
-
 	// When user vote multiple
 	$( '.avfr-wrap' ).on('click', '.avfr-votes-value', function(e) {
 		e.preventDefault();
@@ -173,7 +129,6 @@ jQuery(document).ready(function($){
 
 		var data      = {
 			action:    'avfr_vote',
-			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
 			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
@@ -192,9 +147,9 @@ jQuery(document).ready(function($){
 					$this.parent().addClass('avfr-voted');
 					$this.parent().nextAll('.small-text').find('span').html( json.remaining );
 					$this.parent().html( thanks_voting );
-					$('#' + $this.data('post-id') + ' .avfr-totals-num').html( json.total_votes );
+					$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html( json.total_votes );
 					localStorage.email = data['voter_email'];
-					$('#' + $this.data('post-id') + ' .avfr-vote-now').addClass('voted');
+					$('#avfr-' + $this.data('post-id') + ' .avfr-vote-calc').addClass('voted');
 					$('.voted').hide();
 
 				} else if ( 'remaining-limit' == json.response ) {
@@ -259,8 +214,8 @@ jQuery(document).ready(function($){
 	});
 
 
-	//calc remaining votes like/dislike
-	$('.avfr-wrap').on('click','.avfr-vote-now', function(e) {
+	//calc remaining votes like/dislike/votes
+	$('.avfr-wrap').on('click','.avfr-vote-calc', function(e) {
 		e.preventDefault();
 
 		var $this = $(this);
@@ -294,6 +249,53 @@ jQuery(document).ready(function($){
 		})
 
 	});
+
+
+	
+	$('#imgCaptcha').on('load', function() {
+		$('#reload').removeClass('avfr-reload-animation');
+	});
+
+	$('#reload').click( function (e) {
+		e.preventDefault();
+		$('#imgCaptcha').attr('src',captcha_src+'?'+Math.random());
+		$(this).addClass('avfr-reload-animation');
+	});
+
+
+	// When user report (flag)
+
+	$( '.avfr-flag' ).click ( function(e) {
+		var r = confirm('Are you sure to report this idea as inappropriate ?');
+		if ( r == true ) {
+
+			e.preventDefault();
+
+			var $this = $(this);
+
+			var data      = {
+				action:    'avfr_add_flag',
+				user_id:   $this.data('user-id'),
+				post_id:   $this.data('post-id'),
+				cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+				nonce:     feature_request.nonce
+			};
+
+			$.post( ajaxurl, data, function(response) {
+
+				if ( response == 'success' ) {
+
+					$this.parent().addClass('avfr-flagged');
+					$this.parent().html(thanks_flag);
+				} else if ( 'already-flagged' == response ){
+					alert( already_flagged );
+				}
+
+			});
+		}
+
+	});
+
 
 	$( document ).on('click', '.avfr-tooltip', function(e) {
 		$(this).nextAll('.avfr-tooltip').show();
