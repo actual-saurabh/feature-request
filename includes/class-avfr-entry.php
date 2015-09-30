@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestProcessEntry {
+class Avfr_Entry {
 
 	function __construct(){
 
@@ -25,7 +25,6 @@ class FeatureRequestProcessEntry {
 	*
 	*/
 	function process_entry(){
-		echo $avfr_image_filter;
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$allowed_type	= explode(",",avfr_get_option('avfr_allowed_file_types','avfr_settings_features'));
 		$allowed_size   = avfr_get_option('avfr_max_file_size','avfr_settings_features');
@@ -78,7 +77,7 @@ class FeatureRequestProcessEntry {
 					if ( !is_user_logged_in() ) {
 						$email = $_POST['avfr-email'];
 						if ( !is_email($email) ) {
-							$response_array = array('success' => 'false' , 'message' => __('<span class="dashicons dashicons-warning"></span>'.'Please enter a valid email address.','idea-factory'));
+							$response_array = array('success' => 'false' , 'message' => __('<span class="dashicons dashicons-warning"></span>'.'Please enter a valid email address.','feature-request'));
 							echo json_encode($response_array);
 							die();
 						}
@@ -187,4 +186,4 @@ class FeatureRequestProcessEntry {
 	}
 
 }
-new FeatureRequestProcessEntry;
+new Avfr_Entry;

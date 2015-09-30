@@ -13,31 +13,19 @@ class Feature_Request {
 
 	/**
 	 * Unique identifier
-	 *
-	 *
-	 * The variable name is used as the text domain when internationalizing strings
-	 * of text. Its value should match the Text Domain file header in the main
-	 * plugin file.
-	 *
 	 * @since    1.0
-	 *
-	 * @var      string
 	 */
-	protected $plugin_slug = 'idea-factory';
+	protected $plugin_slug = 'feature-request';
 
 	/**
 	 * Instance of this class.
-	 *
 	 * @since    1.0
-	 *
-	 * @var      object
 	 */
 	protected static $instance = null;
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
-	 *
 	 * @since     1.0
 	 */
 	private function __construct() {
@@ -45,10 +33,10 @@ class Feature_Request {
 		// Activate plugin when new blog is added
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
-		require_once(AVFR_DIR.'/includes/class.type.php');
-		require_once(AVFR_DIR.'/includes/class.process-entry.php');
-		require_once(AVFR_DIR.'/includes/class.process-vote.php');
-		require_once(AVFR_DIR.'/includes/class.process-status.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-post-type.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-entry.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-votes.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-status.php');
 
 		require_once(AVFR_DIR.'/public/includes/class-avfr-template.php');
 		require_once(AVFR_DIR.'/public/includes/class-avfr-assets.php');
@@ -56,7 +44,7 @@ class Feature_Request {
 
 		require_once(AVFR_DIR.'/public/includes/class-avfr-shortcodes.php');
 
-		require_once(AVFR_DIR.'/includes/class.db.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
 
 		// Load plugin text domain
 		add_action( 'init', 			array( $this, 'load_plugin_textdomain' ) );
@@ -65,10 +53,7 @@ class Feature_Request {
 
 	/**
 	 * Return the plugin slug.
-	 *
 	 * @since    1.0
-	 *
-	 * @return    Plugin slug variable.
 	 */
 	public function get_plugin_slug() {
 		return $this->plugin_slug;
@@ -76,10 +61,7 @@ class Feature_Request {
 
 	/**
 	 * Return an instance of this class.
-	 *
 	 * @since     1.0
-	 *
-	 * @return    object    A single instance of this class.
 	 */
 	public static function get_instance() {
 
@@ -93,13 +75,7 @@ class Feature_Request {
 
 	/**
 	 * Fired when the plugin is activated.
-	 *
 	 * @since    1.0
-	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
-	 *                                       "Network Activate" action, false if
-	 *                                       WPMU is disabled or plugin is
-	 *                                       activated on an individual blog.
 	 */
 	public static function activate( $network_wide ) {
 
@@ -137,7 +113,7 @@ class Feature_Request {
 					'avfr_allowed_file_types' => 'image/jpeg,image/jpg,image/png,image/gif',
 					'avfr_max_file_size' => '1024',
 					'avfr_echo_type_size' => __( 'Please uplaod image file with jpg/jpeg/png/gif format >1024 KB size', 'feature-request' ),
-					'avfr_related_feature_num' => '2'
+					'avfr_related_feature_num' => '3'
 				);
 
 		if ( '' == get_option( 'avfr_settings_main' ) ) {
@@ -154,13 +130,7 @@ class Feature_Request {
 
 	/**
 	 * Fired when the plugin is deactivated.
-	 *
 	 * @since    1.0
-	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
-	 *                                       "Network Deactivate" action, false if
-	 *                                       WPMU is disabled or plugin is
-	 *                                       deactivated on an individual blog.
 	 */
 	public static function deactivate( $network_wide ) {
 
@@ -168,7 +138,6 @@ class Feature_Request {
 
 			if ( $network_wide ) {
 
-				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
 
 				foreach ( $blog_ids as $blog_id ) {
@@ -194,10 +163,6 @@ class Feature_Request {
 
 	/**
 	 * Fired when a new site is activated with a WPMU environment.
-	 *
-	 * @since    1.0
-	 *
-	 * @param    int    $blog_id    ID of the new blog.
 	 */
 	public function activate_new_site( $blog_id ) {
 
@@ -212,14 +177,8 @@ class Feature_Request {
 	}
 
 	/**
-	 * Get all blog ids of blogs in the current network that are:
-	 * - not archived
-	 * - not spam
-	 * - not deleted
-	 *
+	 * Get all blog ids
 	 * @since    1.0
-	 *
-	 * @return   array|false    The blog ids, false if no matches.
 	 */
 	private static function get_blog_ids() {
 
@@ -234,14 +193,9 @@ class Feature_Request {
 
 	}
 
-	/**
-	 * Flush rewrite rules for custom post type archive on single activation
-	 *
-	 * @since    1.0
-	 */
+
 	private static function single_activate() {
 
-		flush_rewrite_rules();
 
 		global $wpdb;
 
@@ -264,20 +218,6 @@ class Feature_Request {
 		dbDelta( $sql );
 	}
 
-	/**
-	 * Fired for each blog when the plugin is deactivated.
-	 *
-	 * @since    1.0
-	 */
-	private static function single_deactivate() {
-		// @TODO: Define deactivation functionality here
-	}
-
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    1.0
-	 */
 	public function load_plugin_textdomain() {
 
 		$domain = $this->plugin_slug;
@@ -287,7 +227,6 @@ class Feature_Request {
 	}
 
 	/**
-	*
 	*	Run on plugin upgrade
 	*	@since 1.0
 	*/
@@ -303,7 +242,6 @@ class Feature_Request {
 	}
 
 	/**
-	*
 	*	Create public database tabes on upgrade
 	*	@since 1.0
 	*/

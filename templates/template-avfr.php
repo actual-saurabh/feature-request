@@ -61,11 +61,11 @@
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry-%s', $status ) : false;
-					$groups 	= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
+					$groups 		= wp_get_post_terms( $id, 'groups', array("fields" => "all") );
 					?>
 					<article class="avfr-entry-wrap post <?php if ( is_single() ) { echo "single-post";	} ?> <?php echo sanitize_html_class( $status_class );?> <?php echo $has_voted ? 'avfr-hasvoted' : false;?>">
-						<?php do_action('idea_factory_entry_wrap_top', $id ); ?>
-						<div class="avfr-votes-area" id="<?php echo (int) $id;?>">
+						<?php do_action('avfr_entry_wrap_top', $id ); ?>
+						<div class="avfr-votes-area" id="avfr-<?php echo (int) $id;?>">
 							<div class="avfr-controls">
 								<div class="avfr-totals">
 								
@@ -188,7 +188,7 @@
 									<p class="image-caption"> <?php _e('feature attachments:','feature_request'); ?> </p>
 									<figure class="avfr-image post-image">
 									<?php 
-										echo '<a rel="lightbox" href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
+										echo '<a rel="lightbox" href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '">';
 										the_post_thumbnail( 'thumbnail' );
 										echo '</a>';
 									?>
@@ -202,14 +202,14 @@
 							if (is_single()) {
 								 if ( current_user_can( 'manage_options' ) ) {
 								 	if ( isset($_GET['action']) ) {
-										if ($_GET['action']==='deletepost') {
+										if ( $_GET['action'] === 'deletepost') {
 		 									$id = get_the_id(); 
 											wp_trash_post($id);
 										} 
 									}
 										?>
 								<div id="avfr-delete">	
-			 					    <span class="dashicons dashicons-trash"></span><a href="<?php the_permalink(); ?>&action=deletepost">Delete post</a>
+			 					    <span class="dashicons dashicons-trash"></span><a href="<?php echo esc_url( add_query_arg( array( 'action' => 'deletepost' ), the_permalink() ) ); ?>">Delete post</a>
 									<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
 								</div>
 								<?php }
@@ -219,19 +219,17 @@
 								if ( is_single() ) {
 								
 									//Get number of related post from option
-									$related_posts_num = avfr_get_option('related_avfr_num','avfr_settings_features');
-									if ( isset( $related_posts_num ) && $related_posts_num != '0') {
-									
+									$related_posts_num = avfr_get_option('avfr_related_feature_num','avfr_settings_features');
+									if ( isset( $related_posts_num ) && $related_posts_num != '0') {								
 								?>
 								<div class="related-avfr-section">
 									<h2 class="related-title"><?php _e('Related Features :','feature_request') ?></h2>
 									<div class="related-avfr-list">
 										<?php 
-											$media = get_attached_media( 'image' );
-											//Get array of terms (Groups and ideatags)
-						 					$ideatags 	= wp_get_post_terms( $id, 'featureTags', array("fields" => "all") );
+											//Get array of terms (Groups and featureTags)
+						 					$featuretags 	= wp_get_post_terms( $id, 'featureTags', array("fields" => "all") );
 						 					//Pluck out the IDs to get an array of IDS
-											$ideatags_ids = wp_list_pluck($ideatags,'term_id');
+											$featuretags_ids = wp_list_pluck($featuretags,'term_id');
 
 											$related_query = new WP_Query (array(
 												'post_type'    	 => 'avfr',
@@ -243,9 +241,9 @@
 						                        	'operator' 	 => 'IN'
 						                     		),
 						                     		array(
-													'taxonomy'	 => 'ideatags',
+													'taxonomy'	 => 'featureTags',
 						                        	'field'    	 => 'term_id',
-						                        	'terms'    	 => $ideatags_ids,
+						                        	'terms'    	 => $featuretags_ids,
 						                        	'operator' 	 => 'IN'
 						                     		),
 												 ),
@@ -296,7 +294,7 @@
  							} else {
 							?>
 							<div>
-								<span class="idea-short-comment">
+								<span class="avfr-short-comment">
 									<span class="dashicons dashicons-admin-comments"></span>
 								<?php
 									printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );

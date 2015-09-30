@@ -2,11 +2,11 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * @package   Idea_Factory
- * @author    Nick Haskins <email@nickhaskins.com>
- * @license   GPL-2.0+
- * @link      http://nickhaskins.com
- * @copyright 2015 Your Mom
+ * 	@package   			Feature-request
+ * 	@author    			Averta
+ * 	@license   			GPL-2.0+
+ * 	@link      			http://averta.net
+ *	@copyright 			2015 Averta
  */
 
 // If uninstall not called from WordPress, then exit

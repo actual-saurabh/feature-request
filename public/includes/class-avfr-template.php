@@ -24,9 +24,7 @@ class Avfr_Template {
 	*/
 	function template_loader( $template ) {
 
-		$disable_archive = avfr_get_option('avfr_disable_archive','avfr_settings_advanced');
-
-	   	if ( (is_post_type_archive( 'avfr' ) || 'avfr' == get_post_type() || has_shortcode( isset( $post->post_content ) ? $post->post_content : null, 'feature_request')) && '1' !== $disable_archive ):
+	   	if ( ( is_post_type_archive( 'avfr' ) || 'avfr' == get_post_type() || has_shortcode( isset( $post->post_content ) ? $post->post_content : null, 'feature_request') ) ):
 
 	    	if ( $overridden_template = locate_template( 'template-avfr.php', true ) ) {
 

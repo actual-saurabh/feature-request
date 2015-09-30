@@ -171,7 +171,7 @@
     }
 
     .text-remove{
-        top:2px !important;
+        top:4px !important;
     }
 
 }
@@ -230,7 +230,7 @@
     cursor: default !important;
 }
 
-select#group.ideagroup {
+#group.feature-group {
     @include border-radius($br-rad);
     padding: $input-padding;  
     min-width: 192px;
@@ -282,4 +282,9 @@ select#group.ideagroup {
 
 .dashicons-warning:before {
     margin: 15px 15px 0 0;
+}
+
+.text-core .text-wrap .text-tags .text-tag .text-button {
+    padding-top: 2px !important;
+    padding-bottom: 4px !important;
 }

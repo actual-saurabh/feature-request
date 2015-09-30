@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestDB {
+class Avfr_DB {
 
 	private $avfr_table_name;
 	private $avfr_db_ver;
@@ -44,7 +44,7 @@ class FeatureRequestDB {
 
 		$add = $wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO {$this->avfr_table_name} SET
+				"INSERT INTO {$this->table_name} SET
 					`postid`	= '%s',
 					`time`		= '%s',
 					`ip`		= '%s',

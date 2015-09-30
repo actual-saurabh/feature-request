@@ -24,7 +24,7 @@ class Avfr_Assets {
 
 	    if ( is_post_type_archive( 'avfr' ) || 'avfr' == get_post_type() || has_shortcode( isset( $post->post_content ) ? $post->post_content : null, 'feature_request') ):
 
-	    	if ( '1' !== $disable_css ) {
+	    	if ( 'on' !== $disable_css ) {
 
 	    		wp_enqueue_style('dashicons');
 	    		wp_enqueue_style('feature-request-main', AVFR_URL.'/public/assets/css/master.css', AVFR_VERSION, true);

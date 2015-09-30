@@ -7,7 +7,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestMeta {
+class Avfr_Meta {
 
 	function __construct(){
 
@@ -77,4 +77,4 @@ class FeatureRequestMeta {
 
 	}
 }
-new FeatureRequestMeta;
+new Avfr_Meta;

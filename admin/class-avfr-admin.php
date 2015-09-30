@@ -37,10 +37,10 @@ class AVFR_Admin {
 
 		$plugin = Feature_Request::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
-		require_once(AVFR_DIR.'/admin/includes/class.settings.php');
-		require_once(AVFR_DIR.'/admin/includes/class.meta.php');
-		require_once(AVFR_DIR.'/admin/includes/class.column-mods.php');
-		wp_enqueue_style('idea-factory-admin-css', AVFR_URL.'/admin/assets/css/avfr-admin.css', AVFR_VERSION, true );
+		require_once(AVFR_DIR.'/admin/includes/class-avfr-settings.php');
+		require_once(AVFR_DIR.'/admin/includes/class-avfr-meta.php');
+		require_once(AVFR_DIR.'/admin/includes/class-avfr-columns.php');
+		wp_enqueue_style('avfr-admin-css', AVFR_URL.'/admin/assets/css/avfr-admin.css', AVFR_VERSION, true );
 
 	}
 

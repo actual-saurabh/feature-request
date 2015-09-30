@@ -7,7 +7,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestColumnMods {
+class Avfr_Columns {
 
 	function __construct(){
 
@@ -40,7 +40,7 @@ class FeatureRequestColumnMods {
 	    $item['comments']   = __('<span class="vers comment-grey-bubble" title="Comments"><span class="screen-reader-text">Comments</span></span>','Feature-request');
 	    $item['avfr_status'] = __('Feature Status','Feature-request');
 	    $item['taxonomy-groups']     = __('Groups','Feature-request');
-	    $item['taxonomy-featureTags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Idea Tags</span></span>','Feature-request');
+	    $item['taxonomy-featureTags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Tags</span></span>','Feature-request');
 	    $item['flags']   = __('<span class="dashicons-before dashicons-flag" title="Flags"><span class="screen-reader-text">Flags</span></span>','Feature-request');
 		$item['date'] 		= __('Date Published','Feature-request');
 
@@ -82,4 +82,4 @@ class FeatureRequestColumnMods {
 	}
 
 }
-new FeatureRequestColumnMods;
+new Avfr_Columns;

@@ -10,6 +10,7 @@ jQuery(document).ready(function($){
 		already_flagged = feature_request.already_flagged,
 		form 			= $('#avfr-entry-form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
+		user_email 		= feature_request.user_email,
 		reached_limit 	= feature_request.reached_limit;
 
 	var options = { 
@@ -65,40 +66,7 @@ jQuery(document).ready(function($){
    		}
 	}
 
-	$('.avfr-wrap').on('click','.avfr-like', function(e) {
-		e.preventDefault();
 
-		var $this = $(this);
-
-		$this.nextAll('.avfr-tooltip').show();
-		e.stopPropagation();
-
-		var voteClass = $this.hasClass('avfr-vote-up') ? 'avfr-set-vote-up' : 'avfr-set-vote-down';
-		$this.nextAll('.avfr-tooltip').find('.avfr-submit').removeClass( 'avfr-set-vote-up avfr-set-vote-down' );
-		$this.nextAll('.avfr-tooltip').find('.avfr-submit').addClass( voteClass );
-
-		var data      = {
-			action:    'avfr_calc_remaining_votes',
-			post_id:   $this.data('post-id'),
-			cfg: 	   $this.data('current-group'),
-			nonce:     feature_request.nonce
-		};
-
-		if ( null === localStorage.getItem('email') ) {
-			data['voter_email'] = $this.parent().find('.voter-email').val();
-		} else {
-			data['voter_email'] = localStorage.email;
-		};
-
-		$.post( ajaxurl, data, function(response) {
-			var json = $.parseJSON(response);
-			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
-			if ( null != localStorage.getItem('email') ) {
-				$('.voting-buttons-title').hide();
-			};
-		})
-
-	});
 
 	// When user like / dislike / vote up 1
 	$( '.avfr-wrap' ).on('click', '.avfr-submit', function(e) {
@@ -108,27 +76,27 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 
 		var data      = {
-			action:    $this.hasClass('avfr-set-vote-up') ? 'avfr_add_vote' : 'avfr_minus_vote',
-			user_id:   $this.data('user-id'),
+			action:    'avfr_vote',
 			post_id:   $this.data('post-id'),
 			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+			votes:     $this.hasClass('avfr-set-vote-up') ? "+1" : "-1",
 			nonce:     feature_request.nonce
 		};
-		if ( null === localStorage.getItem('email') ) {
+		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
-			data['voter_email'] = localStorage.email;
+			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
 		};
 
 		$.post( ajaxurl, data, function(response) {
 			var json = $.parseJSON(response);
 			if ( 'success' == json.response ) {
 
-				$('#' + data['post_id'] ).find('.avfr-tooltip').css({'margin-top':'5px'});
-				$('#' + data['post_id'] ).find('.avfr-like').hide();
-				$('#' + data['post_id'] ).find('.avfr-tooltip .voting-buttons').html( thanks_voting );
-				$('#' + data['post_id'] ).find('.avfr-tooltip span').html( json.remaining );
-				$('#' + $this.data('post-id') + ' .avfr-totals_num').html( json.total_vote );
+				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip').css({'margin-top':'5px'});
+				$('#avfr-' + data['post_id'] ).find('.avfr-like').hide();
+				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip .voting-buttons').html( thanks_voting );
+				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip span').html( json.remaining );
+				$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html(json.total_votes);
 				localStorage.email = data['voter_email'];
 
 			} else if ( 'already-voted' == json.response ) {
@@ -168,9 +136,7 @@ jQuery(document).ready(function($){
 
 	$( '.avfr-flag' ).click ( function(e) {
 		var r = confirm('Are you sure to report this idea as inappropriate ?');
-		if ( r == false ) {
-
-		} else {
+		if ( r == true ) {
 
 			e.preventDefault();
 
@@ -206,17 +172,17 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 
 		var data      = {
-			action:    'process_multi_vote',
+			action:    'avfr_vote',
 			user_id:   $this.data('user-id'),
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
 			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
 			nonce:     feature_request.nonce
 		};
-		if ( null === localStorage.getItem('email') ) {
+		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email')) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
-			data['voter_email'] = localStorage.email;
+			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
 		};
 			$.post( ajaxurl, data, function(response) {
 				var json = $.parseJSON(response);
@@ -226,7 +192,7 @@ jQuery(document).ready(function($){
 					$this.parent().addClass('avfr-voted');
 					$this.parent().nextAll('.small-text').find('span').html( json.remaining );
 					$this.parent().html( thanks_voting );
-					$('#' + $this.data('post-id') + ' .iavfr-totals_num').html( json.total_votes );
+					$('#' + $this.data('post-id') + ' .avfr-totals-num').html( json.total_votes );
 					localStorage.email = data['voter_email'];
 					$('#' + $this.data('post-id') + ' .avfr-vote-now').addClass('voted');
 					$('.voted').hide();
@@ -292,34 +258,41 @@ jQuery(document).ready(function($){
 
 	});
 
-	// When click button to see multivote dropdown
-	$( document ).on('click', '.avfr-vote-now', function(e) {
+
+	//calc remaining votes like/dislike
+	$('.avfr-wrap').on('click','.avfr-vote-now', function(e) {
 		e.preventDefault();
+
 		var $this = $(this);
+
 		$this.nextAll('.avfr-tooltip').show();
 		e.stopPropagation();
 
+		var voteClass = $this.hasClass('avfr-vote-up') ? 'avfr-set-vote-up' : 'avfr-set-vote-down';
+		$this.nextAll('.avfr-tooltip').find('.avfr-submit').removeClass( 'avfr-set-vote-up avfr-set-vote-down' );
+		$this.nextAll('.avfr-tooltip').find('.avfr-submit').addClass( voteClass );
+
 		var data      = {
-			action:    'calc_remaining_votes',
+			action:    'avfr_calc_remaining_votes',
 			post_id:   $this.data('post-id'),
-			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+			cfg: 	   $this.data('current-group'),
 			nonce:     feature_request.nonce
 		};
 
-		if ( null === localStorage.getItem('email') ) {
+		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
-			data['voter_email'] = localStorage.email;
+			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
 		};
 
 		$.post( ajaxurl, data, function(response) {
 			var json = $.parseJSON(response);
 			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
-			if ( null != localStorage.getItem('email') ) {
+			if ( null != localStorage.getItem('email') || 'undefined' != localStorage.getItem('email') ) {
 				$('.voting-buttons-title').hide();
 			};
 		})
-		
+
 	});
 
 	$( document ).on('click', '.avfr-tooltip', function(e) {

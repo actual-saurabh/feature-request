@@ -292,7 +292,7 @@ if ( !function_exists('avfr_add_vote') ) {
 
 	function avfr_add_vote( $args = array() ) {
 
-		$db = new FeatureRequestDB;
+		$db = new Avfr_DB;
 
 		$defaults = array(
 			'postid' => get_the_ID(),
@@ -312,7 +312,7 @@ if ( !function_exists('avfr_add_vote') ) {
 
 
 /**
- * Check if idea has voted by current user
+ * Check if feature has voted by current user
  * @since 1.0
  */
 
@@ -394,7 +394,7 @@ if ( !function_exists('avfr_add_flag') ) {
 
 	function avfr_add_flag( $args = array() ) {
 
-		$db = new FeatureRequestDB;
+		$db = new Avfr_DB;
 
 		$defaults = array(
 			'postid' => get_the_ID(),
@@ -501,17 +501,19 @@ if ( !function_exists('avfr_localized_args') ) {
 	function avfr_localized_args( $max = '', $paged = '' ){
 
 		global $wp_query, $post;
+		$current_user = wp_get_current_user();
 
 		$args = array(
 			'ajaxurl' 		  => admin_url( 'admin-ajax.php' ),
 			'nonce'			  => wp_create_nonce('feature_request'),
-			'label'			  => apply_filters('avfr_loadmore_label', __('Load more ideas', 'feature-request')),
-			'label_loading'   => apply_filters('avfr_loadmore_loading', __('Loading ideas...', 'feature-request')),
+			'user_email' 	  => $current_user->user_email,
+			'label'			  => apply_filters('avfr_loadmore_label', __('Load more ...', 'feature-request')),
+			'label_loading'   => apply_filters('avfr_loadmore_loading', __('Loading ...', 'feature-request')),
 			'thanks_voting'   => apply_filters('avfr_thanks_voting', __('Thanks for voting!', 'feature-request')),
 			'already_voted'   => apply_filters('avfr_already_voted', __('You have already voted!', 'feature-request')),
-			'already_flagged' => apply_filters('avfr_already_flagged', __('You have already flagged this idea!', 'feature-request')),
+			'already_flagged' => apply_filters('avfr_already_flagged', __('You have already flagged this post!', 'feature-request')),
 			'thanks_flag'	  => apply_filters('avfr_thanks_flag', __('Reported!', 'feature-request')),
-			'reached_limit'   => apply_filters('avfr_reached_limit', __('You are reached voting limit for this groups of ideas.', 'feature-request')),
+			'reached_limit'   => apply_filters('avfr_reached_limit', __('You are reached voting limit for this groups of features.', 'feature-request')),
 			'startPage'		  => $paged,
 			'maxPages' 		  => $max,
 			'nextLink' 		  => next_posts($max, false)
@@ -553,7 +555,6 @@ if ( !function_exists('avfr_submit_box') ):
 				'option_none_value'  => '-1',
 				'orderby'            => 'Name', 
 				'order'              => 'ASC',
-				'show_count'         => 0,
 				'hide_empty'         => 0, 
 				'include'			 => $groups,
 				'exclude'            => $exluded,
@@ -561,10 +562,7 @@ if ( !function_exists('avfr_submit_box') ):
 				'selected'           => 0,
 				'hierarchical'       => 0, 
 				'name'               => 'group',
-				'id'                 => '',
-				'class'              => 'ideagroup',
-				'depth'              => 0,
-				'tab_index'          => 0,
+				'class'              => 'featureroup',
 				'taxonomy'           => 'groups',
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
@@ -577,14 +575,14 @@ if ( !function_exists('avfr_submit_box') ):
 				    	<a href="#close" type="button" class="modal-close" id="avfr-close">
 						<span aria-hidden="true">&times;</span>
 						</a>
-				    		<h3 class="avfr-modal-title"><?php apply_filters('avfr_submit_idea_label', _e('Submit feature','feature-request'));?></h3>
+				    		<h3 class="avfr-modal-title"><?php _e('Submit feature','feature-request');?></h3>
 				    	</div>
 				    	<div class="avfr-modal-body">
 
 							<form id="avfr-entry-form" method="post" enctype="multipart/form-data">
 								<div id="avfr-form-group" class="form-input-group">
 								<label for="avfr-title">
-									<?php apply_filters('avfr_form_title', _e('Submit feature for:','feature-request'));?>
+									<?php _e('Submit feature for:','feature-request');?>
 								</label>
 								<?php if ( !is_archive() && !is_single() && !empty($groups) && count( explode(',', $groups) ) == 1 ) {
 								 	$group_name = get_term( $groups, 'groups' );
@@ -656,7 +654,7 @@ if ( !function_exists('avfr_submit_box') ):
 
   								<div id="avfr-form-tags" class="form-input-group">
 	  								<label for="tags-data-list">
-	  									<?php apply_filters('avfr_form_title', _e('Idea tags:','feature-request'));?>
+	  									<?php apply_filters('avfr_form_title', _e('Feature tags:','feature-request'));?>
 	  								</label>
 								<textarea name="avfr-tags" id="tags-data-list" rows="1"></textarea>
 								</div>
@@ -665,11 +663,12 @@ if ( !function_exists('avfr_submit_box') ):
   								<?php if ( 'on' != $disable_upload ) : ?>
 
   								<div id="avfr-form-upload" class="form-input-group">
+  								  	<p class="avfr-upload-tip">
+  										<?php echo avfr_get_option('avfr_echo_type_size','avfr_settings_features');?>
+  									</p>
   									<label for="avfr-upload-form">
-  										<?php _e('Select file to upload:','feature-request'); ?>
+  										<?php apply_filters('avfr_form_upload', _e('Select file to upload:','feature-request')); ?>
   									</label>
-  									<?php echo avfr_get_option('avfr_echo_type_size','avfr_settings_features');?>
-  									</br>
   									<input id="avfr-upload-form" type="file"  name='avfr-upload'>
   								</div>
 
@@ -708,7 +707,7 @@ if ( !function_exists('avfr_submit_box') ):
 							<div class="avfr-modal-content">
 								<div class="avfr-modal-body">
 								<button type="button" class="close" data-dismiss="avfr-modal"><span aria-hidden="true">&times;</span></button>
-									<p>Please <a href="<?php echo wp_login_url( home_url() ); ?>">login</a> or <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new idea.', 'feature-request') ?></p>
+									<p>Please <a href="<?php echo wp_login_url( home_url() ); ?>">login</a> or <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new feature request.', 'feature-request') ?></p>
 								</div>
 							</div>
 						</div>
@@ -746,7 +745,7 @@ if ( !function_exists('avfr_submit_header') ):
 
 					<?php do_action('avfr_before_submit_button'); ?>
 
-						<a href="#avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit Idea','feature-request');?></a>
+						<a href="#avfr-modal" class="avfr-button avfr-trigger"><?php _e('Submit feature','feature-request');?></a>
 
 					<?php do_action('avfr_after_submit_button'); ?>
 
@@ -774,16 +773,16 @@ if ( !function_exists('avfr_vote_controls') ):
 		}
 
 		//get voting type
-		$voting_type = avfr_get_option('avfr_voting_type','avfr_settings_features');
-		//getting group of idea.
-		$ideagroups = get_the_terms( $post_id, 'groups' );
+		$voting_type = avfr_get_option('avfr_voting_type','avfr_settings_main');
+		//getting group of feature.
+		$featuregroups = get_the_terms( $post_id, 'groups' );
 
 		if ( 'vote' !== $voting_type ){
 			//getting like/dislike limit option for each group
-			$vote_limit = avfr_get_option('avfr_total_vote_limit_'.$ideagroups[0]->slug,'avfr_settings_groups');
+			$vote_limit = avfr_get_option('avfr_total_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
 		?>
-			<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
-			<a class="avfr-like avfr-vote-down" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-now avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
+			<a class="avfr-like avfr-vote-now avfr-vote-down" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
 			<div class="avfr-tooltip">
 				<div class="voting-buttons">
 					<?php 
@@ -793,7 +792,7 @@ if ( !function_exists('avfr_vote_controls') ):
 						</p>
 					<?php
 						}?>
-					<a class="avfr-submit" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"><?php _e('Vote it!','feature-request') ?></a>
+					<a class="avfr-submit" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"><?php _e('Vote it!','feature-request') ?></a>
 				</div>
 				<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
 			</div>
@@ -801,10 +800,10 @@ if ( !function_exists('avfr_vote_controls') ):
 
 		} else {
 		
-		$voting_limit = avfr_get_option('vote_limit_'.$ideagroups[0]->slug,'avfr_settings_groups');
-			if ( $voting_limit == 'on' ) {
+		$voting_limit = avfr_get_option('avfr_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
+			if ( $voting_limit == '1' ) {
 			?>
-				<a class="avfr-like avfr-vote-up" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
+				<a class="avfr-like avfr-vote-now avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -820,7 +819,7 @@ if ( !function_exists('avfr_vote_controls') ):
 			<?php
 			} else {
 				?>
-				<button class="avfr-vote-now" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
+				<button class="avfr-vote-now" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -832,7 +831,7 @@ if ( !function_exists('avfr_vote_controls') ):
 						}?>
 						<?php 
 						for ( $i=1; $i <= $voting_limit ; $i++ ) { 
-							echo "<a class='avfr-votes-value' data-current-group=".$ideagroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
+							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
 						}
 					 ?>
 					</div>
@@ -875,8 +874,8 @@ if ( !function_exists('avfr_flag_control') ):
 
 	function avfr_flag_control( $post_id ) {
 
-		//getting group of idea.
-		$ideagroups = get_the_terms( $post_id, 'groups' );
+		//getting group of features.
+		$featuregroups = get_the_terms( $post_id, 'groups' );
 
 		//flag option applying
 		$flag_show = avfr_get_option('avfr_flag','avfr_settings_main');
@@ -885,7 +884,7 @@ if ( !function_exists('avfr_flag_control') ):
 			?>
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
-				<a href="#" class="avfr-flag" data-current-group="<?php echo $ideagroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this idea','feature-request'); ?></a>
+				<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
 			</div>
 			<?php
 		}
@@ -993,7 +992,7 @@ if ( !function_exists('avfr_image_filter') ) {
 			return;
 		
 		$allowed_image = array(
-			$avfr_get_file_type = avfr_get_option('avfr_settings_features','idea_allowed_file_types')
+			$avfr_get_file_type = avfr_get_option('avfr_allowed_file_types', 'avfr_settings_features')
 		);
 
 		return $allowed_image;
@@ -1051,7 +1050,7 @@ if ( !function_exists('avfr_get_author_avatar') ) {
 		if ( '' == $author_email ) {
 
 			$author_email = get_the_author_meta('email');
-			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=ideas' );
+			$author_link  = esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ).'?post_type=avfr' );
 		
 		} else {
 

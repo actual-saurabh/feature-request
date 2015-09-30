@@ -85,7 +85,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 163, ../sass/_modal.scss */
 .text-wrap #tags-data-list { height: 28px; width: 100% !important; min-height: 28px; line-height: 1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-color: #cccccc; padding: 6px 0 20px 8px; }
 /* line 173, ../sass/_modal.scss */
-.text-wrap .text-remove { top: 2px !important; }
+.text-wrap .text-remove { top: 4px !important; }
 
 /* line 179, ../sass/_modal.scss */
 .avfr-modal-footer { text-align: left; }
@@ -128,6 +128,9 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 
 /* line 283, ../sass/_modal.scss */
 .dashicons-warning:before { margin: 15px 15px 0 0; }
+
+/* line 287, ../sass/_modal.scss */
+.text-core .text-wrap .text-tags .text-tag .text-button { padding-top: 2px !important; padding-bottom: 4px !important; }
 
 /* line 1, ../sass/_layout.scss */
 .avfr-wrap-wrap { overflow: hidden; *zoom: 1; }
@@ -363,6 +366,9 @@ select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; bo
 #avfr-delete { float: right; margin: 20px; color: #cccccc; font-weight: normal; font-size: 13px; }
 /* line 508, ../sass/_layout.scss */
 #avfr-delete .dashicons { vertical-align: middle; }
+
+/* line 513, ../sass/_layout.scss */
+.related-avfr-section li { padding: 5px 0; }
 
 @media (max-width: 600px) { /* line 3, ../sass/_responsive.scss */
   .avfr-entry-wrap { display: inline-block; padding: 12px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }

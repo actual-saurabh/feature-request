@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestType {
+class Avfr_Post_Type {
 
 	public function __construct(){
 
@@ -21,14 +21,12 @@ class FeatureRequestType {
 	*/
 	function avfr_post_type() {
 
-		$disable_archive = avfr_get_option('avfr_disable_archive','avfr_settings_advanced');
-
-		$domain = 'on' == $disable_archive ? false : avfr_get_option('avfr_domain','avfr_settings_main','suggestions');
+		$domain = avfr_get_option('avfr_domain','avfr_settings_main','suggestions');
 
 		$labels = array(
 			'name'                		=> _x( 'Features','Feature-request' ),
 			'singular_name'       		=> _x( 'Feature','Feature-request' ),
-			'menu_name'           		=> __( 'Features Request', 'Feature-request' ),
+			'menu_name'           		=> __( 'Feature Request', 'Feature-request' ),
 			'name_admin_bar'            => _x( 'Feature', 'add new on admin bar', 'Feature-request' ),
 			'add_new'             		=> __( 'New Feature', 'Feature-request' ),
 			'add_new_item'        		=> __( 'Add New Feature', 'Feature-request' ),
@@ -54,7 +52,7 @@ class FeatureRequestType {
 			'show_ui' 					=> true,
 			'show_in_menu'              => true,
 			'query_var'                 => true,
-			'rewrite' 					=> array( 'slug' => 'avfr','pages' =>true ),
+			'rewrite' 					=> array( 'slug' => 'suggestions','pages' =>true ),
 			'capability_type' 			=> 'post',
 			'has_archive'				=> $domain,
 			'menu_icon'					=> 'dashicons-megaphone',
@@ -66,11 +64,7 @@ class FeatureRequestType {
 
 		register_post_type( 'avfr', apply_filters('avfr_type_args', $args ) );
 
-		/**
-	 	 *
-		 * add category taxonomy to any idea
-		 * 
-		*/
+		// Hierarchical taxonomy for features
 		$labels = array(
 			'name' 						=> _x( 'Groups','taxonomy general name' ), 
 			'singular_name' 			=> _x( 'Groups','taxonomy singular name' ),
@@ -95,11 +89,7 @@ class FeatureRequestType {
 			);
 		register_taxonomy('groups' , array('avfr') , $args);
 
-		/**
-	 	 *
-		 * add tag taxonomy to any idea
-		 * 
-		*/
+		// Non hierarchical taxonomy for features
 		$labels = array(
 			'name' 						=> _x( 'Feature tags','taxonomy general name' ), 
 			'singular_name' 			=> _x( 'Feature tags','taxonomy singular name' ),
@@ -130,4 +120,4 @@ class FeatureRequestType {
 		}
 }
 
-new FeatureRequestType;
+new Avfr_Post_Type;

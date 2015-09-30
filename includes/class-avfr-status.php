@@ -8,7 +8,7 @@
  *	@copyright 			2015 Averta
  */
 
-class FeatureRequestProcessStatus {
+class Avfr_Status {
 
 	function __construct(){
 
@@ -138,4 +138,4 @@ class FeatureRequestProcessStatus {
 	}
 
 }
-new FeatureRequestProcessStatus;
+new Avfr_Status;

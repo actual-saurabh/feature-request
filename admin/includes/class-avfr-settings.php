@@ -7,10 +7,10 @@
  *  @copyright          2015 Averta
  */
 
-require_once dirname( __FILE__ ) . '/class.settings-api.php';
+require_once dirname( __FILE__ ) . '/class-avfr-settings-api.php';
 wp_enqueue_style( 'admin-css' , (AVFR_URL.'/admin/assets/css/admin.css' ));
-if ( !class_exists('AVFR_Settings_Api_Wrap' ) ):
-class AVFR_Settings_Api_Wrap {
+if ( !class_exists('Avfr_Settings' ) ):
+class Avfr_Settings {
 
     private $settings_api;
 
@@ -20,7 +20,7 @@ class AVFR_Settings_Api_Wrap {
 
         $this->dir  		= plugin_dir_path( __FILE__ );
         $this->url  		= plugins_url( '', __FILE__ );
-        $this->settings_api = new WeDevs_Settings_API;
+        $this->settings_api = new Avfr_Settings_API;
 
         add_action( 'admin_init', 						array($this, 'admin_init') );
         add_action( 'admin_menu', 						array($this, 'submenu_page'));
@@ -68,22 +68,22 @@ class AVFR_Settings_Api_Wrap {
                 <script>
                     jQuery(document).ready(function($){
                         // reset post meta
-                        jQuery('.feature-request-reset--votes').click(function(e){
+                        jQuery('.feature-request-reset-votes').click(function(e){
 
-                            e.preventDefault();
-
-                            var data = {
-                                action: $(this).hasClass('reset-db') ? 'avfr_db_reset' : 'avfr_reset',
-                                security: '<?php echo $nonce;?>'
-                            };
-
-                            jQuery.post(ajaxurl, data, function(response) {
-                                if( response ){
-                                    alert(response);
-                                    location.reload();
-                                }
-                            });
-
+                            var r = confirm('Are you sure to reset all votes?');
+                            if ( r == true ) {
+                                e.preventDefault();
+                                var data = {
+                                    action: $(this).hasClass('reset-db') ? 'avfr_db_reset' : 'avfr_reset',
+                                    security: '<?php echo $nonce;?>'
+                                };
+                                jQuery.post(ajaxurl, data, function(response) {
+                                    if( response ){
+                                        alert(response);
+                                        location.reload();
+                                    }
+                                });
+                            }
                         });
                     });
                 </script>
@@ -177,7 +177,7 @@ class AVFR_Settings_Api_Wrap {
             	array(
                     'name' 				=> 'avfr_domain',
                     'label' 			=> __( 'Naming Convention', 'feature-request' ),
-                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'avfr' ).'">'. __( 'Link to features page', 'feature-request' ) .'</a> - ' . __( 'By default its called Ideas. You can rename this here.', 'feature-request' ),
+                    'desc' 				=> '<a href="'.get_post_type_archive_link( 'avfr' ).'">'. __( 'Link to features page', 'feature-request' ) .'</a> - ' . __( 'You should save permalinks after changing this.', 'feature-request' ),
                     'type' 				=> 'text',
                     'default' 			=> __('suggestions','feature-request'),
                     'sanitize_callback' => 'sanitize_text_field'
@@ -220,7 +220,7 @@ class AVFR_Settings_Api_Wrap {
                    array(
                     'name'              => 'avfr_disable_upload',
                     'label'             => __( 'Disable Uplaod Files', 'feature-request' ),
-                    'desc'              => __( 'Disable upload for feature factory form (if checked).', 'feature-request' ),
+                    'desc'              => __( 'Disable upload for form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
@@ -437,19 +437,12 @@ class AVFR_Settings_Api_Wrap {
                     'type'				=> 'checkbox',
                     'default' 			=> ''
                 ),
-                array(
-                    'name' 				=> 'avfr_disable_archive',
-                    'label' 			=> __( 'Disable Archive', 'feature-request' ),
-                    'desc' 				=> __( 'Disable the automatic archive. This assumes you will be using the shortcode instead to show the features on a page that you specify.', 'feature-request' ),
-                    'type'				=> 'checkbox',
-                    'default' 			=> ''
-                )
             ),
             'avfr_settings_resets'    => array(
                 array(
                     'name'              => 'avfr_set_resets',
                     'label'             => __( 'Reset All Votes', 'feature-request' ),
-                    'desc'              => __( '<a class="button feature-request-reset--votes" href="#" >Reset Votes</a>' ),
+                    'desc'              => __( '<a class="button feature-request-reset-votes" href="#" >Reset Votes</a>' ),
                     'type'              => 'html',
                     'default'           => ''
                 )
@@ -556,4 +549,4 @@ class AVFR_Settings_Api_Wrap {
 }
 endif;
 
-$settings = new AVFR_Settings_Api_Wrap();
+$settings = new Avfr_Settings();

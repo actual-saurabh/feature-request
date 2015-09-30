@@ -7,8 +7,8 @@
  *  @copyright          2015 Averta
  */
 
-if ( !class_exists( 'WeDevs_Settings_API' ) ):
-class WeDevs_Settings_API {
+if ( !class_exists( 'Avfr_Settings_API' ) ):
+class Avfr_Settings_API {
     /**
      * settings sections array
      *
