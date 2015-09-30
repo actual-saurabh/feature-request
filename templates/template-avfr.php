@@ -147,11 +147,10 @@
 										<span class="avfr-short-comment">
 											<span class="dashicons dashicons-admin-comments"></span>
 										<?php
-											printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
-										?>
+											comments_popup_link( 'No comment', 'One comment', '% comments', get_permalink() ); ?>
 										</span>
 									</div>
-										<?php echo avfr_flag_control($id); ?>
+										<?php echo avfr_flag_control($id, $ip, $userid); ?>
 						     		</div>
 						     <?php if ( is_single() ) :?>
 								<div id="avfr-avatar">
@@ -159,12 +158,11 @@
 									avfr_get_author_avatar($id); ?>
 									
 								 <div id="avfr-avatar-name">
+								 	<p>
 								<?php 
-									avfr_get_author_name($id);
-											?>
-										<span><?php  _e( " shared this feature", 'feature_request' ); ?> </span>
-										</br>
-										<p><?php the_time('F j, Y'); ?></p>
+									avfr_get_author_name($id); _e( " shared this feature", 'feature_request' ); ?>
+									</p>
+									<p class="date"><?php the_time('F j, Y'); ?></p>
 								 </div>
 								</div>
 	                        
@@ -296,10 +294,7 @@
 							<div>
 								<span class="avfr-short-comment">
 									<span class="dashicons dashicons-admin-comments"></span>
-								<?php
-									printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
-								
-								?>
+								<?php comments_popup_link( 'No comment', 'One comment', '% comments', get_permalink() ); ?>
 								</span>
 							</div>
 							<?php } ?>

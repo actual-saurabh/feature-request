@@ -6,7 +6,6 @@ jQuery(document).ready(function($){
 		thanks_voting   = feature_request.thanks_voting,
 		already_voted   = feature_request.already_voted,
 		error_message 	= feature_request.error_message,
-		thanks_flag     = feature_request.thanks_flag,
 		already_flagged = feature_request.already_flagged,
 		form 			= $('#avfr-entry-form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
@@ -67,8 +66,6 @@ jQuery(document).ready(function($){
    		}
 	}
 
-
-
 	// When user like / dislike / vote up 1
 	$( '.avfr-wrap' ).on('click', '.avfr-submit', function(e) {
 
@@ -79,11 +76,11 @@ jQuery(document).ready(function($){
 		var data      = {
 			action:    'avfr_vote',
 			post_id:   $this.data('post-id'),
-			cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
+			cfg: 	   $this.data('current-group'), // cfg = Current-Feature's Group
 			votes:     $this.hasClass('avfr-set-vote-up') ? "+1" : "-1",
 			nonce:     feature_request.nonce
 		};
-		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email') ) {
+		if ( null === localStorage.getItem('email') || 'undefined' == localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
 			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
@@ -132,10 +129,10 @@ jQuery(document).ready(function($){
 			action:    'avfr_vote',
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
-			cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
+			cfg: 	   $this.data('current-group'), // cfg = Current-Feature's Group
 			nonce:     feature_request.nonce
 		};
-		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email')) {
+		if ( null === localStorage.getItem('email') || 'undefined' == localStorage.getItem('email')) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
 			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
@@ -200,7 +197,7 @@ jQuery(document).ready(function($){
 
 	});
 
-		// Whene user submit status change
+	// Whene user submit status change
 	$( '.change-status-select' ).click( function (e) {
 		e.preventDefault();
 
@@ -213,7 +210,6 @@ jQuery(document).ready(function($){
 		})
 
 	});
-
 
 	//calc remaining votes like/dislike/votes
 	$('.avfr-wrap').on('click','.avfr-vote-calc', function(e) {
@@ -235,7 +231,7 @@ jQuery(document).ready(function($){
 			nonce:     feature_request.nonce
 		};
 
-		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email') ) {
+		if ( null === localStorage.getItem('email') || 'undefined' == localStorage.getItem('email') ) {
 			data['voter_email'] = $this.parent().find('.voter-email').val();
 		} else {
 			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
@@ -244,15 +240,13 @@ jQuery(document).ready(function($){
 		$.post( ajaxurl, data, function(response) {
 			var json = $.parseJSON(response);
 			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
-			if ( null != localStorage.getItem('email') || 'undefined' != localStorage.getItem('email') ) {
+			if ( !( null == localStorage.getItem('email') || 'undefined' == localStorage.getItem('email') ) ) {
 				$('.voting-buttons-title').hide();
 			};
 		})
 
 	});
 
-
-	
 	$('#imgCaptcha').on('load', function() {
 		$('#reload').removeClass('avfr-reload-animation');
 	});
@@ -263,9 +257,7 @@ jQuery(document).ready(function($){
 		$(this).addClass('avfr-reload-animation');
 	});
 
-
 	// When user report (flag)
-
 	$( '.avfr-flag' ).click ( function(e) {
 		var r = confirm(confirm_flag);
 		if ( r == true ) {
@@ -276,20 +268,19 @@ jQuery(document).ready(function($){
 
 			var data      = {
 				action:    'avfr_add_flag',
-				user_id:   $this.data('user-id'),
 				post_id:   $this.data('post-id'),
 				cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
 				nonce:     feature_request.nonce
 			};
 
 			$.post( ajaxurl, data, function(response) {
+				var json = $.parseJSON(response);
+				if ( json.response == 'success' ) {
 
-				if ( response == 'success' ) {
-
-					$this.parent().addClass('avfr-flagged');
-					$this.parent().html(thanks_flag);
-				} else if ( 'already-flagged' == response ){
-					alert( already_flagged );
+					$this.addClass('avfr-flagged');
+					$this.html(json.message);
+				} else if ( 'already-flagged' == json.response ){
+					alert( json.message );
 				}
 
 			});

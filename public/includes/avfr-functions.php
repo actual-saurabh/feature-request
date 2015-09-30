@@ -390,9 +390,9 @@ if ( !function_exists('avfr_has_flag') ) {
  * @since 1.0
  */
 
-if ( !function_exists('avfr_add_flag') ) {
+if ( !function_exists('avfr_insert_flag') ) {
 
-	function avfr_add_flag( $args = array() ) {
+	function avfr_insert_flag( $args = array() ) {
 
 		$db = new Avfr_DB;
 
@@ -511,8 +511,6 @@ if ( !function_exists('avfr_localized_args') ) {
 			'label_loading'   => apply_filters('avfr_loadmore_loading', __('Loading ...', 'feature-request')),
 			'thanks_voting'   => apply_filters('avfr_thanks_voting', __('Thanks for voting!', 'feature-request')),
 			'already_voted'   => apply_filters('avfr_already_voted', __('You have already voted!', 'feature-request')),
-			'already_flagged' => apply_filters('avfr_already_flagged', __('You have already flagged this post!', 'feature-request')),
-			'thanks_flag'	  => apply_filters('avfr_thanks_flag', __('Reported!', 'feature-request')),
 			'confirm_flag'	  => apply_filters('avfr_confirm_flag', __('Are you sure to report this feature as inappropriate ?', 'feature-request')),
 			'reached_limit'   => apply_filters('avfr_reached_limit', __('You are reached voting limit for this groups of features.', 'feature-request')),
 			'startPage'		  => $paged,
@@ -873,21 +871,25 @@ endif;
 
 if ( !function_exists('avfr_flag_control') ):
 
-	function avfr_flag_control( $post_id ) {
+	function avfr_flag_control( $post_id, $ip, $userid ) {
 
 		//getting group of features.
 		$featuregroups = get_the_terms( $post_id, 'groups' );
 
 		//flag option applying
 		$flag_show = avfr_get_option('avfr_flag','avfr_settings_main');
-		if ( 'on' == $flag_show ) {
-
-			?>
+		if ( 'on' == $flag_show ) { ?>
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
-				<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
+				<?php
+				if ( !avfr_has_flag( $post_id, $ip, $userid ) ) { ?>
+					<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
+				<?php
+				} else { ?>
+					<span href="#"> <?php _e('Reported!','feature-request'); ?></span>
+		  <?php } ?>
 			</div>
-			<?php
+		<?php
 		}
 	}
 

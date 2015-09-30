@@ -12,10 +12,11 @@ class Avfr_Votes {
 	function __construct(){
 
 		add_action( 'wp_ajax_avfr_vote', 				        	array($this, 'avfr_vote' ));
-		add_action( 'wp_ajax_process_flag', 				        array($this, 'process_flag' ));
+		add_action( 'wp_ajax_avfr_add_flag', 				        array($this, 'avfr_add_flag' ));
 		add_action( 'wp_ajax_avfr_calc_remaining_votes', 		    array($this, 'avfr_calc_remaining_votes' ));
 		add_action( 'wp_ajax_nopriv_avfr_vote', 					array($this, 'avfr_vote' ));
 		add_action( 'wp_ajax_nopriv_avfr_calc_remaining_votes', 	array($this, 'avfr_calc_remaining_votes' ));
+		add_action( 'wp_ajax_nopriv_avfr_add_flag', 				array($this, 'avfr_add_flag' ));
 				
 	}
 
@@ -134,7 +135,9 @@ class Avfr_Votes {
 			}
 
 			$voted_group 	= $_POST['cfg'];
-			$userid = get_current_user_ID();
+			$userid = get_current_user_id();
+			$get_voter_email 	= get_userdata($userid);
+			$reporter_email = $get_voter_email->user_email;
 			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
 			// get flag statuses
@@ -144,11 +147,14 @@ class Avfr_Votes {
 			$flags 				= get_post_meta( $postid, '_flag', true );
 
 			if ( $has_flag ) {
-				echo 'already-flagged';
+				$response_array = array( 'response' => 'already-flagged', 'message' => __('You already flagged this idea.', 'feature-request') );
+				echo json_encode($response_array);
 			} else {
 				update_post_meta( $postid, '_flag', (int) $flags + 1 );
-				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'groups' => $voted_group, 'type' => 'flag' );
-		        avfr_add_flag( $args );
+				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'groups' => $voted_group, 'type' => 'flag', 'email' => $reporter_email );
+		        avfr_insert_flag( $args );
+		        $response_array = array('response' => 'success', 'message' => __('Reported!', 'feature-request') );
+				echo json_encode($response_array);
 			}
 		}
 			die();

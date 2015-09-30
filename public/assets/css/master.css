@@ -172,7 +172,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 102, ../sass/_layout.scss */
 .avfr-entry-wrap footer a:hover, .avfr-entry-wrap footer a:focus, .avfr-entry-wrap footer a:active, .avfr-entry-wrap div.entry-meta a:hover, .avfr-entry-wrap div.entry-meta a:focus, .avfr-entry-wrap div.entry-meta a:active { color: #acacac; }
 /* line 111, ../sass/_layout.scss */
-.avfr-entry-wrap footer { margin-left: 116px; }
+.avfr-entry-wrap footer { margin-left: 132px; }
 /* line 115, ../sass/_layout.scss */
 .avfr-entry-wrap .entry-header { margin-top: 0; display: table; margin: 0; }
 /* line 120, ../sass/_layout.scss */
@@ -239,7 +239,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .avfr-status .avfr-status-completed { background: #007aaf; }
 
 /* line 286, ../sass/_layout.scss */
-.avfr-loadmore { margin: 20px auto; }
+.avfr-loadmore a { margin: 20px auto; }
 
 /* line 290, ../sass/_layout.scss */
 .avfr-filter-controls { margin-left: 0 !important; padding: 15px 0px; }
@@ -359,7 +359,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 487, ../sass/_layout.scss */
 #avfr-avatar span { font-weight: normal; color: black; }
 /* line 492, ../sass/_layout.scss */
-#avfr-avatar p { padding-left: 1px; padding-top: 0px; font-size: 11px; color: #cccccc; }
+#avfr-avatar .date { padding-left: 1px; padding-top: 0px; font-size: 11px; color: #cccccc; }
 
 /* line 501, ../sass/_layout.scss */
 #avfr-delete { float: right; margin: 20px; color: #cccccc; font-weight: normal; font-size: 13px; }
