@@ -11,7 +11,8 @@ jQuery(document).ready(function($){
 		form 			= $('#avfr-entry-form'),
 		captcha_src     = $('#imgCaptcha').attr('src'),
 		user_email 		= feature_request.user_email,
-		reached_limit 	= feature_request.reached_limit;
+		reached_limit 	= feature_request.reached_limit,
+		confirm_flag 	= feature_request.confirm_flag;
 
 	var options = { 
         target:        '#avfr-entry-form-results p',        
@@ -78,7 +79,7 @@ jQuery(document).ready(function($){
 		var data      = {
 			action:    'avfr_vote',
 			post_id:   $this.data('post-id'),
-			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+			cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
 			votes:     $this.hasClass('avfr-set-vote-up') ? "+1" : "-1",
 			nonce:     feature_request.nonce
 		};
@@ -131,7 +132,7 @@ jQuery(document).ready(function($){
 			action:    'avfr_vote',
 			post_id:   $this.data('post-id'),
 			votes:     $this.data('vote'),
-			cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+			cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
 			nonce:     feature_request.nonce
 		};
 		if ( null === localStorage.getItem('email') || 'undefined' === localStorage.getItem('email')) {
@@ -191,7 +192,7 @@ jQuery(document).ready(function($){
 
 			if ( response == 'success' ) {
 
-				alert( 'Idea status changed.' );
+				alert( 'Status changed.' );
 
 			}
 
@@ -266,7 +267,7 @@ jQuery(document).ready(function($){
 	// When user report (flag)
 
 	$( '.avfr-flag' ).click ( function(e) {
-		var r = confirm('Are you sure to report this idea as inappropriate ?');
+		var r = confirm(confirm_flag);
 		if ( r == true ) {
 
 			e.preventDefault();
@@ -277,7 +278,7 @@ jQuery(document).ready(function($){
 				action:    'avfr_add_flag',
 				user_id:   $this.data('user-id'),
 				post_id:   $this.data('post-id'),
-				cfg: 	   $this.data('current-group'), // cfg = Current Idea Group
+				cfg: 	   $this.data('current-group'), // cfg = Current Feature Group
 				nonce:     feature_request.nonce
 			};
 

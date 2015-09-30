@@ -504,7 +504,7 @@ if ( !function_exists('avfr_localized_args') ) {
 		$current_user = wp_get_current_user();
 
 		$args = array(
-			'ajaxurl' 		  => admin_url( 'admin-ajax.php' ),
+			'ajaxurl' 		  => admin_url('admin-ajax.php'),
 			'nonce'			  => wp_create_nonce('feature_request'),
 			'user_email' 	  => $current_user->user_email,
 			'label'			  => apply_filters('avfr_loadmore_label', __('Load more ...', 'feature-request')),
@@ -513,6 +513,7 @@ if ( !function_exists('avfr_localized_args') ) {
 			'already_voted'   => apply_filters('avfr_already_voted', __('You have already voted!', 'feature-request')),
 			'already_flagged' => apply_filters('avfr_already_flagged', __('You have already flagged this post!', 'feature-request')),
 			'thanks_flag'	  => apply_filters('avfr_thanks_flag', __('Reported!', 'feature-request')),
+			'confirm_flag'	  => apply_filters('avfr_confirm_flag', __('Are you sure to report this feature as inappropriate ?', 'feature-request')),
 			'reached_limit'   => apply_filters('avfr_reached_limit', __('You are reached voting limit for this groups of features.', 'feature-request')),
 			'startPage'		  => $paged,
 			'maxPages' 		  => $max,

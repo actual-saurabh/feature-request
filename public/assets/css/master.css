@@ -50,64 +50,63 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .avfr-modal #avfr-entryform-description { min-height: 100px !important; }
 
 /* line 81, ../sass/_modal.scss */
-#close { -moz-transition: all 3s; -o-transition: all 3s; -webkit-transition: all 3s; transition: all 3s; }
-
-/* line 85, ../sass/_modal.scss */
 .avfr-modal-dialog { position: fixed; left: 0; right: 0; top: -100%; z-index: 11; -moz-transform: translate(0, 0) scale(0); -ms-transform: translate(0, 0) scale(0); -webkit-transform: translate(0, 0) scale(0); transform: translate(0, 0) scale(0); -moz-transform-origin: 50% 0; -ms-transform-origin: 50% 0; -webkit-transform-origin: 50% 0; transform-origin: 50% 0; -moz-transition: top 0s, -moz-transform 0.3s ease-in-out; -o-transition: top 0s, -o-transform 0.3s ease-in-out; -webkit-transition: top 0s, -webkit-transform 0.3s ease-in-out; transition: top 0s, transform 0.3s ease-in-out; }
 
-/* line 96, ../sass/_modal.scss */
+/* line 92, ../sass/_modal.scss */
 .avfr-modal-content { position: relative; background-color: #fff; border: 1px solid #999; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); background-clip: padding-box; outline: 0; }
 
-/* line 106, ../sass/_modal.scss */
+/* line 102, ../sass/_modal.scss */
 .avfr-modal-backdrop { position: absolute; top: 0; right: 0; left: 0; background-color: rgba(0, 0, 0, 0.6); }
-/* line 113, ../sass/_modal.scss */
+/* line 109, ../sass/_modal.scss */
 .avfr-modal-backdrop.fade { opacity: 0; }
-/* line 117, ../sass/_modal.scss */
+/* line 113, ../sass/_modal.scss */
 .avfr-modal-backdrop.in { opacity: 0.75; }
 
-/* line 123, ../sass/_modal.scss */
+/* line 119, ../sass/_modal.scss */
 .avfr-modal-header { padding: 10px 15px; border-bottom: 1px solid #e5e5e5; min-height: 16px; }
-/* line 128, ../sass/_modal.scss */
+/* line 124, ../sass/_modal.scss */
 .avfr-modal-header h3 { margin: 0; line-height: 1.5; }
-/* line 133, ../sass/_modal.scss */
+/* line 129, ../sass/_modal.scss */
 .avfr-modal-header .modal-close { float: right; border: none; opacity: 0.4; text-decoration: none; line-height: normal; text-align: center; padding: 0px 3px; }
-/* line 141, ../sass/_modal.scss */
-.avfr-modal-header .modal-close:focus { outline: 0; border: 0; }
+/* line 137, ../sass/_modal.scss */
+.avfr-modal-header .modal-close:focus { outline: 0 !important; border: 0; }
 
-/* line 149, ../sass/_modal.scss */
+/* line 145, ../sass/_modal.scss */
 .avfr-modal-title { margin: 0; line-height: 1; clear: none; }
 
-/* line 155, ../sass/_modal.scss */
+/* line 151, ../sass/_modal.scss */
 .avfr-modal-body { position: relative; padding: 15px; }
 
-/* line 160, ../sass/_modal.scss */
+/* line 156, ../sass/_modal.scss */
 .text-wrap { width: 100% !important; }
-/* line 163, ../sass/_modal.scss */
+/* line 159, ../sass/_modal.scss */
 .text-wrap #tags-data-list { height: 28px; width: 100% !important; min-height: 28px; line-height: 1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-color: #cccccc; padding: 6px 0 20px 8px; }
-/* line 173, ../sass/_modal.scss */
+/* line 169, ../sass/_modal.scss */
 .text-wrap .text-remove { top: 4px !important; }
 
-/* line 179, ../sass/_modal.scss */
+/* line 175, ../sass/_modal.scss */
 .avfr-modal-footer { text-align: left; }
-/* line 182, ../sass/_modal.scss */
+/* line 178, ../sass/_modal.scss */
 .avfr-modal-footer .btn + .btn { margin-left: 5px; margin-bottom: 0; }
-/* line 187, ../sass/_modal.scss */
+/* line 183, ../sass/_modal.scss */
 .avfr-modal-footer .btn-group .btn + .btn { margin-left: -1px; }
-/* line 191, ../sass/_modal.scss */
+/* line 187, ../sass/_modal.scss */
 .avfr-modal-footer .btn-block + .btn-block { margin-left: 0; }
-/* line 195, ../sass/_modal.scss */
+/* line 191, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"] { font-size: 14px; height: 40px; padding: 0 !important; outline: none; border: none; box-shadow: none; }
-/* line 203, ../sass/_modal.scss */
+/* line 199, ../sass/_modal.scss */
 .avfr-modal-footer input[type="submit"]:active, .avfr-modal-footer input[type="submit"]:focus { outline: none; border: none; }
 
-/* line 212, ../sass/_modal.scss */
+/* line 208, ../sass/_modal.scss */
 .avfr-modal-scrollbar-measure { position: absolute; top: -9999px; width: 50px; height: 50px; overflow: scroll; }
 
-/* line 220, ../sass/_modal.scss */
+/* line 216, ../sass/_modal.scss */
 .close { position: fixed; border: none; display: block; top: 0; left: 0; height: 100%; width: 100%; z-index: 0; overflow: hidden; cursor: default !important; }
+/* line 227, ../sass/_modal.scss */
+.close:focus { outline: 0 !important; border: 0; }
 
 /* line 233, ../sass/_modal.scss */
-select#group.ideagroup { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 5px; min-width: 192px; }
+#group.feature-group { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 5px; min-width: 192px; }
 
 /* line 239, ../sass/_modal.scss */
 #imgCaptcha { margin-left: 11px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; box-shadow: none; vertical-align: middle; margin: 0 10px; }
