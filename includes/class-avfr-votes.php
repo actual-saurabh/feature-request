@@ -27,7 +27,7 @@ class Avfr_Votes {
 	function avfr_vote(){
 
 		check_ajax_referer('feature_request','nonce');
-
+		global $avfr_db;
 		if ( isset( $_POST['post_id'] ) ) {
 
 			$postid 			= $_POST['post_id'];
@@ -42,8 +42,8 @@ class Avfr_Votes {
 			$user_vote_limit	= avfr_get_option('avfr_total_vote_limit_'.$voted_group,'avfr_settings_groups');
 			$limit_time			= avfr_get_option('avfr_votes_limitation_time','avfr_settings_main');
 			//Get user ID
-			$userid = get_current_user_id();
-			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
+			$userid 			= get_current_user_id();
+			$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
@@ -53,10 +53,10 @@ class Avfr_Votes {
 			}
 
 			// get vote statuses
-			$has_voted  		= avfr_has_voted( $postid ,$ip, $userid );
+			$has_voted  		= $avfr_db->avfr_has_voted( $postid ,$ip, $userid );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
+			$user_total_voted 	= $avfr_db->$fun( $ip, $userid, $voter_email, $voted_group );
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
 			// if the public can vote and the user has already voted or they are logged in and have already voted then bail out
@@ -71,7 +71,6 @@ class Avfr_Votes {
 					die();
 			} else {
 				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $voter_email, 'groups' => $voted_group, 'type' => 'vote', 'votes' => intval( $votes_num ) );
-				global $avfr_db;
 				$avfr_db->avfr_insert_vote_flag( $args );
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval( $votes_num ) );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
@@ -96,14 +95,14 @@ class Avfr_Votes {
 			$user_vote_limit	= avfr_get_option('avfr_total_vote_limit_'.$voted_group,'avfr_settings_groups');
 			$limit_time			= avfr_get_option('avfr_votes_limitation_time','avfr_settings_main');
 			//Get user ID
-			$userid = get_current_user_id();
-
-			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
+			$userid 			= get_current_user_id();
+			$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
-			$user_total_voted 	= $fun( $ip, $userid, $voter_email, $voted_group );
+			global $avfr_db;
+			$user_total_voted 	= $avfr_db->$fun( $ip, $userid, $voter_email, $voted_group );
 
 			if ( !$user_total_voted ) {
 				$user_total_voted = 0;
@@ -121,7 +120,6 @@ class Avfr_Votes {
 	/**
 	*	Process the form submission
 	*/
-
 	function avfr_add_flag(){
 		// public voting enabled
 		$can_flag = avfr_get_option('avfr_flag','avfr_settings_main');
@@ -134,17 +132,17 @@ class Avfr_Votes {
 				$postid 		= $_POST['post_id'];
 			}
 
-			$voted_group 	= $_POST['cfg'];
-			$userid = get_current_user_id();
-			$get_voter_email 	= get_userdata($userid);
-			$reporter_email = $get_voter_email->user_email;
-			$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
+			$voted_group 	 = $_POST['cfg'];
+			$userid 		 = get_current_user_id();
+			$get_voter_email = get_userdata($userid);
+			$reporter_email  = $get_voter_email->user_email;
+			$ip 			 = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
 			// get flag statuses
-			$has_flag 	= avfr_has_flag( $postid, $ip, $userid );
+			$has_flag 		 = avfr_has_flag( $postid, $ip, $userid );
 
 			// get flags
-			$flags 				= get_post_meta( $postid, '_flag', true );
+			$flags 			 = get_post_meta( $postid, '_flag', true );
 
 			if ( $has_flag ) {
 				$response_array = array( 'response' => 'already-flagged', 'message' => __('You already flagged this idea.', 'feature-request') );

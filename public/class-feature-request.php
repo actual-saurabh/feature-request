@@ -239,37 +239,11 @@ class Feature_Request {
 		$version = get_option('feature_request_version', true );
 
 		if ( $version != AVFR_VERSION ) {
-
-			self::upgrade_install_db();
+			global $avfr_db;
+			$avfr_db->upgrade_install_db();
 
 		}
 	}
 
-	/**
-	*	Create public database tabes on upgrade
-	*	@since 1.0
-	*/
-	function upgrade_install_db(){
 
-		$avfr_table_name = $wpdb->prefix . 'feature_request';
-
-		$sql = "CREATE TABLE $avfr_table_name (
-			id mediumint(9) NOT NULL AUTO_INCREMENT,
-			postid bigint(20) NOT NULL,
-			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-			ip varchar(20) NOT NULL,
-			userid varchar(20) NOT NULL,
-			email varchar(100) NOT NULL,
-			groups varchar(100) DEFAULT 'none group' NOT NULL,
-			type varchar(20) DEFAULT 'vote' NOT NULL,
-			votes smallint(5) DEFAULT '1' NOT NULL,
-			UNIQUE KEY id (id)
-		);";
-
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta( $sql );
-
-		update_option('avfr_version', $version );
-
-	}
 }

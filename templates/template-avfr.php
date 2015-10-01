@@ -9,7 +9,7 @@
  	*
  **/	
 	get_header();
-
+	global $avfr_db;
 	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_main');
 	do_action('avfr_layout_before'); ?>
@@ -57,7 +57,7 @@
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= avfr_has_voted( $id, $ip, $userid );
+					$has_voted 		= $avfr_db->avfr_has_voted( $id, $ip, $userid );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry-%s', $status ) : false;
@@ -98,7 +98,7 @@
 
 								</div>
 								<?php
-								 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+								 if ( $avfr_db->avfr_is_voting_active( $id, $ip, $userid ) ) {
 									echo avfr_vote_controls($id);
 								} ?>
 							</div>
