@@ -47,7 +47,7 @@ class Avfr_Votes {
 			$get_voter_email 	= get_userdata($userid);
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
-				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','Feature-request'), 'email' => $voter_email );
+				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','feature-request'), 'email' => $voter_email );
 				echo json_encode($response_array);
 				die();
 			}
@@ -70,9 +70,9 @@ class Avfr_Votes {
 				echo json_encode( array('response' => $remaining_votes) );
 					die();
 			} else {
-				$args = array( 'postid' => $postid, 'type' => 'vote', 'groups' => $voted_group, 'votes' => intval( $votes_num ), 'userid' => $userid, 'email' => $voter_email );
-				avfr_add_vote( $args );
-
+				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $voter_email, 'groups' => $voted_group, 'type' => 'vote', 'votes' => intval( $votes_num ) );
+				global $avfr_db;
+				$avfr_db->avfr_insert_vote_flag( $args );
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval( $votes_num ) );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
 				$response_array = array( 'response' => 'success' , 'total_votes' => intval( $total_votes ) + intval( $votes_num ), 'remaining' => $remaining_votes - abs( intval($votes_num) ) );
@@ -151,8 +151,9 @@ class Avfr_Votes {
 				echo json_encode($response_array);
 			} else {
 				update_post_meta( $postid, '_flag', (int) $flags + 1 );
-				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'groups' => $voted_group, 'type' => 'flag', 'email' => $reporter_email );
-		        avfr_insert_flag( $args );
+				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $reporter_email, 'groups' => $voted_group, 'type' => 'flag', 'votes' => '0' );
+		        global $avfr_db;
+				$avfr_db->avfr_insert_vote_flag( $args );
 		        $response_array = array('response' => 'success', 'message' => __('Reported!', 'feature-request') );
 				echo json_encode($response_array);
 			}

@@ -48,7 +48,7 @@ class Feature_Request {
 
 		// Load plugin text domain
 		add_action( 'init', 			array( $this, 'load_plugin_textdomain' ) );
-		add_action('plugins_loaded', 	array($this,'upgrade'));
+		add_action( 'plugins_loaded', 	array( $this, 'upgrade' ) );
 	}
 
 	/**
@@ -216,6 +216,10 @@ class Feature_Request {
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
+	}
+
+	private static function single_deactivate() {
+
 	}
 
 	public function load_plugin_textdomain() {

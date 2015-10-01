@@ -284,34 +284,6 @@ if ( !function_exists('avfr_is_voting_active') ) {
 
 
 /**
- * Add vote and update database
- * @since 1.0
- */
-
-if ( !function_exists('avfr_add_vote') ) {
-
-	function avfr_add_vote( $args = array() ) {
-
-		$db = new Avfr_DB;
-
-		$defaults = array(
-			'postid' => get_the_ID(),
-			'time'   => current_time('timestamp'),
-			'ip'   	 => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0,
-			'userid' => 0,
-			'type'   => 'vote',
-		);
-
-		$args = array_merge( $defaults, $args );
-
-		$db->insert( $args );
-
-	}
-
-}
-
-
-/**
  * Check if feature has voted by current user
  * @since 1.0
  */
@@ -381,34 +353,6 @@ if ( !function_exists('avfr_has_flag') ) {
 			return false;
 
 		}
-	}
-
-}
-
-/**
- * Check if post flagged by user
- * @since 1.0
- */
-
-if ( !function_exists('avfr_insert_flag') ) {
-
-	function avfr_insert_flag( $args = array() ) {
-
-		$db = new Avfr_DB;
-
-		$defaults = array(
-			'postid' => get_the_ID(),
-			'time'   => current_time('timestamp'),
-			'ip'   	 => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0,
-			'type'   => 'flag',
-			'email' => '',
-			'votes' => ''
-		);
-
-		$args = array_merge( $defaults, $args );
-
-		$db->insert( $args );
-
 	}
 
 }

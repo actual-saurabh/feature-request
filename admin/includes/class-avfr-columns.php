@@ -35,14 +35,14 @@ class Avfr_Columns {
 			$item['flags']
 		);
 
-	    $item['title'] 		= __('Title','Feature-request');
-	    $item['author'] 	= __('Author','Feature-request');
-	    $item['comments']   = __('<span class="vers comment-grey-bubble" title="Comments"><span class="screen-reader-text">Comments</span></span>','Feature-request');
-	    $item['avfr_status'] = __('Feature Status','Feature-request');
-	    $item['taxonomy-groups']     = __('Groups','Feature-request');
-	    $item['taxonomy-featureTags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Tags</span></span>','Feature-request');
-	    $item['flags']   = __('<span class="dashicons-before dashicons-flag" title="Flags"><span class="screen-reader-text">Flags</span></span>','Feature-request');
-		$item['date'] 		= __('Date Published','Feature-request');
+	    $item['title'] 		= __('Title','feature-request');
+	    $item['author'] 	= __('Author','feature-request');
+	    $item['comments']   = __('<span class="vers comment-grey-bubble" title="Comments"><span class="screen-reader-text">Comments</span></span>','feature-request');
+	    $item['avfr_status'] = __('Feature Status','feature-request');
+	    $item['taxonomy-groups']     = __('Groups','feature-request');
+	    $item['taxonomy-featureTags']   = __('<span class="dashicons-before dashicons-tag" title="Tags"><span class="screen-reader-text">Tags</span></span>','feature-request');
+	    $item['flags']   = __('<span class="dashicons-before dashicons-flag" title="Flags"><span class="screen-reader-text">Flags</span></span>','feature-request');
+		$item['date'] 		= __('Date Published','feature-request');
 
 	    return $item;
 	}

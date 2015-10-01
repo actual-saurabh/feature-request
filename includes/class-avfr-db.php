@@ -8,66 +8,48 @@
  *	@copyright 			2015 Averta
  */
 
-class Avfr_DB {
+// no direct access allowed
+if ( ! defined('ABSPATH') ) {
+    die();
+}
 
-	private $avfr_table_name;
-	private $avfr_db_ver;
+require_once dirname( __FILE__ ) . '/class-axiom-table.php';
+
+/**
+ * Create and manipulate custom tables in WordPress database.
+ */
+class Avfr_DB extends Axiom_Table {
 
 	function __construct() {
 
 		global $wpdb;
-
-
 		$this->table_name   = $wpdb->base_prefix . 'feature_request';
-		$this->db_version 	= AVFR_VERSION;
 
 	}
 
+	
 
-	// insert events into db
-	public function insert( $args = array() ) {
+	const DB_VERSION	= AVFR_VERSION;
 
-		global $wpdb;
+	/**
+	 * Add vote to database
+	 * @since 1.0
+	 */
+	public function avfr_insert_vote_flag( $fields ) {
 
 		$defaults = array(
-			'postid'	=> '',
-			'time'		=> '',
-			'ip'		=> '',
-			'userid'	=> '',
-			'groups' 	=> '',
-			'type'		=> '',
-			'email'		=> '',
-			'votes' 	=> ''
-		);
+			'postid' => absint( get_the_ID() ),
+			'time'   => date_i18n( 'Y-m-d H:i:s', current_time('timestamp'), true ),
+			'ip'   	 => filter_var( isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0, FILTER_VALIDATE_IP ),
+			'userid' => 0,
+			'type'   => 'vote',
+			);
 
-		$args = wp_parse_args( $args, $defaults );
+		$add = $this->insert( $this->table_name, $fields, $defaults );
 
-		$add = $wpdb->query(
-			$wpdb->prepare(
-				"INSERT INTO {$this->table_name} SET
-					`postid`	= '%s',
-					`time`		= '%s',
-					`ip`		= '%s',
-					`userid`	= '%s',
-					`groups`	= '%s',
-					`type`		= '%s',
-					`votes`		= '%s',
-					`email`		= '%s'
-				;",
-				absint( $args['postid'] ),
-				date_i18n( 'Y-m-d H:i:s', $args['time'], true ),
-				filter_var( $args['ip'], FILTER_VALIDATE_IP ),
-				$args['userid'],
-				$args['groups'],
-				$args['type'],
-				absint($args['votes']),
-				$args['email']
-			)
-		);
-
-		if( $add )
-			return $wpdb->insert_id;
-		return false;
 	}
 
 }
+
+global $avfr_db;
+$avfr_db = new Avfr_DB;

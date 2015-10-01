@@ -22,7 +22,7 @@
 
 			if (is_tax($term)) {
 				if ( avfr_get_option('disable_new_for'.$term->slug,'avfr_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
-					 _e('Submiting new feature for this group is closed.','Feature-request');
+					 _e('Submiting new feature for this group is closed.','feature-request');
 				} else {
 					echo avfr_submit_header();
 				}
@@ -75,7 +75,7 @@
 										if ( 'on' == $total_votes ) { ?>
 
 											<strong class="avfr-totals-num">1</strong><br>
-											<span class="avfr-totals-label"><?php _e( 'vote','Feature-request' ); ?></span>
+											<span class="avfr-totals-label"><?php _e( 'vote','feature-request' ); ?></span>
 												
 										<?php
 
