@@ -74,6 +74,7 @@ class Feature_Request {
 	public static function initiate_db_class() {
 
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
+
 		global $avfr_db;
 		if ( null == $avfr_db) {
 			$avfr_db = new Avfr_DB;
@@ -135,8 +136,6 @@ class Feature_Request {
 			update_option( 'avfr_settings_features', $avfr_settings_features, '', 'no' );
 		}
 
-		flush_rewrite_rules(false);
-
 	}
 
 	/**
@@ -170,6 +169,7 @@ class Feature_Request {
 			$avfr_db->single_deactivate();
 		}
 
+		update_option( 'avfr_post_registered', '0', '', 'no' );
 		flush_rewrite_rules(false);
 
 	}
