@@ -596,7 +596,7 @@ if ( !function_exists('avfr_flag_control') ):
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
 				<?php
-				if ( !avfr_has_flag( $post_id, $ip, $userid ) ) { ?>
+				if ( !avfr_has_vote_flag( $post_id, $ip, $userid, 'flag' ) ) { ?>
 					<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
 				<?php
 				} else { ?>

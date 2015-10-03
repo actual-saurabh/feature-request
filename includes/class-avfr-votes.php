@@ -53,7 +53,7 @@ class Avfr_Votes {
 			}
 
 			// get vote statuses
-			$has_voted  		= $avfr_db->avfr_has_voted( $postid ,$ip, $userid );
+			$has_voted  		= $avfr_db->avfr_has_vote_flag( $postid ,$ip, $userid, 'vote' );
 			//Get related function to time limitation
 			$fun 				= 'avfr_total_votes_'.$limit_time;
 			$user_total_voted 	= $avfr_db->$fun( $ip, $userid, $voter_email, $voted_group );
@@ -74,7 +74,7 @@ class Avfr_Votes {
 				$avfr_db->avfr_insert_vote_flag( $args );
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval( $votes_num ) );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
-				$response_array = array( 'response' => 'success' , 'total_votes' => intval( $total_votes ) + intval( $votes_num ), 'remaining' => $remaining_votes - abs( intval($votes_num) ) );
+				$response_array = array( 'response' => 'success' , 'total_votes' => intval( $votes ) + intval( $votes_num ), 'remaining' => $remaining_votes - abs( intval($votes_num) ) );
 					
 				echo json_encode($response_array);
 			}
@@ -139,7 +139,7 @@ class Avfr_Votes {
 			$ip 			 = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
 			// get flag statuses
-			$has_flag 		 = avfr_has_flag( $postid, $ip, $userid );
+			$has_flag 		 = avfr_has_vote_flag( $postid, $ip, $userid, 'flag' );
 
 			// get flags
 			$flags 			 = get_post_meta( $postid, '_flag', true );

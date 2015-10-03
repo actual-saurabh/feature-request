@@ -29,6 +29,58 @@ class Avfr_DB extends Axiom_Table {
 
 	const DB_VERSION	= AVFR_VERSION;
 
+
+	/**
+	 * When activate
+	 * @since    1.0
+	 */
+	function single_activate() {
+
+		$avfr_table_name = $this->table_name;
+
+		$sql = "CREATE TABLE $avfr_table_name (
+			id mediumint(9) NOT NULL AUTO_INCREMENT,
+			postid bigint(20) NOT NULL,
+			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			ip varchar(20) NOT NULL,
+			userid varchar(20) NOT NULL,
+			email varchar(100) NOT NULL,
+			groups varchar(100) DEFAULT 'none group' NOT NULL,
+			type varchar(20) DEFAULT 'vote' NOT NULL,
+			votes smallint(5) DEFAULT '1' NOT NULL,
+			UNIQUE KEY id (id)
+		);";
+
+		$this->dbDelta( $sql );
+	}
+
+
+	/**
+	 * When deactivate
+	 * @since    1.0
+	 */
+	function single_deactivate() {
+
+	}
+
+
+	/**
+	 * Get all blog ids
+	 * @since    1.0
+	 */
+	function get_blog_ids() {
+
+		global $wpdb;
+
+		// get an array of blog ids
+		$sql = "SELECT blog_id FROM $wpdb->blogs
+			WHERE archived = '0' AND spam = '0'
+			AND deleted = '0'";
+
+		return $wpdb->get_col( $sql );
+
+	}
+
 	/**
 	 * Add vote to database
 	 * @since 1.0
@@ -125,10 +177,10 @@ class Avfr_DB extends Axiom_Table {
 
 
 	/**
-	 * Check if feature has voted by current user
+	 * Check if feature has voted or reported by current user
 	 * @since 1.0
 	 */
-	function avfr_has_voted( $post_id, $ip, $userid = '0' ) {
+	function avfr_has_vote_flag( $post_id, $ip, $userid = '0', $type = 'vote') {
 
 		if ( empty( $post_id ) )
 			return;
@@ -138,7 +190,7 @@ class Avfr_DB extends Axiom_Table {
 
 	    global $wpdb;
 
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $userid, $post_id );
+	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="%s"', $ip, $userid, $post_id, $type );
 
 	   	$result =  $wpdb->get_results( $sql );
 
@@ -164,7 +216,7 @@ class Avfr_DB extends Axiom_Table {
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 
-		if ( ( ( false == $this->avfr_has_voted( $post_id, $ip, $userid) && is_user_logged_in() ) || ( ( false == $this->avfr_has_voted( $post_id, $ip, $userid ) ) && !is_user_logged_in() && 'on' == $public_can_vote) ) && 'open' === $status ){
+		if ( ( ( false == $this->avfr_has_vote_flag( $post_id, $ip, $userid, 'vote') && is_user_logged_in() ) || ( ( false == $this->avfr_has_vote_flag( $post_id, $ip, $userid, 'vote' ) ) && !is_user_logged_in() && 'on' == $public_can_vote) ) && 'open' === $status ){
 
 			return true;
 
@@ -173,37 +225,6 @@ class Avfr_DB extends Axiom_Table {
 			return false;
 		}
 	}
-
-
-	/**
-	 * Check if post flagged by user
-	 * @since 1.0
-	 */
-	function avfr_has_flag( $post_id, $ip, $userid ) {
-
-		if ( empty( $post_id ) )
-			return;
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="flag"', $ip, $userid, $post_id );
-
-	   	$result =  $wpdb->get_results( $sql );
-
-		if ( $result ) {
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-	}
-
 
 	/**
 	*	Create public database tabes on upgrade
@@ -211,7 +232,7 @@ class Avfr_DB extends Axiom_Table {
 	*/
 	function upgrade_install_db(){
 
-		$avfr_table_name = $wpdb->prefix . 'feature_request';
+		$avfr_table_name = $this->table_name;
 
 		$sql = "CREATE TABLE $avfr_table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -226,14 +247,12 @@ class Avfr_DB extends Axiom_Table {
 			UNIQUE KEY id (id)
 		);";
 
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
 
-		update_option('avfr_version', $version );
+		update_option('avfr_version', DB_VERSION );
 
 	}
 
 }
-
 global $avfr_db;
 $avfr_db = new Avfr_DB;

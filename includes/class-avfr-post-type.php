@@ -116,8 +116,10 @@ class Avfr_Post_Type {
 			'rewrite' 					=> array( 'slug' => 'avfrtags' ),
 			);
 		register_taxonomy('featureTags' , array('avfr') , $args);
+
+	}
+
 		
-		}
 }
 
 new Avfr_Post_Type;

@@ -57,7 +57,7 @@
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= $avfr_db->avfr_has_voted( $id, $ip, $userid );
+					$has_voted 		= $avfr_db->avfr_has_vote_flag( $id, $ip, $userid, 'vote' );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry-%s', $status ) : false;
