@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         // watch our project for changes
         watch: {
             sass: {
-                files: ['public/assets/sass/**/*'],
+                files: ['public/assets/sass/front/**/*', 'public/assets/sass/admin/**/*'],
                 tasks: ['sass']
             },
             livereload: {
@@ -19,17 +19,24 @@ module.exports = function(grunt) {
         
         // watch and compile scss files to css
         compass: {
-            options: {
-                
-                sassDir: 'public/assets/sass',
-                cssDir: 'public/assets/css'
-            },
             front_dev: {
                 options: {
+                    sassDir: 'public/assets/sass/front',
+                    cssDir: 'public/assets/css',
                     environment: 'development',
                     watch:true,
                     trace:true,
-                    outputStyle: 'compact' // nested, expanded, compact, compressed.
+                    outputStyle: 'compressed' // nested, expanded, compact, compressed.
+                },
+            },
+            back_dev: {
+                options: {
+                    sassDir: 'public/assets/sass/admin',
+                    cssDir: 'admin/assets/css',
+                    environment: 'development',
+                    watch:true,
+                    trace:true,
+                    outputStyle: 'compressed' // nested, expanded, compact, compressed.
                 },
             }
 

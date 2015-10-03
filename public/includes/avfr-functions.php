@@ -187,8 +187,8 @@ if ( !function_exists('avfr_archive_query') ) {
 	 			$query->set( 'meta_key', $meta );
 
 	 		} elseif ( 'hot' === $meta ) {
-
-	 			$orderby_hot = avfr_order_features_hot();
+	 			global $avfr_db;
+	 			$orderby_hot = $avfr_db->avfr_order_features_hot();
 	 			$query->set( 'post__in' , $orderby_hot );
 	 			$order_by = 'post__in';
 	 		}
@@ -586,7 +586,7 @@ endif;
 if ( !function_exists('avfr_flag_control') ):
 
 	function avfr_flag_control( $post_id, $ip, $userid ) {
-
+		global $avfr_db;
 		//getting group of features.
 		$featuregroups = get_the_terms( $post_id, 'groups' );
 
@@ -596,7 +596,7 @@ if ( !function_exists('avfr_flag_control') ):
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
 				<?php
-				if ( !avfr_has_vote_flag( $post_id, $ip, $userid, 'flag' ) ) { ?>
+				if ( !$avfr_db->avfr_has_vote_flag( $post_id, $ip, $userid, 'flag' ) ) { ?>
 					<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
 				<?php
 				} else { ?>

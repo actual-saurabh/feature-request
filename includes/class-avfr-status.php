@@ -12,10 +12,9 @@ class Avfr_Status {
 
 	function __construct(){
 
-		add_action( 'avfr_vote_up', 					array($this, 'process_status' ), 10, 2);
-		add_action( 'avfr_vote_down', 					array($this, 'process_status' ), 10, 2);
-		add_action( 'wp_ajax_process_change_status', 	array($this, 'process_change_status' ));
-		add_action( 'avfr_status', 						array($this, 'mail_status' ), 10, 2);
+		add_action( 'avfr_add_vote', 					array($this, 'avfr_process_status' ), 10, 2);
+		add_action( 'wp_ajax_process_change_status', 	array($this, 'avfr_change_status' ));
+		add_action( 'avfr_status', 						array($this, 'avfr_mail_status' ), 10, 2);
 	}
 
 	/**
@@ -26,7 +25,7 @@ class Avfr_Status {
 	*	@param $userid int id of the user who voted
 	*
 	*/
-	function process_status( $postid, $userid ) {
+	function avfr_process_status( $postid, $userid ) {
 
 		// get threashold
 		$threshold = avfr_get_option('avfr_threshold','avfr_settings_main');
@@ -74,7 +73,7 @@ class Avfr_Status {
 	*	Change status of votes
 	*
 	*/
-	function process_change_status() {
+	function avfr_change_status() {
 
 		$post_id = $_POST['post_id'];
 		$current_status = get_post_meta( $post_id,'_avfr_status', true );
@@ -121,7 +120,7 @@ class Avfr_Status {
 	*	@param $postid int postid object
 	*
 	*/
-	function mail_status( $status, $postid ) {
+	function avfr_mail_status( $status, $postid ) {
 
 		$admin_email 	= get_bloginfo('admin_email');
 		$entry       	= get_post( $postid );

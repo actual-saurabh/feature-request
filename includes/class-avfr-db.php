@@ -226,6 +226,27 @@ class Avfr_DB extends Axiom_Table {
 		}
 	}
 
+
+	/**
+	 * Return ID of posts that ordered by votes average in past 14 days.
+	 * @since 1.0
+	 */
+	function avfr_order_features_hot() {
+		global $wpdb;
+		$final_array 	= [];
+	    $table 			= $wpdb->base_prefix.'feature_request';
+	    $type 			= 'vote';
+	   	$sql 			= $wpdb->prepare( 'SELECT postid, SUM(votes) as sum FROM '.$table.' WHERE type="%s" AND time>=(CURDATE() - INTERVAL 14 DAY) GROUP BY postid', $type );
+	   	$post_ids 		= $wpdb->get_col( $sql, 0 );
+	   	$post_votes 	= $wpdb->get_col( $sql, 1 );
+	   	$initial_array 	= array_combine($post_ids, $post_votes);
+	   	foreach ( $initial_array as $key => $value ) {
+	   		$final_array[$key] = $value / 336;
+	   	}
+	   	arsort( $final_array );
+	   	return array_keys($final_array);
+	}
+
 	/**
 	*	Create public database tabes on upgrade
 	*	@since 1.0

@@ -74,6 +74,7 @@ class Avfr_Votes {
 				$avfr_db->avfr_insert_vote_flag( $args );
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval( $votes_num ) );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
+				do_action('avfr_add_vote', $postid, $userid );
 				$response_array = array( 'response' => 'success' , 'total_votes' => intval( $votes ) + intval( $votes_num ), 'remaining' => $remaining_votes - abs( intval($votes_num) ) );
 					
 				echo json_encode($response_array);
