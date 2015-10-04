@@ -13,7 +13,6 @@ class Avfr_Post_Type {
 	public function __construct(){
 
        	add_action('init',array($this,'avfr_post_type'));
-       	add_action('admin_init',array($this,'default_post'));
 	}
 	/**
 	* 
@@ -118,8 +117,11 @@ class Avfr_Post_Type {
 			);
 		register_taxonomy('featureTags' , array('avfr') , $args);
 	 
+
+	 	// Check that this plugin was installed bfore this or not
 		if ( '' == get_option( 'avfr_installed_before' ) ) {
 
+			// Defaults for adding post (feature request)
 			$default_post = array(
 				'post_type'	  	=> 'avfr',
 				'post_title'	=> wp_strip_all_tags( __('New feature request', 'feature-request') ),
@@ -132,42 +134,47 @@ class Avfr_Post_Type {
 				 		feugait nulla facilisi.', 'feature-request'),
 
 				);
+			// Insert post
 			$entry_id = wp_insert_post( $default_post );
+			//Insert group (category)
 			wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
+			// Insert tags (featureTags)
 			wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
 
+
+			// Defaults for page with shortcode
+			$avfr_page_def = array(
+				'post_title'            =>    'Sample Feature Request',
+				'post_status'           =>    'publish',
+				'post_type'             =>    'page',
+				'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
+				);
+			// Insert as page
+			$page_id = wp_insert_post ($avfr_page_def);
+
+			// Default options for default category that added above
 			$args = array( 'avfr_vote_limit_example-group-1' => '3',
 				'avfr_total_vote_limit_example-group-1' => '30',
 				'avfr_disable_comment_forexample-group-1' => 'off',
 				'avfr_disable_new_forexample-group-1' => 'off',
 			);
-
+			//Insert options to database
 			update_option( 'avfr_settings_groups', $avfr_settings_main, '', 'no' );
 
+			//Update this option from 0 to 1, so the codes will runs only 1 time.
 			add_option( 'avfr_installed_before', '1', '', 'no');
 
 		}
 
-		if ( '0' === get_option( 'avfr_post_registered' ) ) {
+		// Flush rewrite rules and update option.
+		// The option wil be checked to flushing again.
+		if ( '0' === get_option( 'avfr_post_registered' ) || '' == get_option( 'avfr_post_registered' ) ) {
 			flush_rewrite_rules(false);
 			update_option( 'avfr_post_registered', '1', '', 'no' );
 		}
 
 	}
 
-		function default_post() {
-			if ( get_option($check_installed_bef,0) == "0" ); {
-				//default page
-			$avfr_page_def = array(
-				'post_name'             =>    'first-defualt-feature-request',
-				'post_title'            =>    'Sample Feature Request',
-				'post_status'           =>    'publish',
-				'post_type'             =>    'page',
-				'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
-				);
-			wp_insert_post ($avfr_page_def);
-		    }
-	    }
 }
 
 new Avfr_Post_Type;

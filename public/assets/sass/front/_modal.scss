@@ -1,7 +1,7 @@
 .avfr-modal {
     position:fixed;
     top:0;
-    z-index: 11;
+    z-index: 999999;
     pointer-events: none;
     &:before {
         content: ""; 
@@ -27,7 +27,7 @@
             @include transform( translate(0, -50%) scale(1));
             @include transform-origin(50% 0, false); 
             top: 50%;
-            z-index: 11;
+            z-index: 999999;
         }
 
     }
@@ -79,11 +79,11 @@
 }
 
 .avfr-modal-dialog {
-    position: fixed; 
+    position: fixed;
     left: 0;
     right: 0;
     top: -100%; 
-    z-index: 11;
+    z-index: 999999;
     @include transform( translate(0, 0) scale(0) );
     @include transform-origin(50% 0, false);
     @include transition(top 0s, transform 0.3s ease-in-out);

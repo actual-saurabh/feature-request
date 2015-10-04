@@ -75,6 +75,7 @@ class Avfr_Status {
 	*/
 	function avfr_change_status() {
 
+		global $avfr_db;
 		$post_id = $_POST['post_id'];
 		$current_status = get_post_meta( $post_id,'_avfr_status', true );
 		$new_status = $_POST['new_status'];
@@ -91,20 +92,20 @@ class Avfr_Status {
 		$search			= array('{{writer-name}}','{{avfr-title}}','{{votes}}');
 		$replace 		= array($reciever_info->user_login, $entry->post_title, avfr_get_votes( $post_id ));
 
-		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_writer','avfr_settings_mail') ) {
+		if ( 'on' == avfr_get_option('avfr_send_mail_'.$new_status.'_writer','avfr_settings_mail') ) {
 			
 			$reciever_email = get_the_author_meta( 'user_email' , $post_author_id );
-			$content		= avfr_get_option('mail_content_'.$new_status.'_writer','avfr_settings_mail');
+			$content		= avfr_get_option('avfr_mail_content_'.$new_status.'_writer','avfr_settings_mail');
 			$mail_content   = str_replace($search, $replace, $content);
 			wp_mail( $reciever_email, 'Feature Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
 
 		}
 
-		if ( 'on' == avfr_get_option('send_mail_'.$new_status.'_voters','avfr_settings_mail') ) {
+		if ( 'on' == avfr_get_option('avfr_send_mail_'.$new_status.'_voters','avfr_settings_mail') ) {
 
-			$reciever_emails		= get_voters_email($post_id);
-			$content		= avfr_get_option('avfr_mail_content_'.$new_status.'_voters','avfr_settings_mail');
-			$mail_content   = str_replace($search, $replace, $content);
+			$reciever_emails = $avfr_db->avfr_get_voters_email($post_id);
+			$content		 = avfr_get_option('avfr_mail_content_'.$new_status.'_voters','avfr_settings_mail');
+			$mail_content    = str_replace($search, $replace, $content);
 			wp_mail( $reciever_emails, 'Request '.$entry->post_title.' '.$new_status.'.', $mail_content );
 
 		}

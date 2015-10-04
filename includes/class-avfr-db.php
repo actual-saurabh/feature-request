@@ -108,7 +108,7 @@ class Avfr_DB extends Axiom_Table {
 		if ( empty( $ip ) )
 			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
-	    // global $wpdb;
+	    global $wpdb;
 
 	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$this->table_name.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
@@ -148,7 +148,7 @@ class Avfr_DB extends Axiom_Table {
 
 	    global $wpdb;
 
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$this->table_name.' WHERE userid="%s" AND ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
+	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$this->table_name.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
 
 	   	$total =  $wpdb->get_col( $sql );
 
@@ -190,7 +190,7 @@ class Avfr_DB extends Axiom_Table {
 
 	    global $wpdb;
 
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="%s"', $ip, $userid, $post_id, $type );
+	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" OR userid="%s" AND postid ="%d" AND type="%s"', $ip, $userid, $post_id, $type );
 
 	   	$result =  $wpdb->get_results( $sql );
 
@@ -233,7 +233,7 @@ class Avfr_DB extends Axiom_Table {
 	 */
 	function avfr_order_features_hot() {
 		global $wpdb;
-		$final_array 	= [];
+		$final_array 	= array();
 	    $table 			= $wpdb->base_prefix.'feature_request';
 	    $type 			= 'vote';
 	   	$sql 			= $wpdb->prepare( 'SELECT postid, SUM(votes) as sum FROM '.$table.' WHERE type="%s" AND time>=(CURDATE() - INTERVAL 14 DAY) GROUP BY postid', $type );

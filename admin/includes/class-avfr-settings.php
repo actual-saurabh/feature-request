@@ -23,10 +23,9 @@ class Avfr_Settings {
 
         add_action( 'admin_init', 						array($this, 'admin_init') );
         add_action( 'admin_menu', 						array($this, 'submenu_page'));
-        add_filter( 'contextual_help',                  array($this, 'avfr_help'), 10, 2);
         add_action( 'admin_head',                       array($this, 'reset_votes'));
         add_action( 'wp_ajax_avfr_reset',               array($this, 'avfr_reset' ));
-        
+        add_filter( 'contextual_help',                  array($this, 'avfr_help'), 10, 2);
 
     }
         function submenu_page() { 
@@ -262,13 +261,6 @@ class Avfr_Settings {
                     'default'           => ''
                 ),
 
-                array(
-                'name'              => 'shortcode',
-                'label'             => __( 'Short Code ', 'feature-request' ),
-                'desc'              => __( 'Paste short code for each page you want to display feature request.', 'feature-request' ),
-                'type'              => 'text',
-                'default'           => '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
-            )
             ),
                 /**
                  *features setting:upload,filesize,maximum character in title.

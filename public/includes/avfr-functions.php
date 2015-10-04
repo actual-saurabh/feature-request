@@ -517,7 +517,7 @@ if ( !function_exists('avfr_vote_controls') ):
 		$voting_limit = avfr_get_option('avfr_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
 			if ( $voting_limit == '1' ) {
 			?>
-				<a class="avfr-like avfr-vote-now avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
+				<a class="avfr-like avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
@@ -527,6 +527,11 @@ if ( !function_exists('avfr_vote_controls') ):
 						</p>
 					<?php
 						}?>
+						<?php 
+						for ( $i=1; $i <= $voting_limit ; $i++ ) { 
+							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
+						}
+					 ?>
 					</div>
 					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
 				</div>

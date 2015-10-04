@@ -169,7 +169,8 @@ class Avfr_Shortcodes {
 
 										</div>
 										<?php
-										if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+										global $avfr_db;
+										if ( $avfr_db->avfr_is_voting_active( $id, $ip, $userid ) ) {
 											echo avfr_vote_controls($id);
 										}
 										?>

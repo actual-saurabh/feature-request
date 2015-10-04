@@ -9,25 +9,6 @@
  	*
  **/	
  	
-if(isset($_POST['submit'])){
-
-    $post_id = wp_insert_post( array(
-                    'post_status'     => 'publish',
-                    'post_name'       => 'feature-request-st',
-                    'post_type'       => 'page',
-                    'post_title'      => 'Start Feature Request',
-                    'post_content'    => '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
-                ) );
-
-$post_type = 'custom_type';
-
-$query = "UPDATE {$wpdb->prefix}posts SET post_type='".$post_type."' WHERE id='".$post_id."' LIMIT 1";
-
-GLOBAL $wpdb; 
-
-$wpdb->query($query);
-
-}
 class Feature_Request {
 
 	/**
