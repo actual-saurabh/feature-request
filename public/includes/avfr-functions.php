@@ -665,6 +665,7 @@ if ( !function_exists('avfr_submit_box') ):
   								<div id="avfr-form-upload" class="form-input-group">
   								  	<p class="avfr-upload-tip">
   										<?php echo avfr_get_option('avfr_echo_type_size','avfr_settings_features');?>
+  										
   									</p>
   									<label for="avfr-upload-form">
   										<?php apply_filters('avfr_form_upload', _e('Select file to upload:','feature-request')); ?>
@@ -684,7 +685,7 @@ if ( !function_exists('avfr_submit_box') ):
 								      <img id='reload' src="<?php echo AVFR_URL; ?>/public/assets/image/refresh.png" alt="Refresh" >
 								</div>
 								<?php endif; ?> 
-															
+																	
 								<?php do_action('avfr_inside_form_bottom');?>
 								
 								<input type="hidden" name="action" value="process_entry">
@@ -1181,6 +1182,9 @@ if ( !function_exists('avfr_show_filters') ) {
 				</ul>
 			</div>
 		<?php
+
+
 	}
+
 
 }

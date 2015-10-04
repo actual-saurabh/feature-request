@@ -21,6 +21,8 @@ class Avfr_Shortcodes {
 	*	Show teh votes and vote form within a shortcode
 	* 	@since version 1.0
 	*/
+	// Create post object
+	
 	function avfr_main_sc($atts, $content = null) {
 
 		$defaults = array(

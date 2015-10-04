@@ -212,11 +212,8 @@ class Avfr_Settings {
                     'default' 			=> '',
                     'sanitize_callback' => 'avfr_sanitize_int'
                 ),
-                /**
-                 *
-                 *Disable Upload
-                 *
-                 */
+
+
                    array(
                     'name'              => 'avfr_disable_upload',
                     'label'             => __( 'Disable Uplaod Files', 'feature-request' ),
@@ -225,11 +222,6 @@ class Avfr_Settings {
                     'default'           => ''
                 ),
 
-                /**
-                 *
-                 *Disable captcha
-                 *
-                 */
                   array(
                     'name'              => 'avfr_disable_captcha',
                     'label'             => __( 'Disable Captcha ', 'feature-request' ),
@@ -237,9 +229,7 @@ class Avfr_Settings {
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
-                 /**
-                 *Type of voting setting in admin panel
-                 */
+
                 array(
                     'name'              => 'avfr_voting_type',
                     'label'             => __( 'Select voting type', 'feature-request' ),
@@ -256,9 +246,7 @@ class Avfr_Settings {
                     'options'           => array('YEAR' => 'Year', 'MONTH' => 'Month', 'WEEK' => 'Week' ),
                     'default'           => 'MONTH'
                 ),
-                 /**
-                 *Enable or disable flag in features
-                 */
+
                 array(
                     'name'              => 'avfr_flag',
                     'label'             => __( 'Show flag in features', 'feature-request' ),
@@ -266,16 +254,22 @@ class Avfr_Settings {
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
-                /**
-                 *Enable or disable flag in features
-                 */
+
                 array(
                     'name'              => 'avfr_single',
                     'label'             => __( 'Single page for each feature', 'feature-request' ),
                     'desc'              => __( 'If checked, features has seprate single page and permalink goes activate!.', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
-                )
+                ),
+
+                array(
+                'name'              => 'shortcode',
+                'label'             => __( 'Short Code ', 'feature-request' ),
+                'desc'              => __( 'Paste short code for each page you want to display feature request.', 'feature-request' ),
+                'type'              => 'text',
+                'default'           => '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
+            )
             ),
                 /**
                  *features setting:upload,filesize,maximum character in title.
@@ -507,37 +501,43 @@ class Avfr_Settings {
                  get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-first',
                 'title'     => __( 'First View' ),
-                'content'   => __( '<P>'.'When you triggered feature request to active, you can choose two option for first view on your site 1st option is you can use recommended short code that exclusively explained next or 2st option you can use template page which can be see on setup page  however not differences on Functional nature between shortcode and template page but we suggest build your page with short code.' ),
+                'content'   => __( '<P>'.'<strong>'.'First View'.'<strong/>'.'<p>'.'When you triggered feature request to active, you can choose two option for first view on your site 1st option is you can use recommended short code that exclusively explained next or 2st option you can use template page which can be see on setup page  however not differences on Functional nature between shortcode and template page but we suggest build your page with short code.' ),
                 
                 ) );
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-options',
                 'title'     => __( 'Voting and options' ),
-                'content'   => __( '<P>'."On feature request wordpress plugin user can see flexibility and customization power. when a request submitted users can vote their feature ( if option enabled not logged in users can be participation on voting system) then you can set limit number of voting that users can’t vote more from your purpose it does not end there you can set limitation time that limit number of voting effected on purpose time even a step further and you have permission to select one by one group and set limit number of voting and set time period limitation and you can make decision that none logged in users can be voting or only user that have signed up on your site can be vote and finally you can choose like and dislike instead vote awesome is'nt? " ),
+                'content'   => __( '<P>'.'<strong>'.'Voting and options'.'<strong/>'.'<p>'."On feature request wordpress plugin user can see flexibility and customization power. when a request submitted users can vote their feature ( if option enabled not logged in users can be participation on voting system) then you can set limit number of voting that users can’t vote more from your purpose it does not end there you can set limitation time that limit number of voting effected on purpose time even a step further and you have permission to select one by one group and set limit number of voting and set time period limitation and you can make decision that none logged in users can be voting or only user that have signed up on your site can be vote and finally you can choose like and dislike instead vote awesome is'nt? " ),
 
                 ) );
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-tags',
                 'title'     => __( 'Tags and group' ),
-                'content'   => __( '<P>'.'On feature request plugin you can make category for your features it means you can direct your voters to your special purpose and tags on every post made you aware that which one is your famous subject exactly, on group section you can set option and limit for one by one that separated other be make sure you add group first and then reference to groups settings.' ),
+                'content'   => __( '<P>'.'<strong>'.'Tags and group'.'<strong/>'.'<p>'.'On feature request plugin you can make category for your features it means you can direct your voters to your special purpose and tags on every post made you aware that which one is your famous subject exactly, on group section you can set option and limit for one by one that separated other be make sure you add group first and then reference to groups settings.' ),
                 
                 ) );
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-mail',
                 'title'     => __( 'E-Mail' ),
-                'content'   => __( '<P>'.'Feature request plugin has prospective about email section its mean you can fully customization your plugin about every things relevant to email some example is if feature approved send mail and custom message to writer and every people that made vote for approved post and etc.' ),
+                'content'   => __( '<P>'.'<strong>'.'E-Mail'.'<strong/>'.'<p>'.'Feature request plugin has prospective about email section its mean you can fully customization your plugin about every things relevant to email some example is if feature approved send mail and custom message to writer and every people that made vote for approved post and etc.' ),
                 
                 ) );
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-reset',
                 'title'     => __( 'Resets' ),
-                'content'   => __( '<P>'.'On left  you will see the reset option we created this option for those who wants to rollback to defaults setting we hope this option help you to reconfigure your plugin.' ),
+                'content'   => __( '<P>'.'<strong>'.'Resets'.'<strong/>'.'<p>'.'On left  you will see the reset option we created this option for those who wants to rollback to defaults setting we hope this option help you to reconfigure your plugin.' ),
                 
                 ) );
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-dev',
                 'title'     => __( 'Developers' ),
-                'content'   => __( '<P>'.'Serve as developer you can see and everything you need to develop this plugin on github this plugin made in '.'<b>'. 'averta lab'.'<b/>'.' sep 2015.' ),
+                'content'   => __( '<P>'.'<strong>'.'Developers'.'<strong/>'.'<p>'.'Serve as developer you can see and everything you need to develop this plugin on github this plugin made in '.'<b>'. 'averta lab'.'<b/>'.' sep 2015.' ),
+                
+                ) );
+                get_current_screen()->add_help_tab( array(
+                'id'        => 'avfr-set-shcod',
+                'title'     => __( 'ShortCode' ),
+                'content'   => __( '<P>'.'<strong>'.' ShortCode '.'<strong/>'.' <p>'.' As feature request user you can add shortcode easily to your page for demonstrate your features page you can copy and paste this short code to your target page:' .'<p>'. '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'.' <p>'.' which you can customize feature request plugin for demonstrate what feature as you want.'  ),
                 
                 ) );
                 break;

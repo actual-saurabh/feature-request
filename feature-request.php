@@ -41,5 +41,19 @@ if ( is_admin() ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/class-avfr-admin.php' );
 	add_action( 'plugins_loaded', array( 'AVFR_Admin', 'get_instance' ) );
-
 }
+
+function default_post() {
+	if ( get_option($check_installed_bef,0) == "0" ); {
+		//default page
+	$avfr_page_def = array(
+		'post_name'             =>    'first-defualt-feature-request',
+		'post_title'            =>    'Sample Feature Request',
+		'post_status'           =>    'publish',
+		'post_type'             =>    'page',
+		'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
+		);
+	wp_insert_post ($avfr_page_def);
+}
+
+	add_action('admin_init','default_post' );

@@ -117,7 +117,22 @@ class Avfr_Post_Type {
 			);
 		register_taxonomy('featureTags' , array('avfr') , $args);
 		
+		function default_post() {
+			if ( get_option($check_installed_bef,0) == "0" ); {
+				//default page
+			$avfr_page_def = array(
+				'post_name'             =>    'first-defualt-feature-request',
+				'post_title'            =>    'Sample Feature Request',
+				'post_status'           =>    'publish',
+				'post_type'             =>    'page',
+				'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
+				);
+			wp_insert_post ($avfr_page_def);
 		}
+
+		add_action('admin_init','default_post' );
+	  }
+
 }
 
 new Avfr_Post_Type;

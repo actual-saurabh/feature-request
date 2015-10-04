@@ -8,7 +8,26 @@
  	*	@copyright 			2015 Averta
  	*
  **/	
+ 	
+if(isset($_POST['submit'])){
 
+    $post_id = wp_insert_post( array(
+                    'post_status'     => 'publish',
+                    'post_name'       => 'feature-request-st',
+                    'post_type'       => 'page',
+                    'post_title'      => 'Start Feature Request',
+                    'post_content'    => '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
+                ) );
+
+$post_type = 'custom_type';
+
+$query = "UPDATE {$wpdb->prefix}posts SET post_type='".$post_type."' WHERE id='".$post_id."' LIMIT 1";
+
+GLOBAL $wpdb; 
+
+$wpdb->query($query);
+
+}
 class Feature_Request {
 
 	/**
@@ -37,13 +56,10 @@ class Feature_Request {
 		require_once(AVFR_DIR.'/includes/class-avfr-entry.php');
 		require_once(AVFR_DIR.'/includes/class-avfr-votes.php');
 		require_once(AVFR_DIR.'/includes/class-avfr-status.php');
-
 		require_once(AVFR_DIR.'/public/includes/class-avfr-template.php');
 		require_once(AVFR_DIR.'/public/includes/class-avfr-assets.php');
 		require_once(AVFR_DIR.'/public/includes/avfr-functions.php');
-
 		require_once(AVFR_DIR.'/public/includes/class-avfr-shortcodes.php');
-
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
 
 		// Load plugin text domain
@@ -127,7 +143,9 @@ class Feature_Request {
 		flush_rewrite_rules();
 
 	}
+	 private static function single_deactivate() {
 
+	 }
 	/**
 	 * Fired when the plugin is deactivated.
 	 * @since    1.0
@@ -138,6 +156,7 @@ class Feature_Request {
 
 			if ( $network_wide ) {
 
+				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
 
 				foreach ( $blog_ids as $blog_id ) {
@@ -157,9 +176,8 @@ class Feature_Request {
 			self::single_deactivate();
 		}
 
-		flush_rewrite_rules();
-
 	}
+
 
 	/**
 	 * Fired when a new site is activated with a WPMU environment.
@@ -268,4 +286,5 @@ class Feature_Request {
 		update_option('avfr_version', $version );
 
 	}
+
 }
