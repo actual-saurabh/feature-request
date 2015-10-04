@@ -25,7 +25,7 @@ class Avfr_Settings {
         add_action( 'admin_menu', 						array($this, 'submenu_page'));
         add_action( 'admin_head',                       array($this, 'reset_votes'));
         add_action( 'wp_ajax_avfr_reset',               array($this, 'avfr_reset' ));
-        add_filter( 'contextual_help',                  array($this, 'avfr_help'), 10, 2);
+        add_filter( 'contextual_help',                  array($this, 'avfr_admin'), 10, 2);
 
     }
         function submenu_page() { 
@@ -484,12 +484,13 @@ class Avfr_Settings {
     }
 
 
-     function avfr_help( $contextual_help, $screen_id) {
+    function avfr_admin( $contextual_help, $screen_id) {
          
         switch( $screen_id ) {
             case 'avfr_page_feature-request-settings' :
-         // To add a whole tab group
-                 get_current_screen()->add_help_tab( array(
+                wp_enqueue_style('avfr-admin-css', AVFR_URL.'/admin/assets/css/admin.css', AVFR_VERSION, true );
+                // To add a whole tab group
+                get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-first',
                 'title'     => __( 'First View' ),
                 'content'   => __( '<P>'.'<strong>'.'First View'.'<strong/>'.'<p>'.'When you triggered feature request to active, you can choose two option for first view on your site 1st option is you can use recommended short code that exclusively explained next or 2st option you can use template page which can be see on setup page  however not differences on Functional nature between shortcode and template page but we suggest build your page with short code.' ),

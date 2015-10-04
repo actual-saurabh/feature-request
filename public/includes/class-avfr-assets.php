@@ -37,6 +37,7 @@ class Avfr_Assets {
 			wp_localize_script('feature-request-script', 'feature_request', avfr_localized_args( $max , $paged) );
 
 		endif;
+
 	}
 }
 new Avfr_Assets;

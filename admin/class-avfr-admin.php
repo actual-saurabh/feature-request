@@ -40,7 +40,6 @@ class AVFR_Admin {
 		require_once(AVFR_DIR.'/admin/includes/class-avfr-settings.php');
 		require_once(AVFR_DIR.'/admin/includes/class-avfr-meta.php');
 		require_once(AVFR_DIR.'/admin/includes/class-avfr-columns.php');
-		wp_enqueue_style('avfr-admin-css', AVFR_URL.'/admin/assets/css/admin.css', AVFR_VERSION, true );
 
 	}
 
