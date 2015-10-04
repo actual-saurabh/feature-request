@@ -25,33 +25,6 @@ if ( !function_exists('avfr_get_status') ) {
 
 
 /**
- * Get users email's that voted to request with $post_id id
- * @since 1.0
- */
-
-if ( !function_exists('avfr_get_voters_email') ) {
-
-	function avfr_get_voters_email( $post_id ) {
-
-		if ( empty( $post_id ) )
-				return;
-
-		global $wpdb;
-
-	    $table 	= $wpdb->base_prefix.'feature_request';
-
-	   	$sql   	=  $wpdb->prepare('SELECT email FROM '.$table.' WHERE postid ="%d" AND type="vote"', $post_id );
-
-	   	$result =  $wpdb->get_col( $sql );
-
-	   	return $result;
-			
-	}
-
-}
-
-
-/**
  * Get total time that request with $post_id ID voted/liked/disliked.
  * @since 1.0
  */
@@ -158,32 +131,6 @@ if ( !function_exists('avfr_content_filter') ) {
 
 
 /**
- * Return ID of posts that ordered by votes average in past 14 days.
- * @since 1.0
- */
-
-if ( !function_exists('avfr_order_features_hot') ) {
-
-	function avfr_order_features_hot() {
-		global $wpdb;
-		$final_array 	= [];
-	    $table 			= $wpdb->base_prefix.'feature_request';
-	    $type 			= 'vote';
-	   	$sql 			= $wpdb->prepare( 'SELECT postid, SUM(votes) as sum FROM '.$table.' WHERE type="%s" AND time>=(CURDATE() - INTERVAL 14 DAY) GROUP BY postid', $type );
-	   	$post_ids 		= $wpdb->get_col( $sql, 0 );
-	   	$post_votes 	= $wpdb->get_col( $sql, 1 );
-	   	$initial_array 	= array_combine($post_ids, $post_votes);
-	   	foreach ( $initial_array as $key => $value ) {
-	   		$final_array[$key] = $value / 336;
-	   	}
-	   	arsort( $final_array );
-	   	return array_keys($final_array);
-	}
-
-}
-
-
-/**
  * Make some custom query_var public
  * @since 1.0
  */
@@ -240,8 +187,8 @@ if ( !function_exists('avfr_archive_query') ) {
 	 			$query->set( 'meta_key', $meta );
 
 	 		} elseif ( 'hot' === $meta ) {
-
-	 			$orderby_hot = avfr_order_features_hot();
+	 			global $avfr_db;
+	 			$orderby_hot = $avfr_db->avfr_order_features_hot();
 	 			$query->set( 'post__in' , $orderby_hot );
 	 			$order_by = 'post__in';
 	 		}
@@ -257,239 +204,6 @@ if ( !function_exists('avfr_archive_query') ) {
 
 add_action( 'pre_get_posts', 'avfr_archive_query');
 
-/**
- * If current user (visitor) can vote return true
- * @since 1.0
- */
-
-if ( !function_exists('avfr_is_voting_active') ) {
-
-	function avfr_is_voting_active( $post_id, $ip, $userid = '0' ) {
-
-		$status      	 = avfr_get_status( $post_id );
-
-		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
-
-		if ( ( ( false == avfr_has_voted( $post_id, $ip, $userid) && is_user_logged_in() ) || ( ( false == avfr_has_voted( $post_id, $ip, $userid ) ) && !is_user_logged_in() && 'on' == $public_can_vote) ) && 'open' === $status ){
-
-			return true;
-
-		} else {
-
-			return false;
-		}
-	}
-
-}
-
-
-/**
- * Add vote and update database
- * @since 1.0
- */
-
-if ( !function_exists('avfr_add_vote') ) {
-
-	function avfr_add_vote( $args = array() ) {
-
-		$db = new Avfr_DB;
-
-		$defaults = array(
-			'postid' => get_the_ID(),
-			'time'   => current_time('timestamp'),
-			'ip'   	 => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0,
-			'userid' => 0,
-			'type'   => 'vote',
-		);
-
-		$args = array_merge( $defaults, $args );
-
-		$db->insert( $args );
-
-	}
-
-}
-
-
-/**
- * Check if feature has voted by current user
- * @since 1.0
- */
-
-if ( !function_exists('avfr_has_voted') ) {
-
-	function avfr_has_voted( $post_id, $ip, $userid = '0' ) {
-
-		if ( empty( $post_id ) )
-			return;
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-
-	    $table = $wpdb->base_prefix.'feature_request';
-
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="vote"', $ip, $userid, $post_id );
-
-	   	$result =  $wpdb->get_results( $sql );
-
-		if ( $result ) {
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-	}
-
-}
-
-
-/**
- * Check if post flagged by user
- * @since 1.0
- */
-
-if ( !function_exists('avfr_has_flag') ) {
-
-	function avfr_has_flag( $post_id, $ip, $userid ) {
-
-		if ( empty( $post_id ) )
-			return;
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-	    $table = $wpdb->base_prefix.'feature_request';
-
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$table.' WHERE ip ="%s" AND userid="%s" AND postid ="%d" AND type="flag"', $ip, $userid, $post_id );
-
-	   	$result =  $wpdb->get_results( $sql );
-
-		if ( $result ) {
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-	}
-
-}
-
-/**
- * Check if post flagged by user
- * @since 1.0
- */
-
-if ( !function_exists('avfr_add_flag') ) {
-
-	function avfr_add_flag( $args = array() ) {
-
-		$db = new Avfr_DB;
-
-		$defaults = array(
-			'postid' => get_the_ID(),
-			'time'   => current_time('timestamp'),
-			'ip'   	 => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0,
-			'type'   => 'flag',
-			'email' => '',
-			'votes' => ''
-		);
-
-		$args = array_merge( $defaults, $args );
-
-		$db->insert( $args );
-
-	}
-
-}
-
-
-/**
- * Get total votes in this week
- * @since 1.0
- */
-
-if ( !function_exists('avfr_total_votes_WEEK') ) {
-
-	function avfr_total_votes_WEEK( $ip, $userid = 0, $email, $voted_group ) {
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-	    $table = $wpdb->base_prefix.'feature_request';
-
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEARWEEK(time)=YEARWEEK(CURDATE()) AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
-
-	   	$total =  $wpdb->get_col( $sql );
-
-			return array_sum($total);
-	}
-
-}
-
-/**
- * Get total votes in this month
- * @since 1.0
- */
-
-if ( !function_exists('avfr_total_votes_MONTH') ) {
-
-	function avfr_total_votes_MONTH( $ip, $userid = 0, $email, $voted_group ) {
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-	    $table 	= $wpdb->base_prefix.'feature_request';
-
-	   	$sql 	=  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" OR ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND MONTH(time)=MONTH(CURDATE()) AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
-
-	   	$total 	=  $wpdb->get_col( $sql );
-
-			return array_sum($total);
-	}
-
-}
-
-
-/**
- * Get total votes in this year
- * @since 1.0
- */
-
-if ( !function_exists('avfr_total_votes_YEAR') ) {
-
-	function avfr_total_votes_YEAR( $ip, $userid = 0, $email, $voted_group ) {
-
-		if ( empty( $ip ) )
-			$ip =  isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-
-	    global $wpdb;
-
-	    $table = $wpdb->base_prefix.'feature_request';
-
-	   	$sql =  $wpdb->prepare('SELECT votes FROM '.$table.' WHERE userid="%s" AND ip ="%s" OR email="%s" AND groups ="%s" AND type="vote" AND YEAR(time)=YEAR(CURDATE())', $userid, $ip, $email, $voted_group );
-
-	   	$total =  $wpdb->get_col( $sql );
-
-			return array_sum($total);
-	}
-
-}
-
 
 /**
  * Localizing arguments
@@ -504,15 +218,14 @@ if ( !function_exists('avfr_localized_args') ) {
 		$current_user = wp_get_current_user();
 
 		$args = array(
-			'ajaxurl' 		  => admin_url( 'admin-ajax.php' ),
+			'ajaxurl' 		  => admin_url('admin-ajax.php'),
 			'nonce'			  => wp_create_nonce('feature_request'),
 			'user_email' 	  => $current_user->user_email,
 			'label'			  => apply_filters('avfr_loadmore_label', __('Load more ...', 'feature-request')),
 			'label_loading'   => apply_filters('avfr_loadmore_loading', __('Loading ...', 'feature-request')),
 			'thanks_voting'   => apply_filters('avfr_thanks_voting', __('Thanks for voting!', 'feature-request')),
 			'already_voted'   => apply_filters('avfr_already_voted', __('You have already voted!', 'feature-request')),
-			'already_flagged' => apply_filters('avfr_already_flagged', __('You have already flagged this post!', 'feature-request')),
-			'thanks_flag'	  => apply_filters('avfr_thanks_flag', __('Reported!', 'feature-request')),
+			'confirm_flag'	  => apply_filters('avfr_confirm_flag', __('Are you sure to report this feature as inappropriate ?', 'feature-request')),
 			'reached_limit'   => apply_filters('avfr_reached_limit', __('You are reached voting limit for this groups of features.', 'feature-request')),
 			'startPage'		  => $paged,
 			'maxPages' 		  => $max,
@@ -873,21 +586,25 @@ endif;
 
 if ( !function_exists('avfr_flag_control') ):
 
-	function avfr_flag_control( $post_id ) {
-
+	function avfr_flag_control( $post_id, $ip, $userid ) {
+		global $avfr_db;
 		//getting group of features.
 		$featuregroups = get_the_terms( $post_id, 'groups' );
 
 		//flag option applying
 		$flag_show = avfr_get_option('avfr_flag','avfr_settings_main');
-		if ( 'on' == $flag_show ) {
-
-			?>
+		if ( 'on' == $flag_show ) { ?>
 			<div class="flag-show">
 				<span class="dashicons dashicons-flag"></span>
-				<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
+				<?php
+				if ( !$avfr_db->avfr_has_vote_flag( $post_id, $ip, $userid, 'flag' ) ) { ?>
+					<a href="#" class="avfr-flag" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"> <?php _e('Report this feature request','feature-request'); ?></a>
+				<?php
+				} else { ?>
+					<span href="#"> <?php _e('Reported!','feature-request'); ?></span>
+		  <?php } ?>
 			</div>
-			<?php
+		<?php
 		}
 	}
 

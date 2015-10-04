@@ -13,37 +13,38 @@ class Avfr_Post_Type {
 	public function __construct(){
 
        	add_action('init',array($this,'avfr_post_type'));
+       	add_action('admin_init',array($this,'default_post'));
 	}
 	/**
-	 	* 
-	 	* Creates a post type
-	 	* 
+	* 
+	* Creates a post type
+	* 
 	*/
 	function avfr_post_type() {
 
 		$domain = avfr_get_option('avfr_domain','avfr_settings_main','suggestions');
 
 		$labels = array(
-			'name'                		=> _x( 'Features','Feature-request' ),
-			'singular_name'       		=> _x( 'Feature','Feature-request' ),
-			'menu_name'           		=> __( 'Feature Request', 'Feature-request' ),
-			'name_admin_bar'            => _x( 'Feature', 'add new on admin bar', 'Feature-request' ),
-			'add_new'             		=> __( 'New Feature', 'Feature-request' ),
-			'add_new_item'        		=> __( 'Add New Feature', 'Feature-request' ),
-			'new_item'                  => __( 'New Feature', 'Feature-request' ),
-			'edit_item'           		=> __( 'Edit Feature', 'Feature-request' ),
-			'view_item'           		=> __( 'View Feature', 'Feature-request' ),
-			'all_items'           		=> __( 'All Features', 'Feature-request' ),
-			'search_items'        		=> __( 'Search Feature', 'Feature-request' ),		
-			'update_item'         		=> __( 'Update Feature', 'Feature-request' ),
-			'parent_item_colon'   		=> __( 'Parent Feature:', 'Feature-request' ),
-			'not_found'           		=> __( 'No Feature found', 'Feature-request' ),
-			'not_found_in_trash'  		=> __( 'No Feature found in Trash', 'Feature-request' ),
+			'name'                		=> _x( 'Features','feature-request' ),
+			'singular_name'       		=> _x( 'Feature','feature-request' ),
+			'menu_name'           		=> __( 'Feature Request', 'feature-request' ),
+			'name_admin_bar'            => _x( 'Feature', 'add new on admin bar', 'feature-request' ),
+			'add_new'             		=> __( 'New Feature', 'feature-request' ),
+			'add_new_item'        		=> __( 'Add New Feature', 'feature-request' ),
+			'new_item'                  => __( 'New Feature', 'feature-request' ),
+			'edit_item'           		=> __( 'Edit Feature', 'feature-request' ),
+			'view_item'           		=> __( 'View Feature', 'feature-request' ),
+			'all_items'           		=> __( 'All Features', 'feature-request' ),
+			'search_items'        		=> __( 'Search Feature', 'feature-request' ),		
+			'update_item'         		=> __( 'Update Feature', 'feature-request' ),
+			'parent_item_colon'   		=> __( 'Parent Feature:', 'feature-request' ),
+			'not_found'           		=> __( 'No Feature found', 'feature-request' ),
+			'not_found_in_trash'  		=> __( 'No Feature found in Trash', 'feature-request' ),
 		);
 		$args = array(
 			'labels'              		=> $labels,
-			'label'               		=> __( 'Feature', 'Feature-request' ),
-			'description'         		=> __( 'Create votes', 'Feature-request' ),
+			'label'               		=> __( 'Feature', 'feature-request' ),
+			'description'         		=> __( 'Create votes', 'feature-request' ),
 			'labels'              		=> $labels,
 			'supports'            		=> array( 'editor','title', 'comments', 'author','thumbnail' ), //featured image 
 			'rewrite' 					=> array( 'slug' => 'suggestions','pages' =>true ),
@@ -116,7 +117,44 @@ class Avfr_Post_Type {
 			'rewrite' 					=> array( 'slug' => 'avfrtags' ),
 			);
 		register_taxonomy('featureTags' , array('avfr') , $args);
-		
+	 
+		if ( '' == get_option( 'avfr_installed_before' ) ) {
+
+			$default_post = array(
+				'post_type'	  	=> 'avfr',
+				'post_title'	=> wp_strip_all_tags( __('New feature request', 'feature-request') ),
+				'post_status'   => 'publish',
+				'post_content' 	=> __('Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+				 		euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud 
+				 		exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
+				 		dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at
+				 		vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te
+				 		feugait nulla facilisi.', 'feature-request'),
+
+				);
+			$entry_id = wp_insert_post( $default_post );
+			wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
+			wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
+
+			$args = array( 'avfr_vote_limit_example-group-1' => '3',
+				'avfr_total_vote_limit_example-group-1' => '30',
+				'avfr_disable_comment_forexample-group-1' => 'off',
+				'avfr_disable_new_forexample-group-1' => 'off',
+			);
+
+			update_option( 'avfr_settings_groups', $avfr_settings_main, '', 'no' );
+
+			add_option( 'avfr_installed_before', '1', '', 'no');
+
+		}
+
+		if ( '0' === get_option( 'avfr_post_registered' ) ) {
+			flush_rewrite_rules(false);
+			update_option( 'avfr_post_registered', '1', '', 'no' );
+		}
+
+	}
+
 		function default_post() {
 			if ( get_option($check_installed_bef,0) == "0" ); {
 				//default page
@@ -128,11 +166,8 @@ class Avfr_Post_Type {
 				'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
 				);
 			wp_insert_post ($avfr_page_def);
-		}
-
-		add_action('admin_init','default_post' );
-	  }
-
+		    }
+	    }
 }
 
 new Avfr_Post_Type;

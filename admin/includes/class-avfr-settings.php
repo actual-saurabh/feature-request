@@ -8,7 +8,6 @@
  */
 
 require_once dirname( __FILE__ ) . '/class-avfr-settings-api.php';
-wp_enqueue_style( 'admin-css' , (AVFR_URL.'/admin/assets/css/admin.css' ));
 if ( !class_exists('Avfr_Settings' ) ):
 class Avfr_Settings {
 

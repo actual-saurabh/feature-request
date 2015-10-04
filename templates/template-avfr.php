@@ -9,7 +9,7 @@
  	*
  **/	
 	get_header();
-
+	global $avfr_db;
 	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 	$single_allowed  = avfr_get_option('avfr_single','avfr_settings_main');
 	do_action('avfr_layout_before'); ?>
@@ -22,7 +22,7 @@
 
 			if (is_tax($term)) {
 				if ( avfr_get_option('disable_new_for'.$term->slug,'avfr_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
-					 _e('Submiting new feature for this group is closed.','Feature-request');
+					 _e('Submiting new feature for this group is closed.','feature-request');
 				} else {
 					echo avfr_submit_header();
 				}
@@ -57,7 +57,7 @@
 					$id             = get_the_ID();
 					$userid 		= get_current_user_ID();
 					$ip 			= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-					$has_voted 		= avfr_has_voted( $id, $ip, $userid );
+					$has_voted 		= $avfr_db->avfr_has_vote_flag( $id, $ip, $userid, 'vote' );
 					$total_votes 	= avfr_get_votes( $id );
 					$status      	= avfr_get_status( $id );
 					$status_class   = $status ? sprintf('avfr-entry-%s', $status ) : false;
@@ -75,7 +75,7 @@
 										if ( 'on' == $total_votes ) { ?>
 
 											<strong class="avfr-totals-num">1</strong><br>
-											<span class="avfr-totals-label"><?php _e( 'vote','Feature-request' ); ?></span>
+											<span class="avfr-totals-label"><?php _e( 'vote','feature-request' ); ?></span>
 												
 										<?php
 
@@ -98,7 +98,7 @@
 
 								</div>
 								<?php
-								 if ( avfr_is_voting_active( $id, $ip, $userid ) ) {
+								 if ( $avfr_db->avfr_is_voting_active( $id, $ip, $userid ) ) {
 									echo avfr_vote_controls($id);
 								} ?>
 							</div>
@@ -147,11 +147,10 @@
 										<span class="avfr-short-comment">
 											<span class="dashicons dashicons-admin-comments"></span>
 										<?php
-											printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
-										?>
+											comments_popup_link( 'No comment', 'One comment', '% comments', get_permalink() ); ?>
 										</span>
 									</div>
-										<?php echo avfr_flag_control($id); ?>
+										<?php echo avfr_flag_control($id, $ip, $userid); ?>
 						     		</div>
 						     <?php if ( is_single() ) :?>
 								<div id="avfr-avatar">
@@ -159,12 +158,11 @@
 									avfr_get_author_avatar($id); ?>
 									
 								 <div id="avfr-avatar-name">
+								 	<p>
 								<?php 
-									avfr_get_author_name($id);
-											?>
-										<span><?php  _e( " shared this feature", 'feature_request' ); ?> </span>
-										</br>
-										<p><?php the_time('F j, Y'); ?></p>
+									avfr_get_author_name($id); _e( " shared this feature", 'feature_request' ); ?>
+									</p>
+									<p class="date"><?php the_time('F j, Y'); ?></p>
 								 </div>
 								</div>
 	                        
@@ -296,10 +294,7 @@
 							<div>
 								<span class="avfr-short-comment">
 									<span class="dashicons dashicons-admin-comments"></span>
-								<?php
-									printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'textdomain' ), number_format_i18n( get_comments_number() ) );
-								
-								?>
+								<?php comments_popup_link( 'No comment', 'One comment', '% comments', get_permalink() ); ?>
 								</span>
 							</div>
 							<?php } ?>

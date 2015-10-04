@@ -122,7 +122,7 @@ class Avfr_Shortcodes {
 
 						} elseif( $public_can_vote ) {
 
-							$has_voted 		= avfr_has_voted( $id, $ip, $userid, $email );
+							$has_voted 		= avfr_has_vote_flag( $id, $ip, $userid, $email, 'vote' );
 
 						}
 

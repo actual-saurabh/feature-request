@@ -78,10 +78,6 @@
 
 }
 
-#close {
-    @include transition(all 3s);
-}
-
 .avfr-modal-dialog {
     position: fixed; 
     left: 0;
@@ -139,7 +135,7 @@
         text-align: center;
         padding: 0px 3px;
         &:focus {
-            outline: 0;
+            outline: 0 !important;
             border: 0;
         }
     }
@@ -228,6 +224,10 @@
     z-index:0;
     overflow: hidden;
     cursor: default !important;
+    &:focus {
+        outline: 0 !important;
+        border: 0;
+    }
 }
 
 #group.feature-group {
