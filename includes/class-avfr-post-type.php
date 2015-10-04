@@ -135,6 +135,14 @@ class Avfr_Post_Type {
 			wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
 			wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
 
+			$args = array( 'avfr_vote_limit_example-group-1' => '3',
+				'avfr_total_vote_limit_example-group-1' => '30',
+				'avfr_disable_comment_forexample-group-1' => 'off',
+				'avfr_disable_new_forexample-group-1' => 'off',
+			);
+
+			update_option( 'avfr_settings_groups', $avfr_settings_main, '', 'no' );
+
 			add_option( 'avfr_installed_before', '1', '', 'no');
 
 		}

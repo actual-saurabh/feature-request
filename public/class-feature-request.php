@@ -121,16 +121,18 @@ class Feature_Request {
 				'avfr_voting_type' => 'like',
 				'avfr_votes_limitation_time' => 'MONTH',
 			);
+
+		if ( '' == get_option( 'avfr_settings_main' ) ) {
+			update_option( 'avfr_settings_main', $avfr_settings_main, '', 'no' );
+		}
+
+
 		$avfr_settings_features = array(
 				'avfr_allowed_file_types' => 'image/jpeg,image/jpg,image/png,image/gif',
 				'avfr_max_file_size' => '1024',
 				'avfr_echo_type_size' => __( 'Please uplaod image file with jpg/jpeg/png/gif format >1024 KB size', 'feature-request' ),
 				'avfr_related_feature_num' => '3'
 			);
-
-		if ( '' == get_option( 'avfr_settings_main' ) ) {
-			update_option( 'avfr_settings_main', $avfr_settings_main, '', 'no' );
-		}
 
 		if ( '' == get_option( 'avfr_settings_features' ) ) {
 			update_option( 'avfr_settings_features', $avfr_settings_features, '', 'no' );
