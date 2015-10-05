@@ -203,7 +203,7 @@
     @include border-radius($br-rad);
 
     &:after {
-        font-family:Dashicons;
+        font-family:dashicons;
         position:absolute;
         left:0;
         top:2px;
@@ -510,7 +510,7 @@
 
 }
 
-#avfr-filter-groups, #avfr-filter-status, .featureroup {
+#avfr-filter-groups, #avfr-filter-status, .featureroup, .change-status-select {
     vertical-align: baseline;
     @include appearance(none);
     position: relative;

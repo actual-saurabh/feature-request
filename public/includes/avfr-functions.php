@@ -416,12 +416,15 @@ if ( !function_exists('avfr_submit_box') ):
 			</div>
 
 		<?php } else { ?>
-					<div class="fade avfr-modal" tabindex="-1">
+					<div class="fade avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
+						<a href="#close" type="button" class="close" id="avfr-close" aria-hidden="true"></a>
 						<div class="avfr-modal-dialog ">
 							<div class="avfr-modal-content">
 								<div class="avfr-modal-body">
-								<button type="button" class="close" data-dismiss="avfr-modal"><span aria-hidden="true">&times;</span></button>
-									<p>Please <a href="<?php echo wp_login_url( home_url() ); ?>">login</a> or <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new feature request.', 'feature-request') ?></p>
+									<p>
+										Please <a href="<?php echo wp_login_url( home_url() ); ?>">login</a> or <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new feature request.', 'feature-request') ?>
+										<a href="#close" type="button" class="modal-close" id="avfr-close"><span aria-hidden="true">&times;</span></a>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -443,10 +446,7 @@ if ( !function_exists('avfr_submit_header') ):
 	function avfr_submit_header(){
 
 		$intro_message = avfr_get_option('avfr_welcome', 'avfr_settings_main');
-		$public_can_vote = avfr_get_option('avfr_public_voting', 'avfr_settings_main');
-
-		if ( is_user_logged_in() || 'on' == $public_can_vote ): ?>
-
+		?>
 			<aside class="avfr-layout-submit">
 
 				<div class="avfr-submit-left">
@@ -466,10 +466,7 @@ if ( !function_exists('avfr_submit_header') ):
 				</div>
 
 			</aside>
-
-		<?php endif;
-	}
-
+<?php }
 endif;
 
 

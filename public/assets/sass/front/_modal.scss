@@ -126,21 +126,6 @@
         line-height: 1.5;
     }
 
-    .modal-close {
-        float: right;
-        border: none;
-        opacity: 0.4;
-        color: #000;
-        text-decoration: none;
-        line-height: normal;
-        text-align: center;
-        padding: 0px 3px;
-        &:focus {
-            outline: 0 !important;
-            border: 0;
-        }
-    }
-
 }
 
 .avfr-modal-title {
@@ -294,4 +279,23 @@ select {
     padding-top: 2px !important;
     padding-bottom: 4px !important;
     line-height: 1;
+}
+
+.avfr-upload-tip {
+    padding: 0;
+}
+
+.modal-close {
+    float: right;
+    border: none;
+    opacity: 0.4;
+    color: #000 !important;
+    text-decoration: none;
+    line-height: normal;
+    text-align: center;
+    padding: 0px 3px;
+    &:focus {
+        outline: 0 !important;
+        border: 0;
+    }
 }
