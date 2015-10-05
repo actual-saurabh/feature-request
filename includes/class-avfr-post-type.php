@@ -153,13 +153,13 @@ class Avfr_Post_Type {
 			$page_id = wp_insert_post ($avfr_page_def);
 
 			// Default options for default category that added above
-			$args = array( 'avfr_vote_limit_example-group-1' => '3',
+			$args_group_settings = array( 'avfr_vote_limit_example-group-1' => '3',
 				'avfr_total_vote_limit_example-group-1' => '30',
 				'avfr_disable_comment_forexample-group-1' => 'off',
 				'avfr_disable_new_forexample-group-1' => 'off',
 			);
 			//Insert options to database
-			update_option( 'avfr_settings_groups', $avfr_settings_main, '', 'no' );
+			update_option( 'avfr_settings_groups', $args_group_settings, 'no' );
 
 			//Update this option from 0 to 1, so the codes will runs only 1 time.
 			add_option( 'avfr_installed_before', '1', '', 'no');
@@ -170,7 +170,7 @@ class Avfr_Post_Type {
 		// The option wil be checked to flushing again.
 		if ( '0' === get_option( 'avfr_post_registered' ) || '' == get_option( 'avfr_post_registered' ) ) {
 			flush_rewrite_rules(false);
-			update_option( 'avfr_post_registered', '1', '', 'no' );
+			update_option( 'avfr_post_registered', '1', 'no' );
 		}
 
 	}

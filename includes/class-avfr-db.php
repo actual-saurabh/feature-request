@@ -190,7 +190,7 @@ class Avfr_DB extends Axiom_Table {
 
 	    global $wpdb;
 
-	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ip ="%s" OR userid="%s" AND postid ="%d" AND type="%s"', $ip, $userid, $post_id, $type );
+	   	$sql =  $wpdb->prepare('SELECT * FROM '.$this->table_name.' WHERE ( ip ="%s" OR userid="%s" ) AND postid ="%d" AND type="%s"', $ip, $userid, $post_id, $type );
 
 	   	$result =  $wpdb->get_results( $sql );
 

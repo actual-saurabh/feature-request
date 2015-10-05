@@ -137,7 +137,7 @@ class Avfr_Shortcodes {
 
 							<?php do_action('avfr_main_sc_entry_wrap_top', $postid ); ?>
 
-								<div class="avfr-votes-area" id="<?php echo (int) $id; ?>">
+								<div class="avfr-votes-area" id="avfr-<?php echo (int) $id; ?>">
 									<div class="avfr-controls">
 										<div class="avfr-total">
 										<?php
@@ -195,7 +195,7 @@ class Avfr_Shortcodes {
 								<?php
 
 									$avfr_read_more= '<a href="' . get_permalink() . '" class="read-more" >Read More &rarr;</a>';								
-									avfr_get_the_trim_excerpt( null, 250, null, $avfr_read_more );    
+									echo avfr_get_the_trim_excerpt( null, 250, null, $avfr_read_more );    
 								?>
 								</p>
 							</div>

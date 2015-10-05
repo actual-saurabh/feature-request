@@ -208,7 +208,6 @@ class Avfr_Settings {
                     'desc' 				=> __( 'Specify an optional number of votes that each feature must reach in order for its status to be automatically updated to "approved" , "declined", or "open."', 'feature-request' ),
                     'type' 				=> 'text',
                     'default' 			=> '',
-                    'sanitize_callback' => 'avfr_sanitize_int'
                 ),
 
 
@@ -286,7 +285,6 @@ class Avfr_Settings {
                     'desc' 				=> __( 'Please enter maximum file size that user can be upload ! (Size Calcute in KB).', 'feature-request'  ),
                     'type'				=> 'text',
                     'default' 			=> '1024', // KB
-                    'sanitize_callback' => 'avfr_sanitize_int'
                 ),
                 /**
                  *
@@ -310,7 +308,6 @@ class Avfr_Settings {
                     'desc'              => __( 'Show familiar features (Enter 0 for disabling related feature show only in single page.)', 'feature-request' ),
                     'type'              => 'text',
                     'default'           => __( '3', 'feature-request' ),
-                    'sanitize_callback' => 'avfr_sanitize_int'
                 ),
             ),
             // setting for mail options (section : mail)
@@ -380,7 +377,6 @@ class Avfr_Settings {
                     'desc'              => __( 'Send email to feature writer when feature declined.', 'feature-request'  ),
                     'type'              => 'checkbox',
                     'default'           => '',
-                    'sanitize_callback' => 'avfr_sanitize_checkbox'
                 ),
                 array(
                     'name'              => 'avfr_mail_content_declined_writer',
@@ -444,7 +440,6 @@ class Avfr_Settings {
                             'name'              => 'avfr_group_'.$term->slug,
                             'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'feature-request' ),
                             'type'              => 'html',
-                            'sanitize_callback' => 'avfr_sanitize_html'
                         );
 					$settings_fields['avfr_settings_groups'][]=
 						array(
@@ -452,14 +447,12 @@ class Avfr_Settings {
 		                    'label' 			=> __( ' maximum votes :', 'feature-request' ),
                             'desc'              => __( 'Works only in vote mode.', 'feature-request' ),
 		                    'default' 			=> __( '5', 'feature-request' ),
-		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
 		            $settings_fields['avfr_settings_groups'][]=
 						array(
 		                    'name' 				=> 'avfr_total_vote_limit_'.$term->slug,
 		                    'label' 			=> __( 'Total vote:', 'feature-request' ),
 		                    'default' 			=> __( '30', 'feature-request' ),
-		                    'sanitize_callback' => 'avfr_sanitize_int'
 		                );
                     $settings_fields['avfr_settings_groups'][]=
                         array(

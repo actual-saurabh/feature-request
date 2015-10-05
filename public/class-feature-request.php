@@ -121,7 +121,7 @@ class Feature_Request {
 			);
 
 		if ( '' == get_option( 'avfr_settings_main' ) ) {
-			update_option( 'avfr_settings_main', $avfr_settings_main, '', 'no' );
+			update_option( 'avfr_settings_main', $avfr_settings_main, 'no' );
 		}
 
 
@@ -133,7 +133,7 @@ class Feature_Request {
 			);
 
 		if ( '' == get_option( 'avfr_settings_features' ) ) {
-			update_option( 'avfr_settings_features', $avfr_settings_features, '', 'no' );
+			update_option( 'avfr_settings_features', $avfr_settings_features, 'no' );
 		}
 
 	}
@@ -171,7 +171,7 @@ class Feature_Request {
 			$avfr_db->single_deactivate();
 		}
 
-		update_option( 'avfr_post_registered', '0', '', 'no' );
+		update_option( 'avfr_post_registered', '0', 'no' );
 		flush_rewrite_rules(false);
 
 	}
