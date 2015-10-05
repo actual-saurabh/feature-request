@@ -301,7 +301,7 @@ if ( !function_exists('avfr_submit_box') ):
 								 	$group_name = get_term( $groups, 'groups' );
 								 	echo $group_name->name;
 								 	echo "<input name='group' type='hidden' value=".$group_name->slug.">";
-									} else { wp_dropdown_categories( $args ); } ?> </div>
+									} else { ?> <span class="triangle-down"> <?php wp_dropdown_categories( $args ); } ?></span></div>
 								
 								<script type="text/javascript">
 								jQuery(document).ready(function($){

@@ -130,6 +130,7 @@
         float: right;
         border: none;
         opacity: 0.4;
+        color: #000;
         text-decoration: none;
         line-height: normal;
         text-align: center;
@@ -269,6 +270,7 @@
     p {
         color: #ffffff;
         padding: 10px;
+        margin: 0;
         @include transition(.7s);
         line-height: normal;
     }
@@ -284,7 +286,12 @@
     margin: 15px 15px 0 0;
 }
 
+select {
+    @include border-radius($br-rad);
+}
+
 .text-core .text-wrap .text-tags .text-tag .text-button {
     padding-top: 2px !important;
     padding-bottom: 4px !important;
+    line-height: 1;
 }

@@ -39,7 +39,7 @@
     background:$button-background;
     color:$button-color;
     @include border-radius($br-rad);
-    padding: 16px 8px;
+    padding: 8px;
     text-decoration: none;
     @include transition(background .1s ease);
     display: inline-block;
@@ -56,6 +56,10 @@
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.5));
     }
 
+}
+
+#avfr-entry-form input[type="submit"].avfr-button {
+    width: 110px;
 }
 
 .avfr-entry-wrap {
@@ -260,11 +264,11 @@
         vertical-align: baseline;
         white-space: nowrap;
         text-align: center;
-        padding:11px 15px;
+        padding:11px 0px;
         color:white;
         text-shadow:0 1px 1px rgba(0,0,0,0.1);
         @include border-radius($br-rad);
-        width: $default-width;
+        width: 114px;
         font-size: 13px;
         line-height: 1.5;
     }
@@ -307,32 +311,6 @@
     div,
     li {
         margin: 8px 3px;
-    }
-
-    select {
-        vertical-align: baseline;
-        @include appearance(none);
-        position: relative;
-        padding: 6px 30px 6px 6px;
-        @include border-radius($br-rad);
-    }
-
-    .triangle-down {
-        position: relative;
-
-        &:after {
-            content: '';
-            display: inline-block;
-            position: absolute;
-            background-color: transparent;
-            border: solid transparent;
-            border-top-color: #999;
-            pointer-events: none;
-            border-width: 6px 4px 4px 4px;
-            top: 10px;
-            right: 15px;
-        }
-
     }
 
 }
@@ -512,4 +490,31 @@
 
 .related-avfr-section li {
     padding: 5px 0;
+}
+
+.triangle-down {
+    position: relative;
+
+    &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        background-color: transparent;
+        border: solid transparent;
+        border-top-color: #999;
+        pointer-events: none;
+        border-width: 6px 4px 4px 4px;
+        top: 10px;
+        right: 15px;
+    }
+
+}
+
+#avfr-filter-groups, #avfr-filter-status, .featureroup {
+    vertical-align: baseline;
+    @include appearance(none);
+    position: relative;
+    padding: 6px 30px 6px 6px;
+    @include border-radius($br-rad);
+    border: $br-width solid $border-color;
 }
