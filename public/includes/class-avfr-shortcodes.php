@@ -107,7 +107,7 @@ class Avfr_Shortcodes {
 
 				$max = $q->max_num_pages;
 
-				wp_localize_script('avfr-script', 'feature_request',  avfr_localized_args( $max , $paged ) );
+				wp_localize_script('feature-request-script', 'feature_request',  avfr_localized_args( $max , $paged ) );
 
 				if ( $q->have_posts() ):
 
