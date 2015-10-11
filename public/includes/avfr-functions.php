@@ -920,6 +920,7 @@ if ( !function_exists('avfr_show_filters') ) {
 function avfr_save_option_for_group($term_id, $tt_id) {
 
 	$groups_option =  get_option('avfr_settings_groups', '0');
+	if (!is_array($groups_option)) { $groups_option = array(); }
 	$catinfo = get_term_by( 'id', $term_id, 'groups' );
 	$new_group_slug = $catinfo->slug;
 	// Default options for default category that added above
