@@ -499,13 +499,13 @@ if ( !function_exists('avfr_vote_controls') ):
 					<?php 
 						if ( !is_user_logged_in() ) { ?>
 						<p class="voting-buttons-title">
-							<input type="text" name="voter-email" class="voter-email" placeholder="Enter your email to vote.">
+							<input type="text" name="voter-email" class="voter-email" placeholder="<?php _e('Enter your email to vote.', 'feature-request'); ?>">
 						</p>
 					<?php
 						}?>
 					<a class="avfr-submit" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"><?php _e('Vote it!','feature-request') ?></a>
 				</div>
-				<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
+				<p class="small-text"><?php _e('You have <span>...</span> votes left in this category for this ', 'feature-request'); echo strtolower(avfr_get_option('avfr_votes_limitation_time','avfr_settings_main')); ?>!</p>
 			</div>
 		<?php
 
@@ -520,38 +520,48 @@ if ( !function_exists('avfr_vote_controls') ):
 					<?php 
 						if ( !is_user_logged_in() ) { ?>
 						<p class="voting-buttons-title">
-							<input type="text" name="voter-email" class="voter-email" placeholder="Enter your email to vote.">
+							<input type="text" name="voter-email" class="voter-email" placeholder="<?php _e('Enter your email to vote.', 'feature-request'); ?>">
 						</p>
 					<?php
 						}?>
 						<?php 
 						for ( $i=1; $i <= $voting_limit ; $i++ ) { 
-							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
+							if ($i == 1) {
+								$ivote = __('1 vote', 'feature-request');
+							} else {
+								$ivote = $i.__(' votes', 'feature-request');
+							}
+							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$ivote."</a>";
 						}
 					 ?>
 					</div>
-					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
+					<p class="small-text"><?php _e('You have <span>...</span> votes left in this category for this ', 'feature-request'); echo strtolower(avfr_get_option('avfr_votes_limitation_time','avfr_settings_main')); ?>!</p>
 				</div>
 			<?php
 			} else {
 				?>
-				<button class="avfr-vote-now avfr-vote-calc" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>">Vote</button>
+				<button class="avfr-vote-now avfr-vote-calc" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>"><?php _e('Vote', 'feature-request') ?></button>
 				<div class="avfr-tooltip">
 					<div class="voting-buttons">
 					<?php 
 						if ( !is_user_logged_in() ) { ?>
 						<p class="voting-buttons-title">
-							<input type="text" name="voter-email" class="voter-email" placeholder="Enter your email to vote.">
+							<input type="text" name="voter-email" class="voter-email" placeholder="<?php _e('Enter your email to vote.', 'feature-request'); ?>">
 						</p>
 					<?php
 						}?>
 						<?php 
 						for ( $i=1; $i <= $voting_limit ; $i++ ) { 
-							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$i." vote</a>";
+							if ($i == 1) {
+								$ivote = __('1 vote', 'feature-request');
+							} else {
+								$ivote = $i.__(' votes', 'feature-request');
+							}
+							echo "<a class='avfr-votes-value' data-current-group=".$featuregroups[0]->slug." data-post-id=". (int) $post_id." data-vote=".$i." href='#'>".$ivote."</a>";
 						}
 					 ?>
 					</div>
-					<p class="small-text">You have <span>...</span> votes left in this category for this <?php echo strtolower(avfr_get_option('votes_limitation_time','avfr_settings_features')); ?>!</p>
+					<p class="small-text"><?php _e('You have <span>...</span> votes left in this category for this ', 'feature-request');  echo strtolower(avfr_get_option('avfr_votes_limitation_time','avfr_settings_main')); ?>!</p>
 				</div>
 				<?php
 			}
