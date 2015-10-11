@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Feature Request\n"
-"POT-Creation-Date: 2015-10-05 11:28+0330\n"
+"POT-Creation-Date: 2015-10-11 12:27+0330\n"
 "PO-Revision-Date: 2015-10-04 10:25+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -74,13 +74,13 @@ msgstr ""
 msgid "Declined"
 msgstr ""
 
-#: admin/includes/class-avfr-meta.php:48 public/includes/avfr-functions.php:870
-#: public/includes/avfr-functions.php:891
+#: admin/includes/class-avfr-meta.php:48 public/includes/avfr-functions.php:880
+#: public/includes/avfr-functions.php:901
 msgid "Open"
 msgstr ""
 
-#: admin/includes/class-avfr-meta.php:49 public/includes/avfr-functions.php:872
-#: public/includes/avfr-functions.php:893
+#: admin/includes/class-avfr-meta.php:49 public/includes/avfr-functions.php:882
+#: public/includes/avfr-functions.php:903
 msgid "Completed"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgid "Groups can have different settings"
 msgstr ""
 
 #: admin/includes/class-avfr-settings.php:151
-#: admin/includes/class-avfr-settings.php:513
+#: admin/includes/class-avfr-settings.php:506
 msgid "E-Mail"
 msgstr ""
 
@@ -204,252 +204,252 @@ msgid ""
 "or \"open.\""
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:217
+#: admin/includes/class-avfr-settings.php:216
 msgid "Disable Uplaod Files"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:218
+#: admin/includes/class-avfr-settings.php:217
 msgid "Disable upload for form (if checked)."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:225
+#: admin/includes/class-avfr-settings.php:224
 msgid "Disable Captcha "
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:226
+#: admin/includes/class-avfr-settings.php:225
 msgid "Disable captcha code on submit form (if checked)."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:233
+#: admin/includes/class-avfr-settings.php:232
 msgid "Select voting type"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:234
+#: admin/includes/class-avfr-settings.php:233
 msgid "Users can vote 1-5 star or can score + and - to any feature."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:241
+#: admin/includes/class-avfr-settings.php:240
 msgid "Select voting limitation time"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:242
+#: admin/includes/class-avfr-settings.php:241
 msgid ""
 "Set limit to user vote (one user can vote only 10 time in month by defults "
 "change it in groups section)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:250
+#: admin/includes/class-avfr-settings.php:249
 msgid "Show flag in features"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:251
+#: admin/includes/class-avfr-settings.php:250
 msgid "If checked, users can report unpleasant features."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:258
+#: admin/includes/class-avfr-settings.php:257
 msgid "Single page for each feature"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:259
+#: admin/includes/class-avfr-settings.php:258
 msgid ""
 "If checked, features has seprate single page and permalink goes activate!."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:274
+#: admin/includes/class-avfr-settings.php:273
 msgid "Allowed file types"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:275
+#: admin/includes/class-avfr-settings.php:274
 msgid "Enter file upload format that you want with above format"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:277
+#: admin/includes/class-avfr-settings.php:276
 msgid "image/jpeg,image/jpg"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:285
+#: admin/includes/class-avfr-settings.php:284
 msgid "Maximum allowed file size"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:286
+#: admin/includes/class-avfr-settings.php:285
 msgid ""
 "Please enter maximum file size that user can be upload ! (Size Calcute in "
 "KB)."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:298
+#: admin/includes/class-avfr-settings.php:296
 msgid "Tip upload Massage"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:299
+#: admin/includes/class-avfr-settings.php:297
 msgid ""
 "Explain for your customer about image size and type that they can upload!"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:301
+#: admin/includes/class-avfr-settings.php:299
 msgid "Please uplaod image file with jpg format >1024 KB size!"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:309
+#: admin/includes/class-avfr-settings.php:307
 msgid "Number of related feature"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:310
+#: admin/includes/class-avfr-settings.php:308
 msgid ""
 "Show familiar features (Enter 0 for disabling related feature show only in "
 "single page.)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:312
+#: admin/includes/class-avfr-settings.php:310
 msgid "3"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:322
+#: admin/includes/class-avfr-settings.php:319
 msgid "Send mail if approved"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:323
+#: admin/includes/class-avfr-settings.php:320
 msgid "If feature gone be approved, feature submitter will be inform via mail"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:329
+#: admin/includes/class-avfr-settings.php:326
 msgid "Text will be sent"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:332
+#: admin/includes/class-avfr-settings.php:329
 msgid "Above text will sent to feature submitter if feature gone approved!"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:337
+#: admin/includes/class-avfr-settings.php:334
 msgid "Send mail to Voters"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:338
+#: admin/includes/class-avfr-settings.php:335
 msgid "Send email to feature voters when feature approved."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:344
+#: admin/includes/class-avfr-settings.php:341
 msgid "Content (approved feature ) (voters)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:351
+#: admin/includes/class-avfr-settings.php:348
 msgid "To writer if completed"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:352
+#: admin/includes/class-avfr-settings.php:349
 msgid "Send email to feature writer when feature completed."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:358
+#: admin/includes/class-avfr-settings.php:355
 msgid "Content (completed feature ) (writer)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:365
+#: admin/includes/class-avfr-settings.php:362
 msgid "To voters if approved"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:366
+#: admin/includes/class-avfr-settings.php:363
 msgid "Send email to feature voters when feature completed."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:372
+#: admin/includes/class-avfr-settings.php:369
 msgid "Content (completed feature ) (voters)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:379
+#: admin/includes/class-avfr-settings.php:376
 msgid "To writer if declined"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:380
+#: admin/includes/class-avfr-settings.php:377
 msgid "Send email to feature writer when feature declined."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:387
+#: admin/includes/class-avfr-settings.php:383
 msgid "Content (declined feature ) (writer)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:394
+#: admin/includes/class-avfr-settings.php:390
 msgid "To voters if declined"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:395
+#: admin/includes/class-avfr-settings.php:391
 msgid "Send email to feature voters when feature declined."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:401
+#: admin/includes/class-avfr-settings.php:397
 msgid "Content (declined feature ) (voters)"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:413
+#: admin/includes/class-avfr-settings.php:409
 msgid "Disable Core CSS"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:414
+#: admin/includes/class-avfr-settings.php:410
 msgid "Disable the core css file from loading."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:420
+#: admin/includes/class-avfr-settings.php:416
 msgid "Disable Emails"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:421
+#: admin/includes/class-avfr-settings.php:417
 msgid "Disable the admin email notification of new submissions."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:429
+#: admin/includes/class-avfr-settings.php:425
 msgid "Reset All Votes"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:430
+#: admin/includes/class-avfr-settings.php:426
 msgid ""
 "<a class=\"button feature-request-reset-votes\" href=\"#\" >Reset Votes</a>"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:445
+#: admin/includes/class-avfr-settings.php:441
 msgid "<h3 style=\"width:400px;\">Settings for "
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:452
+#: admin/includes/class-avfr-settings.php:447
 msgid " maximum votes :"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:453
+#: admin/includes/class-avfr-settings.php:448
 msgid "Works only in vote mode."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:454
+#: admin/includes/class-avfr-settings.php:449
 msgid "5"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:460
+#: admin/includes/class-avfr-settings.php:454
 msgid "Total vote:"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:461
+#: admin/includes/class-avfr-settings.php:455
 msgid "30"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:467
+#: admin/includes/class-avfr-settings.php:460
 msgid "Disable comments"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:468
+#: admin/includes/class-avfr-settings.php:461
 msgid "Disable comments for selected group."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:475
+#: admin/includes/class-avfr-settings.php:468
 msgid "Disable submit new feature"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:476
+#: admin/includes/class-avfr-settings.php:469
 msgid "Disable submitting new feature for selected group."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:495
+#: admin/includes/class-avfr-settings.php:488
 msgid "First View"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:496
+#: admin/includes/class-avfr-settings.php:489
 msgid ""
 "<P><strong>First View<strong/><p>When you triggered feature request to "
 "active, you can choose two option for first view on your site 1st option is "
@@ -459,11 +459,11 @@ msgid ""
 "suggest build your page with short code."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:501
+#: admin/includes/class-avfr-settings.php:494
 msgid "Voting and options"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:502
+#: admin/includes/class-avfr-settings.php:495
 msgid ""
 "<P><strong>Voting and options<strong/><p>On feature request wordpress plugin "
 "user can see flexibility and customization power. when a request submitted "
@@ -478,11 +478,11 @@ msgid ""
 "dislike instead vote awesome is'nt? "
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:507
+#: admin/includes/class-avfr-settings.php:500
 msgid "Tags and group"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:508
+#: admin/includes/class-avfr-settings.php:501
 msgid ""
 "<P><strong>Tags and group<strong/><p>On feature request plugin you can make "
 "category for your features it means you can direct your voters to your "
@@ -492,7 +492,7 @@ msgid ""
 "reference to groups settings."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:514
+#: admin/includes/class-avfr-settings.php:507
 msgid ""
 "<P><strong>E-Mail<strong/><p>Feature request plugin has prospective about "
 "email section its mean you can fully customization your plugin about every "
@@ -501,40 +501,41 @@ msgid ""
 "and etc."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:519
+#: admin/includes/class-avfr-settings.php:512
 msgid "Resets"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:520
+#: admin/includes/class-avfr-settings.php:513
 msgid ""
 "<P><strong>Resets<strong/><p>On left  you will see the reset option we "
 "created this option for those who wants to rollback to defaults setting we "
 "hope this option help you to reconfigure your plugin."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:525
+#: admin/includes/class-avfr-settings.php:518
 msgid "Developers"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:526
+#: admin/includes/class-avfr-settings.php:519
 msgid ""
 "<P><strong>Developers<strong/><p>Serve as developer you can see and "
 "everything you need to develop this plugin on github this plugin made in "
 "<b>averta lab<b/> sep 2015."
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:531
+#: admin/includes/class-avfr-settings.php:524
 msgid "ShortCode"
 msgstr ""
 
-#: admin/includes/class-avfr-settings.php:532
+#: admin/includes/class-avfr-settings.php:525
 msgid ""
 "<P><strong> ShortCode <strong/> <p> As feature request user you can add "
 "shortcode easily to your page for demonstrate your features page you can "
 "copy and paste this short code to your target page:<p>[feature_request "
-"hide_submit=\"off\" hide_votes=\"off\" hide_voting=\"off\"] <p> which you "
-"can customize feature request plugin for demonstrate what feature as you "
-"want."
+"hide_submit=\"off\" hide_votes=\"off\" hide_voting=\"off\" groups="
+"\"2,5,12\"]<br>[feature_request_user_votes hide_total=\"off\" hide_remaining="
+"\"off\" groups=\"2,5,12\"] <p> which you can customize feature request "
+"plugin for demonstrate what feature as you want."
 msgstr ""
 
 #: includes/class-avfr-entry.php:50
@@ -804,7 +805,7 @@ msgstr ""
 msgid "You already flagged this idea."
 msgstr ""
 
-#: includes/class-avfr-votes.php:156 public/includes/avfr-functions.php:606
+#: includes/class-avfr-votes.php:156 public/includes/avfr-functions.php:616
 msgid "Reported!"
 msgstr ""
 
@@ -881,49 +882,75 @@ msgstr ""
 msgid "to submit new feature request."
 msgstr ""
 
+#: public/includes/avfr-functions.php:502
+#: public/includes/avfr-functions.php:523
+#: public/includes/avfr-functions.php:549
+msgid "Enter your email to vote."
+msgstr ""
+
 #: public/includes/avfr-functions.php:506
 msgid "Vote it!"
 msgstr ""
 
-#: public/includes/avfr-functions.php:603
+#: public/includes/avfr-functions.php:508
+#: public/includes/avfr-functions.php:538
+#: public/includes/avfr-functions.php:564
+msgid "You have <span>...</span> votes left in this category for this "
+msgstr ""
+
+#: public/includes/avfr-functions.php:530
+#: public/includes/avfr-functions.php:556
+msgid "1 vote"
+msgstr ""
+
+#: public/includes/avfr-functions.php:532
+#: public/includes/avfr-functions.php:558
+msgid " votes"
+msgstr ""
+
+#: public/includes/avfr-functions.php:543
+msgid "Vote"
+msgstr ""
+
+#: public/includes/avfr-functions.php:613
 msgid "Report this feature request"
 msgstr ""
 
-#: public/includes/avfr-functions.php:855
+#: public/includes/avfr-functions.php:865
 msgid "Select a group"
 msgstr ""
 
-#: public/includes/avfr-functions.php:868
+#: public/includes/avfr-functions.php:878
 msgid "Status of feature"
 msgstr ""
 
-#: public/includes/avfr-functions.php:869
+#: public/includes/avfr-functions.php:879
 msgid "All"
 msgstr ""
 
-#: public/includes/avfr-functions.php:871
-#: public/includes/avfr-functions.php:892
+#: public/includes/avfr-functions.php:881
+#: public/includes/avfr-functions.php:902
 msgid "Approve"
 msgstr ""
 
-#: public/includes/avfr-functions.php:873
-#: public/includes/avfr-functions.php:894
+#: public/includes/avfr-functions.php:883
+#: public/includes/avfr-functions.php:904
 msgid "Decline"
 msgstr ""
 
-#: public/includes/avfr-functions.php:878
+#: public/includes/avfr-functions.php:888
 msgid "My Features"
 msgstr ""
 
-#: public/includes/avfr-functions.php:881
+#: public/includes/avfr-functions.php:891
 msgid "Hot"
 msgstr ""
 
-#: public/includes/avfr-functions.php:882
+#: public/includes/avfr-functions.php:892
 msgid "Top"
 msgstr ""
 
-#: public/includes/avfr-functions.php:883
+#: public/includes/avfr-functions.php:893
 msgid "New"
 msgstr ""
 
@@ -941,15 +968,15 @@ msgstr ""
 msgid "No suggestion found. Why not submit one?"
 msgstr ""
 
-#: public/includes/class-avfr-shortcodes.php:278
+#: public/includes/class-avfr-shortcodes.php:279
 msgid "Your voting status in current "
 msgstr ""
 
-#: public/includes/class-avfr-shortcodes.php:287
+#: public/includes/class-avfr-shortcodes.php:288
 msgid "Total Votes: "
 msgstr ""
 
-#: public/includes/class-avfr-shortcodes.php:290
+#: public/includes/class-avfr-shortcodes.php:291
 msgid "Remaining Votes: "
 msgstr ""
 

@@ -522,7 +522,7 @@ class Avfr_Settings {
                 get_current_screen()->add_help_tab( array(
                 'id'        => 'avfr-set-shcod',
                 'title'     => __( 'ShortCode' ),
-                'content'   => __( '<P>'.'<strong>'.' ShortCode '.'<strong/>'.' <p>'.' As feature request user you can add shortcode easily to your page for demonstrate your features page you can copy and paste this short code to your target page:' .'<p>'. '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'.' <p>'.' which you can customize feature request plugin for demonstrate what feature as you want.'  ),
+                'content'   => __( '<P>'.'<strong>'.' ShortCode '.'<strong/>'.' <p>'.' As feature request user you can add shortcode easily to your page for demonstrate your features page you can copy and paste this short code to your target page:' .'<p>'. '[feature_request hide_submit="off" hide_votes="off" hide_voting="off" groups="2,5,12"]<br>[feature_request_user_votes hide_total="off" hide_remaining="off" groups="2,5,12"]'.' <p>'.' which you can customize feature request plugin for demonstrate what feature as you want.'  ),
                 
                 ) );
                 break;

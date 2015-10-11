@@ -1,21 +1,17 @@
 Feature Request
 ====================
 Description:
------------------
+-------------------
 Featrue request and suggestion submitter with voting system for wordpress.
 
 
 installation:
----------------------
+-------------------
 1. Upload "feature-request" folder to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Save Feature Request settings and Permalink settings.
+3. Delete or edit sample suggestion.
 
-
-Frequently Asked Questions:
---------------------------
-Why the voting controls for features not shown?
-You should save settings after installation and after changing vote type.
+Note: You can't use the plugin without any groups in this version. So make sure at least one group exists for feature requests.
 
 
 Some Features:
@@ -29,3 +25,9 @@ Some Features:
 * Internal CAPTCHA
 * Attachment for features
 * Advanced and easy to use settings for controlling new features submitting, Emails, Vote limitation and etc.
+
+Shortcodes:
+-------------------
+[feature_request hide_submit="off" hide_votes="off" hide_voting="off" groups="2,5,12"]
+
+[feature_request_user_votes hide_total="off" hide_remaining="off" groups="2,5,12"]
