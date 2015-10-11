@@ -24,10 +24,15 @@
         }
 
         .avfr-modal-dialog {
-            @include transform( translate(0, -50%) scale(1));
-            @include transform-origin(50% 0, false); 
-            top: 50%;
+            @include transform(scale(1));
+            @include transform-origin(50% 50%, false); 
+            top: 0;
             z-index: 999999;
+            height: 100%;
+        }
+
+        html{
+            overflow: hidden;
         }
 
     }
@@ -84,7 +89,7 @@
     right: 0;
     top: -100%; 
     z-index: 999999;
-    @include transform( translate(0, 0) scale(0) );
+    @include transform(scale(0) );
     @include transform-origin(50% 0, false);
     @include transition(top 0s, transform 0.3s ease-in-out);
 }
@@ -97,6 +102,10 @@
     @include box-shadow(0 3px 9px rgba(0,0,0,.5));
     background-clip: padding-box;
     outline: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    max-height: 820px;
 }
 
 .avfr-modal-backdrop {
@@ -137,6 +146,9 @@
 .avfr-modal-body {
     position: relative;
     padding: $modal-innerpadding;
+    height: 100%;
+    padding-bottom: 64px;
+    overflow: auto;
 }
 
 .text-wrap {
