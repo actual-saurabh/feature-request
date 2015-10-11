@@ -146,8 +146,7 @@
 .avfr-modal-body {
     position: relative;
     padding: $modal-innerpadding;
-    height: 100%;
-    padding-bottom: 64px;
+    height: calc(100% - 64px);
     overflow: auto;
 }
 
