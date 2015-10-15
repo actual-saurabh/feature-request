@@ -126,9 +126,9 @@ class Avfr_Votes {
 		$can_flag = avfr_get_option('avfr_flag','avfr_settings_main');
 
 		if ( $can_flag == "on") {
-		
+			
 			check_ajax_referer('feature_request','nonce');
-
+			global $avfr_db;
 			if ( isset( $_POST['post_id'] ) ) {
 				$postid 		= $_POST['post_id'];
 			}
@@ -140,7 +140,7 @@ class Avfr_Votes {
 			$ip 			 = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 
 			// get flag statuses
-			$has_flag 		 = avfr_has_vote_flag( $postid, $ip, $userid, 'flag' );
+			$has_flag 		 = $avfr_db->avfr_has_vote_flag( $postid, $ip, $userid, 'flag' );
 
 			// get flags
 			$flags 			 = get_post_meta( $postid, '_flag', true );
@@ -151,7 +151,6 @@ class Avfr_Votes {
 			} else {
 				update_post_meta( $postid, '_flag', (int) $flags + 1 );
 				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $reporter_email, 'groups' => $voted_group, 'type' => 'flag', 'votes' => '0' );
-		        global $avfr_db;
 				$avfr_db->avfr_insert_vote_flag( $args );
 		        $response_array = array('response' => 'success', 'message' => __('Reported!', 'feature-request') );
 				echo json_encode($response_array);

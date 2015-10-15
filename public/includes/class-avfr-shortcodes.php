@@ -208,11 +208,11 @@ class Avfr_Shortcodes {
 									?>
 								</div>
 							<?php
-								if ( false != has_term( '', 'featurestags', $id) ) {?>
+								if ( false != has_term( '', 'featureTags', $id) ) {?>
 									<div class="avfr-short-tags">
 										<span class="dashicons dashicons-tag"></span>
 										<?php
-										the_terms( $id, 'featurestags', ' ', ', ' );
+										the_terms( $id, 'featureTags', ' ', ', ' );
 										?>
 									</div>
 							<?php } ?>

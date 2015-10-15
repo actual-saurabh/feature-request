@@ -90,7 +90,18 @@ module.exports = function(grunt) {
          
             ],
           },
+          release: {
+            files: [
+              // makes all src relative to cwd 
+              {expand: true, src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.txt', '!public/assets/sass/**/*', '!public/assets/sass'], dest: '../release/'},
+            ],
+          },
         },
+
+
+    	clean: {
+    		release: ['release/*'],
+    	},
 
     });
 
