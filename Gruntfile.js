@@ -76,28 +76,29 @@ module.exports = function(grunt) {
         copy: {
           main: {
             files: [
-         
-              // makes all src relative to cwd 
+          
+              //copy public folder
               {expand: true, cwd: 'public/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/public/'},
 
               //copy template folder
               {expand: true, cwd: 'templates/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/templates/'},
 
-              //copy admin
+              //copy admin folder
               {expand: true, cwd: 'admin/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/admin/'},
-              //copy includes
+              //copy includes folder
               {expand: true, cwd: 'includes/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/includes/'}
          
             ],
           },
+
           release: {
             files: [
               // makes all src relative to cwd 
-              {expand: true, src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.txt', '!public/assets/sass/**/*', '!public/assets/sass'], dest: '../release/'},
+              {expand: true, src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', '!public/assets/sass/**/*', '!public/assets/sass'], dest: 'release/'},
             ],
           },
-        },
 
+        },
 
     	clean: {
     		release: ['release/*'],
@@ -108,5 +109,5 @@ module.exports = function(grunt) {
     // register task
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('default', ['sass']);
-
+    grunt.registerTask('build', ['clean', 'copy:release']);
 };
