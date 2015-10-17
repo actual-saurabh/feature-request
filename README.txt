@@ -7,10 +7,10 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Advanced Featrue request and suggestion submitter with voting system for wordpress.
+Advanced Feature request and suggestion submitter with voting system for WordPress.
 
 == Description ==
-Featrue request and suggestion submitter with voting system for wordpress.
+Feature request and suggestion submitter with voting system for WordPress.
 
 = Features =
 
@@ -23,7 +23,7 @@ Featrue request and suggestion submitter with voting system for wordpress.
 * Internal CAPTCHA
 * Attachment for features
 * Advanced and easy to use settings for controlling new features submitting, Emails, Vote limitation and etc.
-* Archieve page and custom page with shortcode to viewing list of features request.
+* Archive page and custom page with shortcode to viewing list of features request.
 
 = Shortcodes =
 
@@ -39,7 +39,15 @@ Featrue request and suggestion submitter with voting system for wordpress.
 Note: You can't use the plugin without any groups in this version. So make sure at least one group exists for feature requests.
 
 == Screenshots ==
-1. List of requests and multivote system.
+1. Feature request setup page.
+2. Features settings.
+3. Set limitations for voting.
+4. Help in setting page.
+5. Submit new suggestion by logged in user.
+6. Features listing in archive page
+7. Voting to feature (Multi vote).
+8. Features listing in page (With shortcode).
+9. Single page for suggestions.
 
 == Changelog ==
 = 1.0.0 =
