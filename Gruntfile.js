@@ -96,15 +96,15 @@ module.exports = function(grunt) {
               // makes all src relative to cwd 
               { expand: true, 
               	src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', 
-              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!.*'], 
-              	dest: 'release/'},
+              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!build', '!build/**/*', '!.*'], 
+              	dest: 'build/feature-request/'},
             ],
           },
 
         },
 
     	clean: {
-    		release: ['release/*'],
+    		release: ['build/feature-request/*'],
     	},
 
 
