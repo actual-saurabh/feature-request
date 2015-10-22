@@ -33,7 +33,7 @@ echo
 
 # Check version in readme.txt is the same as plugin file
 # on ubuntu $GITPATH/readme.txt seems to have an extra /
-NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.md | awk -F' ' '{print $3}'`
+NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
 if [ "$NEWVERSION1" == "" ]; then  NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`; fi
 echo "readme version: $NEWVERSION1"
 NEWVERSION2=`grep "^ \* Version" $GITPATH/$MAINFILE | awk -F' ' '{print $3}'`
@@ -74,7 +74,7 @@ echo "Ignoring github specific files and deployment script"
 # .gitignore" "$SVN_LOCAL_PATH/trunk/"
 
 #couldn't get multi line patten above to ignore wp-assets folder
-svn propset svn:ignore "deploy.sh"$'\n'"deploy-build.sh"$'\n'"wp-assets"$'\n'"README.md"$'\n'"readme.md"$'\n'".git"$'\n'"bower.json"$'\n'"Gruntfile.js"$'\n'".gitignore" "$SVN_LOCAL_PATH/trunk/"
+svn propset svn:ignore "deploy.sh"$'\n'"deploy-build.sh"$'\n'"wp-assets"$'\n'"build"$'\n'"README.md"$'\n'"readme.md"$'\n'".git"$'\n'"bower.json"$'\n'"Gruntfile.js"$'\n'".gitignore" "$SVN_LOCAL_PATH/trunk/"
 
 #export git -> SVN
 echo "Exporting the HEAD of master from git to the trunk of SVN"
