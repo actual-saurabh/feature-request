@@ -94,7 +94,10 @@ module.exports = function(grunt) {
           release: {
             files: [
               // makes all src relative to cwd 
-              {expand: true, src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', '!public/assets/sass/**/*', '!public/assets/sass'], dest: 'release/'},
+              { expand: true, 
+              	src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', 
+              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!.*'], 
+              	dest: 'release/'},
             ],
           },
 
@@ -104,10 +107,35 @@ module.exports = function(grunt) {
     		release: ['release/*'],
     	},
 
+
+    	// deploy via rsync
+        deploy: {
+            options: {
+                args: ["--verbose -zP"], // z:compress while transfering data, P: display progress
+                exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', 'public/assets/sass',
+                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json', 'deploy.sh', 'deploy-build.sh',
+                          'bower_components','build', 'contributors.txt', 'config.rb', 'wp-assets', 'release'
+                ],
+                recursive: true,
+                syncDestIgnoreExcl: true
+            },
+
+            build: {
+                options: {
+                    src: "./",
+                    dest: "build/feature-request/"
+                }
+            }
+        }
+
     });
+	
+	// rename tasks
+    grunt.renameTask('rsync', 'deploy');
 
     // register task
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('default', ['sass']);
-    grunt.registerTask('build', ['clean', 'copy:release']);
+    grunt.registerTask('build'  , ['clean', 'copy:release']);
+    grunt.registerTask('release', ['deploy:build']);
 };
