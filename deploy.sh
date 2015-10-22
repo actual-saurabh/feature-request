@@ -33,7 +33,7 @@ echo
 
 # Check version in readme.txt is the same as plugin file
 # on ubuntu $GITPATH/readme.txt seems to have an extra /
-NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.md | awk -F' ' '{print $3}'`
+NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
 if [ "$NEWVERSION1" == "" ]; then  NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`; fi
 echo "readme version: $NEWVERSION1"
 NEWVERSION2=`grep "^ \* Version" $GITPATH/$MAINFILE | awk -F' ' '{print $3}'`
