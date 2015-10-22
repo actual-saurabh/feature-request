@@ -1,23 +1,23 @@
 <?php
 /**
+ 	* Featrue request WordPress Plugin.
  	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
+ 	* @package   			Feature-request
+ 	* @author    			Averta
+ 	* @license   			GPL-2.0+
+ 	* @link      			http://averta.net
  	*	@copyright 			2015 Averta
  	*
- 	* 	Plugin Name:       Feature Request
- 	* 	Plugin URI:        http://averta.net
- 	* 	Description:       Featrue request and suggestion submitter with voting system for wordpress.
- 	* 	Version:           1.0
- 	* 	GitHub Plugin URI: https://github.com/averta-lab/feature-request
+ 	* Plugin Name:       Feature Request
+ 	* Plugin URI:        http://averta.net
+ 	* Description:       Featrue request and suggestion submitter with voting system for wordpress.
+ 	* Version:           1.0.0
+ 	* GitHub Plugin URI: https://github.com/averta-lab/feature-request
  	*	Author:            Averta
-	* 	Author URI:        http://averta.net
-	* 	Text Domain:       featrue-request
-	* 	License:           GPL-2.0+
-	* 	License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
-	* 	Domain Path:       /languages
+	* Author URI:        http://averta.net
+	* Text Domain:       featrue-request
+	* License:           license.txt
+	* Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
