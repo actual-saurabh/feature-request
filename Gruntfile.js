@@ -113,7 +113,7 @@ module.exports = function(grunt) {
             options: {
                 args: ["--verbose -zP"], // z:compress while transfering data, P: display progress
                 exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', 'public/assets/sass',
-                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json', 'deploy.sh', 'deploy-build.sh',
+                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json',
                           'bower_components','build', 'contributors.txt', 'config.rb', 'wp-assets', 'release'
                 ],
                 recursive: true,
