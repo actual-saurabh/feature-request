@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Feature Request, Idea Suggestion, Suggestion System
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Advanced Feature request and suggestion submitter with voting system for WordPress.
 
