@@ -25,11 +25,11 @@ SVNUSER="averta" # your svn username
 
 # Let's begin...
 echo ".........................................."
-echo
+echo 
 echo "Preparing to deploy WordPress plugin"
-echo
+echo 
 echo ".........................................."
-echo
+echo 
 
 # Check version in readme.txt is the same as plugin file
 # on ubuntu $GITPATH/readme.txt seems to have an extra /
@@ -74,25 +74,23 @@ echo "Ignoring github specific files and deployment script"
 # .gitignore" "$SVN_LOCAL_PATH/trunk/"
 
 #couldn't get multi line patten above to ignore wp-assets folder
-svn propset svn:ignore "deploy.sh"$'\n'"deploy-build.sh"$'\n'"wp-assets"$'\n'"build"$'\n'"README.md"$'\n'"readme.md"$'\n'".git"$'\n'"bower.json"$'\n'"Gruntfile.js"$'\n'".gitignore" "$SVN_LOCAL_PATH/trunk/"
+svn propset svn:ignore "deploy.sh"$'\n'"deploy-build.sh"$'\n'"package.json"$'\n'"wp-assets"$'\n'"build"$'\n'"README.md"$'\n'"readme.md"$'\n'".git"$'\n'"bower.json"$'\n'"Gruntfile.js"$'\n'".gitignore" "$SVN_LOCAL_PATH/trunk/"
 
 #export git -> SVN
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-# git checkout-index -a -f --prefix=$SVN_LOCAL_PATH/trunk/
-rm -rf `find build -name Thumbs.db`
-cp -R "$GITPATH/build/$PLUGINSLUG/" "$SVN_LOCAL_PATH/trunk/"
+git checkout-index -a -f --prefix=$SVN_LOCAL_PATH/trunk/
 
 # sed commands to convert readme.md to readme.txt
 # sed -e 's/^#\{1\} \(.*\)/=== \1 ===/g' -e 's/^#\{2\} \(.*\)/== \1 ==/g' -e 's/^#\{3\} \(.*\)/= \1 =/g' -e 's/^#\{4,5\} \(.*\)/**\1**/g' "readme.md" > "$SVN_LOCAL_PATH/trunk/readme.txt"
 
 #if submodule exist, recursively check out their indexes
-#if [ -f ".gitmodules" ]
-#then
-#echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
-#git submodule init
-#git submodule update
-#git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVN_LOCAL_PATH/trunk/$path/'
-#fi
+if [ -f ".gitmodules" ]
+then
+echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
+git submodule init
+git submodule update
+git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVN_LOCAL_PATH/trunk/$path/'
+fi
 
 echo "Changing directory to SVN and committing to trunk"
 cd $SVN_LOCAL_PATH/trunk/
@@ -105,7 +103,7 @@ read SVNCOMMITMSG
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 
 # svn commit --username=$SVNUSER -m "$SVNCOMMITMSG"
-svn ci --username=$SVNUSER -m "$SVNCOMMITMSG"
+svn ci -m "$SVNCOMMITMSG"
 
 
 echo "Creating new SVN tag & committing it"
