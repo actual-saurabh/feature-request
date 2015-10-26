@@ -96,15 +96,15 @@ module.exports = function(grunt) {
               // makes all src relative to cwd 
               { expand: true, 
               	src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', 
-              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!.*'], 
-              	dest: 'release/'},
+              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!build', '!build/**/*', '!.*'], 
+              	dest: 'build/feature-request/'},
             ],
           },
 
         },
 
     	clean: {
-    		release: ['release/*'],
+    		release: ['build/feature-request/*'],
     	},
 
 
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
             options: {
                 args: ["--verbose -zP"], // z:compress while transfering data, P: display progress
                 exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', 'public/assets/sass',
-                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json', 'deploy.sh', 'deploy-build.sh',
+                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json',
                           'bower_components','build', 'contributors.txt', 'config.rb', 'wp-assets', 'release'
                 ],
                 recursive: true,
