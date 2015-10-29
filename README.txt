@@ -121,6 +121,9 @@ Bugs can be reported in our [support forums](http://wordpress.org/support/plugin
 
 == Changelog ==
 
+= Version 1.0.7 / (29.10.2015) =
+* Minor bug fixes
+
 = Version 1.0.0 / (22.10.2015) =
 * Initial release
 
