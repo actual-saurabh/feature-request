@@ -140,6 +140,8 @@ class Avfr_Post_Type {
 			wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
 			// Insert tags (featureTags)
 			wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
+			// Set default post status as Open
+			update_post_meta( $entry_id, '_avfr_status', 'open' );
 
 
 			// Defaults for page with shortcode

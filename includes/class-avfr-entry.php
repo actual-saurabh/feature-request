@@ -37,14 +37,14 @@ class Avfr_Entry {
 		
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'process_entry' ) {
 
-							// only run for logged in users or if public is allowed
+			// only run for logged in users or if public is allowed
 			if( !is_user_logged_in() && 'on' !== $public_can_vote )
 				return;
 
-							// ok security passes so let's process some data
+			// ok security passes so let's process some data
 			if ( wp_verify_nonce( $_POST['nonce'], 'avfr-entry-nonce' ) ) {
 
-								// bail if we dont have rquired fields
+				// bail if we dont have rquired fields
 				if ( empty( $title ) || empty( $desc ) ) {
 
 					printf(('<div class="error">%s</div>'), __('Whoopsy! Looks like you forgot the Title and/or description.', 'feature-request'));
@@ -178,7 +178,7 @@ class Avfr_Entry {
 		$message .= __("Description:", 'feature-request') . "\n";
 		$message .= $entry->post_content."\n\n";
 		$message .= __("Manage all request at", 'feature-request') . "\n";
-		$message .= admin_url('edit.php?post_type=feature');
+		$message .= admin_url('edit.php?post_type=avfr');
 
 		if ( !isset($mail_disabled) || $mail_disabled == 'off' )
 			wp_mail( $admin_email, sprintf(__('New Feature Request Submission - %s', 'feature-request'), $entry_id), $message );
