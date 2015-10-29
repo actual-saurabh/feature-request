@@ -108,22 +108,6 @@
     max-height: 820px;
 }
 
-.avfr-modal-backdrop {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: $modal-backdrop-bg;
-
-    &.fade { 
-        opacity: 0;
-    }
-
-    &.in {
-        opacity: $modal-backdrop-opacity;
-    }
-
-}
 
 .avfr-modal-header {
     padding: $modal-title_padding-ver $modal-title_padding ;

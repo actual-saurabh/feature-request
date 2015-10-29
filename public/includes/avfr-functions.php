@@ -280,7 +280,7 @@ if ( !function_exists('avfr_submit_box') ):
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
 				); ?>
-			<div class="fade avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
+			<div class="avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 				<a href="#close" type="button" class="close" id="avfr-close" aria-hidden="true"></a>
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
@@ -306,7 +306,7 @@ if ( !function_exists('avfr_submit_box') ):
 								<script type="text/javascript">
 								jQuery(document).ready(function($){
 
-								    jQuery('#tags-data-list')
+								    $('#tags-data-list')
 								        .textext({
 								            plugins : 'tags autocomplete'
 								        })
@@ -416,13 +416,13 @@ if ( !function_exists('avfr_submit_box') ):
 			</div>
 
 		<?php } else { ?>
-					<div class="fade avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
+					<div class="avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 						<a href="#close" type="button" class="close" id="avfr-close" aria-hidden="true"></a>
 						<div class="avfr-modal-dialog ">
 							<div class="avfr-modal-content">
 								<div class="avfr-modal-body">
 									<p>
-										Please <a href="<?php echo wp_login_url( home_url() ); ?>">login</a> or <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new feature request.', 'feature-request') ?>
+										<?php _e('Please', 'feature-request'); ?> <a href="<?php echo wp_login_url( home_url() ); ?>"><?php _e('login', 'feature-request'); ?></a> <?php _e('or', 'feature-request'); ?> <a href="<?php echo wp_registration_url(); ?>"><?php _e('register', 'feature-request') ?></a><?php _e('to submit new feature request.', 'feature-request') ?>
 										<a href="#close" type="button" class="modal-close" id="avfr-close"><span aria-hidden="true">&times;</span></a>
 									</p>
 								</div>
