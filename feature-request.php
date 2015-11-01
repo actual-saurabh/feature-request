@@ -8,16 +8,16 @@
  * @link      http://averta.net
  *
  *
- * Plugin Name:       Feature Request
- * Plugin URI:        https://wordpress.org/plugins/feature-request/
- * Description:       Featrue request and suggestion submitter with voting system for wordpress.
- * Version:           1.0.7
- * Author:            averta
- * Author URI:        http://averta.net
- * Text Domain:       feature-request
- * License URI:       license.txt
- * Domain Path:       /languages
- * Tested up to: 	    4.4.0
+ * Plugin Name:     Feature Request
+ * Plugin URI:      https://wordpress.org/plugins/feature-request/
+ * Description:     Featrue request and suggestion submitter with voting system for wordpress.
+ * Version:         1.0.7
+ * Author:          averta
+ * Author URI:      http://averta.net
+ * Text Domain:     feature-request
+ * License URI:     license.txt
+ * Domain Path:     /languages
+ * Tested up to:    4.4.0
  */
 
 // If this file is called directly, abort.
