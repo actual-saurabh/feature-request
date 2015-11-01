@@ -16,7 +16,7 @@ module.exports = function(grunt) {
                 files: ['public/assets/**/*', 'admin/assets/**/*', '**/*.html', '**/*.php', 'public/assets/img/**/*.{png,jpg,jpeg,gif,webp,svg}']
             }
         },
-        
+
         // watch and compile scss files to css
         compass: {
             front_dev: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
             }
 
         },
-    
+
 
         uglify: {
             publicscripts: {
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
         copy: {
           main: {
             files: [
-          
+
               //copy public folder
               {expand: true, cwd: 'public/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/public/'},
 
@@ -87,16 +87,16 @@ module.exports = function(grunt) {
               {expand: true, cwd: 'admin/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/admin/'},
               //copy includes folder
               {expand: true, cwd: 'includes/', src: ['**'], dest: 'e:/xampp/htdocs/wp/wp-content/plugins/feature-request/includes/'}
-         
+
             ],
           },
 
           release: {
             files: [
-              // makes all src relative to cwd 
-              { expand: true, 
-              	src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!*.txt', 
-              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!build', '!build/**/*', '!.*'], 
+              // makes all src relative to cwd
+              { expand: true,
+              	src: ['**', '!release', '!?.', '!node_modules/**/*', '!node_modules', '!*.md', '!*.json', '!Gruntfile.js', '!contributors.txt',
+              		  '!public/assets/sass/**/*', '!public/assets/sass', '!wp-assets', '!build', '!build/**/*', '!.*', '!deploy-build.sh', '!deploy.sh'],
               	dest: 'build/feature-request/'},
             ],
           },
@@ -107,35 +107,20 @@ module.exports = function(grunt) {
     		release: ['build/feature-request/*'],
     	},
 
-
-    	// deploy via rsync
-        deploy: {
-            options: {
-                args: ["--verbose -zP"], // z:compress while transfering data, P: display progress
-                exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', 'public/assets/sass',
-                          '.*', 'README.md', 'config.rb', '.jshintrc', 'bower.json',
-                          'bower_components','build', 'contributors.txt', 'config.rb', 'wp-assets', 'release'
-                ],
-                recursive: true,
-                syncDestIgnoreExcl: true
-            },
-
-            build: {
-                options: {
-                    src: "./",
-                    dest: "build/feature-request/"
-                }
+        shell:{
+            deploy_build:{
+                command: 'sh deploy-build.sh'
             }
-        }
+        },
 
     });
-	
+
 	// rename tasks
     grunt.renameTask('rsync', 'deploy');
 
     // register task
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('default', ['sass']);
-    grunt.registerTask('build'  , ['clean', 'copy:release']);
-    grunt.registerTask('release', ['deploy:build']);
+    grunt.registerTask('build'  , ['clean', 'copy:release']); // builds production version in build folder
+    grunt.registerTask('release', ['build', 'shell:deploy_build']);
 };
