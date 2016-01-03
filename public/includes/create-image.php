@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * Generate Captcha code
+ * 
  * @package   			Feature-Request
  * @author    			Averta
  * @license   			GPL-2.0+
