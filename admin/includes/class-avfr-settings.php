@@ -1,10 +1,12 @@
 <?php
 /**
- *  @package            Feature-request
- *  @author             Averta
- *  @license            GPL-2.0+
- *  @link               http://averta.net
- *  @copyright          2015 Averta
+ *
+ * @package             Feature-Request
+ * @author              Averta
+ * @license             GPL-2.0+
+ * @link                http://averta.net
+ * @copyright           2015 Averta
+ *
  */
 
 require_once dirname( __FILE__ ) . '/class-avfr-settings-api.php';
@@ -55,7 +57,7 @@ class Avfr_Settings {
 
     /**
     *
-    *   Handl the click event for resetting votes
+    *   Handel the click event for resetting votes
     *
     */
     function reset_votes() {
@@ -91,7 +93,7 @@ class Avfr_Settings {
     }
     /**
     *
-    * Process the votes reste
+    * Process the votes reset
     *
     */
     function avfr_reset(){
@@ -222,7 +224,7 @@ class Avfr_Settings {
                   array(
                     'name'              => 'avfr_disable_captcha',
                     'label'             => __( 'Disable Captcha ', 'feature-request' ),
-                    'desc'              => __( 'Disable captcha code on submit form (if checked).', 'feature-request' ),
+                    'desc'              => __( 'Disable Captcha code on submit form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
@@ -255,7 +257,7 @@ class Avfr_Settings {
                 array(
                     'name'              => 'avfr_single',
                     'label'             => __( 'Single page for each feature', 'feature-request' ),
-                    'desc'              => __( 'If checked, features has seprate single page and permalink goes activate!.', 'feature-request' ),
+                    'desc'              => __( 'If checked, features has separate single page and permalink goes activate!.', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
@@ -288,7 +290,7 @@ class Avfr_Settings {
                 ),
                 /**
                  *
-                 *echo the explanition about size and type
+                 *echo the explanation about size and type
                  *
                  */
                  array(

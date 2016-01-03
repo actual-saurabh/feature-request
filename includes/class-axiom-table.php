@@ -2,11 +2,12 @@
 /**
  * Custom Tables Class.
  *
- * @package   Custom Tables
- * @author    averta [averta.net]
- * @license   LICENSE.txt
- * @link      http://averta.net
- * @copyright Copyright © 2015 averta
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 // no direct access allowed
@@ -90,7 +91,7 @@ class Axiom_Table {
 
 
 	/**
-	* Master table tabes
+	* Master table tables
 	*
 	* @since 1.0
 	* @access private
@@ -134,7 +135,6 @@ class Axiom_Table {
 		if( in_array( $name, $this->tabel_names ) ){
 			return $this->get_global_table_name( $name );
 
-		// Get list of Masterslider table names
 		} elseif( 'tables' == $name ){
 			global $wpdb;
 			$tables = array();
@@ -205,10 +205,10 @@ class Axiom_Table {
 
 
 	/**
-	 * Updates masterslider tables if update is required
+	 * Updates tables if update is required
 	 *
 	 * @since 1.0
-	 * @return bool  is any update required for tabels?
+	 * @return bool  is any update required for tables?
 	 */
 	public function update_tables(){
 		// check if the tables need update

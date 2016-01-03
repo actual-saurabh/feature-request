@@ -1,10 +1,12 @@
 <?php
 /**
- *  @package            Feature-request
- *  @author             Averta
- *  @license            GPL-2.0+
- *  @link               http://averta.net
- *  @copyright          2015 Averta
+ *
+ * @package             Feature-Request
+ * @author              Averta
+ * @license             GPL-2.0+
+ * @link                http://averta.net
+ * @copyright           2015 Averta
+ *
  */
 
 if ( !class_exists( 'Avfr_Settings_API' ) ):
@@ -78,7 +80,7 @@ class Avfr_Settings_API {
         return $this;
     }
     /**
-     * Initialize and registers the settings sections and fileds to WordPress
+     * Initialize and registers the settings sections and fields to WordPress
      *
      * Usually this should be called at `admin_init` hook.
      *

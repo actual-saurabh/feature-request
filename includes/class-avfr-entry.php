@@ -1,11 +1,13 @@
 <?php
 
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 class Avfr_Entry {
@@ -41,13 +43,13 @@ class Avfr_Entry {
 			if( !is_user_logged_in() && 'on' !== $public_can_vote )
 				return;
 
-			// ok security passes so let's process some data
+			// OK security passes so let's process some data
 			if ( wp_verify_nonce( $_POST['nonce'], 'avfr-entry-nonce' ) ) {
 
-				// bail if we dont have rquired fields
+				// bail if we don't have required fields
 				if ( empty( $title ) || empty( $desc ) ) {
 
-					printf(('<div class="error">%s</div>'), __('Whoopsy! Looks like you forgot the Title and/or description.', 'feature-request'));
+					printf(('<div class="error">%s</div>'), __('Whoops! Looks like you forgot the Title and/or description.', 'feature-request'));
 
 				} else if ( 'on' == avfr_get_option('avfr_disable_captcha', 'avfr_settings_main') || isset ($_POST["captcha"]) && $_POST["captcha"] != "" && $_SESSION["code"] == $_POST["captcha"]  )	{
 
@@ -154,7 +156,7 @@ class Avfr_Entry {
 
 		}	
 
-		exit(); // ajax
+		exit(); // Ajax
 	}
 
 	/**

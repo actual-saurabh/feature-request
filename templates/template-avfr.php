@@ -1,13 +1,14 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */
+
 	get_header();
 	global $avfr_db;
 	$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
@@ -22,7 +23,7 @@
 
 			if (is_tax($term)) {
 				if ( avfr_get_option('disable_new_for'.$term->slug,'avfr_settings_groups') == 'on' || ( (is_single() && $single_allowed != 'on') ) ) { 
-					 _e('Submiting new feature for this group is closed.','feature-request');
+					 _e('Submitting new feature for this group is closed.','feature-request');
 				} else {
 					echo avfr_submit_header();
 				}

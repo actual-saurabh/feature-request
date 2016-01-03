@@ -1,13 +1,14 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */
+
 class Avfr_Shortcodes {
 
 	function __construct() {
@@ -18,7 +19,7 @@ class Avfr_Shortcodes {
 	}
 
 	/**
-	*	Show teh votes and vote form within a shortcode
+	*	Show the votes and vote form within a shortcode
 	* 	@since version 1.0
 	*/
 	// Create post object
