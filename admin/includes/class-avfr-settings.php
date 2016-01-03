@@ -1,5 +1,6 @@
 <?php
 /**
+ * Plugin settings
  *
  * @package             Feature-Request
  * @author              Averta
@@ -140,7 +141,7 @@ class Avfr_Settings {
             ),
             array(
                 'id' 	=> 'avfr_settings_features',
-                'title' => __( 'features', 'feature-request' ),
+                'title' => __( 'Features', 'feature-request' ),
                 'desc'  => __( 'Features settings','feature-request' )
             ),
             array(
