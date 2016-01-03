@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * Functions that used entire plugin
+ * 
  * @package   			Feature-Request
  * @author    			Averta
  * @license   			GPL-2.0+

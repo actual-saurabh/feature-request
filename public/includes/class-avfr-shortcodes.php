@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * Short code
+ * 
  * @package   			Feature-Request
  * @author    			Averta
  * @license   			GPL-2.0+
@@ -9,6 +10,9 @@
  *
  */
 
+/**
+ * Shortcode class
+ */
 class Avfr_Shortcodes {
 
 	function __construct() {
@@ -19,10 +23,9 @@ class Avfr_Shortcodes {
 	}
 
 	/**
-	*	Show the votes and vote form within a shortcode
-	* 	@since version 1.0
+	* Show the votes and vote form within a shortcode
+	* @since version 1.0
 	*/
-	// Create post object
 	
 	function avfr_main_sc($atts, $content = null) {
 
@@ -265,12 +268,12 @@ class Avfr_Shortcodes {
 			'remaining'		=> 'on'
 		);
 		$atts 				= shortcode_atts( $defaults, $atts );
-			// Get limit for users from option
+		// Get limit for users from option
 		$limit_time			= avfr_get_option('avfr_votes_limitation_time','avfr_settings_main');
-			//Get user ID
+		//Get user ID
 		$userid 			= get_current_user_ID();
 		$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
-			//Calculate votes
+		//Calculate votes
 		$fun 				= 'avfr_total_votes_'.$limit_time;
 		$args 				= array( 'include' => $atts['groups'] );
 		$terms    		 	= get_terms( 'groups' , $args );
