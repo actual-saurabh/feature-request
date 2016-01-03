@@ -50,8 +50,7 @@ class Avfr_Votes {
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
 			if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','feature-request'), 'email' => $voter_email );
-				echo json_encode($response_array);
-				die();
+				wp_send_json($response_array);
 			}
 
 			// get vote statuses
@@ -64,25 +63,23 @@ class Avfr_Votes {
 			// if the public can vote and the user has already voted or they are logged in and have already voted then bail out
 			if ( $public_can_vote && $has_voted ) {
 				$response_array = array('response' => 'already-voted');
-				echo json_encode($response_array);
-				die();
+				wp_send_json($response_array);
 			}
 
 			if ( $user_vote_limit < ($user_total_voted + abs( intval($votes_num) ) ) ) {
-				echo json_encode( array('response' => $remaining_votes) );
-					die();
+				wp_send_json( array('response' => $remaining_votes) );
 			} else {
-				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $voter_email, 'groups' => $voted_group, 'type' => 'vote', 'votes' => intval( $votes_num ) );
+				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $voter_email, 'groups' => $voted_group, 'type' => 'vote', 'votes' => abs( intval( $votes_num ) ) );
 				$avfr_db->avfr_insert_vote_flag( $args );
 				update_post_meta( $postid, '_avfr_votes', intval( $votes ) + intval( $votes_num ) );
 				update_post_meta( $postid, '_avfr_total_votes', intval( $total_votes ) + 1 );
 				do_action('avfr_add_vote', $postid, $userid );
 				$response_array = array( 'response' => 'success' , 'total_votes' => intval( $votes ) + intval( $votes_num ), 'remaining' => $remaining_votes - abs( intval($votes_num) ) );
 					
-				echo json_encode($response_array);
+				wp_send_json($response_array);
 			}
 		}
-		die();
+		wp_die();
 	}
 
 	function avfr_calc_remaining_votes(){
@@ -114,14 +111,14 @@ class Avfr_Votes {
 			$remaining_votes 	= $user_vote_limit - $user_total_voted;
 
 			$response_array = array('response' => $remaining_votes );
-			echo json_encode($response_array);
+			wp_send_json($response_array);
 
 		}
-		die();
+		wp_die();
 	}
 
 	/**
-	*	Process the form submission
+	* Process the form submission
 	*/
 	function avfr_add_flag(){
 		// public voting enabled
@@ -149,16 +146,16 @@ class Avfr_Votes {
 
 			if ( $has_flag ) {
 				$response_array = array( 'response' => 'already-flagged', 'message' => __('You already flagged this idea.', 'feature-request') );
-				echo json_encode($response_array);
+				wp_send_json($response_array);
 			} else {
 				update_post_meta( $postid, '_flag', (int) $flags + 1 );
 				$args = array( 'postid' => $postid, 'ip' => $ip, 'userid' => $userid, 'email' => $reporter_email, 'groups' => $voted_group, 'type' => 'flag', 'votes' => '0' );
 				$avfr_db->avfr_insert_vote_flag( $args );
 		        $response_array = array('response' => 'success', 'message' => __('Reported!', 'feature-request') );
-				echo json_encode($response_array);
+				wp_send_json($response_array);
 			}
 		}
-			die();
+			wp_die();
 	}
 }
 new Avfr_Votes;
