@@ -46,9 +46,9 @@ class Feature_Request {
 		require_once(AVFR_DIR.'/public/includes/avfr-functions.php');
 		require_once(AVFR_DIR.'/public/includes/class-avfr-shortcodes.php');
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-upgrade.php');
 		// Load plugin text domain
 		add_action( 'init', 			array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'plugins_loaded', 	array( $this, 'upgrade' ) );
 	}
 
 	/**
@@ -225,18 +225,4 @@ class Feature_Request {
 		$out = load_textdomain( $domain, trailingslashit( AVFR_DIR ). 'languages/' . $domain . '-' . $locale . '.mo' );
 	}
 
-	/**
-	 * Run on plugin upgrade
-	 * @since 1.0 
-	 */
-	public function upgrade(){
-
-		$version = get_option('feature_request_version', true );
-
-		if ( $version != AVFR_VERSION ) {
-			global $avfr_db;
-			$avfr_db->upgrade_install_db();
-
-		}
-	}
 }

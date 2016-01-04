@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Set some constants
-define('AVFR_VERSION', '1.0.7');
+define('AVFR_VERSION', '1.1.0');
 define('AVFR_DIR' , plugin_dir_path( __FILE__ ) );
 define('AVFR_URL' , plugins_url( '', __FILE__ ) );
 

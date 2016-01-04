@@ -520,14 +520,20 @@ function avfr_groups_edit_form_fields( $tag ) {
         </td>
     </tr>
     <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="cm-disabled"><?php _e( 'Disable comments', 'averta-envato' ); ?></label>
+        </th>
         <td>
-            <input type="checkbox" id="cm-disabled" name="cm-disabled" <?php echo esc_attr( $comments_disabled ); ?>><?php _e( 'Disable comments', 'averta-envato' ); ?>
+            <input type="checkbox" id="cm-disabled" name="cm-disabled" <?php echo esc_attr( $comments_disabled ); ?>>
             <p class="description"><?php _e( 'Disable comments in this group.', 'averta-envato' ); ?></p>
         </td>
     </tr>
     <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="new-disabled"><?php _e( 'Disable new', 'averta-envato' ); ?></label>
+        </th>
         <td>
-            <input type="checkbox" id="new-disabled" name="new-disabled" <?php echo esc_attr( $new_disabled ); ?>> <?php _e( 'Disable new', 'averta-envato' ); ?>
+            <input type="checkbox" id="new-disabled" name="new-disabled" <?php echo esc_attr( $new_disabled ); ?>>
             <p class="description"><?php _e( 'Disable posting new feature request submition in this groups.', 'averta-envato' ); ?></p>
         </td>
     </tr>
