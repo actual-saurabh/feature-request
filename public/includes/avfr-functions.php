@@ -254,12 +254,13 @@ if ( !function_exists('avfr_submit_box') ):
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
 		$exluded  		 = '';
+
 		if ( is_user_logged_in() || 'on' == $public_can_vote ) { 
 			
-			$allgroups = get_terms('groups', array('hide_empty' => 0, ));
+			$allgroups = get_terms( 'groups', array( 'hide_empty' => 0 ) );
 			foreach ( $allgroups as $exclude ) {
-				if ( 'on' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_groups') ) {
-					$exluded[]=$exclude->term_id;
+				if ( 'on' === get_term_meta( $exclude->term_id, 'avfr_new_disabled', true ) ) {
+					$exluded[] = $exclude->term_id;
 				}
 			}
 
@@ -281,13 +282,14 @@ if ( !function_exists('avfr_submit_box') ):
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
 				); ?>
+
 			<div class="avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 				<a href="#close" type="button" class="close" id="avfr-close" aria-hidden="true"></a>
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
 				    	<div class="avfr-modal-header">
 				    	<a href="#close" type="button" class="modal-close" id="avfr-close">
-						<span aria-hidden="true">&times;</span>
+							<span aria-hidden="true">&times;</span>
 						</a>
 				    		<h3 class="avfr-modal-title"><?php _e('Submit feature','feature-request');?></h3>
 				    	</div>
