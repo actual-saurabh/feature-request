@@ -1,11 +1,13 @@
 <?php
 
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 class Avfr_Post_Type {
@@ -40,6 +42,7 @@ class Avfr_Post_Type {
 			'not_found'           		=> __( 'No Feature found', 'feature-request' ),
 			'not_found_in_trash'  		=> __( 'No Feature found in Trash', 'feature-request' ),
 		);
+
 		$args = array(
 			'labels'              		=> $labels,
 			'label'               		=> __( 'Feature', 'feature-request' ),
@@ -64,6 +67,7 @@ class Avfr_Post_Type {
 
 		register_post_type( 'avfr', apply_filters('avfr_type_args', $args ) );
 
+
 		// Hierarchical taxonomy for features
 		$labels = array(
 			'name' 						=> _x( 'Groups','taxonomy general name' ), 
@@ -78,6 +82,7 @@ class Avfr_Post_Type {
 			'update_count_callback' 	=> '_update_post_term_count',
 			'menu_name' 				=> __( 'Groups' ),
 			);
+
 		$args = array(
 			'hierarchical' 				=> true ,
 			'labels' 					=> $labels ,
@@ -87,7 +92,9 @@ class Avfr_Post_Type {
 			'rewrite' 					=> array( 'slug' => 'groups' ),
 			'update_count_callback' 	=> '_update_post_term_count',
 			);
+
 		register_taxonomy('groups' , array('avfr') , $args);
+
 
 		// Non hierarchical taxonomy for features
 		$labels = array(
@@ -107,6 +114,7 @@ class Avfr_Post_Type {
 			'add_new_item'				=> __( 'Add tag' ),
 			'menu_name' 				=> __( 'Tags' ),
 			);
+
 		$args = array(
 			'hierarchical' 				=> false , 
 			'labels' 					=> $labels ,
@@ -115,10 +123,11 @@ class Avfr_Post_Type {
 			'update_count_callback' 	=> '_update_post_term_count',
 			'rewrite' 					=> array( 'slug' => 'avfrtags' ),
 			);
+
 		register_taxonomy('featureTags' , array('avfr') , $args);
 	 
 
-	 	// Check that this plugin was installed bfore this or not
+	 	// Check that this plugin was installed before this or not
 		if ( '' == get_option( 'avfr_installed_before' ) ) {
 
 			// Defaults for adding post (feature request)
@@ -134,12 +143,17 @@ class Avfr_Post_Type {
 				 		feugait nulla facilisi.', 'feature-request'),
 
 				);
+
 			// Insert post
 			$entry_id = wp_insert_post( $default_post );
+
 			//Insert group (category)
-			wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
+			$group_term_id = wp_set_object_terms( $entry_id, __('Example group 1', 'feature-request') ,'groups');
+			$term_id = $group_term_id[0];
+
 			// Insert tags (featureTags)
-			wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
+			$tag_term_id = wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
+
 			// Set default post status as Open
 			update_post_meta( $entry_id, '_avfr_status', 'open' );
 
@@ -151,17 +165,18 @@ class Avfr_Post_Type {
 				'post_type'             =>    'page',
 				'post_content'          =>    '[feature_request hide_submit="off" hide_votes="off" hide_voting="off"]'
 				);
+
 			// Insert as page
 			$page_id = wp_insert_post ($avfr_page_def);
 
-			// Default options for default category that added above
-			$args_group_settings = array( 'avfr_vote_limit_example-group-1' => '3',
-				'avfr_total_vote_limit_example-group-1' => '30',
-				'avfr_disable_comment_forexample-group-1' => 'off',
-				'avfr_disable_new_forexample-group-1' => 'off',
-			);
-			//Insert options to database
-			update_option( 'avfr_settings_groups', $args_group_settings, 'no' );
+			/**
+			 * Use term meta instead of site option for default group settings
+			 * @since    1.1.0 
+			 */
+			update_term_meta( $term_id, 'avfr_max_votes', 3 );
+		    update_term_meta( $term_id, 'avfr_total_votes', 30 );
+		    update_term_meta( $term_id, 'avfr_comments_disabled', 'off' );
+		    update_term_meta( $term_id, 'avfr_new_disabled', 'off' );
 
 			//Update this option from 0 to 1, so the codes will runs only 1 time.
 			add_option( 'avfr_installed_before', '1', '', 'no');
@@ -169,7 +184,7 @@ class Avfr_Post_Type {
 		}
 
 		// Flush rewrite rules and update option.
-		// The option wil be checked to flushing again.
+		// The option will be checked to flushing again.
 		if ( '0' === get_option( 'avfr_post_registered' ) || '' == get_option( 'avfr_post_registered' ) ) {
 			flush_rewrite_rules(false);
 			update_option( 'avfr_post_registered', '1', 'no' );

@@ -1,14 +1,18 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
- 	
+ * Main plugin file
+ * 
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */	
+
+/**
+ * Main plugin class
+ */
 class Feature_Request {
 
 	/**
@@ -42,14 +46,15 @@ class Feature_Request {
 		require_once(AVFR_DIR.'/public/includes/avfr-functions.php');
 		require_once(AVFR_DIR.'/public/includes/class-avfr-shortcodes.php');
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
+		require_once(AVFR_DIR.'/includes/class-avfr-upgrade.php');
 		// Load plugin text domain
-		add_action( 'init', 			array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'plugins_loaded', 	array( $this, 'upgrade' ) );
+		add_action( 'init', array( $this, 'avfr_load_textdomain' ) );
 	}
 
 	/**
 	 * Return the plugin slug.
-	 * @since    1.0
+	 * @since     1.0
+	 * @return    string    plugin slug
 	 */
 	public function get_plugin_slug() {
 		return $this->plugin_slug;
@@ -58,6 +63,7 @@ class Feature_Request {
 	/**
 	 * Return an instance of this class.
 	 * @since     1.0
+	 * @return    Instance of class
 	 */
 	public static function get_instance() {
 
@@ -68,7 +74,12 @@ class Feature_Request {
 
 		return self::$instance;
 	}
-
+    
+    /**
+     * Initiate database class
+     * @since     1.0
+     * @return    Instance of database class
+     */
 	public static function initiate_db_class() {
 
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
@@ -81,8 +92,10 @@ class Feature_Request {
 		return $avfr_db;
 	}
 
+
 	/**
 	 * Fired when the plugin is activated.
+	 * @param    bool    $network_wide    Check is network wide or not
 	 * @since    1.0
 	 */
 	public static function activate( $network_wide ) {
@@ -137,9 +150,15 @@ class Feature_Request {
 		}
 
 	}
+
+	/**
+	 * Empty function, not used
+	 * @since    1.0
+	 */
 	 private static function single_deactivate() {
 
 	 }
+
 	/**
 	 * Fired when the plugin is deactivated.
 	 * @since    1.0
@@ -194,27 +213,17 @@ class Feature_Request {
 
 	}
 
-
-	public function load_plugin_textdomain() {
+	/**
+	 * Load text domain of plugin
+	 * @since 1.0
+	 */
+	public function avfr_load_textdomain() {
 
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		$out = load_textdomain( $domain, trailingslashit( AVFR_DIR ). 'languages/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( 'feature-request', false, plugin_basename( dirname( __FILE__ ) ) . '../languages/' );
 	}
 
-	/**
-	*	Run on plugin upgrade
-	*	@since 1.0
-	*/
-	function upgrade(){
-
-		$version = get_option('feature_request_version', true );
-
-		if ( $version != AVFR_VERSION ) {
-			global $avfr_db;
-			$avfr_db->upgrade_install_db();
-
-		}
-	}
 }

@@ -1,10 +1,12 @@
 <?php
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 class Avfr_Meta {
@@ -18,7 +20,7 @@ class Avfr_Meta {
 	/**
 	*
 	*
-	*	Add a status metabox if teh user has opted in for the threshold settings
+	*	Add a status metabox if the user has opted in for the threshold settings
 	*
 	*	@since 1.0
 	*/

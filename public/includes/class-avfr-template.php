@@ -1,13 +1,15 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
+ * Template loader
+ * 
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */
+	
 class Avfr_Template {
 
 	function __construct() {
@@ -17,10 +19,10 @@ class Avfr_Template {
 	}
 
 	/**
-	*
-	* @since version 1.0
-	* @param $template - return based on view
-	* @return page template based on view regardless if the post type doesnt even exist yet due to no posts
+	* 
+	* @param     $template    return based on view
+	* @since     1.0
+	* @return    $template    page template based on view regardless if the post type doesnt even exist yet due to no posts
 	*/
 	function template_loader( $template ) {
 

@@ -1,13 +1,14 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
+ * Functions that used entire plugin
+ * 
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */
 
 if ( !function_exists('avfr_get_status') ) {
 
@@ -150,7 +151,7 @@ add_filter( 'query_vars', 'avfr_add_query_vars_filter' );
 
 
 /**
- * Change query based on query vars in url
+ * Change query based on query vars in URL
  * @since 1.0
  */
 
@@ -253,12 +254,13 @@ if ( !function_exists('avfr_submit_box') ):
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
 		$exluded  		 = '';
+
 		if ( is_user_logged_in() || 'on' == $public_can_vote ) { 
 			
-			$allgroups = get_terms('groups', array('hide_empty' => 0, ));
+			$allgroups = get_terms( 'groups', array( 'hide_empty' => 0 ) );
 			foreach ( $allgroups as $exclude ) {
-				if ( 'on' == avfr_get_option('avfr_disable_new_for'.$exclude->slug,'avfr_settings_groups') ) {
-					$exluded[]=$exclude->term_id;
+				if ( 'on' === get_term_meta( $exclude->term_id, 'avfr_new_disabled', true ) ) {
+					$exluded[] = $exclude->term_id;
 				}
 			}
 
@@ -280,13 +282,14 @@ if ( !function_exists('avfr_submit_box') ):
 				'hide_if_empty'      => false,
 				'value_field'	     => 'name',	
 				); ?>
+
 			<div class="avfr-modal" id="avfr-modal" aria-hidden="true" tabindex="-1">
 				<a href="#close" type="button" class="close" id="avfr-close" aria-hidden="true"></a>
 				<div class="avfr-modal-dialog ">
 				    <div class="avfr-modal-content">
 				    	<div class="avfr-modal-header">
 				    	<a href="#close" type="button" class="modal-close" id="avfr-close">
-						<span aria-hidden="true">&times;</span>
+							<span aria-hidden="true">&times;</span>
 						</a>
 				    		<h3 class="avfr-modal-title"><?php _e('Submit feature','feature-request');?></h3>
 				    	</div>
@@ -437,7 +440,7 @@ endif;
 
 
 /**
- * Header area showing intor message and button to click to open submission modal
+ * Header area showing intro message and button to click to open submission modal
  * @since 1.0
  */
 
@@ -916,22 +919,3 @@ if ( !function_exists('avfr_show_filters') ) {
 	}
 
 }
-
-function avfr_save_option_for_group($term_id, $tt_id) {
-
-	$groups_option =  get_option('avfr_settings_groups', '0');
-	if (!is_array($groups_option)) { $groups_option = array(); }
-	$catinfo = get_term_by( 'id', $term_id, 'groups' );
-	$new_group_slug = $catinfo->slug;
-	// Default options for default category that added above
-	$new_options = array( 'avfr_vote_limit_'.$new_group_slug => '3',
-		'avfr_total_vote_limit_'.$new_group_slug => '30',
-		'avfr_disable_comment_for'.$new_group_slug => 'off',
-		'avfr_disable_new_for'.$new_group_slug => 'off',
-	);
-
-	update_option('avfr_settings_groups', array_merge($groups_option, $new_options), 'no');
-
-}
-
-add_action('create_groups', 'avfr_save_option_for_group', 10, 3);

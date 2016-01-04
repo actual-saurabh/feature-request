@@ -1,10 +1,13 @@
 <?php
 /**
- *  @package            Feature-request
- *  @author             Averta
- *  @license            GPL-2.0+
- *  @link               http://averta.net
- *  @copyright          2015 Averta
+ * Plugin settings
+ *
+ * @package             Feature-Request
+ * @author              Averta
+ * @license             GPL-2.0+
+ * @link                http://averta.net
+ * @copyright           2015 Averta
+ *
  */
 
 require_once dirname( __FILE__ ) . '/class-avfr-settings-api.php';
@@ -55,7 +58,7 @@ class Avfr_Settings {
 
     /**
     *
-    *   Handl the click event for resetting votes
+    *   Handel the click event for resetting votes
     *
     */
     function reset_votes() {
@@ -91,7 +94,7 @@ class Avfr_Settings {
     }
     /**
     *
-    * Process the votes reste
+    * Process the votes reset
     *
     */
     function avfr_reset(){
@@ -138,13 +141,8 @@ class Avfr_Settings {
             ),
             array(
                 'id' 	=> 'avfr_settings_features',
-                'title' => __( 'features', 'feature-request' ),
+                'title' => __( 'Features', 'feature-request' ),
                 'desc'  => __( 'Features settings','feature-request' )
-            ),
-            array(
-                'id' 	=> 'avfr_settings_groups',
-                'title' => __( 'Groups', 'feature-request' ),
-                'desc'  => __( 'Groups can have different settings','feature-request' )
             ),
             array(
                 'id'    => 'avfr_settings_mail',
@@ -222,7 +220,7 @@ class Avfr_Settings {
                   array(
                     'name'              => 'avfr_disable_captcha',
                     'label'             => __( 'Disable Captcha ', 'feature-request' ),
-                    'desc'              => __( 'Disable captcha code on submit form (if checked).', 'feature-request' ),
+                    'desc'              => __( 'Disable Captcha code on submit form (if checked).', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
@@ -255,7 +253,7 @@ class Avfr_Settings {
                 array(
                     'name'              => 'avfr_single',
                     'label'             => __( 'Single page for each feature', 'feature-request' ),
-                    'desc'              => __( 'If checked, features has seprate single page and permalink goes activate!.', 'feature-request' ),
+                    'desc'              => __( 'If checked, features has separate single page and permalink goes activate!.', 'feature-request' ),
                     'type'              => 'checkbox',
                     'default'           => ''
                 ),
@@ -288,7 +286,7 @@ class Avfr_Settings {
                 ),
                 /**
                  *
-                 *echo the explanition about size and type
+                 *echo the explanation about size and type
                  *
                  */
                  array(
@@ -400,9 +398,6 @@ class Avfr_Settings {
                     'sanitize_callback' => 'esc_textarea'
                 ),
             ),
-            'avfr_settings_groups'    => array(
-
-            ),
             'avfr_settings_advanced' 	=> array(
             	array(
                     'name' 				=> 'avfr_disable_css',
@@ -429,49 +424,6 @@ class Avfr_Settings {
                 )
             )
         );
-
-
-		$taxonomy = 'groups';
-		$terms = get_terms($taxonomy, array('hide_empty'=> false)); // Get all terms of a taxonomy
-		if ( $terms && !is_wp_error($terms) ) {
-				foreach ( $terms as $term ) { 
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_group_'.$term->slug,
-                            'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'feature-request' ),
-                            'type'              => 'html',
-                        );
-					$settings_fields['avfr_settings_groups'][]=
-						array(
-		                    'name' 				=> 'avfr_vote_limit_'.$term->slug,
-		                    'label' 			=> __( ' maximum votes :', 'feature-request' ),
-                            'desc'              => __( 'Works only in vote mode.', 'feature-request' ),
-		                    'default' 			=> __( '5', 'feature-request' ),
-		                );
-		            $settings_fields['avfr_settings_groups'][]=
-						array(
-		                    'name' 				=> 'avfr_total_vote_limit_'.$term->slug,
-		                    'label' 			=> __( 'Total vote:', 'feature-request' ),
-		                    'default' 			=> __( '30', 'feature-request' ),
-		                );
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_disable_comment_for'.$term->slug,
-                            'label'             => __( 'Disable comments', 'feature-request' ),
-                            'desc'              => __( 'Disable comments for selected group.', 'feature-request' ),
-                            'default'           => '',
-                            'type'              => 'checkbox'
-                        );
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_disable_new_for'.$term->slug,
-                            'label'             => __( 'Disable submit new feature', 'feature-request' ),
-                            'desc'              => __( 'Disable submitting new feature for selected group.', 'feature-request' ),
-                            'default'           => '',
-                            'type'              => 'checkbox'
-                        );
-				}
-		}
 
         return $settings_fields;
     }
@@ -535,3 +487,76 @@ class Avfr_Settings {
 endif;
 
 $settings = new Avfr_Settings();
+
+
+
+
+
+function avfr_groups_edit_form_fields( $tag ) {
+
+    $term_id = $tag->term_id;
+    
+    $max_votes = get_term_meta( $term_id, 'avfr_max_votes', true );
+    $total_votes = get_term_meta( $term_id, 'avfr_total_votes', true);
+    $comments_disabled = 'on' === get_term_meta( $term_id, 'avfr_comments_disabled', true ) ? 'checked' : '';
+    $new_disabled = 'on' === get_term_meta( $term_id, 'avfr_new_disabled', true ) ? 'checked' : '';
+?>
+    <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="max-votes"><?php _e( 'Maximum votes :', 'averta-envato' ); ?></label>
+        </th>
+        <td>
+            <input type="number" id="max-votes" name="max-votes" placeholder="3" maxlength="6" min="1" value="<?php echo esc_attr( $max_votes ); ?>">
+            <p class="description"><?php _e( 'Maximum votes that user can vote in each feature request in this group.', 'averta-envato' ); ?></p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="total-votes"><?php _e( 'Total votes :', 'averta-envato' ); ?></label>
+        </th>
+        <td>
+            <input type="number" id="total-votes" name="total-votes" placeholder="30" maxlength="6" min="1" value="<?php echo esc_attr( $total_votes ); ?>">
+            <p class="description"><?php _e( 'Total votes that user can vote in this group in certain time that set in plugin settings.', 'averta-envato' ); ?></p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="cm-disabled"><?php _e( 'Disable comments', 'averta-envato' ); ?></label>
+        </th>
+        <td>
+            <input type="checkbox" id="cm-disabled" name="cm-disabled" <?php echo esc_attr( $comments_disabled ); ?>>
+            <p class="description"><?php _e( 'Disable comments in this group.', 'averta-envato' ); ?></p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="new-disabled"><?php _e( 'Disable new', 'averta-envato' ); ?></label>
+        </th>
+        <td>
+            <input type="checkbox" id="new-disabled" name="new-disabled" <?php echo esc_attr( $new_disabled ); ?>>
+            <p class="description"><?php _e( 'Disable posting new feature request submition in this groups.', 'averta-envato' ); ?></p>
+        </td>
+    </tr>
+    <?php 
+}
+
+add_action('groups_edit_form_fields', 'avfr_groups_edit_form_fields');
+add_action('groups_add_form_fields', 'avfr_groups_edit_form_fields');
+
+
+function avfr_save_groups_custom_meta( $term_id ) {
+
+    $max_votes = abs($_POST['max-votes']);
+    $total_votes = abs($_POST['total-votes']);
+    $comments_disabled = $_POST['cm-disabled'] ? 'on' : 'off' ;
+    $new_disabled = $_POST['new-disabled'] ? 'on' : 'off' ;
+
+    update_term_meta( $term_id, 'avfr_max_votes', $max_votes );
+    update_term_meta( $term_id, 'avfr_total_votes', $total_votes );
+    update_term_meta( $term_id, 'avfr_comments_disabled', $comments_disabled );
+    update_term_meta( $term_id, 'avfr_new_disabled', $new_disabled );
+
+}
+
+add_action( 'edited_groups', 'avfr_save_groups_custom_meta', 10, 2 );  
+add_action( 'create_groups', 'avfr_save_groups_custom_meta', 10, 2 );

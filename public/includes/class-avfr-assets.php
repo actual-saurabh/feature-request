@@ -1,13 +1,18 @@
 <?php
 /**
- 	*
- 	* 	@package   			Feature-request
- 	* 	@author    			Averta
- 	* 	@license   			GPL-2.0+
- 	* 	@link      			http://averta.net
- 	*	@copyright 			2015 Averta
- 	*
- **/	
+ * Asset loader
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
+ */
+
+/**
+ * Asset loader class
+ */
 class Avfr_Assets {
 
 	function __construct(){

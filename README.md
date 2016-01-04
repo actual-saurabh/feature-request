@@ -2,7 +2,7 @@ Feature Request
 ====================
 Description:
 -------------------
-Featrue request and suggestion submitter with voting system for wordpress.
+Feature request and suggestion submitter with voting system for WordPress.
 
 
 installation:

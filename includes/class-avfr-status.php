@@ -1,11 +1,13 @@
 <?php
 
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 class Avfr_Status {
@@ -27,7 +29,7 @@ class Avfr_Status {
 	*/
 	function avfr_process_status( $postid, $userid ) {
 
-		// get threashold
+		// get threshold
 		$threshold = avfr_get_option('avfr_threshold','avfr_settings_main');
 
 		// bail if no user threshold set
@@ -110,7 +112,7 @@ class Avfr_Status {
 
 		}
 
-		exit(); // ajax
+		exit(); // Ajax
 	}
 
 	/**

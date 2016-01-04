@@ -17,7 +17,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 global $wpdb;
 $table = $wpdb->prefix.'feature_request';
 
-// delete optoin
+// delete option
 delete_option('feature_request_version');
 
 // drop db table

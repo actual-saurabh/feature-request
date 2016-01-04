@@ -1,11 +1,13 @@
 <?php
 
 /**
- * 	@package   			Feature-request
- * 	@author    			Averta
- * 	@license   			GPL-2.0+
- * 	@link      			http://averta.net
- *	@copyright 			2015 Averta
+ *
+ * @package   			Feature-Request
+ * @author    			Averta
+ * @license   			GPL-2.0+
+ * @link      			http://averta.net
+ * @copyright 			2015 Averta
+ *
  */
 
 // no direct access allowed
@@ -248,7 +250,7 @@ class Avfr_DB extends Axiom_Table {
 	}
 
 	/**
-	*	Create public database tabes on upgrade
+	*	Create public database tables on upgrade
 	*	@since 1.0
 	*/
 	function upgrade_install_db(){
