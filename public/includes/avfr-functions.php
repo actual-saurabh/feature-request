@@ -917,22 +917,3 @@ if ( !function_exists('avfr_show_filters') ) {
 	}
 
 }
-
-function avfr_save_option_for_group($term_id, $tt_id) {
-
-	$groups_option =  get_option('avfr_settings_groups', '0');
-	if (!is_array($groups_option)) { $groups_option = array(); }
-	$catinfo = get_term_by( 'id', $term_id, 'groups' );
-	$new_group_slug = $catinfo->slug;
-	// Default options for default category that added above
-	$new_options = array( 'avfr_vote_limit_'.$new_group_slug => '3',
-		'avfr_total_vote_limit_'.$new_group_slug => '30',
-		'avfr_disable_comment_for'.$new_group_slug => 'off',
-		'avfr_disable_new_for'.$new_group_slug => 'off',
-	);
-
-	update_option('avfr_settings_groups', array_merge($groups_option, $new_options), 'no');
-
-}
-
-add_action('create_groups', 'avfr_save_option_for_group', 10, 3);
