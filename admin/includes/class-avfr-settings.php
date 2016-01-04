@@ -145,11 +145,6 @@ class Avfr_Settings {
                 'desc'  => __( 'Features settings','feature-request' )
             ),
             array(
-                'id' 	=> 'avfr_settings_groups',
-                'title' => __( 'Groups', 'feature-request' ),
-                'desc'  => __( 'Groups can have different settings','feature-request' )
-            ),
-            array(
                 'id'    => 'avfr_settings_mail',
                 'title' => __( 'E-Mail', 'feature-request' ),
                 'desc'  => __( 'Email settings, you can select when and who should be recieve emails.','feature-request' )
@@ -403,9 +398,6 @@ class Avfr_Settings {
                     'sanitize_callback' => 'esc_textarea'
                 ),
             ),
-            'avfr_settings_groups'    => array(
-
-            ),
             'avfr_settings_advanced' 	=> array(
             	array(
                     'name' 				=> 'avfr_disable_css',
@@ -432,49 +424,6 @@ class Avfr_Settings {
                 )
             )
         );
-
-
-		$taxonomy = 'groups';
-		$terms = get_terms($taxonomy, array('hide_empty'=> false)); // Get all terms of a taxonomy
-		if ( $terms && !is_wp_error($terms) ) {
-				foreach ( $terms as $term ) { 
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_group_'.$term->slug,
-                            'label'              => __( '<h3 style="width:400px;">Settings for '.$term->name.' group</h3>' , 'feature-request' ),
-                            'type'              => 'html',
-                        );
-					$settings_fields['avfr_settings_groups'][]=
-						array(
-		                    'name' 				=> 'avfr_vote_limit_'.$term->slug,
-		                    'label' 			=> __( ' maximum votes :', 'feature-request' ),
-                            'desc'              => __( 'Works only in vote mode.', 'feature-request' ),
-		                    'default' 			=> __( '5', 'feature-request' ),
-		                );
-		            $settings_fields['avfr_settings_groups'][]=
-						array(
-		                    'name' 				=> 'avfr_total_vote_limit_'.$term->slug,
-		                    'label' 			=> __( 'Total vote:', 'feature-request' ),
-		                    'default' 			=> __( '30', 'feature-request' ),
-		                );
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_disable_comment_for'.$term->slug,
-                            'label'             => __( 'Disable comments', 'feature-request' ),
-                            'desc'              => __( 'Disable comments for selected group.', 'feature-request' ),
-                            'default'           => '',
-                            'type'              => 'checkbox'
-                        );
-                    $settings_fields['avfr_settings_groups'][]=
-                        array(
-                            'name'              => 'avfr_disable_new_for'.$term->slug,
-                            'label'             => __( 'Disable submit new feature', 'feature-request' ),
-                            'desc'              => __( 'Disable submitting new feature for selected group.', 'feature-request' ),
-                            'default'           => '',
-                            'type'              => 'checkbox'
-                        );
-				}
-		}
 
         return $settings_fields;
     }
@@ -571,20 +520,14 @@ function avfr_groups_edit_form_fields( $tag ) {
         </td>
     </tr>
     <tr class="form-field">
-        <th valign="top" scope="row">
-            <label for="cm-disabled"><?php _e( 'Disable comments', 'averta-envato' ); ?></label>
-        </th>
         <td>
-            <input type="checkbox" id="cm-disabled" name="cm-disabled" <?php echo esc_attr( $comments_disabled ); ?>>
+            <input type="checkbox" id="cm-disabled" name="cm-disabled" <?php echo esc_attr( $comments_disabled ); ?>><?php _e( 'Disable comments', 'averta-envato' ); ?>
             <p class="description"><?php _e( 'Disable comments in this group.', 'averta-envato' ); ?></p>
         </td>
     </tr>
     <tr class="form-field">
-        <th valign="top" scope="row">
-            <label for="new-disabled"><?php _e( 'Disable new', 'averta-envato' ); ?></label>
-        </th>
         <td>
-            <input type="checkbox" id="new-disabled" name="new-disabled" <?php echo esc_attr( $new_disabled ); ?>>
+            <input type="checkbox" id="new-disabled" name="new-disabled" <?php echo esc_attr( $new_disabled ); ?>> <?php _e( 'Disable new', 'averta-envato' ); ?>
             <p class="description"><?php _e( 'Disable posting new feature request submition in this groups.', 'averta-envato' ); ?></p>
         </td>
     </tr>
