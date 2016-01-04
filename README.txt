@@ -4,9 +4,9 @@ Donate link: http://averta.net/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Feature Request, Idea Suggestion, Suggestion System
-Requires at least: 4.0
+Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 1.0.7
+Stable tag: 1.1.0
 
 Advanced Feature request and suggestion submitter with voting system for WordPress.
 
@@ -54,7 +54,7 @@ You can start translating 'Feature Request' by our [online translation service](
 
 = Minimum Requirements =
 
-* WordPress 3.8 or greater
+* WordPress 4.4 or greater
 * PHP version 5.2.4 or greater
 * MySQL version 5.0 or greater
 
@@ -121,6 +121,12 @@ Bugs can be reported in our [support forums](http://wordpress.org/support/plugin
 
 == Changelog ==
 
+= Version 1.1.0 / (4.1.2016) =
+* Make plugin translatable
+* Update settings API
+* Move groups settings to taxonomy creation and edit page.
+* Minor bug fixes
+
 = Version 1.0.7 / (29.10.2015) =
 * Minor bug fixes
 
@@ -130,6 +136,9 @@ Bugs can be reported in our [support forums](http://wordpress.org/support/plugin
 
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+- WordPress version 4.4 or above is required
 
 = 1.0.0 =
 - [New]: Initial release
