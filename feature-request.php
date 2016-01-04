@@ -11,7 +11,7 @@
  * Plugin Name:     Feature Request
  * Plugin URI:      https://wordpress.org/plugins/feature-request/
  * Description:     Feature request and suggestion submitter with voting system for WordPress.
- * Version:         1.0.7
+ * Version:         1.1.0
  * Author:          averta
  * Author URI:      http://averta.net
  * Text Domain:     feature-request
