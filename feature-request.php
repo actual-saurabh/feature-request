@@ -16,7 +16,7 @@
  * Author URI:      http://averta.net
  * Text Domain:     feature-request
  * License URI:     license.txt
- * Domain Path:     /languages
+ * Domain Path:     /languages/
  * Tested up to:    4.4.0
  */
 

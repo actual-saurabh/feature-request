@@ -48,7 +48,7 @@ class Feature_Request {
 		require_once(AVFR_DIR.'/includes/class-avfr-db.php');
 		require_once(AVFR_DIR.'/includes/class-avfr-upgrade.php');
 		// Load plugin text domain
-		add_action( 'init', 			array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $this, 'avfr_load_textdomain' ) );
 	}
 
 	/**
@@ -217,12 +217,13 @@ class Feature_Request {
 	 * Load text domain of plugin
 	 * @since 1.0
 	 */
-	public function load_plugin_textdomain() {
+	public function avfr_load_textdomain() {
 
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		$out = load_textdomain( $domain, trailingslashit( AVFR_DIR ). 'languages/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( 'feature-request', false, plugin_basename( dirname( __FILE__ ) ) . '../languages/' );
 	}
 
 }
