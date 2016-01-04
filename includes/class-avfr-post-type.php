@@ -153,7 +153,7 @@ class Avfr_Post_Type {
 
 			// Insert tags (featureTags)
 			$tag_term_id = wp_set_object_terms( $entry_id, __('Example tag 1', 'feature-request') ,'featureTags');
-			
+
 			// Set default post status as Open
 			update_post_meta( $entry_id, '_avfr_status', 'open' );
 
@@ -171,7 +171,7 @@ class Avfr_Post_Type {
 
 			/**
 			 * Use term meta instead of site option for default group settings
-			 * @since 1.0.8 
+			 * @since    1.1.0 
 			 */
 			update_term_meta( $term_id, 'avfr_max_votes', 3 );
 		    update_term_meta( $term_id, 'avfr_total_votes', 30 );
