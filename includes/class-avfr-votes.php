@@ -38,10 +38,12 @@ class Avfr_Votes {
 			$votes 				= get_post_meta( $postid, '_avfr_votes', true );
 			$total_votes 		= get_post_meta( $postid, '_avfr_total_votes', true );
 			$voted_group 		= $_POST['cfg'];
+			$term = get_term_by( 'slug', $voted_group, $taxonomy = 'groups' );
+			$term_id = $term->term_id;
 			// public voting enabled
 			$public_can_vote 	= avfr_get_option('avfr_public_voting','avfr_settings_main');
 			// Get limit for users from option in voted category
-			$user_vote_limit	= avfr_get_option('avfr_total_vote_limit_'.$voted_group,'avfr_settings_groups');
+			$user_vote_limit 	= get_term_meta( $term_id, 'avfr_total_votes', true);
 			$limit_time			= avfr_get_option('avfr_votes_limitation_time','avfr_settings_main');
 			//Get user ID
 			$userid 			= get_current_user_id();
@@ -93,9 +95,13 @@ class Avfr_Votes {
 			$postid 			= $_POST['post_id'];
 			// get votes
 			$voted_group 		= $_POST['cfg'];
+			$term = get_term_by( 'slug', $voted_group, $taxonomy = 'groups' );
+			$term_id = $term->term_id;
 			// Get limit for users from option in voted category
-			$user_vote_limit	= avfr_get_option('avfr_total_vote_limit_'.$voted_group,'avfr_settings_groups');
+			
+			$user_vote_limit 	= get_term_meta( $term_id, 'avfr_total_votes', true);
 			$limit_time			= avfr_get_option('avfr_votes_limitation_time','avfr_settings_main');
+			
 			//Get user ID
 			$userid 			= get_current_user_id();
 			$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;

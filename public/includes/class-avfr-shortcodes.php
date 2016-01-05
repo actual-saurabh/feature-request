@@ -285,7 +285,7 @@ class Avfr_Shortcodes {
 
 			foreach ( $terms as $term ) {
 				${'user_total_voted'.$term->slug} 	= $avfr_db->$fun( $ip, $userid, '', $term->slug );
-				${'user_vote_limit'.$term->slug}	= avfr_get_option('avfr_total_vote_limit_'.$term->slug,'avfr_settings_groups');
+				${'user_vote_limit'.$term->slug}	= get_term_meta( $term->term_id, 'avfr_total_votes', true );
 				${'remaining_votes'.$term->slug} 	= ${'user_vote_limit'.$term->slug} - ${'user_total_voted'.$term->slug} ;
 				echo "<p class='avfr-sc-term'>".$term->name."</p>";
 				if ( $show_total ) {

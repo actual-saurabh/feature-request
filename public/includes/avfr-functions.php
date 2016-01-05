@@ -493,7 +493,8 @@ if ( !function_exists('avfr_vote_controls') ):
 
 		if ( 'vote' !== $voting_type ){
 			//getting like/dislike limit option for each group
-			$vote_limit = avfr_get_option('avfr_total_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
+			$term_id = $featuregroups[0]->term_id;
+			$vote_limit = get_term_meta( $term_id, 'avfr_total_votes', true );
 		?>
 			<a class="avfr-like avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
 			<a class="avfr-like avfr-vote-calc avfr-vote-down" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" id="<?php echo (int) $post_id;?>" href="#"></a>
@@ -513,8 +514,8 @@ if ( !function_exists('avfr_vote_controls') ):
 		<?php
 
 		} else {
-		
-		$voting_limit = avfr_get_option('avfr_vote_limit_'.$featuregroups[0]->slug,'avfr_settings_groups');
+		$term_id = $featuregroups[0]->term_id;
+		$voting_limit = get_term_meta( $term_id, 'avfr_max_votes', true );
 			if ( $voting_limit == '1' ) {
 			?>
 				<a class="avfr-like avfr-vote-calc avfr-vote-up" data-current-group="<?php echo $featuregroups[0]->slug; ?>" data-post-id="<?php echo (int) $post_id;?>" href="#"></a>
