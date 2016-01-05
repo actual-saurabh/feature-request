@@ -47,12 +47,10 @@ jQuery(document).ready(function($){
 
    function showResponse(responseJson, statusText, xhr, $form)  {
 
-   	var json = $.parseJSON(responseJson);
-
-   		$(results).html(json.message);
+   		$(results).html(responseJson.message);
    		$('#avfr-entry-form-results').css({'display':'inline-block','background-color':'#DD6D5A'});
 
-   		if ( 'false' == json.success ) {
+   		if ( 'false' == responseJson.success ) {
 
    			$('.avfr-modal-footer input').removeAttr( 'disabled' );
    			
@@ -87,31 +85,31 @@ jQuery(document).ready(function($){
 		};
 
 		$.post( ajaxurl, data, function(response) {
-			var json = $.parseJSON(response);
-			if ( 'success' == json.response ) {
+
+			if ( 'success' == response.response ) {
 
 				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip').css({'margin-top':'5px'});
 				$('#avfr-' + data['post_id'] ).find('.avfr-like').hide();
 				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip .voting-buttons').html( thanks_voting );
-				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip span').html( json.remaining );
-				$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html(json.total_votes);
+				$('#avfr-' + data['post_id'] ).find('.avfr-tooltip span').html( response.remaining );
+				$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html(response.total_votes);
 				localStorage.email = data['voter_email'];
 
-			} else if ( 'already-voted' == json.response ) {
+			} else if ( 'already-voted' == response.response ) {
 
 				alert( already_voted );
 
-			} else if ( 'reached-limit' == json.response ) {
+			} else if ( 'reached-limit' == response.response ) {
 
 				alert( reached_limit );
 
-			} else if ( 'email-warning' == json.response ) {
+			} else if ( 'email-warning' == response.response ) {
 
-				alert( json.warning );
+				alert( response.warning );
 
 			} else {
 
-				alert( error_message );
+				alert( 'Your remainig votes are '+ response.response );
 
 			}
 
@@ -138,33 +136,33 @@ jQuery(document).ready(function($){
 			data['voter_email'] = ( '' != user_email ) ? user_email : localStorage.email;
 		};
 			$.post( ajaxurl, data, function(response) {
-				var json = $.parseJSON(response);
-				if ( 'success' == json.response ) {
+
+				if ( 'success' == response.response ) {
 					
 					$this.parent().parent().css({'margin-top':'-5px'});
 					$this.parent().addClass('avfr-voted');
-					$this.parent().nextAll('.small-text').find('span').html( json.remaining );
+					$this.parent().nextAll('.small-text').find('span').html( response.remaining );
 					$this.parent().html( thanks_voting );
-					$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html( json.total_votes );
+					$('#avfr-' + $this.data('post-id') + ' .avfr-totals-num').html( response.total_votes );
 					localStorage.email = data['voter_email'];
 					$('#avfr-' + $this.data('post-id') + ' .avfr-vote-calc').addClass('voted');
 					$('.voted').hide();
 
-				} else if ( 'remaining-limit' == json.response ) {
+				} else if ( 'remaining-limit' == response.response ) {
 
 					alert( remaining_limit );
 
-				} else if ( 'already-voted' == json.response ) {
+				} else if ( 'already-voted' == response.response ) {
 
 					alert( already_voted );
 
-				} else if ( 'email-warning' == json.response ) {
+				} else if ( 'email-warning' == response.response ) {
 
-					alert( json.warning );
+					alert( response.warning );
 
 				} else {
 
-					alert( 'Your remainig votes are '+ json.response );
+					alert( 'Your remainig votes are '+ response.response );
 
 				}
 
@@ -238,8 +236,7 @@ jQuery(document).ready(function($){
 		};
 
 		$.post( ajaxurl, data, function(response) {
-			var json = $.parseJSON(response);
-			$this.nextAll('.avfr-tooltip').find('span').html( json.response );
+			$this.nextAll('.avfr-tooltip').find('span').html( response.response );
 			if ( !( null == localStorage.getItem('email') || 'undefined' == localStorage.getItem('email') ) ) {
 				$('.voting-buttons-title').hide();
 			};
@@ -274,13 +271,13 @@ jQuery(document).ready(function($){
 			};
 
 			$.post( ajaxurl, data, function(response) {
-				var json = $.parseJSON(response);
-				if ( json.response == 'success' ) {
+
+				if ( response.response == 'success' ) {
 
 					$this.addClass('avfr-flagged');
-					$this.html(json.message);
-				} else if ( 'already-flagged' == json.response ){
-					alert( json.message );
+					$this.html(response.message);
+				} else if ( 'already-flagged' == response.response ){
+					alert( response.message );
 				}
 
 			});
