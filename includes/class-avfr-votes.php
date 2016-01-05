@@ -48,6 +48,7 @@ class Avfr_Votes {
 			$ip 				= isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : 0;
 			$get_voter_email 	= get_userdata($userid);
 			$voter_email 		= ( !is_user_logged_in() && isset( $_POST['voter_email'] ) ) ? $_POST['voter_email'] : $get_voter_email->user_email;
+
 			if ( !is_email( $voter_email ) ) {
 				$response_array = array('response' => 'email-warning', 'warning' => __('Please enter a valid email address.','feature-request'), 'email' => $voter_email );
 				wp_send_json($response_array);
@@ -81,6 +82,7 @@ class Avfr_Votes {
 		}
 		wp_die();
 	}
+
 
 	function avfr_calc_remaining_votes(){
 

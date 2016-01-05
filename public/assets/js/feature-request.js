@@ -1,4 +1,42 @@
-+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),jQuery(document).ready(function(a){var b=parseInt(feature_request.startPage)+1,c=parseInt(feature_request.maxPages),d=feature_request.nextLink,e=feature_request.label,f=feature_request.label_loading;c>=b&&a(".avfr-wrap").append('<div class="avfr-layout-main clearfix avfr-layout-main-'+b+'"></div>').append('<p class="avfr-loadmore fix"><a class="avfr-button" href="#">'+e+"</a></p>"),a(".avfr-loadmore a").click(function(){return c>=b&&(a(this).text(f),a(".avfr-layout-main-"+b).load(d+" .avfr-entry-wrap",function(){b++,d=d.replace(/\/page\/[0-9]?/,"/page/"+b),a(".avfr-loadmore").before('<div class="avfr-layout-main clearfix avfr-layout-main-'+b+'"></div>'),c>=b?a(".avfr-loadmore a").text(e):a(".avfr-loadmore a").fadeOut()})),!1})}),jQuery(document).ready(function(a){function b(b,c,d){var e=i;if(""===a.trim(a("#avfr-entryform-title").val())){e.find("#avfr-entryform-title").css("border-color","#d9534f");var f=!1}if(""===a.trim(a("#avfr-entryform-description").val())){e.find("textarea[name='avfr-description']").css("border-color","#d9534f");var f=!1}return f===!1?!1:(e.find(":submit").attr("disabled","disabled"),a("#avfr-entry-form-results").show(),a("#avfr-entry-form-results").css({display:"inline-block","background-color":"#afafaf"}),void a("#avfr-entry-form-results p").html("Sending data ..."))}function c(b,c,d,f){var g=a.parseJSON(b);a(e).html(g.message),a("#avfr-entry-form-results").css({display:"inline-block","background-color":"#DD6D5A"}),"false"==g.success?a(".avfr-modal-footer input").removeAttr("disabled"):(a("#avfr-entry-form-results").css("background-color","#53d96f"),setTimeout(function(){window.location=window.location.pathname},1e3))}var d=feature_request.ajaxurl,e=a("#avfr-entry-form-results p"),f=feature_request.thanks_voting,g=feature_request.already_voted,h=feature_request.error_message,i=(feature_request.already_flagged,a("#avfr-entry-form")),j=a("#imgCaptcha").attr("src"),k=feature_request.user_email,l=feature_request.reached_limit,m=feature_request.confirm_flag,n={target:"#avfr-entry-form-results p",success:c,beforeSubmit:b,url:d};i.ajaxForm(n),a(".avfr-wrap").on("click",".avfr-submit",function(b){b.preventDefault();var c=a(this),e={action:"avfr_vote",post_id:c.data("post-id"),cfg:c.data("current-group"),votes:c.hasClass("avfr-set-vote-up")?"+1":"-1",nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?e.voter_email=c.parent().find(".voter-email").val():e.voter_email=""!=k?k:localStorage.email,a.post(d,e,function(b){var d=a.parseJSON(b);"success"==d.response?(a("#avfr-"+e.post_id).find(".avfr-tooltip").css({"margin-top":"5px"}),a("#avfr-"+e.post_id).find(".avfr-like").hide(),a("#avfr-"+e.post_id).find(".avfr-tooltip .voting-buttons").html(f),a("#avfr-"+e.post_id).find(".avfr-tooltip span").html(d.remaining),a("#avfr-"+c.data("post-id")+" .avfr-totals-num").html(d.total_votes),localStorage.email=e.voter_email):"already-voted"==d.response?alert(g):"reached-limit"==d.response?alert(l):"email-warning"==d.response?alert(d.warning):alert(h)})}),a(".avfr-wrap").on("click",".avfr-votes-value",function(b){b.preventDefault();var c=a(this),e={action:"avfr_vote",post_id:c.data("post-id"),votes:c.data("vote"),cfg:c.data("current-group"),nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?e.voter_email=c.parent().find(".voter-email").val():e.voter_email=""!=k?k:localStorage.email,a.post(d,e,function(b){var d=a.parseJSON(b);"success"==d.response?(c.parent().parent().css({"margin-top":"-5px"}),c.parent().addClass("avfr-voted"),c.parent().nextAll(".small-text").find("span").html(d.remaining),c.parent().html(f),a("#avfr-"+c.data("post-id")+" .avfr-totals-num").html(d.total_votes),localStorage.email=e.voter_email,a("#avfr-"+c.data("post-id")+" .avfr-vote-calc").addClass("voted"),a(".voted").hide()):"remaining-limit"==d.response?alert(remaining_limit):"already-voted"==d.response?alert(g):"email-warning"==d.response?alert(d.warning):alert("Your remainig votes are "+d.response)})}),a(document).on("click",".avfr-change-status",function(b){b.preventDefault();var c=a(this),e={action:"process_change_status",post_id:c.data("post-id"),new_status:c.data("val"),nonce:feature_request.nonce};a.post(d,e,function(a){"success"==a&&alert("Status changed.")})}),a(".change-status-select").click(function(b){b.preventDefault();var c=a(this);c.change(function(){c.parent().nextAll(".avfr-change-status").attr("data-val",c.find("option:selected").val())})}),a(".avfr-wrap").on("click",".avfr-vote-calc",function(b){b.preventDefault();var c=a(this);c.nextAll(".avfr-tooltip").show(),b.stopPropagation();var e=c.hasClass("avfr-vote-up")?"avfr-set-vote-up":"avfr-set-vote-down";c.nextAll(".avfr-tooltip").find(".avfr-submit").removeClass("avfr-set-vote-up avfr-set-vote-down"),c.nextAll(".avfr-tooltip").find(".avfr-submit").addClass(e);var f={action:"avfr_calc_remaining_votes",post_id:c.data("post-id"),cfg:c.data("current-group"),nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?f.voter_email=c.parent().find(".voter-email").val():f.voter_email=""!=k?k:localStorage.email,a.post(d,f,function(b){var d=a.parseJSON(b);c.nextAll(".avfr-tooltip").find("span").html(d.response),null!=localStorage.getItem("email")&&"undefined"!=localStorage.getItem("email")&&a(".voting-buttons-title").hide()})}),a("#imgCaptcha").on("load",function(){a("#reload").removeClass("avfr-reload-animation")}),a("#reload").click(function(b){b.preventDefault(),a("#imgCaptcha").attr("src",j+"?"+Math.random()),a(this).addClass("avfr-reload-animation")}),a(".avfr-flag").click(function(b){var c=confirm(m);if(1==c){b.preventDefault();var e=a(this),f={action:"avfr_add_flag",post_id:e.data("post-id"),cfg:e.data("current-group"),nonce:feature_request.nonce};a.post(d,f,function(b){var c=a.parseJSON(b);"success"==c.response?(e.addClass("avfr-flagged"),e.html(c.message)):"already-flagged"==c.response&&alert(c.message)})}}),a(document).on("click",".avfr-tooltip",function(b){a(this).nextAll(".avfr-tooltip").show(),b.stopPropagation()}),a(document).click(function(b){b.stopPropagation(),a(".avfr-tooltip").hide()}),a(function(){a(".avfr-filter-control-item a").each(function(){a(this).prop("href")==window.location.href&&a(this).addClass("current")})})}),/*!
+/* ========================================================================
+ * Bootstrap: transition.js v3.3.1
+ * http://getbootstrap.com/javascript/#transitions
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
++function(a){"use strict";
+// CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+// ============================================================
+function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}
+// http://blog.alexmaccaw.com/css-transitions
+a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),jQuery(document).ready(function(a){var b=parseInt(feature_request.startPage)+1,c=parseInt(feature_request.maxPages),d=feature_request.nextLink,e=feature_request.label,f=feature_request.label_loading;c>=b&&a(".avfr-wrap").append('<div class="avfr-layout-main clearfix avfr-layout-main-'+b+'"></div>').append('<p class="avfr-loadmore fix"><a class="avfr-button" href="#">'+e+"</a></p>"),a(".avfr-loadmore a").click(function(){
+// Are there more posts to load?
+// Show that we're working.
+return c>=b&&(a(this).text(f),a(".avfr-layout-main-"+b).load(d+" .avfr-entry-wrap",function(){
+// Update page number and nextLink.
+b++,d=d.replace(/\/page\/[0-9]?/,"/page/"+b),a(".avfr-loadmore").before('<div class="avfr-layout-main clearfix avfr-layout-main-'+b+'"></div>'),c>=b?a(".avfr-loadmore a").text(e):a(".avfr-loadmore a").fadeOut()})),!1})}),jQuery(document).ready(function(a){
+// entry handler
+function b(b,c,d){var e=h;if(""===a.trim(a("#avfr-entryform-title").val())){e.find("#avfr-entryform-title").css("border-color","#d9534f");var f=!1}if(""===a.trim(a("#avfr-entryform-description").val())){e.find("textarea[name='avfr-description']").css("border-color","#d9534f");var f=!1}return f===!1?!1:(e.find(":submit").attr("disabled","disabled"),a("#avfr-entry-form-results").show(),a("#avfr-entry-form-results").css({display:"inline-block","background-color":"#afafaf"}),void a("#avfr-entry-form-results p").html("Sending data ..."))}function c(b,c,d,f){a(e).html(b.message),a("#avfr-entry-form-results").css({display:"inline-block","background-color":"#DD6D5A"}),"false"==b.success?a(".avfr-modal-footer input").removeAttr("disabled"):(a("#avfr-entry-form-results").css("background-color","#53d96f"),setTimeout(function(){window.location=window.location.pathname},1e3))}
+//vars
+var d=feature_request.ajaxurl,e=a("#avfr-entry-form-results p"),f=feature_request.thanks_voting,g=feature_request.already_voted,h=(feature_request.error_message,feature_request.already_flagged,a("#avfr-entry-form")),i=a("#imgCaptcha").attr("src"),j=feature_request.user_email,k=feature_request.reached_limit,l=feature_request.confirm_flag,m={target:"#avfr-entry-form-results p",success:c,beforeSubmit:b,url:d};h.ajaxForm(m),
+// When user like / dislike / vote up 1
+a(".avfr-wrap").on("click",".avfr-submit",function(b){b.preventDefault();var c=a(this),e={action:"avfr_vote",post_id:c.data("post-id"),cfg:c.data("current-group"),// cfg = Current-Feature's Group
+votes:c.hasClass("avfr-set-vote-up")?"+1":"-1",nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?e.voter_email=c.parent().find(".voter-email").val():e.voter_email=""!=j?j:localStorage.email,a.post(d,e,function(b){"success"==b.response?(a("#avfr-"+e.post_id).find(".avfr-tooltip").css({"margin-top":"5px"}),a("#avfr-"+e.post_id).find(".avfr-like").hide(),a("#avfr-"+e.post_id).find(".avfr-tooltip .voting-buttons").html(f),a("#avfr-"+e.post_id).find(".avfr-tooltip span").html(b.remaining),a("#avfr-"+c.data("post-id")+" .avfr-totals-num").html(b.total_votes),localStorage.email=e.voter_email):"already-voted"==b.response?alert(g):"reached-limit"==b.response?alert(k):"email-warning"==b.response?alert(b.warning):alert("Your remainig votes are "+b.response)})}),
+// When user vote multiple
+a(".avfr-wrap").on("click",".avfr-votes-value",function(b){b.preventDefault();var c=a(this),e={action:"avfr_vote",post_id:c.data("post-id"),votes:c.data("vote"),cfg:c.data("current-group"),// cfg = Current-Feature's Group
+nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?e.voter_email=c.parent().find(".voter-email").val():e.voter_email=""!=j?j:localStorage.email,a.post(d,e,function(b){"success"==b.response?(c.parent().parent().css({"margin-top":"-5px"}),c.parent().addClass("avfr-voted"),c.parent().nextAll(".small-text").find("span").html(b.remaining),c.parent().html(f),a("#avfr-"+c.data("post-id")+" .avfr-totals-num").html(b.total_votes),localStorage.email=e.voter_email,a("#avfr-"+c.data("post-id")+" .avfr-vote-calc").addClass("voted"),a(".voted").hide()):"remaining-limit"==b.response?alert(remaining_limit):"already-voted"==b.response?alert(g):"email-warning"==b.response?alert(b.warning):alert("Your remainig votes are "+b.response)})}),
+// When status chenged from fornt-end
+a(document).on("click",".avfr-change-status",function(b){b.preventDefault();var c=a(this),e={action:"process_change_status",post_id:c.data("post-id"),new_status:c.data("val"),nonce:feature_request.nonce};a.post(d,e,function(a){"success"==a&&alert("Status changed.")})}),
+// Whene user submit status change
+a(".change-status-select").click(function(b){b.preventDefault();var c=a(this);c.change(function(){c.parent().nextAll(".avfr-change-status").attr("data-val",c.find("option:selected").val())})}),
+//calc remaining votes like/dislike/votes
+a(".avfr-wrap").on("click",".avfr-vote-calc",function(b){b.preventDefault();var c=a(this);c.nextAll(".avfr-tooltip").show(),b.stopPropagation();var e=c.hasClass("avfr-vote-up")?"avfr-set-vote-up":"avfr-set-vote-down";c.nextAll(".avfr-tooltip").find(".avfr-submit").removeClass("avfr-set-vote-up avfr-set-vote-down"),c.nextAll(".avfr-tooltip").find(".avfr-submit").addClass(e);var f={action:"avfr_calc_remaining_votes",post_id:c.data("post-id"),cfg:c.data("current-group"),nonce:feature_request.nonce};null===localStorage.getItem("email")||"undefined"==localStorage.getItem("email")?f.voter_email=c.parent().find(".voter-email").val():f.voter_email=""!=j?j:localStorage.email,a.post(d,f,function(b){c.nextAll(".avfr-tooltip").find("span").html(b.response),null!=localStorage.getItem("email")&&"undefined"!=localStorage.getItem("email")&&a(".voting-buttons-title").hide()})}),a("#imgCaptcha").on("load",function(){a("#reload").removeClass("avfr-reload-animation")}),a("#reload").click(function(b){b.preventDefault(),a("#imgCaptcha").attr("src",i+"?"+Math.random()),a(this).addClass("avfr-reload-animation")}),
+// When user report (flag)
+a(".avfr-flag").click(function(b){var c=confirm(l);if(1==c){b.preventDefault();var e=a(this),f={action:"avfr_add_flag",post_id:e.data("post-id"),cfg:e.data("current-group"),// cfg = Current Feature Group
+nonce:feature_request.nonce};a.post(d,f,function(a){"success"==a.response?(e.addClass("avfr-flagged"),e.html(a.message)):"already-flagged"==a.response&&alert(a.message)})}}),a(document).on("click",".avfr-tooltip",function(b){a(this).nextAll(".avfr-tooltip").show(),b.stopPropagation()}),a(document).click(function(b){b.stopPropagation(),a(".avfr-tooltip").hide()}),
+//Filter buttons current link
+a(function(){a(".avfr-filter-control-item a").each(function(){a(this).prop("href")==window.location.href&&a(this).addClass("current")})})}),/*!
  * jQuery Form Plugin
  * version: 3.51.0-2014.06.20
  * Requires jQuery v1.5 or later
@@ -16,7 +54,474 @@
  * @copyright Copyright (C) 2011 Alex Gorbatchev. All rights reserved.
  * @license MIT License
  */
-function(a,b){function c(){}function d(){}function e(){}function f(a,b){"string"==typeof b&&(b=b.split("."));var c,d=b.join(".").replace(/\.(\w)/g,function(a,b){return b.toUpperCase()}),e=b.shift();return typeof(c=a[d])!=l?c=c:typeof(c=a[e])!=l&&b.length>0&&(c=f(c,b)),c}function g(){function a(a,b){e.bind(a,function(){return b.apply(d,arguments)})}var b,c=k.apply(arguments),d=this,e=1===c.length?d:c.shift();c=c[0]||{};for(b in c)a(b,c[b])}function h(a,b){return{input:a,form:b}}var i,j=(JSON||{}).stringify,k=Array.prototype.slice,l="undefined",m="item.manager",n="plugins",o="ext",p="html.wrap",q="html.hidden",r="keys",s="preInvalidate",t="postInvalidate",u="getFormData",v="setFormData",w="setInputData",x="postInit",y="ready",z={itemManager:d,plugins:[],ext:{},html:{wrap:'<div class="text-core"><div class="text-wrap"/></div>',hidden:'<input type="hidden" />'},keys:{8:"backspace",9:"tab",13:"enter!",27:"escape!",37:"left",38:"up!",39:"right",40:"down!",46:"delete",108:"numpadEnter"}};if(!j)throw new Error("JSON.stringify() not found");i=d.prototype,i.init=function(a){},i.filter=function(a,b){var c,d,e=[];for(c=0;c<a.length;c++)d=a[c],this.itemContains(d,b)&&e.push(d);return e},i.itemContains=function(a,b){return 0==this.itemToString(a).toLowerCase().indexOf(b.toLowerCase())},i.stringToItem=function(a){return a},i.itemToString=function(a){return a},i.compareItems=function(a,b){return a==b},i=c.prototype,i.init=function(b,c){var d,e,f,g=this;g._defaults=a.extend({},z),g._opts=c||{},g._plugins={},g._itemManager=e=new(g.opts(m)),b=a(b),f=a(g.opts(p)),d=a(g.opts(q)),b.wrap(f).keydown(function(a){return g.onKeyDown(a)}).keyup(function(a){return g.onKeyUp(a)}).data("textext",g),a(g).data({hiddenInput:d,wrapElement:b.parents(".text-wrap").first(),input:b}),d.attr("name",b.attr("name")),b.attr("name",null),d.insertAfter(b),a.extend(!0,e,g.opts(o+".item.manager")),a.extend(!0,g,g.opts(o+".*"),g.opts(o+".core")),g.originalWidth=b.outerWidth(),g.invalidateBounds(),e.init(g),g.initPatches(),g.initPlugins(g.opts(n),a.fn.textext.plugins),g.on({setFormData:g.onSetFormData,getFormData:g.onGetFormData,setInputData:g.onSetInputData,anyKeyUp:g.onAnyKeyUp}),g.trigger(x),g.trigger(y),g.getFormData(0)},i.initPatches=function(){var b,c=[],d=a.fn.textext.patches;for(b in d)c.push(b);this.initPlugins(c,d)},i.initPlugins=function(b,c){var d,e,f,g=this,h=[];for("string"==typeof b&&(b=b.split(/\s*,\s*|\s+/g)),f=0;f<b.length;f++)d=b[f],e=c[d],e&&(g._plugins[d]=e=new e,g[d]=function(a){return function(){return a}}(e),h.push(e),a.extend(!0,e,g.opts(o+".*"),g.opts(o+"."+d)));for(h.sort(function(a,b){return a=a.initPriority(),b=b.initPriority(),a===b?0:b>a?1:-1}),f=0;f<h.length;f++)h[f].init(g)},i.hasPlugin=function(a){return!!this._plugins[a]},i.on=g,i.bind=function(a,b){this.input().bind(a,b)},i.trigger=function(){var a=arguments;this.input().trigger(a[0],k.call(a,1))},i.itemManager=function(){return this._itemManager},i.input=function(){return a(this).data("input")},i.opts=function(a){var b=f(this._opts,a);return"undefined"==typeof b?f(this._defaults,a):b},i.wrapElement=function(){return a(this).data("wrapElement")},i.invalidateBounds=function(){var a,b=this,c=b.input(),d=b.wrapElement(),e=d.parent(),f=b.originalWidth+"px";b.trigger(s),a=c.outerHeight()+"px",c.css({width:f}),d.css({width:f,height:a}),e.css({height:a}),b.trigger(t)},i.focusInput=function(){this.input()[0].focus()},i.serializeData=j,i.hiddenInput=function(b){return a(this).data("hiddenInput")},i.getWeightedEventResponse=function(a,b){var c=this,d={},e=0;c.trigger(a,d,b);for(var f in d)e=Math.max(e,f);return d[e]},i.getFormData=function(a){var b=this,c=b.getWeightedEventResponse(u,a||0);b.trigger(v,c.form),b.trigger(w,c.input)},i.onAnyKeyUp=function(a,b){this.getFormData(b)},i.onSetInputData=function(a,b){this.input().val(b)},i.onSetFormData=function(a,b){var c=this;c.hiddenInput().val(c.serializeData(b))},i.onGetFormData=function(a,b){var c=this.input().val();b[0]=h(c,c)},a(["Down","Up"]).each(function(){var a=this.toString();i["onKey"+a]=function(b){var c=this,d=c.opts(r)[b.keyCode],e=!0;return d&&(e="!"!=d.substr(-1),d=d.replace("!",""),c.trigger(d+"Key"+a),"Up"==a&&c._lastKeyDown==b.keyCode&&(c._lastKeyDown=null,c.trigger(d+"KeyPress")),"Down"==a&&(c._lastKeyDown=b.keyCode)),c.trigger("anyKey"+a,b.keyCode),e}}),i=e.prototype,i.on=g,i.formDataObject=h,i.init=function(a){throw new Error("Not implemented")},i.baseInit=function(b,c){var d=this;b._defaults=a.extend(!0,b._defaults,c),d._core=b,d._timers={}},i.startTimer=function(a,b,c){var d=this;d.stopTimer(a),d._timers[a]=setTimeout(function(){delete d._timers[a],c.apply(d)},1e3*b)},i.stopTimer=function(a){clearTimeout(this._timers[a])},i.core=function(){return this._core},i.opts=function(a){return this.core().opts(a)},i.itemManager=function(){return this.core().itemManager()},i.input=function(){return this.core().input()},i.val=function(a){var b=this.input();return typeof a===l?b.val():void b.val(a)},i.trigger=function(){var a=this.core();a.trigger.apply(a,arguments)},i.bind=function(a,b){this.core().bind(a,b)},i.initPriority=function(){return 0};var A=!1,B=a.fn.textext=function(b){var d;return A||null==(d=a.fn.textext.css)||(a("head").append("<style>"+d+"</style>"),A=!0),this.map(function(){var d=a(this);if(null==b)return d.data("textext");var e=new c;return e.init(d,b),d.data("textext",e),e.input()[0]})};B.addPlugin=function(a,b){B.plugins[a]=b,b.prototype=new B.TextExtPlugin},B.addPatch=function(a,b){B.patches[a]=b,b.prototype=new B.TextExtPlugin},B.TextExt=c,B.TextExtPlugin=e,B.ItemManager=d,B.plugins={},B.patches={}}(jQuery),function(a){function b(){}a.fn.textext.TextExtIE9Patches=b,a.fn.textext.addPatch("ie9",b);var c=b.prototype;c.init=function(a){if(-1!=navigator.userAgent.indexOf("MSIE 9")){var b=this;a.on({postInvalidate:b.onPostInvalidate})}},c.onPostInvalidate=function(){var a=this,b=a.input(),c=b.val();b.val(Math.random()),b.val(c)}}(jQuery),/**
+function(a,b){/**
+	 * TextExt is the main core class which by itself doesn't provide any functionality
+	 * that is user facing, however it has the underlying mechanics to bring all the
+	 * plugins together under one roof and make them work with each other or on their
+	 * own.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExt
+	 */
+function c(){}/**
+	 * ItemManager is used to seamlessly convert between string that come from the user input to whatever 
+	 * the format the item data is being passed around in. It's used by all plugins that in one way or 
+	 * another operate with items, such as Tags, Filter, Autocomplete and Suggestions. Default implementation 
+	 * works with `String` type. 
+	 *
+	 * Each instance of `TextExt` creates a new instance of default implementation of `ItemManager`
+	 * unless `itemManager` option was set to another implementation.
+	 *
+	 * To satisfy requirements of managing items of type other than a `String`, different implementation
+	 * if `ItemManager` should be supplied.
+	 *
+	 * If you wish to bring your own implementation, you need to create a new class and implement all the 
+	 * methods that `ItemManager` has. After, you need to supply your pass via the `itemManager` option during
+	 * initialization like so:
+	 *
+	 *     $('#input').textext({
+	 *         itemManager : CustomItemManager
+	 *     })
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id ItemManager
+	 */
+function d(){}/**
+	 * TextExtPlugin is a base class for all plugins. It provides common methods which are reused
+	 * by majority of plugins.
+	 *
+	 * All plugins must register themselves by calling the `$.fn.textext.addPlugin(name, constructor)`
+	 * function while providing plugin name and constructor. The plugin name is the same name that user
+	 * will identify the plugin in the `plugins` option when initializing TextExt component and constructor
+	 * function will create a new instance of the plugin. *Without registering, the core won't
+	 * be able to see the plugin.*
+	 *
+	 * <span class="new label version">new in 1.2.0</span> You can get instance of each plugin from the core 
+	 * via associated function with the same name as the plugin. For example:
+	 *
+	 *     $('#input').textext()[0].tags()
+	 *     $('#input').textext()[0].autocomplete()
+	 *     ...
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtPlugin
+	 */
+function e(){}/**
+	 * Returns object property by name where name is dot-separated and object is multiple levels deep.
+	 * @param target Object Source object.
+	 * @param name String Dot separated property name, ie `foo.bar.world`
+	 * @id core.getProperty
+	 */
+function f(a,b){"string"==typeof b&&(b=b.split("."));var c,d=b.join(".").replace(/\.(\w)/g,function(a,b){return b.toUpperCase()}),e=b.shift();
+// name.length here should be zero
+return typeof(c=a[d])!=l?c=c:typeof(c=a[e])!=l&&b.length>0&&(c=f(c,b)),c}/**
+	 * Hooks up specified events in the scope of the current object.
+	 * @author agorbatchev
+	 * @date 2011/08/09
+	 */
+function g(){function a(a,b){e.bind(a,function(){
+// apply handler to our PLUGIN object, not the target
+return b.apply(d,arguments)})}var b,c=k.apply(arguments),d=this,e=1===c.length?d:c.shift();c=c[0]||{};for(b in c)a(b,c[b])}function h(a,b){return{input:a,form:b}}var i,j=(JSON||{}).stringify,k=Array.prototype.slice,l="undefined",/**
+		 * TextExt provides a way to pass in the options to configure the core as well as
+		 * each plugin that is being currently used. The jQuery exposed plugin `$().textext()` 
+		 * function takes a hash object with key/value set of options. For example:
+		 *
+		 *     $('textarea').textext({
+		 *         enabled: true
+		 *     })
+		 *
+		 * There are multiple ways of passing in the options:
+		 *
+		 * 1. Options could be nested multiple levels deep and accessed using all lowercased, dot
+		 * separated style, eg `foo.bar.world`. The manual is using this style for clarity and
+		 * consistency. For example:
+		 *
+		 *        {
+		 *            item: {
+		 *                manager: ...
+		 *            },
+		 *
+		 *            html: {
+		 *                wrap: ...
+		 *            },
+		 *
+		 *            autocomplete: {
+		 *                enabled: ...,
+		 *                dropdown: {
+		 *                   position: ...
+		 *                }
+		 *            }
+		 *        }
+		 *
+		 * 2. Options could be specified using camel cased names in a flat key/value fashion like so:
+		 *
+		 *        {
+		 *            itemManager: ...,
+		 *            htmlWrap: ...,
+		 *            autocompleteEnabled: ...,
+		 *            autocompleteDropdownPosition: ...
+		 *        }
+		 *
+		 * 3. Finally, options could be specified in mixed style. It's important to understand that
+		 * for each dot separated name, its alternative in camel case is also checked for, eg for 
+		 * `foo.bar.world` it's alternatives could be `fooBarWorld`, `foo.barWorld` or `fooBar.world`, 
+		 * which translates to `{ foo: { bar: { world: ... } } }`, `{ fooBarWorld: ... }`, 
+		 * `{ foo : { barWorld : ... } }` or `{ fooBar: { world: ... } }` respectively. For example:
+		 *
+		 *        {
+		 *            itemManager : ...,
+		 *            htmlWrap: ...,
+		 *            autocomplete: {
+		 *                enabled: ...,
+		 *                dropdownPosition: ...
+		 *            }
+		 *        }
+		 *
+		 * Mixed case is used through out the code, wherever it seems appropriate. However in the code, all option
+		 * names are specified in the dot notation because it works both ways where as camel case is not
+		 * being converted to its alternative dot notation.
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExt.options
+		 */
+/**
+		 * Default instance of `ItemManager` which takes `String` type as default for tags.
+		 *
+		 * @name item.manager
+		 * @default ItemManager
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.options.item.manager
+		 */
+m="item.manager",/**
+		 * List of plugins that should be used with the current instance of TextExt. The list could be
+		 * specified as array of strings or as comma or space separated string.
+		 *
+		 * @name plugins
+		 * @default []
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.options.plugins
+		 */
+n="plugins",/**
+		 * TextExt allows for overriding of virtually any method that the core or any of its plugins
+		 * use. This could be accomplished through the use of the `ext` option.
+		 *
+		 * It's possible to specifically target the core or any plugin, as well as overwrite all the
+		 * desired methods everywhere.
+		 *
+		 * 1. Targeting the core:
+		 *
+		 *        ext: {
+		 *            core: {
+		 *                trigger: function()
+		 *                {
+		 *                    console.log('TextExt.trigger', arguments);
+		 *                    $.fn.textext.TextExt.prototype.trigger.apply(this, arguments);
+		 *                }
+		 *            }
+		 *        }
+		 *
+		 * 2. Targeting individual plugins:
+		 *
+		 *        ext: {
+		 *            tags: {
+		 *                addTags: function(tags)
+		 *                {
+		 *                    console.log('TextExtTags.addTags', tags);
+		 *                    $.fn.textext.TextExtTags.prototype.addTags.apply(this, arguments);
+		 *                }
+		 *            }
+		 *        }
+		 *
+		 * 3. Targeting `ItemManager` instance:
+		 *
+		 *        ext: {
+		 *            itemManager: {
+		 *                stringToItem: function(str)
+		 *                {
+		 *                    console.log('ItemManager.stringToItem', str);
+		 *                    return $.fn.textext.ItemManager.prototype.stringToItem.apply(this, arguments);
+		 *                }
+		 *            }
+		 *        }
+		 *
+		 * 4. And finally, in edge cases you can extend everything at once:
+		 *
+		 *        ext: {
+		 *            '*': {
+		 *                fooBar: function() {}
+		 *            }
+		 *        }
+		 *
+		 * @name ext
+		 * @default {}
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.options.ext
+		 */
+o="ext",/**
+		 * HTML source that is used to generate elements necessary for the core and all other
+		 * plugins to function.
+		 *
+		 * @name html.wrap
+		 * @default '<div class="text-core"><div class="text-wrap"/></div>'
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.options.html.wrap
+		 */
+p="html.wrap",/**
+		 * HTML source that is used to generate hidden input value of which will be submitted 
+		 * with the HTML form.
+		 *
+		 * @name html.hidden
+		 * @default '<input type="hidden" />'
+		 * @author agorbatchev
+		 * @date 2011/08/20
+		 * @id TextExt.options.html.hidden
+		 */
+q="html.hidden",/**
+		 * Hash table of key codes and key names for which special events will be created
+		 * by the core. For each entry a `[name]KeyDown`, `[name]KeyUp` and `[name]KeyPress` events 
+		 * will be triggered along side with `anyKeyUp` and `anyKeyDown` events for every 
+		 * key stroke.
+		 *
+		 * Here's a list of default keys:
+		 *
+		 *     {
+		 *         8   : 'backspace',
+		 *         9   : 'tab',
+		 *         13  : 'enter!',
+		 *         27  : 'escape!',
+		 *         37  : 'left',
+		 *         38  : 'up!',
+		 *         39  : 'right',
+		 *         40  : 'down!',
+		 *         46  : 'delete',
+		 *         108 : 'numpadEnter'
+		 *     }
+		 *
+		 * Please note the `!` at the end of some keys. This tells the core that by default
+		 * this keypress will be trapped and not passed on to the text input.
+		 *
+		 * @name keys
+		 * @default { ... }
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.options.keys
+		 */
+r="keys",/**
+		 * The core triggers or reacts to the following events.
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExt.events
+		 */
+/**
+		 * Core triggers `preInvalidate` event before the dimensions of padding on the text input
+		 * are set.
+		 *
+		 * @name preInvalidate
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.preInvalidate
+		 */
+s="preInvalidate",/**
+		 * Core triggers `postInvalidate` event after the dimensions of padding on the text input
+		 * are set.
+		 *
+		 * @name postInvalidate
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.postInvalidate
+		 */
+t="postInvalidate",/**
+		 * Core triggers `getFormData` on every key press to collect data that will be populated
+		 * into the hidden input that will be submitted with the HTML form and data that will
+		 * be displayed in the input field that user is currently interacting with.
+		 *
+		 * All plugins that wish to affect how the data is presented or sent must react to 
+		 * `getFormData` and populate the data in the following format:
+		 *
+		 *     {
+		 *         input : {String},
+		 *         form  : {Object}
+		 *     }
+		 *
+		 * The data key must be a numeric weight which will be used to determine which data
+		 * ends up being used. Data with the highest numerical weight gets the priority. This
+		 * allows plugins to set the final data regardless of their initialization order, which
+		 * otherwise would be impossible.
+		 *
+		 * For example, the Tags and Autocomplete plugins have to work side by side and Tags
+		 * plugin must get priority on setting the data. Therefore the Tags plugin sets data
+		 * with the weight 200 where as the Autocomplete plugin sets data with the weight 100.
+		 *
+		 * Here's an example of a typical `getFormData` handler:
+		 * 
+		 *     TextExtPlugin.prototype.onGetFormData = function(e, data, keyCode)
+		 *     {
+		 *         data[100] = self.formDataObject('input value', 'form value');
+		 *     };
+		 *
+		 * Core also reacts to the `getFormData` and updates hidden input with data which will be
+		 * submitted with the HTML form.
+		 *
+		 * @name getFormData
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.getFormData
+		 */
+u="getFormData",/**
+		 * Core triggers and reacts to the `setFormData` event to update the actual value in the
+		 * hidden input that will be submitted with the HTML form. Second argument can be value
+		 * of any type and by default it will be JSON serialized with `TextExt.serializeData()`
+		 * function.
+		 *
+		 * @name setFormData
+		 * @author agorbatchev
+		 * @date 2011/08/22
+		 * @id TextExt.events.setFormData
+		 */
+v="setFormData",/**
+		 * Core triggers and reacts to the `setInputData` event to update the actual value in the
+		 * text input that user is interacting with. Second argument must be of a `String` type
+		 * the value of which will be set into the text input.
+		 *
+		 * @name setInputData
+		 * @author agorbatchev
+		 * @date 2011/08/22
+		 * @id TextExt.events.setInputData
+		 */
+w="setInputData",/**
+		 * Core triggers `postInit` event to let plugins run code after all plugins have been 
+		 * created and initialized. This is a good place to set some kind of global values before 
+		 * somebody gets to use them. This is not the right place to expect all plugins to finish
+		 * their initialization.
+		 *
+		 * @name postInit
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.postInit
+		 */
+x="postInit",/**
+		 * Core triggers `ready` event after all global configuration and prepearation has been
+		 * done and the TextExt component is ready for use. Event handlers should expect all 
+		 * values to be set and the plugins to be in the final state.
+		 *
+		 * @name ready
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.ready
+		 */
+y="ready",/**
+		 * Core triggers `anyKeyUp` event for every key up event triggered within the component.
+		 *
+		 * @name anyKeyUp
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.anyKeyUp
+		 */
+/**
+		 * Core triggers `anyKeyDown` event for every key down event triggered within the component.
+		 *
+		 * @name anyKeyDown
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.anyKeyDown
+		 */
+/**
+		 * Core triggers `[name]KeyUp` event for every key specifid in the `keys` option that is 
+		 * triggered within the component.
+		 *
+		 * @name [name]KeyUp
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.[name]KeyUp
+		 */
+/**
+		 * Core triggers `[name]KeyDown` event for every key specified in the `keys` option that is 
+		 * triggered within the component.
+		 *
+		 * @name [name]KeyDown
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.[name]KeyDown
+		 */
+/**
+		 * Core triggers `[name]KeyPress` event for every key specified in the `keys` option that is 
+		 * triggered within the component.
+		 *
+		 * @name [name]KeyPress
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExt.events.[name]KeyPress
+		 */
+z={itemManager:d,plugins:[],ext:{},html:{wrap:'<div class="text-core"><div class="text-wrap"/></div>',hidden:'<input type="hidden" />'},keys:{8:"backspace",9:"tab",13:"enter!",27:"escape!",37:"left",38:"up!",39:"right",40:"down!",46:"delete",108:"numpadEnter"}};
+// Freak out if there's no JSON.stringify function found
+if(!j)throw new Error("JSON.stringify() not found");i=d.prototype,i.init=function(a){},i.filter=function(a,b){var c,d,e=[];for(c=0;c<a.length;c++)d=a[c],this.itemContains(d,b)&&e.push(d);return e},i.itemContains=function(a,b){return 0==this.itemToString(a).toLowerCase().indexOf(b.toLowerCase())},i.stringToItem=function(a){return a},i.itemToString=function(a){return a},i.compareItems=function(a,b){return a==b},i=c.prototype,i.init=function(b,c){var d,e,f,g=this;g._defaults=a.extend({},z),g._opts=c||{},g._plugins={},g._itemManager=e=new(g.opts(m)),b=a(b),f=a(g.opts(p)),d=a(g.opts(q)),b.wrap(f).keydown(function(a){return g.onKeyDown(a)}).keyup(function(a){return g.onKeyUp(a)}).data("textext",g),a(g).data({hiddenInput:d,wrapElement:b.parents(".text-wrap").first(),input:b}),d.attr("name",b.attr("name")),b.attr("name",null),d.insertAfter(b),a.extend(!0,e,g.opts(o+".item.manager")),a.extend(!0,g,g.opts(o+".*"),g.opts(o+".core")),g.originalWidth=b.outerWidth(),g.invalidateBounds(),e.init(g),g.initPatches(),g.initPlugins(g.opts(n),a.fn.textext.plugins),g.on({setFormData:g.onSetFormData,getFormData:g.onGetFormData,setInputData:g.onSetInputData,anyKeyUp:g.onAnyKeyUp}),g.trigger(x),g.trigger(y),g.getFormData(0)},i.initPatches=function(){var b,c=[],d=a.fn.textext.patches;for(b in d)c.push(b);this.initPlugins(c,d)},i.initPlugins=function(b,c){var d,e,f,g=this,h=[];for("string"==typeof b&&(b=b.split(/\s*,\s*|\s+/g)),f=0;f<b.length;f++)d=b[f],e=c[d],e&&(g._plugins[d]=e=new e,g[d]=function(a){return function(){return a}}(e),h.push(e),a.extend(!0,e,g.opts(o+".*"),g.opts(o+"."+d)));for(h.sort(function(a,b){return a=a.initPriority(),b=b.initPriority(),a===b?0:b>a?1:-1}),f=0;f<h.length;f++)h[f].init(g)},i.hasPlugin=function(a){return!!this._plugins[a]},i.on=g,i.bind=function(a,b){this.input().bind(a,b)},i.trigger=function(){var a=arguments;this.input().trigger(a[0],k.call(a,1))},i.itemManager=function(){return this._itemManager},i.input=function(){return a(this).data("input")},i.opts=function(a){var b=f(this._opts,a);return"undefined"==typeof b?f(this._defaults,a):b},i.wrapElement=function(){return a(this).data("wrapElement")},i.invalidateBounds=function(){var a,b=this,c=b.input(),d=b.wrapElement(),e=d.parent(),f=b.originalWidth+"px";b.trigger(s),a=c.outerHeight()+"px",c.css({width:f}),d.css({width:f,height:a}),e.css({height:a}),b.trigger(t)},i.focusInput=function(){this.input()[0].focus()},i.serializeData=j,i.hiddenInput=function(b){return a(this).data("hiddenInput")},i.getWeightedEventResponse=function(a,b){var c=this,d={},e=0;c.trigger(a,d,b);for(var f in d)e=Math.max(e,f);return d[e]},i.getFormData=function(a){var b=this,c=b.getWeightedEventResponse(u,a||0);b.trigger(v,c.form),b.trigger(w,c.input)},i.onAnyKeyUp=function(a,b){this.getFormData(b)},i.onSetInputData=function(a,b){this.input().val(b)},i.onSetFormData=function(a,b){var c=this;c.hiddenInput().val(c.serializeData(b))},i.onGetFormData=function(a,b){var c=this.input().val();b[0]=h(c,c)},a(["Down","Up"]).each(function(){var a=this.toString();i["onKey"+a]=function(b){var c=this,d=c.opts(r)[b.keyCode],e=!0;return d&&(e="!"!=d.substr(-1),d=d.replace("!",""),c.trigger(d+"Key"+a),"Up"==a&&c._lastKeyDown==b.keyCode&&(c._lastKeyDown=null,c.trigger(d+"KeyPress")),"Down"==a&&(c._lastKeyDown=b.keyCode)),c.trigger("anyKey"+a,b.keyCode),e}}),i=e.prototype,i.on=g,i.formDataObject=h,i.init=function(a){throw new Error("Not implemented")},i.baseInit=function(b,c){var d=this;b._defaults=a.extend(!0,b._defaults,c),d._core=b,d._timers={}},i.startTimer=function(a,b,c){var d=this;d.stopTimer(a),d._timers[a]=setTimeout(function(){delete d._timers[a],c.apply(d)},1e3*b)},i.stopTimer=function(a){clearTimeout(this._timers[a])},i.core=function(){return this._core},i.opts=function(a){return this.core().opts(a)},i.itemManager=function(){return this.core().itemManager()},i.input=function(){return this.core().input()},i.val=function(a){var b=this.input();return typeof a===l?b.val():void b.val(a)},i.trigger=function(){var a=this.core();a.trigger.apply(a,arguments)},i.bind=function(a,b){this.core().bind(a,b)},i.initPriority=function(){return 0};
+//--------------------------------------------------------------------------------
+// jQuery Integration
+/**
+	 * TextExt integrates as a jQuery plugin available through the `$(selector).textext(opts)` call. If
+	 * `opts` argument is passed, then a new instance of `TextExt` will be created for all the inputs
+	 * that match the `selector`. If `opts` wasn't passed and TextExt was already intantiated for 
+	 * inputs that match the `selector`, array of `TextExt` instances will be returned instead.
+	 *
+	 *     // will create a new instance of `TextExt` for all elements that match `.sample`
+	 *     $('.sample').textext({ ... });
+	 *
+	 *     // will return array of all `TextExt` instances
+	 *     var list = $('.sample').textext();
+	 *
+	 * The following properties are also exposed through the jQuery `$.fn.textext`:
+	 *
+	 * * `TextExt` -- `TextExt` class.
+	 * * `TextExtPlugin` -- `TextExtPlugin` class.
+	 * * `ItemManager` -- `ItemManager` class.
+	 * * `plugins` -- Key/value table of all registered plugins.
+	 * * `addPlugin(name, constructor)` -- All plugins should register themselves using this function.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExt.jquery
+	 */
+var A=!1,B=a.fn.textext=function(b){var d;return A||null==(d=a.fn.textext.css)||(a("head").append("<style>"+d+"</style>"),A=!0),this.map(function(){var d=a(this);if(null==b)return d.data("textext");var e=new c;return e.init(d,b),d.data("textext",e),e.input()[0]})};/**
+	 * This static function registers a new plugin which makes it available through the `plugins` option
+	 * to the end user. The name specified here is the name the end user would put in the `plugins` option
+	 * to add this plugin to a new instance of TextExt.
+	 * 
+	 * @signature $.fn.textext.addPlugin(name, constructor)
+	 *
+	 * @param name {String} Name of the plugin.
+	 * @param constructor {Function} Plugin constructor.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/10/11
+	 * @id TextExt.addPlugin
+	 */
+B.addPlugin=function(a,b){B.plugins[a]=b,b.prototype=new B.TextExtPlugin},/**
+	 * This static function registers a new patch which is added to each instance of TextExt. If you are
+	 * adding a new patch, make sure to call this method.
+	 * 
+	 * @signature $.fn.textext.addPatch(name, constructor)
+	 *
+	 * @param name {String} Name of the patch.
+	 * @param constructor {Function} Patch constructor.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/10/11
+	 * @id TextExt.addPatch
+	 */
+B.addPatch=function(a,b){B.patches[a]=b,b.prototype=new B.TextExtPlugin},B.TextExt=c,B.TextExtPlugin=e,B.ItemManager=d,B.plugins={},B.patches={}}(jQuery),function(a){function b(){}a.fn.textext.TextExtIE9Patches=b,a.fn.textext.addPatch("ie9",b);var c=b.prototype;c.init=function(a){if(-1!=navigator.userAgent.indexOf("MSIE 9")){var b=this;a.on({postInvalidate:b.onPostInvalidate})}},c.onPostInvalidate=function(){var a=this,b=a.input(),c=b.val();
+// agorbatchev :: IE9 doesn't seem to update the padding if box-sizing is on until the
+// text box value changes, so forcing this change seems to do the trick of updating
+// IE's padding visually.
+b.val(Math.random()),b.val(c)}}(jQuery),/**
  * jQuery TextExt Plugin
  * http://textextjs.com
  *
@@ -24,7 +529,602 @@ function(a,b){function c(){}function d(){}function e(){}function f(a,b){"string"
  * @copyright Copyright (C) 2011 Alex Gorbatchev. All rights reserved.
  * @license MIT License
  */
-function(a){function b(){}a.fn.textext.TextExtAutocomplete=b,a.fn.textext.addPlugin("autocomplete",b);var c=b.prototype,d=".",e="text-selected",f=d+e,g="text-suggestion",h=d+g,i="text-label",j=d+i,k="autocomplete.enabled",l="autocomplete.dropdown.position",m="autocomplete.dropdown.maxHeight",n="autocomplete.render",o="html.dropdown",p="html.suggestion",q="hideDropdown",r="showDropdown",s="getSuggestions",t="above",u="below",v="mousedownOnAutocomplete",w={autocomplete:{enabled:!0,dropdown:{position:u,maxHeight:"100px"}},html:{dropdown:'<div class="text-dropdown"><div class="text-list"/></div>',suggestion:'<div class="text-suggestion"><span class="text-label"/></div>'}};c.init=function(b){var c=this;c.baseInit(b,w);var d,e=c.input();c.opts(k)===!0&&(c.on({blur:c.onBlur,anyKeyUp:c.onAnyKeyUp,deleteKeyUp:c.onAnyKeyUp,backspaceKeyPress:c.onBackspaceKeyPress,enterKeyPress:c.onEnterKeyPress,escapeKeyPress:c.onEscapeKeyPress,setSuggestions:c.onSetSuggestions,showDropdown:c.onShowDropdown,hideDropdown:c.onHideDropdown,toggleDropdown:c.onToggleDropdown,postInvalidate:c.positionDropdown,getFormData:c.onGetFormData,downKeyDown:c.onDownKeyDown,upKeyDown:c.onUpKeyDown}),d=a(c.opts(o)),d.insertAfter(e),c.on(d,{mouseover:c.onMouseOver,mousedown:c.onMouseDown,click:c.onClick}),d.css("maxHeight",c.opts(m)).addClass("text-position-"+c.opts(l)),a(c).data("container",d),a(document.body).click(function(a){c.isDropdownVisible()&&!c.withinWrapElement(a.target)&&c.trigger(q)}),c.positionDropdown())},c.containerElement=function(){return a(this).data("container")},c.onMouseOver=function(b){var c=this,d=a(b.target);d.is(h)&&(c.clearSelected(),d.addClass(e))},c.onMouseDown=function(a){this.containerElement().data(v,!0)},c.onClick=function(b){var c=this,d=a(b.target);(d.is(h)||d.is(j))&&c.trigger("enterKeyPress"),c.core().hasPlugin("tags")&&c.val("")},c.onBlur=function(a){var b=this,c=b.containerElement(),d=c.data(v)===!0;b.isDropdownVisible()&&(d?b.core().focusInput():b.trigger(q)),c.removeData(v)},c.onBackspaceKeyPress=function(a){var b=this,c=b.val().length>0;(c||b.isDropdownVisible())&&b.getSuggestions()},c.onAnyKeyUp=function(a,b){var c=this,d=null!=c.opts("keys."+b);c.val().length>0&&!d&&c.getSuggestions()},c.onDownKeyDown=function(a){var b=this;b.isDropdownVisible()?b.toggleNextSuggestion():b.getSuggestions()},c.onUpKeyDown=function(a){this.togglePreviousSuggestion()},c.onEnterKeyPress=function(a){var b=this;b.isDropdownVisible()&&b.selectFromDropdown()},c.onEscapeKeyPress=function(a){var b=this;b.isDropdownVisible()&&b.trigger(q)},c.positionDropdown=function(){var a=this,b=a.containerElement(),c=a.opts(l),d=a.core().wrapElement().outerHeight(),e={};e[c===t?"bottom":"top"]=d+"px",b.css(e)},c.suggestionElements=function(){return this.containerElement().find(h)},c.setSelectedSuggestion=function(b){if(b){var c,d,f=this,h=f.suggestionElements(),i=h.first();for(f.clearSelected(),d=0;d<h.length;d++)if(c=a(h[d]),f.itemManager().compareItems(c.data(g),b)){i=c.addClass(e);break}i.addClass(e),f.scrollSuggestionIntoView(i)}},c.selectedSuggestionElement=function(){return this.suggestionElements().filter(f).first()},c.isDropdownVisible=function(){return this.containerElement().is(":visible")===!0},c.onGetFormData=function(a,b,c){var d=this,e=d.val(),f=e,g=e;b[100]=d.formDataObject(f,g)},c.initPriority=function(){return 200},c.onHideDropdown=function(a){this.hideDropdown()},c.onToggleDropdown=function(a){var b=this;b.trigger(b.containerElement().is(":visible")?q:r)},c.onShowDropdown=function(b,c){var d=this,e=d.selectedSuggestionElement().data(g),f=d._suggestions;return f?(a.isFunction(c)?c(d):(d.renderSuggestions(d._suggestions),d.toggleNextSuggestion()),d.showDropdown(d.containerElement()),void d.setSelectedSuggestion(e)):d.trigger(s)},c.onSetSuggestions=function(a,b){var c=this,d=c._suggestions=b.result;b.showHideDropdown!==!1&&c.trigger(null===d||0===d.length?q:r)},c.getSuggestions=function(){var a=this,b=a.val();a._previousInputValue!=b&&(""==b&&(current=null),a._previousInputValue=b,a.trigger(s,{query:b}))},c.clearItems=function(){this.containerElement().find(".text-list").children().remove()},c.renderSuggestions=function(b){var c=this;c.clearItems(),a.each(b||[],function(a,b){c.addSuggestion(b)})},c.showDropdown=function(){this.containerElement().show()},c.hideDropdown=function(){var a=this,b=a.containerElement();a._previousInputValue=null,b.hide()},c.addSuggestion=function(a){var b=this,c=b.opts(n),d=b.addDropdownItem(c?c.call(b,a):b.itemManager().itemToString(a));d.data(g,a)},c.addDropdownItem=function(b){var c=this,d=c.containerElement().find(".text-list"),e=a(c.opts(p));return e.find(".text-label").html(b),d.append(e),e},c.clearSelected=function(){this.suggestionElements().removeClass(e)},c.toggleNextSuggestion=function(){var a,b=this,c=b.selectedSuggestionElement();c.length>0?(a=c.next(),a.length>0&&c.removeClass(e)):a=b.suggestionElements().first(),a.addClass(e),b.scrollSuggestionIntoView(a)},c.togglePreviousSuggestion=function(){var a=this,b=a.selectedSuggestionElement(),c=b.prev();0!=c.length&&(a.clearSelected(),c.addClass(e),a.scrollSuggestionIntoView(c))},c.scrollSuggestionIntoView=function(a){var b=a.outerHeight(),c=this.containerElement(),d=c.innerHeight(),e=c.scrollTop(),f=(a.position()||{}).top,g=null,h=parseInt(c.css("paddingTop"));null!=f&&(f+b>d&&(g=f+e+b-d+h),0>f&&(g=f+e-h),null!=g&&c.scrollTop(g))},c.selectFromDropdown=function(){var a=this,b=a.selectedSuggestionElement().data(g);b&&(a.val(a.itemManager().itemToString(b)),a.core().getFormData()),a.trigger(q)},c.withinWrapElement=function(a){return this.core().wrapElement().find(a).size()>0}}(jQuery),/**
+function(a){/**
+	 * Autocomplete plugin brings the classic autocomplete functionality to the TextExt ecosystem.
+	 * The gist of functionality is when user starts typing in, for example a term or a tag, a
+	 * dropdown would be presented with possible suggestions to complete the input quicker.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete
+	 */
+function b(){}a.fn.textext.TextExtAutocomplete=b,a.fn.textext.addPlugin("autocomplete",b);var c=b.prototype,d=".",e="text-selected",f=d+e,g="text-suggestion",h=d+g,i="text-label",j=d+i,/**
+		 * Autocomplete plugin options are grouped under `autocomplete` when passed to the 
+		 * `$().textext()` function. For example:
+		 *
+		 *     $('textarea').textext({
+		 *         plugins: 'autocomplete',
+		 *         autocomplete: {
+		 *             dropdownPosition: 'above'
+		 *         }
+		 *     })
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.options
+		 */
+/**
+		 * This is a toggle switch to enable or disable the Autucomplete plugin. The value is checked
+		 * each time at the top level which allows you to toggle this setting on the fly.
+		 *
+		 * @name autocomplete.enabled
+		 * @default true
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.options.autocomplete.enabled
+		 */
+k="autocomplete.enabled",/**
+		 * This option allows to specify position of the dropdown. The two possible values
+		 * are `above` and `below`.
+		 *
+		 * @name autocomplete.dropdown.position
+		 * @default "below"
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.options.autocomplete.dropdown.position
+		 */
+l="autocomplete.dropdown.position",/**
+		 * This option allows to specify maximum height of the dropdown. Value is taken directly, so
+		 * if desired height is 200 pixels, value must be `200px`.
+		 *
+		 * @name autocomplete.dropdown.maxHeight
+		 * @default "100px"
+		 * @author agorbatchev
+		 * @date 2011/12/29
+		 * @id TextExtAutocomplete.options.autocomplete.dropdown.maxHeight
+		 * @version 1.1
+		 */
+m="autocomplete.dropdown.maxHeight",/**
+		 * This option allows to override how a suggestion item is rendered. The value should be
+		 * a function, the first argument of which is suggestion to be rendered and `this` context
+		 * is the current instance of `TextExtAutocomplete`. 
+		 *
+		 * [Click here](/manual/examples/autocomplete-with-custom-render.html) to see a demo.
+		 *
+		 * For example:
+		 *
+		 *     $('textarea').textext({
+		 *         plugins: 'autocomplete',
+		 *         autocomplete: {
+		 *             render: function(suggestion)
+		 *             {
+		 *                 return '<b>' + suggestion + '</b>';
+		 *             }
+		 *         }
+		 *     })
+		 *
+		 * @name autocomplete.render
+		 * @default null
+		 * @author agorbatchev
+		 * @date 2011/12/23
+		 * @id TextExtAutocomplete.options.autocomplete.render
+		 * @version 1.1
+		 */
+n="autocomplete.render",/**
+		 * HTML source that is used to generate the dropdown.
+		 *
+		 * @name html.dropdown
+		 * @default '<div class="text-dropdown"><div class="text-list"/></div>'
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.options.html.dropdown
+		 */
+o="html.dropdown",/**
+		 * HTML source that is used to generate each suggestion.
+		 *
+		 * @name html.suggestion
+		 * @default '<div class="text-suggestion"><span class="text-label"/></div>'
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.options.html.suggestion
+		 */
+p="html.suggestion",/**
+		 * Autocomplete plugin triggers or reacts to the following events.
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.events
+		 */
+/**
+		 * Autocomplete plugin triggers and reacts to the `hideDropdown` to hide the dropdown if it's 
+		 * already visible.
+		 *
+		 * @name hideDropdown
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.events.hideDropdown
+		 */
+q="hideDropdown",/**
+		 * Autocomplete plugin triggers and reacts to the `showDropdown` to show the dropdown if it's 
+		 * not already visible.
+		 *
+		 * It's possible to pass a render callback function which will be called instead of the
+		 * default `TextExtAutocomplete.renderSuggestions()`. 
+		 *
+		 * Here's how another plugin should trigger this event with the optional render callback:
+		 *
+		 *     this.trigger('showDropdown', function(autocomplete)
+		 *     {
+		 *         autocomplete.clearItems();
+		 *         var node = autocomplete.addDropdownItem('<b>Item</b>');
+		 *         node.addClass('new-look');
+		 *     });
+		 *
+		 * @name showDropdown
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.events.showDropdown
+		 */
+r="showDropdown",/**
+		 * Autocomplete plugin reacts to the `setSuggestions` event triggered by other plugins which
+		 * wish to populate the suggestion items. Suggestions should be passed as event argument in the 
+		 * following format: `{ data : [ ... ] }`. 
+		 *
+		 * Here's how another plugin should trigger this event:
+		 *
+		 *     this.trigger('setSuggestions', { data : [ "item1", "item2" ] });
+		 *
+		 * @name setSuggestions
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.events.setSuggestions
+		 */
+/**
+		 * Autocomplete plugin triggers the `getSuggestions` event and expects to get results by listening for
+		 * the `setSuggestions` event.
+		 *
+		 * @name getSuggestions
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtAutocomplete.events.getSuggestions
+		 */
+s="getSuggestions",t="above",u="below",v="mousedownOnAutocomplete",w={autocomplete:{enabled:!0,dropdown:{position:u,maxHeight:"100px"}},html:{dropdown:'<div class="text-dropdown"><div class="text-list"/></div>',suggestion:'<div class="text-suggestion"><span class="text-label"/></div>'}};/**
+	 * Initialization method called by the core during plugin instantiation.
+	 *
+	 * @signature TextExtAutocomplete.init(core)
+	 *
+	 * @param core {TextExt} Instance of the TextExt core class.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.init
+	 */
+c.init=function(b){var c=this;c.baseInit(b,w);var d,e=c.input();c.opts(k)===!0&&(c.on({blur:c.onBlur,anyKeyUp:c.onAnyKeyUp,deleteKeyUp:c.onAnyKeyUp,backspaceKeyPress:c.onBackspaceKeyPress,enterKeyPress:c.onEnterKeyPress,escapeKeyPress:c.onEscapeKeyPress,setSuggestions:c.onSetSuggestions,showDropdown:c.onShowDropdown,hideDropdown:c.onHideDropdown,toggleDropdown:c.onToggleDropdown,postInvalidate:c.positionDropdown,getFormData:c.onGetFormData,
+// using keyDown for up/down keys so that repeat events are
+// captured and user can scroll up/down by holding the keys
+downKeyDown:c.onDownKeyDown,upKeyDown:c.onUpKeyDown}),d=a(c.opts(o)),d.insertAfter(e),c.on(d,{mouseover:c.onMouseOver,mousedown:c.onMouseDown,click:c.onClick}),d.css("maxHeight",c.opts(m)).addClass("text-position-"+c.opts(l)),a(c).data("container",d),a(document.body).click(function(a){c.isDropdownVisible()&&!c.withinWrapElement(a.target)&&c.trigger(q)}),c.positionDropdown())},/**
+	 * Returns top level dropdown container HTML element.
+	 * 
+	 * @signature TextExtAutocomplete.containerElement()
+	 * 
+	 * @author agorbatchev
+	 * @date 2011/08/15
+	 * @id TextExtAutocomplete.containerElement
+	 */
+c.containerElement=function(){return a(this).data("container")},
+//--------------------------------------------------------------------------------
+// User mouse/keyboard input
+/**
+	 * Reacts to the `mouseOver` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onMouseOver(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onMouseOver
+	 */
+c.onMouseOver=function(b){var c=this,d=a(b.target);d.is(h)&&(c.clearSelected(),d.addClass(e))},/**
+	 * Reacts to the `mouseDown` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onMouseDown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author adamayres
+	 * @date 2012/01/13
+	 * @id TextExtAutocomplete.onMouseDown
+	 */
+c.onMouseDown=function(a){this.containerElement().data(v,!0)},/**
+	 * Reacts to the `click` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onClick(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onClick
+	 */
+c.onClick=function(b){var c=this,d=a(b.target);(d.is(h)||d.is(j))&&c.trigger("enterKeyPress"),c.core().hasPlugin("tags")&&c.val("")},/**
+	 * Reacts to the `blur` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onBlur(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onBlur
+	 */
+c.onBlur=function(a){var b=this,c=b.containerElement(),d=c.data(v)===!0;
+// only trigger a close event if the blur event was 
+// not triggered by a mousedown event on the autocomplete
+// otherwise set focus back back on the input
+b.isDropdownVisible()&&(d?b.core().focusInput():b.trigger(q)),c.removeData(v)},/**
+	 * Reacts to the `backspaceKeyPress` event triggered by the TextExt core. 
+	 *
+	 * @signature TextExtAutocomplete.onBackspaceKeyPress(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onBackspaceKeyPress
+	 */
+c.onBackspaceKeyPress=function(a){var b=this,c=b.val().length>0;(c||b.isDropdownVisible())&&b.getSuggestions()},/**
+	 * Reacts to the `anyKeyUp` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onAnyKeyUp(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onAnyKeyUp
+	 */
+c.onAnyKeyUp=function(a,b){var c=this,d=null!=c.opts("keys."+b);c.val().length>0&&!d&&c.getSuggestions()},/**
+	 * Reacts to the `downKeyDown` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onDownKeyDown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onDownKeyDown
+	 */
+c.onDownKeyDown=function(a){var b=this;b.isDropdownVisible()?b.toggleNextSuggestion():b.getSuggestions()},/**
+	 * Reacts to the `upKeyDown` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onUpKeyDown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onUpKeyDown
+	 */
+c.onUpKeyDown=function(a){this.togglePreviousSuggestion()},/**
+	 * Reacts to the `enterKeyPress` event triggered by the TextExt core.
+	 *
+	 * @signature TextExtAutocomplete.onEnterKeyPress(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onEnterKeyPress
+	 */
+c.onEnterKeyPress=function(a){var b=this;b.isDropdownVisible()&&b.selectFromDropdown()},/**
+	 * Reacts to the `escapeKeyPress` event triggered by the TextExt core. Hides the dropdown
+	 * if it's currently visible.
+	 *
+	 * @signature TextExtAutocomplete.onEscapeKeyPress(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onEscapeKeyPress
+	 */
+c.onEscapeKeyPress=function(a){var b=this;b.isDropdownVisible()&&b.trigger(q)},
+//--------------------------------------------------------------------------------
+// Core functionality
+/**
+	 * Positions dropdown either below or above the input based on the `autocomplete.dropdown.position`
+	 * option specified, which could be either `above` or `below`.
+	 *
+	 * @signature TextExtAutocomplete.positionDropdown()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/15
+	 * @id TextExtAutocomplete.positionDropdown
+	 */
+c.positionDropdown=function(){var a=this,b=a.containerElement(),c=a.opts(l),d=a.core().wrapElement().outerHeight(),e={};e[c===t?"bottom":"top"]=d+"px",b.css(e)},/**
+	 * Returns list of all the suggestion HTML elements in the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.suggestionElements()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.suggestionElements
+	 */
+c.suggestionElements=function(){return this.containerElement().find(h)},/**
+	 * Highlights specified suggestion as selected in the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.setSelectedSuggestion(suggestion)
+	 *
+	 * @param suggestion {Object} Suggestion object. With the default `ItemManager` this
+	 * is expected to be a string, anything else with custom implementations.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.setSelectedSuggestion
+	 */
+c.setSelectedSuggestion=function(b){if(b){var c,d,f=this,h=f.suggestionElements(),i=h.first();for(f.clearSelected(),d=0;d<h.length;d++)if(c=a(h[d]),f.itemManager().compareItems(c.data(g),b)){i=c.addClass(e);break}i.addClass(e),f.scrollSuggestionIntoView(i)}},/**
+	 * Returns the first suggestion HTML element from the dropdown that is highlighted as selected.
+	 *
+	 * @signature TextExtAutocomplete.selectedSuggestionElement()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.selectedSuggestionElement
+	 */
+c.selectedSuggestionElement=function(){return this.suggestionElements().filter(f).first()},/**
+	 * Returns `true` if dropdown is currently visible, `false` otherwise.
+	 *
+	 * @signature TextExtAutocomplete.isDropdownVisible()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.isDropdownVisible
+	 */
+c.isDropdownVisible=function(){return this.containerElement().is(":visible")===!0},/**
+	 * Reacts to the `getFormData` event triggered by the core. Returns data with the
+	 * weight of 100 to be *less than the Tags plugin* data weight. The weights system is
+	 * covered in greater detail in the [`getFormData`][1] event documentation.
+	 *
+	 * [1]: /manual/textext.html#getformdata
+	 *
+	 * @signature TextExtAutocomplete.onGetFormData(e, data, keyCode)
+	 *
+	 * @param e {Object} jQuery event.
+	 * @param data {Object} Data object to be populated.
+	 * @param keyCode {Number} Key code that triggered the original update request.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/22
+	 * @id TextExtAutocomplete.onGetFormData
+	 */
+c.onGetFormData=function(a,b,c){var d=this,e=d.val(),f=e,g=e;b[100]=d.formDataObject(f,g)},/**
+	 * Returns initialization priority of the Autocomplete plugin which is expected to be
+	 * *greater than the Tags plugin* because of the dependencies. The value is 200.
+	 *
+	 * @signature TextExtAutocomplete.initPriority()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/22
+	 * @id TextExtAutocomplete.initPriority
+	 */
+c.initPriority=function(){return 200},/**
+	 * Reacts to the `hideDropdown` event and hides the dropdown if it's already visible.
+	 *
+	 * @signature TextExtAutocomplete.onHideDropdown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onHideDropdown
+	 */
+c.onHideDropdown=function(a){this.hideDropdown()},/**
+	 * Reacts to the 'toggleDropdown` event and shows or hides the dropdown depending if
+	 * it's currently hidden or visible.
+	 *
+	 * @signature TextExtAutocomplete.onToggleDropdown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/12/27
+	 * @id TextExtAutocomplete.onToggleDropdown
+	 * @version 1.1.0
+	 */
+c.onToggleDropdown=function(a){var b=this;b.trigger(b.containerElement().is(":visible")?q:r)},/**
+	 * Reacts to the `showDropdown` event and shows the dropdown if it's not already visible.
+	 * It's possible to pass a render callback function which will be called instead of the
+	 * default `TextExtAutocomplete.renderSuggestions()`.
+	 *
+	 * If no suggestion were previously loaded, it will fire `getSuggestions` event and exit.
+	 *
+	 * Here's how another plugin should trigger this event with the optional render callback:
+	 *
+	 *     this.trigger('showDropdown', function(autocomplete)
+	 *     {
+	 *         autocomplete.clearItems();
+	 *         var node = autocomplete.addDropdownItem('<b>Item</b>');
+	 *         node.addClass('new-look');
+	 *     });
+	 *
+	 * @signature TextExtAutocomplete.onShowDropdown(e, renderCallback)
+	 *
+	 * @param e {Object} jQuery event.
+	 * @param renderCallback {Function} Optional callback function which would be used to 
+	 * render dropdown items. As a first argument, reference to the current instance of 
+	 * Autocomplete plugin will be supplied. It's assumed, that if this callback is provided
+	 * rendering will be handled completely manually.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onShowDropdown
+	 */
+c.onShowDropdown=function(b,c){var d=this,e=d.selectedSuggestionElement().data(g),f=d._suggestions;return f?(a.isFunction(c)?c(d):(d.renderSuggestions(d._suggestions),d.toggleNextSuggestion()),d.showDropdown(d.containerElement()),void d.setSelectedSuggestion(e)):d.trigger(s)},/**
+	 * Reacts to the `setSuggestions` event. Expects to recieve the payload as the second argument
+	 * in the following structure:
+	 *
+	 *     {
+	 *         result : [ "item1", "item2" ],
+	 *         showHideDropdown : false
+	 *     }
+	 *
+	 * Notice the optional `showHideDropdown` option. By default, ie without the `showHideDropdown` 
+	 * value the method will trigger either `showDropdown` or `hideDropdown` depending if there are
+	 * suggestions. If set to `false`, no event is triggered.
+	 *
+	 * @signature TextExtAutocomplete.onSetSuggestions(e, data)
+	 *
+	 * @param data {Object} Data payload.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.onSetSuggestions
+	 */
+c.onSetSuggestions=function(a,b){var c=this,d=c._suggestions=b.result;b.showHideDropdown!==!1&&c.trigger(null===d||0===d.length?q:r)},/**
+	 * Prepears for and triggers the `getSuggestions` event with the `{ query : {String} }` as second
+	 * argument.
+	 *
+	 * @signature TextExtAutocomplete.getSuggestions()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.getSuggestions
+	 */
+c.getSuggestions=function(){var a=this,b=a.val();a._previousInputValue!=b&&(
+// if user clears input, then we want to select first suggestion
+// instead of the last one
+""==b&&(current=null),a._previousInputValue=b,a.trigger(s,{query:b}))},/**
+	 * Removes all HTML suggestion items from the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.clearItems()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.clearItems
+	 */
+c.clearItems=function(){this.containerElement().find(".text-list").children().remove()},/**
+	 * Clears all and renders passed suggestions.
+	 *
+	 * @signature TextExtAutocomplete.renderSuggestions(suggestions)
+	 *
+	 * @param suggestions {Array} List of suggestions to render.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.renderSuggestions
+	 */
+c.renderSuggestions=function(b){var c=this;c.clearItems(),a.each(b||[],function(a,b){c.addSuggestion(b)})},/**
+	 * Shows the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.showDropdown()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.showDropdown
+	 */
+c.showDropdown=function(){this.containerElement().show()},/**
+	 * Hides the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.hideDropdown()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.hideDropdown
+	 */
+c.hideDropdown=function(){var a=this,b=a.containerElement();a._previousInputValue=null,b.hide()},/**
+	 * Adds single suggestion to the bottom of the dropdown. Uses `ItemManager.itemToString()` to
+	 * serialize provided suggestion to string.
+	 *
+	 * @signature TextExtAutocomplete.addSuggestion(suggestion)
+	 *
+	 * @param suggestion {Object} Suggestion item. By default expected to be a string.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.addSuggestion
+	 */
+c.addSuggestion=function(a){var b=this,c=b.opts(n),d=b.addDropdownItem(c?c.call(b,a):b.itemManager().itemToString(a));d.data(g,a)},/**
+	 * Adds and returns HTML node to the bottom of the dropdown.
+	 *
+	 * @signature TextExtAutocomplete.addDropdownItem(html)
+	 *
+	 * @param html {String} HTML to be inserted into the item.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.addDropdownItem
+	 */
+c.addDropdownItem=function(b){var c=this,d=c.containerElement().find(".text-list"),e=a(c.opts(p));return e.find(".text-label").html(b),d.append(e),e},/**
+	 * Removes selection highlight from all suggestion elements.
+	 *
+	 * @signature TextExtAutocomplete.clearSelected()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/02
+	 * @id TextExtAutocomplete.clearSelected
+	 */
+c.clearSelected=function(){this.suggestionElements().removeClass(e)},/**
+	 * Selects next suggestion relative to the current one. If there's no
+	 * currently selected suggestion, it will select the first one. Selected
+	 * suggestion will always be scrolled into view.
+	 *
+	 * @signature TextExtAutocomplete.toggleNextSuggestion()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/02
+	 * @id TextExtAutocomplete.toggleNextSuggestion
+	 */
+c.toggleNextSuggestion=function(){var a,b=this,c=b.selectedSuggestionElement();c.length>0?(a=c.next(),a.length>0&&c.removeClass(e)):a=b.suggestionElements().first(),a.addClass(e),b.scrollSuggestionIntoView(a)},/**
+	 * Selects previous suggestion relative to the current one. Selected
+	 * suggestion will always be scrolled into view.
+	 *
+	 * @signature TextExtAutocomplete.togglePreviousSuggestion()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/02
+	 * @id TextExtAutocomplete.togglePreviousSuggestion
+	 */
+c.togglePreviousSuggestion=function(){var a=this,b=a.selectedSuggestionElement(),c=b.prev();0!=c.length&&(a.clearSelected(),c.addClass(e),a.scrollSuggestionIntoView(c))},/**
+	 * Scrolls specified HTML suggestion element into the view.
+	 *
+	 * @signature TextExtAutocomplete.scrollSuggestionIntoView(item)
+	 *
+	 * @param item {HTMLElement} jQuery HTML suggestion element which needs to
+	 * scrolled into view.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.scrollSuggestionIntoView
+	 */
+c.scrollSuggestionIntoView=function(a){var b=a.outerHeight(),c=this.containerElement(),d=c.innerHeight(),e=c.scrollTop(),f=(a.position()||{}).top,g=null,h=parseInt(c.css("paddingTop"));null!=f&&(
+// if scrolling down and item is below the bottom fold
+f+b>d&&(g=f+e+b-d+h),
+// if scrolling up and item is above the top fold
+0>f&&(g=f+e-h),null!=g&&c.scrollTop(g))},/**
+	 * Uses the value from the text input to finish autocomplete action. Currently selected
+	 * suggestion from the dropdown will be used to complete the action. Triggers `hideDropdown`
+	 * event.
+	 *
+	 * @signature TextExtAutocomplete.selectFromDropdown()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/17
+	 * @id TextExtAutocomplete.selectFromDropdown
+	 */
+c.selectFromDropdown=function(){var a=this,b=a.selectedSuggestionElement().data(g);b&&(a.val(a.itemManager().itemToString(b)),a.core().getFormData()),a.trigger(q)},/**
+	 * Determines if the specified HTML element is within the TextExt core wrap HTML element.
+	 *
+	 * @signature TextExtAutocomplete.withinWrapElement(element)
+	 *
+	 * @param element {HTMLElement} element to check if contained by wrap element
+	 *
+	 * @author adamayres
+	 * @version 1.3.0
+	 * @date 2012/01/15
+	 * @id TextExtAutocomplete.withinWrapElement
+	 */
+c.withinWrapElement=function(a){return this.core().wrapElement().find(a).size()>0}}(jQuery),/**
  * jQuery TextExt Plugin
  * http://textextjs.com
  *
@@ -32,4 +1132,363 @@ function(a){function b(){}a.fn.textext.TextExtAutocomplete=b,a.fn.textext.addPlu
  * @copyright Copyright (C) 2011 Alex Gorbatchev. All rights reserved.
  * @license MIT License
  */
-function(a){function b(){}a.fn.textext.TextExtTags=b,a.fn.textext.addPlugin("tags",b);var c=b.prototype,d=".",e="text-tags-on-top",f=d+e,g="text-tag",h=d+g,i="text-tags",j=d+i,k="text-label",l=d+k,m="text-remove",n=d+m,o="tags.enabled",p="tags.items",q="html.tag",r="html.tags",s="isTagAllowed",t="tagClick",u={tags:{enabled:!0,items:null},html:{tags:'<div class="text-tags"/>',tag:'<div class="text-tag"><div class="text-button"><span class="text-label"/><a class="text-remove"/></div></div>'}};c.init=function(b){this.baseInit(b,u);var c,d=this,e=d.input();d.opts(o)&&(c=a(d.opts(r)),e.after(c),a(d).data("container",c),d.on({enterKeyPress:d.onEnterKeyPress,backspaceKeyDown:d.onBackspaceKeyDown,preInvalidate:d.onPreInvalidate,postInit:d.onPostInit,getFormData:d.onGetFormData}),d.on(c,{click:d.onClick,mousemove:d.onContainerMouseMove}),d.on(e,{mousemove:d.onInputMouseMove})),d._originalPadding={left:parseInt(e.css("paddingLeft")||0),top:parseInt(e.css("paddingTop")||0)},d._paddingBox={left:0,top:0},d.updateFormCache()},c.containerElement=function(){return a(this).data("container")},c.onPostInit=function(a){var b=this;b.addTags(b.opts(p))},c.onGetFormData=function(a,b,c){var d=this,e=13===c?"":d.val(),f=d._formData;b[200]=d.formDataObject(e,f)},c.initPriority=function(){return 100},c.onInputMouseMove=function(a){this.toggleZIndex(a)},c.onContainerMouseMove=function(a){this.toggleZIndex(a)},c.onBackspaceKeyDown=function(a){var b=this,c=b.tagElements().last();0==b.val().length&&b.removeTag(c)},c.onPreInvalidate=function(a){var b=this,c=b.tagElements().last(),d=c.position();c.length>0?d.left+=c.innerWidth():d=b._originalPadding,b._paddingBox=d,b.input().css({paddingLeft:d.left,paddingTop:d.top})},c.onClick=function(b){function c(a,b){d.data(g,a),d.find(l).text(e.itemManager().itemToString(a)),e.updateFormCache(),f.getFormData(),f.invalidateBounds(),b&&f.focusInput()}var d,e=this,f=e.core(),i=a(b.target),k=0;i.is(j)?k=1:i.is(n)?(e.removeTag(i.parents(h+":first")),k=1):i.is(l)&&(d=i.parents(h+":first"),e.trigger(t,d,d.data(g),c)),k&&f.focusInput()},c.onEnterKeyPress=function(a){var b=this,c=b.val(),d=b.itemManager().stringToItem(c);b.isTagAllowed(d)&&(b.addTags([d]),b.core().focusInput())},c.updateFormCache=function(){var b=this,c=[];b.tagElements().each(function(){c.push(a(this).data(g))}),b._formData=c},c.toggleZIndex=function(a){var b=this,c=b.input().offset(),d=a.clientX-c.left,g=a.clientY-c.top,h=b._paddingBox,i=b.containerElement(),j=i.is(f),k=d>h.left&&g>h.top;(!j&&!k||j&&k)&&i[(j?"remove":"add")+"Class"](e)},c.tagElements=function(){return this.containerElement().find(h)},c.isTagAllowed=function(a){var b={tag:a,result:!0};return this.trigger(s,b),b.result===!0},c.addTags=function(a){if(a&&0!=a.length){var b,c,d=this,e=d.core(),f=d.containerElement();for(b=0;b<a.length;b++)c=a[b],c&&d.isTagAllowed(c)&&f.append(d.renderTag(c));d.updateFormCache(),e.getFormData(),e.invalidateBounds()}},c.getTagElement=function(b){var c,d,e=this,f=e.tagElements();for(c=0;c<f.length;c++)if(d=a(f[c]),e.itemManager().compareItems(d.data(g),b))return d;return null},c.removeTag=function(b){var c,d=this,e=d.core();if(b instanceof a)c=b,b=b.data(g);else if(c=d.getTagElement(b),null===c)return;c.remove(),d.updateFormCache(),e.getFormData(),e.invalidateBounds()},c.renderTag=function(b){var c=this,d=a(c.opts(q));return d.find(".text-label").text(c.itemManager().itemToString(b)),d.data(g,b),d}}(jQuery);
+function(a){/**
+	 * Tags plugin brings in the traditional tag functionality where user can assemble and
+	 * edit list of tags. Tags plugin works especially well together with Autocomplete, Filter,
+	 * Suggestions and Ajax plugins to provide full spectrum of features. It can also work on
+	 * its own and just do one thing -- tags.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags
+	 */
+function b(){}a.fn.textext.TextExtTags=b,a.fn.textext.addPlugin("tags",b);var c=b.prototype,d=".",e="text-tags-on-top",f=d+e,g="text-tag",h=d+g,i="text-tags",j=d+i,k="text-label",l=d+k,m="text-remove",n=d+m,/**
+		 * Tags plugin options are grouped under `tags` when passed to the
+		 * `$().textext()` function. For example:
+		 *
+		 *     $('textarea').textext({
+		 *         plugins: 'tags',
+		 *         tags: {
+		 *             items: [ "tag1", "tag2" ]
+		 *         }
+		 *     })
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.options
+		 */
+/**
+		 * This is a toggle switch to enable or disable the Tags plugin. The value is checked
+		 * each time at the top level which allows you to toggle this setting on the fly.
+		 *
+		 * @name tags.enabled
+		 * @default true
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.options.tags.enabled
+		 */
+o="tags.enabled",/**
+		 * Allows to specify tags which will be added to the input by default upon initialization.
+		 * Each item in the array must be of the type that current `ItemManager` can understand.
+		 * Default type is `String`.
+		 *
+		 * @name tags.items
+		 * @default null
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.options.tags.items
+		 */
+p="tags.items",/**
+		 * HTML source that is used to generate a single tag.
+		 *
+		 * @name html.tag
+		 * @default '<div class="text-tags"/>'
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.options.html.tag
+		 */
+q="html.tag",/**
+		 * HTML source that is used to generate container for the tags.
+		 *
+		 * @name html.tags
+		 * @default '<div class="text-tag"><div class="text-button"><span class="text-label"/><a class="text-remove"/></div></div>'
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.options.html.tags
+		 */
+r="html.tags",/**
+		 * Tags plugin dispatches or reacts to the following events.
+		 *
+		 * @author agorbatchev
+		 * @date 2011/08/17
+		 * @id TextExtTags.events
+		 */
+/**
+		 * Tags plugin triggers the `isTagAllowed` event before adding each tag to the tag list. Other plugins have
+		 * an opportunity to interrupt this by setting `result` of the second argument to `false`. For example:
+		 *
+		 *     $('textarea').textext({...}).bind('isTagAllowed', function(e, data)
+		 *     {
+		 *         if(data.tag === 'foo')
+		 *             data.result = false;
+		 *     })
+		 *
+		 * The second argument `data` has the following format: `{ tag : {Object}, result : {Boolean} }`. `tag`
+		 * property is in the format that the current `ItemManager` can understand.
+		 *
+		 * @name isTagAllowed
+		 * @author agorbatchev
+		 * @date 2011/08/19
+		 * @id TextExtTags.events.isTagAllowed
+		 */
+s="isTagAllowed",/**
+		 * Tags plugin triggers the `tagClick` event when user clicks on one of the tags. This allows to process
+		 * the click and potentially change the value of the tag (for example in case of user feedback).
+		 *
+		 *     $('textarea').textext({...}).bind('tagClick', function(e, tag, value, callback)
+		 *     {
+		 *         var newValue = window.prompt('New value', value);
+
+		 *         if(newValue)
+		 *             callback(newValue, true);
+		 *     })
+		 *
+		 *  Callback argument has the following signature:
+		 *
+		 *     function(newValue, refocus)
+		 *     {
+		 *         ...
+		 *     }
+		 *
+		 * Please check out [example](/manual/examples/tags-changing.html).
+		 *
+		 * @name tagClick
+		 * @version 1.3.0
+		 * @author s.stok
+		 * @date 2011/01/23
+		 * @id TextExtTags.events.tagClick
+		 */
+t="tagClick",u={tags:{enabled:!0,items:null},html:{tags:'<div class="text-tags"/>',tag:'<div class="text-tag"><div class="text-button"><span class="text-label"/><a class="text-remove"/></div></div>'}};/**
+	 * Initialization method called by the core during plugin instantiation.
+	 *
+	 * @signature TextExtTags.init(core)
+	 *
+	 * @param core {TextExt} Instance of the TextExt core class.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.init
+	 */
+c.init=function(b){this.baseInit(b,u);var c,d=this,e=d.input();d.opts(o)&&(c=a(d.opts(r)),e.after(c),a(d).data("container",c),d.on({enterKeyPress:d.onEnterKeyPress,backspaceKeyDown:d.onBackspaceKeyDown,preInvalidate:d.onPreInvalidate,postInit:d.onPostInit,getFormData:d.onGetFormData}),d.on(c,{click:d.onClick,mousemove:d.onContainerMouseMove}),d.on(e,{mousemove:d.onInputMouseMove})),d._originalPadding={left:parseInt(e.css("paddingLeft")||0),top:parseInt(e.css("paddingTop")||0)},d._paddingBox={left:0,top:0},d.updateFormCache()},/**
+	 * Returns HTML element in which all tag HTML elements are residing.
+	 *
+	 * @signature TextExtTags.containerElement()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/15
+	 * @id TextExtTags.containerElement
+	 */
+c.containerElement=function(){return a(this).data("container")},
+//--------------------------------------------------------------------------------
+// Event handlers
+/**
+	 * Reacts to the `postInit` event triggered by the core and sets default tags
+	 * if any were specified.
+	 *
+	 * @signature TextExtTags.onPostInit(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/09
+	 * @id TextExtTags.onPostInit
+	 */
+c.onPostInit=function(a){var b=this;b.addTags(b.opts(p))},/**
+	 * Reacts to the [`getFormData`][1] event triggered by the core. Returns data with the
+	 * weight of 200 to be *greater than the Autocomplete plugin* data weight. The weights
+	 * system is covered in greater detail in the [`getFormData`][1] event documentation.
+	 *
+	 * [1]: /manual/textext.html#getformdata
+	 *
+	 * @signature TextExtTags.onGetFormData(e, data, keyCode)
+	 *
+	 * @param e {Object} jQuery event.
+	 * @param data {Object} Data object to be populated.
+	 * @param keyCode {Number} Key code that triggered the original update request.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/22
+	 * @id TextExtTags.onGetFormData
+	 */
+c.onGetFormData=function(a,b,c){var d=this,e=13===c?"":d.val(),f=d._formData;b[200]=d.formDataObject(e,f)},/**
+	 * Returns initialization priority of the Tags plugin which is expected to be
+	 * *less than the Autocomplete plugin* because of the dependencies. The value is
+	 * 100.
+	 *
+	 * @signature TextExtTags.initPriority()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/22
+	 * @id TextExtTags.initPriority
+	 */
+c.initPriority=function(){return 100},/**
+	 * Reacts to user moving mouse over the text area when cursor is over the text
+	 * and not over the tags. Whenever mouse cursor is over the area covered by
+	 * tags, the tags container is flipped to be on top of the text area which
+	 * makes all tags functional with the mouse.
+	 *
+	 * @signature TextExtTags.onInputMouseMove(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/08
+	 * @id TextExtTags.onInputMouseMove
+	 */
+c.onInputMouseMove=function(a){this.toggleZIndex(a)},/**
+	 * Reacts to user moving mouse over the tags. Whenever the cursor moves out
+	 * of the tags and back into where the text input is happening visually,
+	 * the tags container is sent back under the text area which allows user
+	 * to interact with the text using mouse cursor as expected.
+	 *
+	 * @signature TextExtTags.onContainerMouseMove(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/08
+	 * @id TextExtTags.onContainerMouseMove
+	 */
+c.onContainerMouseMove=function(a){this.toggleZIndex(a)},/**
+	 * Reacts to the `backspaceKeyDown` event. When backspace key is pressed in an empty text field,
+	 * deletes last tag from the list.
+	 *
+	 * @signature TextExtTags.onBackspaceKeyDown(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/02
+	 * @id TextExtTags.onBackspaceKeyDown
+	 */
+c.onBackspaceKeyDown=function(a){var b=this,c=b.tagElements().last();0==b.val().length&&b.removeTag(c)},/**
+	 * Reacts to the `preInvalidate` event and updates the input box to look like the tags are
+	 * positioned inside it.
+	 *
+	 * @signature TextExtTags.onPreInvalidate(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.onPreInvalidate
+	 */
+c.onPreInvalidate=function(a){var b=this,c=b.tagElements().last(),d=c.position();c.length>0?d.left+=c.innerWidth():d=b._originalPadding,b._paddingBox=d,b.input().css({paddingLeft:d.left,paddingTop:d.top})},/**
+	 * Reacts to the mouse `click` event.
+	 *
+	 * @signature TextExtTags.onClick(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.onClick
+	 */
+c.onClick=function(b){function c(a,b){d.data(g,a),d.find(l).text(e.itemManager().itemToString(a)),e.updateFormCache(),f.getFormData(),f.invalidateBounds(),b&&f.focusInput()}var d,e=this,f=e.core(),i=a(b.target),k=0;i.is(j)?k=1:i.is(n)?(e.removeTag(i.parents(h+":first")),k=1):i.is(l)&&(d=i.parents(h+":first"),e.trigger(t,d,d.data(g),c)),k&&f.focusInput()},/**
+	 * Reacts to the `enterKeyPress` event and adds whatever is currently in the text input
+	 * as a new tag. Triggers `isTagAllowed` to check if the tag could be added first.
+	 *
+	 * @signature TextExtTags.onEnterKeyPress(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.onEnterKeyPress
+	 */
+c.onEnterKeyPress=function(a){var b=this,c=b.val(),d=b.itemManager().stringToItem(c);b.isTagAllowed(d)&&(b.addTags([d]),
+// refocus the textarea just in case it lost the focus
+b.core().focusInput())},
+//--------------------------------------------------------------------------------
+// Core functionality
+/**
+	 * Creates a cache object with all the tags currently added which will be returned
+	 * in the `onGetFormData` handler.
+	 *
+	 * @signature TextExtTags.updateFormCache()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/09
+	 * @id TextExtTags.updateFormCache
+	 */
+c.updateFormCache=function(){var b=this,c=[];b.tagElements().each(function(){c.push(a(this).data(g))}),
+// cache the results to be used in the onGetFormData
+b._formData=c},/**
+	 * Toggles tag container to be on top of the text area or under based on where
+	 * the mouse cursor is located. When cursor is above the text input and out of
+	 * any of the tags, the tags container is sent under the text area. If cursor
+	 * is over any of the tags, the tag container is brought to be over the text
+	 * area.
+	 *
+	 * @signature TextExtTags.toggleZIndex(e)
+	 *
+	 * @param e {Object} jQuery event.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/08
+	 * @id TextExtTags.toggleZIndex
+	 */
+c.toggleZIndex=function(a){var b=this,c=b.input().offset(),d=a.clientX-c.left,g=a.clientY-c.top,h=b._paddingBox,i=b.containerElement(),j=i.is(f),k=d>h.left&&g>h.top;(!j&&!k||j&&k)&&i[(j?"remove":"add")+"Class"](e)},/**
+	 * Returns all tag HTML elements.
+	 *
+	 * @signature TextExtTags.tagElements()
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.tagElements
+	 */
+c.tagElements=function(){return this.containerElement().find(h)},/**
+	 * Wrapper around the `isTagAllowed` event which triggers it and returns `true`
+	 * if `result` property of the second argument remains `true`.
+	 *
+	 * @signature TextExtTags.isTagAllowed(tag)
+	 *
+	 * @param tag {Object} Tag object that the current `ItemManager` can understand.
+	 * Default is `String`.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.isTagAllowed
+	 */
+c.isTagAllowed=function(a){var b={tag:a,result:!0};return this.trigger(s,b),b.result===!0},/**
+	 * Adds specified tags to the tag list. Triggers `isTagAllowed` event for each tag
+	 * to insure that it could be added. Calls `TextExt.getFormData()` to refresh the data.
+	 *
+	 * @signature TextExtTags.addTags(tags)
+	 *
+	 * @param tags {Array} List of tags that current `ItemManager` can understand. Default
+	 * is `String`.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.addTags
+	 */
+c.addTags=function(a){if(a&&0!=a.length){var b,c,d=this,e=d.core(),f=d.containerElement();for(b=0;b<a.length;b++)c=a[b],c&&d.isTagAllowed(c)&&f.append(d.renderTag(c));d.updateFormCache(),e.getFormData(),e.invalidateBounds()}},/**
+	 * Returns HTML element for the specified tag.
+	 *
+	 * @signature TextExtTags.getTagElement(tag)
+	 *
+	 * @param tag {Object} Tag object in the format that current `ItemManager` can understand.
+	 * Default is `String`.
+
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.getTagElement
+	 */
+c.getTagElement=function(b){var c,d,e=this,f=e.tagElements();for(c=0;c<f.length;c++)if(d=a(f[c]),e.itemManager().compareItems(d.data(g),b))return d;return null},/**
+	 * Removes specified tag from the list. Calls `TextExt.getFormData()` to refresh the data.
+	 *
+	 * @signature TextExtTags.removeTag(tag)
+	 *
+	 * @param tag {Object} Tag object in the format that current `ItemManager` can understand.
+	 * Default is `String`.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.removeTag
+	 */
+c.removeTag=function(b){var c,d=this,e=d.core();if(b instanceof a)c=b,b=b.data(g);else if(c=d.getTagElement(b),null===c)
+//Tag does not exist
+return;c.remove(),d.updateFormCache(),e.getFormData(),e.invalidateBounds()},/**
+	 * Creates and returns new HTML element from the source code specified in the `html.tag` option.
+	 *
+	 * @signature TextExtTags.renderTag(tag)
+	 *
+	 * @param tag {Object} Tag object in the format that current `ItemManager` can understand.
+	 * Default is `String`.
+	 *
+	 * @author agorbatchev
+	 * @date 2011/08/19
+	 * @id TextExtTags.renderTag
+	 */
+c.renderTag=function(b){var c=this,d=a(c.opts(q));return d.find(".text-label").text(c.itemManager().itemToString(b)),d.data(g,b),d}}(jQuery);
