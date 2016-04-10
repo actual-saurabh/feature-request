@@ -11,7 +11,7 @@
  * Plugin Name:     Feature Request
  * Plugin URI:      https://wordpress.org/plugins/feature-request/
  * Description:     Feature request and suggestion submitter with voting system for WordPress.
- * Version:         1.1.1
+ * Version:         1.1.2
  * Author:          averta
  * Author URI:      http://averta.net
  * Text Domain:     feature-request
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Set some constants
-define('AVFR_VERSION', '1.1.0');
+define('AVFR_VERSION', '1.1.2');
 define('AVFR_DIR' , plugin_dir_path( __FILE__ ) );
 define('AVFR_URL' , plugins_url( '', __FILE__ ) );
 
