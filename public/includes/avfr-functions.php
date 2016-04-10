@@ -40,6 +40,7 @@ if ( !function_exists('avfr_get_total_votes') ) {
 		$total_votes = get_post_meta( $post_id, '_avfr_total_votes', true );
 
 		return !empty( $total_votes ) ? $total_votes : false;
+		
 	}
 
 }
