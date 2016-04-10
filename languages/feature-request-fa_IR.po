@@ -1,15 +1,15 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Feature Request\n"
 "POT-Creation-Date: 2016-04-10 11:53+0430\n"
-"PO-Revision-Date: 2015-10-04 10:25+0330\n"
+"PO-Revision-Date: 2016-04-10 11:53+0430\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 1.8.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: feature-request.php\n"
@@ -23,11 +23,11 @@ msgstr ""
 #: admin/includes/class-avfr-columns.php:40
 #: public/includes/avfr-functions.php:359
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: admin/includes/class-avfr-columns.php:41
 msgid "Author"
-msgstr ""
+msgstr "نویسنده"
 
 #: admin/includes/class-avfr-columns.php:42
 msgid ""
@@ -43,7 +43,7 @@ msgstr ""
 #: admin/includes/class-avfr-columns.php:44
 #: includes/class-avfr-post-type.php:83
 msgid "Groups"
-msgstr ""
+msgstr "گروه ها"
 
 #: admin/includes/class-avfr-columns.php:45
 msgid ""
@@ -63,20 +63,20 @@ msgstr ""
 
 #: admin/includes/class-avfr-columns.php:72
 msgid "open"
-msgstr ""
+msgstr "باز"
 
 #: admin/includes/class-avfr-meta.php:48
 msgid "Approved"
-msgstr ""
+msgstr "پذیرفته شده"
 
 #: admin/includes/class-avfr-meta.php:49
 msgid "Declined"
-msgstr ""
+msgstr "رد شده"
 
 #: admin/includes/class-avfr-meta.php:50 public/includes/avfr-functions.php:884
 #: public/includes/avfr-functions.php:905
 msgid "Open"
-msgstr ""
+msgstr "باز"
 
 #: admin/includes/class-avfr-meta.php:51 public/includes/avfr-functions.php:886
 #: public/includes/avfr-functions.php:907
@@ -89,7 +89,7 @@ msgstr ""
 
 #: admin/includes/class-avfr-settings.php:36
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: admin/includes/class-avfr-settings.php:53
 msgid "Feature Request Settings"
@@ -101,11 +101,11 @@ msgstr ""
 
 #: admin/includes/class-avfr-settings.php:139
 msgid "Setup"
-msgstr ""
+msgstr "کلی"
 
 #: admin/includes/class-avfr-settings.php:140
 msgid "Setting up plugin"
-msgstr ""
+msgstr "تنظیمات کلی افزونه"
 
 #: admin/includes/class-avfr-settings.php:144
 msgid "Features"
@@ -927,7 +927,7 @@ msgstr ""
 
 #: public/includes/avfr-functions.php:883
 msgid "All"
-msgstr ""
+msgstr "همه"
 
 #: public/includes/avfr-functions.php:885
 #: public/includes/avfr-functions.php:906
@@ -949,7 +949,7 @@ msgstr ""
 
 #: public/includes/avfr-functions.php:896
 msgid "Top"
-msgstr ""
+msgstr "برترین ها"
 
 #: public/includes/avfr-functions.php:897
 msgid "New"
