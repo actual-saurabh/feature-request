@@ -12,6 +12,22 @@
  * @copyright 			2015 Averta
  *
  */
+if ( current_user_can( 'manage_options' ) ) {
+
+	if ( isset($_GET['action']) ) {
+		if ( 'deletepost' === $_GET['action'] ) {
+			$id = get_the_id(); 
+			wp_trash_post($id);
+			wp_safe_redirect( get_post_type_archive_link( 'avfr' ), $status = 302 );
+		} 
+	}
+
+}
+
+if ( isset( $_GET['redirect'] ) ) {
+	
+	exit;
+}
 
 get_header();
 global $avfr_db;
@@ -185,7 +201,7 @@ do_action('avfr_layout_before'); ?>
 
 		?>
 		<div class="attachments">
-			<p class="image-caption"> <?php _e('feature attachments:','feature_request'); ?> </p>
+			<p class="image-caption"> <?php _e('feature attachments:','feature-request'); ?> </p>
 			<figure class="avfr-image post-image">
 				<?php 
 				echo '<a rel="lightbox" href="' . $large_image_url[0] . '" title="' . the_title_attribute( 'echo=0' ) . '">';
@@ -201,15 +217,9 @@ do_action('avfr_layout_before'); ?>
 <?php
 if (is_single()) {
 	if ( current_user_can( 'manage_options' ) ) {
-		if ( isset($_GET['action']) ) {
-			if ( 'deletepost' === $_GET['action'] ) {
-				$id = get_the_id(); 
-				wp_trash_post($id);
-			} 
-		}
 		?>
 		<div id="avfr-delete">	
-			<span class="dashicons dashicons-trash"></span><a href="<?php echo esc_url( add_query_arg( array( 'action' => 'deletepost' ), the_permalink() ) ); ?>">Delete post</a>
+			<span class="dashicons dashicons-trash"></span><a href="<?php echo add_query_arg( array( 'action' => 'deletepost' ), the_permalink() ); ?>"><?php _e( 'Delete post', 'feature-request' ); ?></a>
 			<span class="dashicons dashicons-edit"></span> <?php edit_post_link( 'Edit Post', '', '', '' ); ?>
 		</div>
 		<?php }

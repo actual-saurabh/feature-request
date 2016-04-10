@@ -1,15 +1,15 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Feature Request\n"
 "POT-Creation-Date: 2016-04-10 11:53+0430\n"
-"PO-Revision-Date: 2015-10-04 10:25+0330\n"
+"PO-Revision-Date: 2016-04-10 11:53+0430\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: feature-request.php\n"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: admin/includes/class-avfr-settings.php:139
 msgid "Setup"
-msgstr ""
+msgstr "inrätta"
 
 #: admin/includes/class-avfr-settings.php:140
 msgid "Setting up plugin"

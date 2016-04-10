@@ -40,6 +40,7 @@ if ( !function_exists('avfr_get_total_votes') ) {
 		$total_votes = get_post_meta( $post_id, '_avfr_total_votes', true );
 
 		return !empty( $total_votes ) ? $total_votes : false;
+		
 	}
 
 }
@@ -239,8 +240,6 @@ if ( !function_exists('avfr_localized_args') ) {
 
 }
 
-/*--- PLUGGABLES ---*/
-
 
 /**
  * Submit modal box
@@ -249,7 +248,7 @@ if ( !function_exists('avfr_localized_args') ) {
 
 if ( !function_exists('avfr_submit_box') ):
 
-	function avfr_submit_box( $groups = '' ) {
+	function avfr_submit_box( $groups = 0 ) {
 
 		$public_can_vote = avfr_get_option('avfr_public_voting','avfr_settings_main');
 		$userid 		 = $public_can_vote && !is_user_logged_in() ? 1 : get_current_user_ID();
@@ -300,11 +299,27 @@ if ( !function_exists('avfr_submit_box') ):
 								<label for="avfr-title">
 									<?php _e('Submit feature for:','feature-request');?>
 								</label>
-								<?php if ( !is_archive() && !is_single() && !empty($groups) && count( explode(',', $groups) ) == 1 ) {
+								<?php 
+
+								if ( !empty($groups) && count( explode(',', $groups) ) == 1 ) {
+
 								 	$group_name = get_term( $groups, 'groups' );
 								 	echo $group_name->name;
 								 	echo "<input name='group' type='hidden' value=".$group_name->slug.">";
-									} else { ?> <span class="triangle-down"> <?php wp_dropdown_categories( $args ); } ?></span></div>
+									} elseif ( empty($groups) ) {
+
+										$groups = get_terms( 'groups', array('hide_empty' => 0) );
+
+										if ( count( $groups ) == 1 ) {
+											echo $groups[0]->name;
+								 			echo "<input name='group' type='hidden' value=".$groups[0]->slug.">";
+										} else {
+											wp_dropdown_categories( $args );
+										}
+
+									} else {
+										
+									 ?> <span class="triangle-down"> <?php wp_dropdown_categories( $args ); } ?></span></div>
 								
 								<script type="text/javascript">
 								jQuery(document).ready(function($){

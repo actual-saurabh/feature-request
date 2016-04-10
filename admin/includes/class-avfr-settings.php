@@ -494,12 +494,18 @@ $settings = new Avfr_Settings();
 
 function avfr_groups_edit_form_fields( $tag ) {
 
-    $term_id = $tag->term_id;
-    
-    $max_votes = get_term_meta( $term_id, 'avfr_max_votes', true );
-    $total_votes = get_term_meta( $term_id, 'avfr_total_votes', true);
-    $comments_disabled = 'on' === get_term_meta( $term_id, 'avfr_comments_disabled', true ) ? 'checked' : '';
-    $new_disabled = 'on' === get_term_meta( $term_id, 'avfr_new_disabled', true ) ? 'checked' : '';
+    $max_votes = $total_votes = $comments_disabled = $new_disabled = '';
+
+    if ( is_object( $tag ) ) {
+
+        $term_id = $tag->term_id;
+        $max_votes = get_term_meta( $term_id, 'avfr_max_votes', true );
+        $total_votes = get_term_meta( $term_id, 'avfr_total_votes', true);
+        $comments_disabled = 'on' === get_term_meta( $term_id, 'avfr_comments_disabled', true ) ? 'checked' : '';
+        $new_disabled = 'on' === get_term_meta( $term_id, 'avfr_new_disabled', true ) ? 'checked' : '';
+
+    }
+
 ?>
     <tr class="form-field">
         <th valign="top" scope="row">
@@ -546,8 +552,11 @@ add_action('groups_add_form_fields', 'avfr_groups_edit_form_fields');
 
 function avfr_save_groups_custom_meta( $term_id ) {
 
-    $max_votes = abs($_POST['max-votes']);
-    $total_votes = abs($_POST['total-votes']);
+    $max_votes_val = isset( $_POST['max-votes'] ) ? : 0;
+    $total_votes_val = isset( $_POST['total-votes'] ) ? : 0;
+
+    $max_votes = abs($max_votes_val);
+    $total_votes = abs($total_votes_val);
     $comments_disabled = $_POST['cm-disabled'] ? 'on' : 'off' ;
     $new_disabled = $_POST['new-disabled'] ? 'on' : 'off' ;
 
